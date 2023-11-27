@@ -1,0 +1,71 @@
+//
+//  SharedSequenceConvertibleType.swift
+//  RxExtensions
+//
+//  Created by George Churikov on 17.11.2023.
+//
+
+
+import Foundation
+import RxSwift
+import RxCocoa
+
+public extension SharedSequenceConvertibleType {
+    func withUnretained<T: AnyObject>(_ obj: T) -> Driver<(T, Element)> {
+        return self.asObservable()
+            .withUnretained(obj)
+            .asDriver(onErrorDriveWith: .empty())
+    }
+}
+
+public extension SharedSequenceConvertibleType {
+    func flatMap<A: AnyObject, O: ObservableConvertibleType>(
+        weak obj: A,
+        selector: @escaping (A, Self.Element) throws -> O
+    ) -> SharedSequence<SharingStrategy, O.Element> {
+        return flatMap { [weak obj] value -> SharedSequence<SharingStrategy, O.Element> in
+            do {
+                return try obj.map { try selector($0, value)
+                    .asSharedSequence(onErrorRecover: { _ in .empty() }) } ?? .empty()
+            } catch {
+                return .empty()
+            }
+        }
+    }
+    
+    func flatMapFirst<A: AnyObject, O: ObservableConvertibleType>(
+        weak obj: A,
+        selector: @escaping (A, Self.Element) throws -> O
+    ) -> SharedSequence<SharingStrategy, O.Element> {
+        return flatMapFirst { [weak obj] value -> SharedSequence<SharingStrategy, O.Element> in
+            do {
+                return try obj.map { try selector($0, value)
+                    .asSharedSequence(onErrorRecover: { _ in .empty() }) } ?? .empty()
+            } catch {
+                return .empty()
+            }
+        }
+    }
+    
+    func flatMapLatest<A: AnyObject, O: ObservableConvertibleType>(
+        weak obj: A,
+        selector: @escaping (A, Self.Element) throws -> O
+    ) -> SharedSequence<SharingStrategy, O.Element> {
+        return flatMapLatest { [weak obj] value -> SharedSequence<SharingStrategy, O.Element> in
+            do {
+                return try obj.map { try selector($0, value)
+                    .asSharedSequence(onErrorRecover: { _ in .empty() }) } ?? .empty()
+            } catch {
+                return .empty()
+            }
+        }
+    }
+}
+
+public extension SharedSequenceConvertibleType where Element: Equatable {
+    func filterEqual(_ value: Element) -> SharedSequence<SharingStrategy, Element> {
+        return self.asObservable()
+            .filter { $0 == value }
+            .asSharedSequence(onErrorDriveWith: .empty())
+    }
+}
