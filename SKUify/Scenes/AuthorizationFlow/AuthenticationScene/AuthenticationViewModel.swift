@@ -64,6 +64,7 @@ final class AuthenticationViewModel: ViewModelProtocol {
     private let loginStateUseCase: Domain.LoginStateUseCase
     private let keyboardUseCase: Domain.KeyboardUseCase
     
+    // Trackers
     private var activityIndicator = ActivityTracker()
     private var errorTracker = ErrorTracker()
     
