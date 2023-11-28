@@ -25,14 +25,14 @@ final class AuthenticationNavigator: AuthenticationNavigatorProtocol {
     }
     
     func toLogin() {
-        let loginVC = AuthenticationVC()
+        let vc = AuthenticationVC()
 
-        loginVC.viewModel = AuthenticationViewModel(
+        vc.viewModel = AuthenticationViewModel(
             useCases: di,
             navigator: self
         )
         
-        navigationController.pushViewController(loginVC, animated: true)
+        navigationController.pushViewController(vc, animated: true)
     }
 
     deinit {

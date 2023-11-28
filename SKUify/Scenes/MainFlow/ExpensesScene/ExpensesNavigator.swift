@@ -29,6 +29,8 @@ final class ExpensesNavigator: ExpensesNavigatorProtocol {
             useCases: di,
             navigator: self
         )
+        
+        navigationController.pushViewController(vc, animated: true)
     }
     
     deinit {

@@ -10,4 +10,9 @@ import UIKit
 
 final class DashboardVC: BaseViewController {
     var viewModel: DashboardViewModel!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+    }
 }

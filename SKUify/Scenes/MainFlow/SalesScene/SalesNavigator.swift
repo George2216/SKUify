@@ -29,6 +29,8 @@ final class SalesNavigator: SalesNavigatorProtocol {
             useCases: di,
             navigator: self
         )
+        
+        navigationController.pushViewController(vc, animated: true)
     }
     
     deinit {

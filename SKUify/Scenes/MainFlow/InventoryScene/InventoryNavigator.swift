@@ -29,6 +29,8 @@ final class InventoryNavigator: InventoryNavigatorProtocol {
             useCases: di,
             navigator: self
         )
+        
+        navigationController.pushViewController(vc, animated: true)
     }
     
     deinit {

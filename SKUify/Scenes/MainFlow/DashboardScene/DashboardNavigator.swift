@@ -30,6 +30,8 @@ final class DashboardNavigator: DashboardNavigatorProtocol {
             useCases: di,
             navigator: self
         )
+        
+        navigationController.pushViewController(vc, animated: true)
     }
     
     deinit {

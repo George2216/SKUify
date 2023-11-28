@@ -32,19 +32,21 @@ final class MainTabBarNavigator {
             di: di
         )
         dashboardNavigation.tabBarItem = UITabBarItem(
-            title: "Network",
-            image: UIImage(named: "Toolbox"),
+            title: "Dashboard",
+            image: UIImage(named: "dashboard"),
             selectedImage: nil
         )
        
+        dashboardNavigation.navigationBar.prefersLargeTitles = false
+
         let salesNavigation = UINavigationController()
         let salesNavigator = SalesNavigator(
             navigationController: salesNavigation,
             di: di
         )
         salesNavigation.tabBarItem = UITabBarItem(
-            title: "Network",
-            image: UIImage(named: "Toolbox"),
+            title: "Sales",
+            image: UIImage(named: "sales"),
             selectedImage: nil
         )
         
@@ -54,8 +56,8 @@ final class MainTabBarNavigator {
             di: di
         )
         expensesNavigation.tabBarItem = UITabBarItem(
-            title: "Network",
-            image: UIImage(named: "Toolbox"),
+            title: "Expenses",
+            image: UIImage(named: "expenses"),
             selectedImage: nil
         )
         
@@ -65,11 +67,10 @@ final class MainTabBarNavigator {
             di: di
         )
         inventoryNavigation.tabBarItem = UITabBarItem(
-            title: "Network",
-            image: UIImage(named: "Toolbox"),
+            title: "Inventory",
+            image: UIImage(named: "inventory"),
             selectedImage: nil
         )
-        
         
         
         tabBarController.viewControllers = [
@@ -79,13 +80,16 @@ final class MainTabBarNavigator {
             inventoryNavigation
         ]
         
-        navigationController.pushViewController(tabBarController, animated: true)
+        navigationController.isNavigationBarHidden = true
 
         dashboardNavigator.toDashboard()
         salesNavigator.toSales()
         expensesNavigator.toExpenses()
         inventoryNavigator.toInventory()
         
+        navigationController.pushViewController(tabBarController, animated: true)
+
+       
     }
   
   
