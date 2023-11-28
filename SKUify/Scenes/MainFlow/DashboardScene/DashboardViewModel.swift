@@ -13,15 +13,16 @@ import RxCocoa
 final class DashboardViewModel: ViewModelProtocol {
     
     // Dependencies
-    private let navigator: AuthenticationNavigatorProtocol
+    private let navigator: DashboardNavigatorProtocol
     
     // Use case storage
     
+    // Trackers
     private var activityIndicator = ActivityTracker()
     private var errorTracker = ErrorTracker()
     
     init(
-        navigator: AuthenticationNavigatorProtocol
+        navigator: DashboardNavigatorProtocol
     ) {
         self.navigator = navigator
         

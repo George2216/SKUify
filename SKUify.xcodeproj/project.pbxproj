@@ -958,6 +958,9 @@
 		5E418A3B2B07B52C0070EDA4 /* MainFlow */ = {
 			isa = PBXGroup;
 			children = (
+				5ED911042B160C3B00FC0A66 /* InventoryScene */,
+				5ED911032B160C2D00FC0A66 /* ExpensesScene */,
+				5ED911022B160C1800FC0A66 /* SalesScene */,
 				5E418A7E2B0B9D260070EDA4 /* DashboardScene */,
 				5E418A792B0B96520070EDA4 /* MainTabBarContoller */,
 			);
@@ -1172,6 +1175,27 @@
 				5ED910B42B13FAA100FC0A66 /* AppUseCaseProvider.swift */,
 			);
 			path = UseCaseProvider;
+			sourceTree = "<group>";
+		};
+		5ED911022B160C1800FC0A66 /* SalesScene */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SalesScene;
+			sourceTree = "<group>";
+		};
+		5ED911032B160C2D00FC0A66 /* ExpensesScene */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ExpensesScene;
+			sourceTree = "<group>";
+		};
+		5ED911042B160C3B00FC0A66 /* InventoryScene */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = InventoryScene;
 			sourceTree = "<group>";
 		};
 		64753082D6C7D8A0E495013A /* Frameworks */ = {

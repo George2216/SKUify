@@ -26,10 +26,18 @@ final class MainTabBarNavigator {
     func toTabBar() {
         let tabBarController = MainTabBarController()
         let firstVC = UIViewController()
-        let first = makeTabBarItemController(viewController: firstVC, title: "First", imageName: "person")
+        let first = makeTabBarItemController(
+            viewController: firstVC,
+            title: "First",
+            imageName: "person"
+        )
         
         let secondVC = UIViewController()
-        let second = makeTabBarItemController(viewController: firstVC, title: "Second", imageName: "plus")
+        let second = makeTabBarItemController(
+            viewController: secondVC,
+            title: "Second",
+            imageName: "plus"
+        )
         
         tabBarController.viewControllers = [first, second]
         navigationController.pushViewController(tabBarController, animated: true)
