@@ -12,5 +12,6 @@ protocol DIProtocol:
     AuthenticationUseCases,
     DashboardUseCases,
     SalesUseCases,
-    ExpensesUseCases
+    ExpensesUseCases,
+    InventoryUseCases
 {}

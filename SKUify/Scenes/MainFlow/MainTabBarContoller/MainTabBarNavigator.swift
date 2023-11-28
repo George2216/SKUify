@@ -25,37 +25,68 @@ final class MainTabBarNavigator {
     
     func toTabBar() {
         let tabBarController = MainTabBarController()
-        let firstVC = UIViewController()
-        let first = makeTabBarItemController(
-            viewController: firstVC,
-            title: "First",
-            imageName: "person"
-        )
         
-        let secondVC = UIViewController()
-        let second = makeTabBarItemController(
-            viewController: secondVC,
-            title: "Second",
-            imageName: "plus"
+        let dashboardNavigation = UINavigationController()
+        let dashboardNavigator = DashboardNavigator(
+            navigationController: dashboardNavigation,
+            di: di
         )
-        
-        tabBarController.viewControllers = [first, second]
-        navigationController.pushViewController(tabBarController, animated: true)
-    }
-    
-    private func makeTabBarItemController(
-        viewController: UIViewController,
-        title: String,
-        imageName: String
-    ) -> UIViewController {
-        let navigation = UINavigationController(rootViewController: viewController)
-        navigation.tabBarItem = UITabBarItem(
-            title: title,
-            image: UIImage(systemName: imageName),
+        dashboardNavigation.tabBarItem = UITabBarItem(
+            title: "Network",
+            image: UIImage(named: "Toolbox"),
             selectedImage: nil
         )
-        return navigation
+       
+        let salesNavigation = UINavigationController()
+        let salesNavigator = SalesNavigator(
+            navigationController: salesNavigation,
+            di: di
+        )
+        salesNavigation.tabBarItem = UITabBarItem(
+            title: "Network",
+            image: UIImage(named: "Toolbox"),
+            selectedImage: nil
+        )
+        
+        let expensesNavigation = UINavigationController()
+        let expensesNavigator = ExpensesNavigator(
+            navigationController: expensesNavigation,
+            di: di
+        )
+        expensesNavigation.tabBarItem = UITabBarItem(
+            title: "Network",
+            image: UIImage(named: "Toolbox"),
+            selectedImage: nil
+        )
+        
+        let inventoryNavigation = UINavigationController()
+        let inventoryNavigator = InventoryNavigator(
+            navigationController: inventoryNavigation,
+            di: di
+        )
+        inventoryNavigation.tabBarItem = UITabBarItem(
+            title: "Network",
+            image: UIImage(named: "Toolbox"),
+            selectedImage: nil
+        )
+        
+        
+        
+        tabBarController.viewControllers = [
+            dashboardNavigation,
+            salesNavigation,
+            expensesNavigation,
+            inventoryNavigation
+        ]
+        
+        navigationController.pushViewController(tabBarController, animated: true)
+
+        dashboardNavigator.toDashboard()
+        salesNavigator.toSales()
+        expensesNavigator.toExpenses()
+        inventoryNavigator.toInventory()
         
     }
-    
+  
+  
 }
