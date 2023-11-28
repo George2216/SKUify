@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class SalesNavigator: BaseViewController {
+final class SalesVC: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
