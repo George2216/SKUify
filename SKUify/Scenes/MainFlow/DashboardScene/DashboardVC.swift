@@ -9,5 +9,5 @@ import Foundation
 import UIKit
 
 final class DashboardVC: BaseViewController {
-    
+    var viewModel: DashboardViewModel!
 }

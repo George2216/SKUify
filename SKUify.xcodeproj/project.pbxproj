@@ -1189,9 +1189,9 @@
 			isa = PBXGroup;
 			children = (
 				5ED911052B160CDC00FC0A66 /* SalesNavigator.swift */,
+				5ED9110B2B160DAD00FC0A66 /* SalesUseCases.swift */,
 				5ED911072B160D2100FC0A66 /* SalesVC.swift */,
 				5ED911092B160D6500FC0A66 /* SalesViewModel.swift */,
-				5ED9110B2B160DAD00FC0A66 /* SalesUseCases.swift */,
 			);
 			path = SalesScene;
 			sourceTree = "<group>";

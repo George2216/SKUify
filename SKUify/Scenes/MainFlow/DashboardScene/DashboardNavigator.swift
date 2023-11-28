@@ -25,7 +25,11 @@ final class DashboardNavigator: DashboardNavigatorProtocol {
     }
     
     func toDashboard() {
-       
+       let vc = DashboardVC()
+        vc.viewModel = DashboardViewModel(
+            dashboardUseCases: di,
+             navigator: self
+        )
     }
     
     deinit {

@@ -11,11 +11,24 @@ import RxSwift
 import RxCocoa
 import RxExtensions
 
-import Foundation
-import RxSwift
-
 final class SalesViewModel: ViewModelProtocol {
     
+    // Dependencies
+    private let navigator: SalesNavigatorProtocol
+    
+    // Use case storage
+    
+    // Trackers
+    private var activityIndicator = ActivityTracker()
+    private var errorTracker = ErrorTracker()
+    
+    init(
+        salesUseCases: SalesUseCases,
+        navigator: SalesNavigatorProtocol
+    ) {
+        self.navigator = navigator
+        
+    }
     func transform(_ input: Input) -> Output {
         return Output()
     }
@@ -29,6 +42,8 @@ final class SalesViewModel: ViewModelProtocol {
     }
     
 }
+
+
 
 
 

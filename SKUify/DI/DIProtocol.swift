@@ -6,4 +6,10 @@
 //
 
 import Foundation
-protocol DIProtocol: AppManagerUseCases, AuthenticationUseCases {}
+
+protocol DIProtocol:
+    AppManagerUseCases,
+    AuthenticationUseCases,
+    DashboardUseCases,
+    SalesUseCases
+{}

@@ -25,7 +25,11 @@ final class SalesNavigator: SalesNavigatorProtocol {
     }
     
     func toSales() {
-       
+       let vc = SalesVC()
+        vc.viewModel = SalesViewModel(
+            salesUseCases: di,
+            navigator: self
+        )
     }
     
     deinit {

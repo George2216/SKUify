@@ -8,6 +8,7 @@
 import Foundation
 
 final class SalesVC: BaseViewController {
+    var viewModel: SalesViewModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
