@@ -124,6 +124,10 @@
 		5ED911082B160D2100FC0A66 /* SalesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED911072B160D2100FC0A66 /* SalesVC.swift */; };
 		5ED9110A2B160D6500FC0A66 /* SalesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED911092B160D6500FC0A66 /* SalesViewModel.swift */; };
 		5ED9110C2B160DAD00FC0A66 /* SalesUseCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED9110B2B160DAD00FC0A66 /* SalesUseCases.swift */; };
+		5ED9110E2B16111D00FC0A66 /* ExpensesUseCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED9110D2B16111D00FC0A66 /* ExpensesUseCases.swift */; };
+		5ED911102B16112E00FC0A66 /* ExpensesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED9110F2B16112E00FC0A66 /* ExpensesVC.swift */; };
+		5ED911122B16119900FC0A66 /* ExpensesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED911112B16119900FC0A66 /* ExpensesViewModel.swift */; };
+		5ED911142B1611C400FC0A66 /* ExpensesNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED911132B1611C400FC0A66 /* ExpensesNavigator.swift */; };
 		68447411A355AEDF04F006FE /* Pods_DomainTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80259D1E8B54987AD3F0F329 /* Pods_DomainTests.framework */; };
 		7FAB603DE1AC018C66BA63E6 /* Pods_SKUify_SKUifyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA054B4A6EAADFE9931E384C /* Pods_SKUify_SKUifyUITests.framework */; };
 		882167328D4D65290B325069 /* Pods_RealmPlatform.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D079D9983D3D9A8F27883D7 /* Pods_RealmPlatform.framework */; };
@@ -457,6 +461,10 @@
 		5ED911072B160D2100FC0A66 /* SalesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalesVC.swift; sourceTree = "<group>"; };
 		5ED911092B160D6500FC0A66 /* SalesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalesViewModel.swift; sourceTree = "<group>"; };
 		5ED9110B2B160DAD00FC0A66 /* SalesUseCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalesUseCases.swift; sourceTree = "<group>"; };
+		5ED9110D2B16111D00FC0A66 /* ExpensesUseCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesUseCases.swift; sourceTree = "<group>"; };
+		5ED9110F2B16112E00FC0A66 /* ExpensesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesVC.swift; sourceTree = "<group>"; };
+		5ED911112B16119900FC0A66 /* ExpensesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesViewModel.swift; sourceTree = "<group>"; };
+		5ED911132B1611C400FC0A66 /* ExpensesNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesNavigator.swift; sourceTree = "<group>"; };
 		600C7E97A7A653BF5943C52A /* Pods-SKUify-SKUifyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SKUify-SKUifyUITests.debug.xcconfig"; path = "Target Support Files/Pods-SKUify-SKUifyUITests/Pods-SKUify-SKUifyUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		60A9638939CD20017F5CD177 /* Pods-NetworkPlatform.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetworkPlatform.release.xcconfig"; path = "Target Support Files/Pods-NetworkPlatform/Pods-NetworkPlatform.release.xcconfig"; sourceTree = "<group>"; };
 		63A3B8BAAC808F07DBF47BCB /* Pods_RxExtensions.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RxExtensions.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1199,6 +1207,10 @@
 		5ED911032B160C2D00FC0A66 /* ExpensesScene */ = {
 			isa = PBXGroup;
 			children = (
+				5ED9110D2B16111D00FC0A66 /* ExpensesUseCases.swift */,
+				5ED9110F2B16112E00FC0A66 /* ExpensesVC.swift */,
+				5ED911112B16119900FC0A66 /* ExpensesViewModel.swift */,
+				5ED911132B1611C400FC0A66 /* ExpensesNavigator.swift */,
 			);
 			path = ExpensesScene;
 			sourceTree = "<group>";
@@ -2256,6 +2268,7 @@
 				5ED9110C2B160DAD00FC0A66 /* SalesUseCases.swift in Sources */,
 				5E418A5C2B07B8960070EDA4 /* AppNavigatorProtocol.swift in Sources */,
 				5E418A662B07C2F40070EDA4 /* BaseViewController.swift in Sources */,
+				5ED9110E2B16111D00FC0A66 /* ExpensesUseCases.swift in Sources */,
 				5E418A232B067CE10070EDA4 /* AuthenticationViewModel.swift in Sources */,
 				5E418A272B067D050070EDA4 /* AuthenticationUseCases.swift in Sources */,
 				5E418A6B2B07C3340070EDA4 /* BannerView.swift in Sources */,
@@ -2282,9 +2295,11 @@
 				5E418A7D2B0B969A0070EDA4 /* MainTabBarNavigator.swift in Sources */,
 				5E418AB92B0EB0F40070EDA4 /* TitledTextField.swift in Sources */,
 				5ED911062B160CDC00FC0A66 /* SalesNavigator.swift in Sources */,
+				5ED911142B1611C400FC0A66 /* ExpensesNavigator.swift in Sources */,
 				5ED910492B123B6800FC0A66 /* PasswordRecoveryResultView.swift in Sources */,
 				5E418A7B2B0B96810070EDA4 /* MainTabBarController.swift in Sources */,
 				5E418A572B07B8780070EDA4 /* AppManagerUseCases.swift in Sources */,
+				5ED911102B16112E00FC0A66 /* ExpensesVC.swift in Sources */,
 				5E418ABB2B0F8A490070EDA4 /* VerticaStack.swift in Sources */,
 				5E418A692B07C3230070EDA4 /* BannerViewManager.swift in Sources */,
 				5ED910452B121BD200FC0A66 /* PasswordRecoveryView.swift in Sources */,
@@ -2295,6 +2310,7 @@
 				5ED9104B2B1244EA00FC0A66 /* CustomActivityIndicator.swift in Sources */,
 				5E418A252B067CF60070EDA4 /* AuthenticationVC.swift in Sources */,
 				5E418A402B07B5500070EDA4 /* FakeLauncherViewControllerProtocol.swift in Sources */,
+				5ED911122B16119900FC0A66 /* ExpensesViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

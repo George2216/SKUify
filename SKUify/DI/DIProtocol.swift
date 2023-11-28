@@ -11,5 +11,6 @@ protocol DIProtocol:
     AppManagerUseCases,
     AuthenticationUseCases,
     DashboardUseCases,
-    SalesUseCases
+    SalesUseCases,
+    ExpensesUseCases
 {}

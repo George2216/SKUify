@@ -1,5 +1,5 @@
 //
-//  SalesNavigator.swift
+//  ExpensesNavigator.swift
 //  SKUify
 //
 //  Created by George Churikov on 28.11.2023.
@@ -7,11 +7,11 @@
 
 import UIKit
 
-protocol SalesNavigatorProtocol {
-    func toSales()
+protocol ExpensesNavigatorProtocol {
+    func toExpenses()
 }
 
-final class SalesNavigator: SalesNavigatorProtocol {
+final class ExpensesNavigator: ExpensesNavigatorProtocol {
     private let navigationController: UINavigationController
     private let di: DIProtocol
 
@@ -23,10 +23,10 @@ final class SalesNavigator: SalesNavigatorProtocol {
         self.di = di
     }
     
-    func toSales() {
-       let vc = SalesVC()
-        vc.viewModel = SalesViewModel(
-            salesUseCases: di,
+    func toExpenses() {
+       let vc = ExpensesVC()
+        vc.viewModel = ExpensesViewModel(
+            useCases: di,
             navigator: self
         )
     }
@@ -36,6 +36,4 @@ final class SalesNavigator: SalesNavigatorProtocol {
     }
     
 }
-
-
 

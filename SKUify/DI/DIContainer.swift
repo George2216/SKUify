@@ -12,16 +12,14 @@ import RxSwift
 import AppEventsPlatform
 
 class DIContainer: DIProtocol {
-       
-    static let shared: DIProtocol = DIContainer()
-    
+           
 //    private let networkUseCaseProvider: Domain.NetworkUseCaseProvider
     private let realmUseCaseProvider: Domain.RealmUseCaseProvider
     private let appEventsUseCaseProvider: Domain.AppEventsUseCaseProvider
     
 //    private let interceptorFactory: Domain.InterceptorFactory
 
-    private init() {
+    init() {
 //        let endpoint = "https://api.profitprotectorpro.com/"
 //        let xAuthorization = "9015-2EAB-0FD8-39DD-F30E"
 //
