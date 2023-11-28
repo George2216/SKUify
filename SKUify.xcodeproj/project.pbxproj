@@ -120,6 +120,7 @@
 		5ED910B72B13FECA00FC0A66 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED910B62B13FECA00FC0A66 /* UIView.swift */; };
 		5ED910B92B140C8900FC0A66 /* UIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED910B82B140C8900FC0A66 /* UIScrollView.swift */; };
 		5ED910BB2B14159700FC0A66 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED910BA2B14159700FC0A66 /* SignUpView.swift */; };
+		5ED911062B160CDC00FC0A66 /* SalesNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED911052B160CDC00FC0A66 /* SalesNavigator.swift */; };
 		68447411A355AEDF04F006FE /* Pods_DomainTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80259D1E8B54987AD3F0F329 /* Pods_DomainTests.framework */; };
 		7FAB603DE1AC018C66BA63E6 /* Pods_SKUify_SKUifyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA054B4A6EAADFE9931E384C /* Pods_SKUify_SKUifyUITests.framework */; };
 		882167328D4D65290B325069 /* Pods_RealmPlatform.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D079D9983D3D9A8F27883D7 /* Pods_RealmPlatform.framework */; };
@@ -449,6 +450,7 @@
 		5ED910B62B13FECA00FC0A66 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		5ED910B82B140C8900FC0A66 /* UIScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollView.swift; sourceTree = "<group>"; };
 		5ED910BA2B14159700FC0A66 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		5ED911052B160CDC00FC0A66 /* SalesNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalesNavigator.swift; sourceTree = "<group>"; };
 		600C7E97A7A653BF5943C52A /* Pods-SKUify-SKUifyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SKUify-SKUifyUITests.debug.xcconfig"; path = "Target Support Files/Pods-SKUify-SKUifyUITests/Pods-SKUify-SKUifyUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		60A9638939CD20017F5CD177 /* Pods-NetworkPlatform.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetworkPlatform.release.xcconfig"; path = "Target Support Files/Pods-NetworkPlatform/Pods-NetworkPlatform.release.xcconfig"; sourceTree = "<group>"; };
 		63A3B8BAAC808F07DBF47BCB /* Pods_RxExtensions.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RxExtensions.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1180,6 +1182,7 @@
 		5ED911022B160C1800FC0A66 /* SalesScene */ = {
 			isa = PBXGroup;
 			children = (
+				5ED911052B160CDC00FC0A66 /* SalesNavigator.swift */,
 			);
 			path = SalesScene;
 			sourceTree = "<group>";
@@ -2266,6 +2269,7 @@
 				5E418AB52B0D09160070EDA4 /* Fonts.swift in Sources */,
 				5E418A7D2B0B969A0070EDA4 /* MainTabBarNavigator.swift in Sources */,
 				5E418AB92B0EB0F40070EDA4 /* TitledTextField.swift in Sources */,
+				5ED911062B160CDC00FC0A66 /* SalesNavigator.swift in Sources */,
 				5ED910492B123B6800FC0A66 /* PasswordRecoveryResultView.swift in Sources */,
 				5E418A7B2B0B96810070EDA4 /* MainTabBarController.swift in Sources */,
 				5E418A572B07B8780070EDA4 /* AppManagerUseCases.swift in Sources */,
