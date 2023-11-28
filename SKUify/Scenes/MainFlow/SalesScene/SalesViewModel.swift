@@ -23,7 +23,7 @@ final class SalesViewModel: ViewModelProtocol {
     private var errorTracker = ErrorTracker()
     
     init(
-        salesUseCases: SalesUseCases,
+        useCases: SalesUseCases,
         navigator: SalesNavigatorProtocol
     ) {
         self.navigator = navigator

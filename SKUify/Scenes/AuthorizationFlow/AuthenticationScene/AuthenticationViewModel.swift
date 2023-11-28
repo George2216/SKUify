@@ -69,12 +69,12 @@ final class AuthenticationViewModel: ViewModelProtocol {
     private var errorTracker = ErrorTracker()
     
     init(
-        loginUseCases: AuthenticationUseCases,
+        useCases: AuthenticationUseCases,
         navigator: AuthenticationNavigatorProtocol
     ) {
         self.navigator = navigator
-        self.loginStateUseCase = loginUseCases.makeLoginStateUseCase()
-        self.keyboardUseCase = loginUseCases.makeKeyboardUseCase()
+        self.loginStateUseCase = useCases.makeLoginStateUseCase()
+        self.keyboardUseCase = useCases.makeKeyboardUseCase()
         login()
     }
     

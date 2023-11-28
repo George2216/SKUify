@@ -28,7 +28,7 @@ final class AuthenticationNavigator: AuthenticationNavigatorProtocol {
         let loginVC = AuthenticationVC()
 
         loginVC.viewModel = AuthenticationViewModel(
-            loginUseCases: di,
+            useCases: di,
             navigator: self
         )
         

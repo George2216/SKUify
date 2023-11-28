@@ -22,7 +22,7 @@ final class DashboardViewModel: ViewModelProtocol {
     private var errorTracker = ErrorTracker()
     
     init(
-        dashboardUseCases: DashboardUseCases,
+        useCases: DashboardUseCases,
         navigator: DashboardNavigatorProtocol
     ) {
         self.navigator = navigator

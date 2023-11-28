@@ -1207,10 +1207,10 @@
 		5ED911032B160C2D00FC0A66 /* ExpensesScene */ = {
 			isa = PBXGroup;
 			children = (
+				5ED911132B1611C400FC0A66 /* ExpensesNavigator.swift */,
 				5ED9110D2B16111D00FC0A66 /* ExpensesUseCases.swift */,
 				5ED9110F2B16112E00FC0A66 /* ExpensesVC.swift */,
 				5ED911112B16119900FC0A66 /* ExpensesViewModel.swift */,
-				5ED911132B1611C400FC0A66 /* ExpensesNavigator.swift */,
 			);
 			path = ExpensesScene;
 			sourceTree = "<group>";
