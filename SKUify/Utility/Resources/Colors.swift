@@ -17,4 +17,5 @@ extension UIColor {
     // text
     static let textColor = UIColor(named: "textColor") ?? .clear
     static let subtextColor = UIColor(named: "subtextColor") ?? .clear
+    static let lightSubtextColor = UIColor(named: "lightSubtextColor") ?? .clear
 }

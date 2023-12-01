@@ -143,20 +143,3 @@ extension Reactive where Base: SignUpView {
     
 }
 
-extension UIView {
-    static func spacer(size: CGFloat = .greatestFiniteMagnitude, for layout: NSLayoutConstraint.Axis = .vertical) -> UIView {
-        let spacer = UIView()
-        
-        if layout == .horizontal {
-            let constraint = spacer.widthAnchor.constraint(equalToConstant: size)
-            constraint.priority = .defaultLow
-            constraint.isActive = true
-        } else {
-            let constraint = spacer.heightAnchor.constraint(equalToConstant: size)
-            constraint.priority = .defaultLow
-            constraint.isActive = true
-        }
-        return spacer
-    }
-    
-}

@@ -11,7 +11,7 @@ import SnapKit
 
 final class DefaultButton: UIButton {
     
-    private var disposeBag = DisposeBag()
+    fileprivate var disposeBag = DisposeBag()
     
     private var configStorage = Config.empty()
     
@@ -28,22 +28,27 @@ final class DefaultButton: UIButton {
     // MARK: - Private methods
     
     private func setupConfig(config: Config) {
-        disposeBag = DisposeBag()
         layer.reset()
         
         var configuration = Configuration.plain()
         configuration.title = config.title
         
-        setupAttributed { incoming in
-            var outgoing = incoming
-            outgoing.font = UIFont.manrope(
+        setupTextFont(
+            .manrope(
                 type: .extraBold,
-                size: 13
-            )
-            return outgoing
-        }
+                size: 13)
+        )
+        
+        setupAction(config)
         
         self.configuration = configuration
+        
+        
+        setupStyle(style: config.style)
+        setupHeight(style: config.style)
+    }
+    
+    private func setupAction(_ config: Config) {
         if let action = config.action {
             alpha = 1
             rx.tap
@@ -54,11 +59,14 @@ final class DefaultButton: UIButton {
         } else {
             alpha = 0.7
         }
-        
-        setupStyle(style: config.style)
-        setupHeight(style: config.style)
-
-        
+    }
+    
+    private func setupTextFont(_ font: UIFont?) {
+        setupAttributed { incoming in
+            var outgoing = incoming
+            outgoing.font = font
+            return outgoing
+        }
     }
     
     private func setupAttributed(
@@ -92,10 +100,14 @@ final class DefaultButton: UIButton {
                 chekSubstile: chekSubstile
             )
             
+        case .image(let image):
+            configuration?.image = image.image
+            
         case .none:
             backgroundColor = .white
             configuration?.baseForegroundColor = .textColor
-       
+      
+      
         }
         clipsToBounds = true
     }
@@ -152,7 +164,7 @@ extension DefaultButton {
     
     private func setupChekButton(
         isSelected: Bool,
-        chekSubstile: Style.CheckButtonSubstyle
+        chekSubstile: CheckButtonSubstyle
     ) {
         let imageName = isSelected ? "checkmark.square.fill" : "square"
         configuration?.image = UIImage(systemName: imageName)
@@ -173,32 +185,33 @@ extension DefaultButton {
         configuration?.contentInsets = .zero
         
        
-        setupAttributed { incoming in
-            var outgoing = incoming
-            switch         chekSubstile {
-            case .light:
-                outgoing.font = UIFont.manrope(
+        switch chekSubstile {
+        case .light:
+            setupTextFont(
+                .manrope(
                     type: .regular,
                     size: 14
                 )
-            case .bold:
-                outgoing.font = UIFont.manrope(
+            )
+        case .bold:
+            setupTextFont(
+                .manrope(
                     type: .bold,
                     size: 16
                 )
-            }
-            
-            return outgoing
+            )
         }
+       
     }
     
     private func setupSimpleStyle() {
         backgroundColor = .white
+        configuration?.baseForegroundColor = .textColor
         layer.cornerRadius = 12.0
         layer.borderColor = UIColor.border.cgColor
         layer.borderWidth = 2.0
-        configuration?.baseForegroundColor = .textColor
     }
+    
 }
 
 
@@ -225,7 +238,11 @@ extension DefaultButton {
         case primary
         case fullyRoundedPrimary
         case primaryPlus
-        case chekButton(isSelected: Bool, substile: CheckButtonSubstyle)
+        case chekButton(
+            isSelected: Bool,
+            substile: CheckButtonSubstyle
+        )
+        case image(_ image: ImageType)
         case none
         
         fileprivate var height: CGFloat? {
@@ -240,16 +257,29 @@ extension DefaultButton {
 
             case .light,
                     .chekButton,
-                    .none:
+                    .none,
+                    .image:
                 return nil
             }
         }
+    }
+    
+    enum CheckButtonSubstyle {
+        case light
+        case bold
+    }
+    
+    enum ImageType {
+        case status
         
-        enum CheckButtonSubstyle {
-            case light
-            case bold
+        var image: UIImage {
+            switch self {
+            case .status:
+                return .status
+            }
         }
     }
+    
 }
 
 // MARK: - Custom binding
@@ -257,6 +287,7 @@ extension DefaultButton {
 extension Reactive where Base: DefaultButton {
     var config: Binder<DefaultButton.Config> {
         return Binder(self.base) { button, config in
+            button.disposeBag = DisposeBag()
             button.config = config
         }
     }

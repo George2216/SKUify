@@ -26,52 +26,41 @@ final class MainTabBarNavigator {
     func toTabBar() {
         let tabBarController = MainTabBarController()
         
-        let dashboardNavigation = UINavigationController()
+        let dashboardNavigation = makeNavigation(
+            title: "Dashboard",
+            image: .dashboard
+        )
         let dashboardNavigator = DashboardNavigator(
             navigationController: dashboardNavigation,
             di: di
         )
-        dashboardNavigation.tabBarItem = UITabBarItem(
-            title: "Dashboard",
-            image: UIImage(named: "dashboard"),
-            selectedImage: nil
+        
+        let salesNavigation = makeNavigation(
+            title: "Sales",
+            image: .sales
         )
-       
-        dashboardNavigation.navigationBar.prefersLargeTitles = false
-
-        let salesNavigation = UINavigationController()
         let salesNavigator = SalesNavigator(
             navigationController: salesNavigation,
             di: di
         )
-        salesNavigation.tabBarItem = UITabBarItem(
-            title: "Sales",
-            image: UIImage(named: "sales"),
-            selectedImage: nil
-        )
         
-        let expensesNavigation = UINavigationController()
+        let expensesNavigation = makeNavigation(
+            title: "Expenses",
+            image: .expenses
+        )
         let expensesNavigator = ExpensesNavigator(
             navigationController: expensesNavigation,
             di: di
         )
-        expensesNavigation.tabBarItem = UITabBarItem(
-            title: "Expenses",
-            image: UIImage(named: "expenses"),
-            selectedImage: nil
-        )
         
-        let inventoryNavigation = UINavigationController()
+        let inventoryNavigation = makeNavigation(
+            title: "Inventory",
+            image: .inventory
+        )
         let inventoryNavigator = InventoryNavigator(
             navigationController: inventoryNavigation,
             di: di
         )
-        inventoryNavigation.tabBarItem = UITabBarItem(
-            title: "Inventory",
-            image: UIImage(named: "inventory"),
-            selectedImage: nil
-        )
-        
         
         tabBarController.viewControllers = [
             dashboardNavigation,
@@ -88,9 +77,23 @@ final class MainTabBarNavigator {
         inventoryNavigator.toInventory()
         
         navigationController.pushViewController(tabBarController, animated: true)
-
        
     }
-  
+    
+    private func makeNavigation(
+        title: String,
+        image: UIImage
+    ) -> UINavigationController {
+        let navigation = UINavigationController()
+        navigation.view.backgroundColor = .background
+        
+        navigation.tabBarItem = UITabBarItem(
+            title: title,
+            image: image,
+            selectedImage: nil
+        )
+        return navigation
+    }
+    
   
 }

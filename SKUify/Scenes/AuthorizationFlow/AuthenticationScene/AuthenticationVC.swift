@@ -142,6 +142,7 @@ final class AuthenticationVC: BaseViewController {
             .drive(scrollView.rx.scrollToVisibleTextField)
             .disposed(by: disposeBag)
     }
+    
     // MARK: Setup views
     
     private func setupMainView(_ view: UIView) {

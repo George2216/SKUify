@@ -22,25 +22,39 @@ extension UIView {
         
         return nil
     }
+    
 }
-//
-//extension UIView {
-//    static func spacer(
-//        size: CGFloat = .greatestFiniteMagnitude,
-//        for layout: NSLayoutConstraint.Axis = .horizontal
-//    ) -> UIView {
-//        let spacer = UIView()
-//
-//        if layout == .horizontal {
-//            let constraint = spacer.widthAnchor.constraint(equalToConstant: size)
-//            constraint.priority = .defaultLow
-//            constraint.isActive = true
-//        } else {
-//            let constraint = spacer.heightAnchor.constraint(equalToConstant: size)
-//            constraint.priority = .defaultLow
-//            constraint.isActive = true
-//        }
-//        return spacer
-//    }
-//
-//}
+
+extension UIView {
+    func centerOfView() -> CGPoint {
+        self.superview?
+            .convert(
+                self.center,
+                to: nil
+            ) ?? CGPoint.zero
+    }
+    
+}
+
+extension UIView {
+    static func spacer(
+        size: CGFloat = .greatestFiniteMagnitude,
+        for layout: NSLayoutConstraint.Axis = .vertical
+    ) -> UIView {
+        let spacer = UIView()
+        
+        if layout == .horizontal {
+            let constraint = spacer.widthAnchor
+                .constraint(equalToConstant: size)
+            constraint.priority = .defaultLow
+            constraint.isActive = true
+        } else {
+            let constraint = spacer.heightAnchor
+                .constraint(equalToConstant: size)
+            constraint.priority = .defaultLow
+            constraint.isActive = true
+        }
+        return spacer
+    }
+    
+}

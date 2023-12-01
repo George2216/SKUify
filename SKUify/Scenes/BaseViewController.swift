@@ -28,6 +28,14 @@ class BaseViewController: UIViewController {
 
         setNavBarTranslucent()
         setupLoadingIndicator()
+        PopoverManager.shared.setup(from: self)
+    }
+    
+    // MARK: - Popover Handling
+
+    fileprivate func showPopover(_ input: PopoverManager.Input) {
+        PopoverManager.shared
+            .showPopover(input)
     }
     
     // MARK: - Banner Handling
@@ -67,6 +75,32 @@ class BaseViewController: UIViewController {
     }
     
 }
+extension BaseViewController {
+   private func viewAtPoint(_ point: CGPoint) -> UIView? {
+        if let window = UIWindow.key {
+            return window.hitTest(point, with: nil)
+        }
+        return nil
+    }
+}
+
+// MARK: - Popover delegate methods
+
+extension BaseViewController: UIPopoverPresentationControllerDelegate {
+
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
+
+    func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {
+
+    }
+
+    func popoverPresentationControllerShouldDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) -> Bool {
+        return true
+    }
+}
+
 
 // MARK: - Binding
 
@@ -80,6 +114,12 @@ extension Reactive where Base: BaseViewController {
     var banner: Binder<BannerView.Input> {
         return Binder(self.base) { controller, bannerInput in
             controller.showBanner(bannerInput)
+        }
+    }
+    
+    var popover: Binder<PopoverManager.Input> {
+        return Binder(base) { controller, popoverInput in
+            controller.showPopover(popoverInput)
         }
     }
     

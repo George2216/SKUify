@@ -6,12 +6,17 @@
 //
 
 import Foundation
+import UIKit
 
 final class SalesVC: BaseViewController {
     var viewModel: SalesViewModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Sales"
+
     }
+    
+   
     
 }
