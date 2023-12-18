@@ -13,6 +13,10 @@ final public class AppEventsUseCaseProvider: Domain.AppEventsUseCaseProvider {
         KeyboardUseCase()
     }
     
+    public func makeAppVersionUseCase() -> Domain.AppVersionUseCase {
+        AppVersionUseCase()
+    }
+    
     public init() { }
 
 }

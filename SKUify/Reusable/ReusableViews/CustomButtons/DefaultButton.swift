@@ -103,9 +103,13 @@ final class DefaultButton: UIButton {
         case .image(let image):
             configuration?.image = image.image
             
+        case .infoButton:
+            setupInfoButton()
+            
         case .none:
             backgroundColor = .white
             configuration?.baseForegroundColor = .textColor
+      
       
       
         }
@@ -153,7 +157,7 @@ extension DefaultButton {
             font: .manrope(
                 type: .bold,
                 size: 13
-            )!
+            )
         )
         let image = UIImage.plus
             .withConfiguration(imageConfig)
@@ -204,6 +208,28 @@ extension DefaultButton {
        
     }
     
+    private func setupInfoButton() {
+        let imageConfig = UIImage.SymbolConfiguration(
+            font: .manrope(
+                type: .bold,
+                size: 12
+            )
+        )
+        configuration?.image = UIImage(systemName: "info.circle.fill")?
+            .withConfiguration(imageConfig)
+        configuration?.imagePadding = 5
+        configuration?.imagePlacement = .trailing
+        configuration?.baseForegroundColor = .textColor
+        configuration?.contentInsets = .zero
+
+        setupTextFont(
+            .manrope(
+                type: .bold,
+                size: 12
+            )
+        )
+    }
+    
     private func setupSimpleStyle() {
         backgroundColor = .white
         configuration?.baseForegroundColor = .textColor
@@ -243,6 +269,7 @@ extension DefaultButton {
             substile: CheckButtonSubstyle
         )
         case image(_ image: ImageType)
+        case infoButton
         case none
         
         fileprivate var height: CGFloat? {
@@ -258,7 +285,8 @@ extension DefaultButton {
             case .light,
                     .chekButton,
                     .none,
-                    .image:
+                    .image,
+                    .infoButton:
                 return nil
             }
         }

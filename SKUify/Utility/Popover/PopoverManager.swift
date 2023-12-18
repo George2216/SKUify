@@ -9,13 +9,10 @@ import Foundation
 import UIKit
 
 final class PopoverManager: PopoverManagerProtocol {
-    static let shared: PopoverManagerProtocol = PopoverManager()
     
-    private var baseController: (UIViewController & UIPopoverPresentationControllerDelegate)?
-    
-    private init() { }
-    
-    func setup(from show: UIViewController & UIPopoverPresentationControllerDelegate) {
+    private weak var baseController: (UIViewController & UIPopoverPresentationControllerDelegate)?
+        
+    func setup(from show: (UIViewController & UIPopoverPresentationControllerDelegate)) {
         baseController = show
     }
     
@@ -38,6 +35,8 @@ final class PopoverManager: PopoverManagerProtocol {
     
 }
 
+// MARK: - Input
+
 extension PopoverManager {
     struct Input {
         let pointView: CGPoint
@@ -46,6 +45,8 @@ extension PopoverManager {
     }
     
 }
+
+// MARK: - Find view by point
 
 extension PopoverManager {
    private func viewAtPoint(_ point: CGPoint) -> UIView? {

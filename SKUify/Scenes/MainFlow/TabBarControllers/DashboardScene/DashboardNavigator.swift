@@ -8,8 +8,9 @@
 import UIKit
 import Domain
 
-protocol DashboardNavigatorProtocol {
+protocol DashboardNavigatorProtocol: AnyObject {
     func toDashboard()
+    func toSettings()
 }
 
 final class DashboardNavigator: DashboardNavigatorProtocol {
@@ -32,6 +33,14 @@ final class DashboardNavigator: DashboardNavigatorProtocol {
         )
         
         navigationController.pushViewController(vc, animated: true)
+    }
+    
+    func toSettings() {
+        let navigator = SettingsNavigator(
+            navigationController: navigationController,
+            di: di
+        )
+        navigator.toSettings()
     }
     
     deinit {

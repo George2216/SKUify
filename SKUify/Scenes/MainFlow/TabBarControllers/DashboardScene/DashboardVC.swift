@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import RxCocoa
 
 final class DashboardVC: BaseViewController {
     var viewModel: DashboardViewModel!
@@ -19,6 +20,11 @@ final class DashboardVC: BaseViewController {
 
     private let filterByDateButton = PopoverButton()
     
+    private lazy var collectionView = DashboardCollectionView(
+        frame: .zero,
+        collectionViewLayout: createCollectionViewLayout()
+    )
+  
     private let calendarPopoverController = CalendarPopoverVC()
     private let currencyPopoverController = CurrencyPopoverVC()
     
@@ -29,6 +35,8 @@ final class DashboardVC: BaseViewController {
 
         setupFilterByDateButton()
         sutupNavBarItems()
+        setupCollectionView()
+        
         bindToSettingsBarButtonItem(output)
         bindToCurrencyBarButtonItem(output)
         bindToNotificationBarButtonItem(output)
@@ -36,9 +44,66 @@ final class DashboardVC: BaseViewController {
         bindToFilterByDateButtonConfig(output)
         bindCalendarPopover(output)
         bindCurrencyPopover(output)
+        bindToCollectionView(output)
     }
     
-    // MARK: Make binding
+    private func createCollectionViewLayout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        return layout
+    }
+    
+}
+
+// MARK: - Setup views
+
+extension DashboardVC {
+    
+    private func setupCollectionView() {
+        view.addSubview(collectionView)
+        collectionView.snp.makeConstraints { make in
+            make.horizontalEdges
+                .equalToSuperview()
+            make.top
+                .equalTo(filterByDateButton.snp.bottom)
+                .offset(10)
+            make.bottom
+                .equalToSuperview()
+        }
+    }
+    
+    private func setupFilterByDateButton() {
+        view.addSubview(filterByDateButton)
+        filterByDateButton.snp.makeConstraints { make in
+            make.horizontalEdges
+                .equalToSuperview()
+                .inset(16)
+            make.height
+                .equalTo(44)
+            make.top.equalTo(view.safeAreaInsets.top)
+                .inset(31)
+        }
+    }
+    
+    private func sutupNavBarItems() {
+        navigationItem.leftBarButtonItem = titleImageBarButtonItem
+        navigationItem.rightBarButtonItems = [
+            notificationBarButtonItem,
+            currencyBarButtonItem,
+            settingsBarButtonItem
+        ]
+    }
+    
+}
+
+// MARK: Make binding
+
+extension DashboardVC {
+    
+    private func bindToCollectionView(_ output: DashboardViewModel.Output) {
+        collectionView.bind(output.collectionData)
+            .disposed(by: disposeBag)
+    }
     
     // Bind to bar button items
     private func bindToSettingsBarButtonItem(_ output: DashboardViewModel.Output) {
@@ -106,54 +171,5 @@ final class DashboardVC: BaseViewController {
             .drive(rx.popover)
             .disposed(by: disposeBag)
     }
-
-    
-    // MARK: - Setup views
-    
-    private func setupFilterByDateButton() {
-        view.addSubview(filterByDateButton)
-        filterByDateButton.snp.makeConstraints { make in
-            make.horizontalEdges
-                .equalToSuperview()
-                .inset(16)
-            make.height
-                .equalTo(44)
-            make.top.equalToSuperview()
-                .inset(31)
-        }
-    }
-    
-    private func sutupNavBarItems() {
-        navigationItem.leftBarButtonItem = titleImageBarButtonItem
-        navigationItem.rightBarButtonItems = [
-            notificationBarButtonItem,
-            currencyBarButtonItem,
-            settingsBarButtonItem
-        ]
-
-    }
-    
-}
-
-
-class CalendarPopoverVC: UIViewController {
-    let calendar = UIDatePicker()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        calendar.preferredDatePickerStyle = .inline
-        calendar.datePickerMode = .date
-        view.addSubview(calendar)
-        calendar.snp.makeConstraints { make in
-            make.edges
-                .equalToSuperview()
-        }
-        
-    }
-    
-}
-
-
-class CurrencyPopoverVC: UIViewController {
     
 }

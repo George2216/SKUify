@@ -15,6 +15,7 @@ final class AuthenticationVC: BaseViewController {
     var viewModel: AuthenticationViewModel!
 
     // MARK: - UI Elements
+    
     private let scrollView = UIScrollView()
     private let containerView = UIView()
     
@@ -53,8 +54,22 @@ final class AuthenticationVC: BaseViewController {
         bindToSignUpView(output)
         
         bindHeightForScrollingToTxtField(output)
+        
+        makeBanner(output)
+        makeFetching(output)
     }
 
+    private func makeBanner(_ output: AuthenticationViewModel.Output) {
+        output.error
+            .drive(rx.banner)
+            .disposed(by: disposeBag)
+    }
+    
+    private func makeFetching(_ output: AuthenticationViewModel.Output) {
+        output.fetching
+            .drive(rx.loading)
+            .disposed(by: disposeBag)
+    }
     
     // MARK: Make main view by state
 

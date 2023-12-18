@@ -36,6 +36,16 @@ final class ErrorTracker: SharedSequenceConvertibleType {
         return _subject.asObservable()
     }
     
+    func asBannerInput(_ style: BannerView.Style) -> SharedSequence<SharingStrategy, BannerView.Input> {
+        return _subject.map { error in
+            BannerView.Input(
+                text: error.localizedDescription,
+                style: style
+            )
+        }
+        .asDriverOnErrorJustComplete()
+    }
+    
     private func onError(_ error: Error) {
         _subject.onNext(error)
     }

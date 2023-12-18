@@ -18,4 +18,14 @@ extension UIColor {
     static let textColor = UIColor(named: "textColor") ?? .clear
     static let subtextColor = UIColor(named: "subtextColor") ?? .clear
     static let lightSubtextColor = UIColor(named: "lightSubtextColor") ?? .clear
+    static let greenTextColor = UIColor(named: "greenTextColor") ?? .clear
+    
+    // Charts
+    static let marginChart = UIColor(named: "marginChart") ?? .clear
+    static let profitChart = UIColor(named: "profitChart") ?? .clear
+    static let refundsChart = UIColor(named: "refundsChart") ?? .clear
+    static let roiChart = UIColor(named: "roiChart") ?? .clear
+    static let salesChart = UIColor(named: "salesChart") ?? .clear
+    static let unitsSoldChart = UIColor(named: "unitsSoldChart") ?? .clear
+    
 }

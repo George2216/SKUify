@@ -9,8 +9,8 @@ import Foundation
 import UIKit
 
 extension UIFont {
-    static func manrope(type: ManropeFontType, size: CGFloat) -> UIFont? {
-        UIFont(name: "Manrope-\(type.typeName)", size: size)
+    static func manrope(type: ManropeFontType, size: CGFloat) -> UIFont {
+        UIFont(name: "Manrope-\(type.typeName)", size: size) ?? UIFont()
     }
     
     enum ManropeFontType: String {

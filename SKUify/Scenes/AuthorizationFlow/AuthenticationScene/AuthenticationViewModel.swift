@@ -61,18 +61,21 @@ final class AuthenticationViewModel: ViewModelProtocol {
     private var navigator: AuthenticationNavigatorProtocol?
     
     // Use case storage
+    
+    private let loginUseCase: Domain.LoginUseCase
     private let loginStateUseCase: Domain.LoginStateUseCase
     private let keyboardUseCase: Domain.KeyboardUseCase
     
     // Trackers
-    private var activityIndicator = ActivityTracker()
-    private var errorTracker = ErrorTracker()
+    private var activityTracker = ActivityTracker()
+    private var loginErrorTracker = ErrorTracker()
     
     init(
         useCases: AuthenticationUseCases,
         navigator: AuthenticationNavigatorProtocol
     ) {
         self.navigator = navigator
+        self.loginUseCase = useCases.makeLoginUseCase()
         self.loginStateUseCase = useCases.makeLoginStateUseCase()
         self.keyboardUseCase = useCases.makeKeyboardUseCase()
         login()
@@ -90,7 +93,9 @@ final class AuthenticationViewModel: ViewModelProtocol {
             loginInput: makeLoginInput(),
             passwordRecoveryInput: makePasswordRecoveryInput(),
             passwordRecoveryResultInput: makePasswordRecoveryResultInput(),
-            signUpInput: makeSignUpInput()
+            signUpInput: makeSignUpInput(),
+            fetching: activityTracker.asDriver(),
+            error: loginErrorTracker.asBannerInput(.error)
         )
     }
     
@@ -138,16 +143,7 @@ final class AuthenticationViewModel: ViewModelProtocol {
             .asDriverOnErrorJustComplete()
     }
     
-    // MARK: - Login
     
-    private func login() {
-        loginTrigger
-            .flatMapLatest(weak: self) { owner, _ in
-                owner.loginStateUseCase.login()
-            }
-            .subscribe()
-            .disposed(by: disposeBag)
-    }
     
     // Make button config without action
     private func makeBaseFullyRoundedPrimaryButtonConfig(_ title: String) -> DefaultButton.Config {
@@ -290,6 +286,45 @@ extension AuthenticationViewModel {
     private func getKeyboardHeight() -> Driver<CGFloat> {
         keyboardUseCase
             .getKeyboardHeight()
+            .asDriverOnErrorJustComplete()
+    }
+    
+    // MARK: - Login
+    
+    private func login() {
+        loginTrigger
+            .asDriverOnErrorJustComplete()
+            .withLatestFrom(loginFieldsText)
+            .flatMapLatest(
+                weak: self,
+                selector: { owner, loginData in
+                    owner
+                        .login(
+                            email: loginData.0,
+                            password: loginData.1
+                        )
+                }
+            )
+            .flatMapLatest(weak: self) { owner, _ in
+                owner.loginStateUseCase
+                    .login()
+            }
+            .drive()
+            .disposed(by: disposeBag)
+    }
+    
+    // Try login
+    private func login(
+        email: String,
+        password: String
+    ) -> Driver<Void> {
+        return loginUseCase
+            .login(
+                email: email,
+                password: password
+            )
+            .trackActivity(activityTracker)
+            .trackError(loginErrorTracker)
             .asDriverOnErrorJustComplete()
     }
     
@@ -615,6 +650,10 @@ extension AuthenticationViewModel {
         let passwordRecoveryInput: Driver<PasswordRecoveryView.Input>
         let passwordRecoveryResultInput: Driver<PasswordRecoveryResultView.Input>
         let signUpInput: Driver<SignUpView.Input>
+        // Trackers
+        let fetching: Driver<Bool>
+        let error: Driver<BannerView.Input>
+
     }
     
 }

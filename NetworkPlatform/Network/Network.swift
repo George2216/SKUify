@@ -67,12 +67,13 @@ final class Network<T: Decodable> {
     ) -> Observable<Data> {
         
         let absolutePath = "\(endPoint)/\(path)"
-            
+
         return RxAlamofire
             .data(
                 method,
                 absolutePath,
                 parameters: parameters,
+                encoding: URLEncoding.default,
                 headers: HTTPHeaders(headers),
                 interceptor: interceptor
             )

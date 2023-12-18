@@ -9,4 +9,5 @@ import Foundation
 
 public protocol RealmUseCaseProvider {
     func makeLoginStateUseCase() -> Domain.LoginStateUseCase
+    func makeAuthorizationDataUseCase() -> Domain.AuthorizationDataUseCase
 }

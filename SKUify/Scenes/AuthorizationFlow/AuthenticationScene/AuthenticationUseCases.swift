@@ -11,4 +11,5 @@ import Domain
 protocol AuthenticationUseCases {
     func makeLoginStateUseCase() -> Domain.LoginStateUseCase
     func makeKeyboardUseCase() -> Domain.KeyboardUseCase
+    func makeLoginUseCase() -> Domain.LoginUseCase
 }

@@ -97,7 +97,10 @@ final class LoginView: ContainerBorderVerticalStack {
     // MARK: - Setup Views
     
     private func setupCreateAccountLabel() {
-        createAccountLabel.font = .manrope(type: .semiBold, size: 16)
+        createAccountLabel.font = .manrope(
+            type: .semiBold,
+            size: 16
+        )
         createAccountLabel.textAlignment = .center
         createAccountLabel.textColor = .textColor
     }
@@ -128,6 +131,7 @@ final class LoginView: ContainerBorderVerticalStack {
 }
 
 // MARK: - Input
+
 extension LoginView {
     struct Input {
         let loginTxtFieldConfigs: Driver<[TitledTextField.Config]>

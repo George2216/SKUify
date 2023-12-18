@@ -42,8 +42,8 @@ final class DefaultBarButtonItem: UIBarButtonItem {
         button.frame = .init(
             origin: .zero,
             size: .init(
-                width: 40,
-                height: 40
+                width: 30,
+                height: 30
             )
         )
         customView = button

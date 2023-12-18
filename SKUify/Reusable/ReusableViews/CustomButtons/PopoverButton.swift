@@ -11,7 +11,7 @@ import RxCocoa
 import UIKit
 import SnapKit
 
-final class PopoverButton: UIView {
+final class PopoverButton: UIButton {
     fileprivate var disposeBag = DisposeBag()
     
     private var configStorage = Config.empty()
@@ -26,7 +26,7 @@ final class PopoverButton: UIView {
     
     // MARK: - UI element
 
-    private let titleLabel = UILabel()
+    private let customTitleLabel = UILabel()
     private let chevronImageView = UIImageView()
     
     // MARK: - Initializers
@@ -45,19 +45,12 @@ final class PopoverButton: UIView {
     }
     
     private func setupConfig(config: Config) {
-        titleLabel.text = config.title
-        
+        customTitleLabel.text = config.title
         if let action = config.action {
-            let tapGesture = UITapGestureRecognizer()
-            addGestureRecognizer(tapGesture)
-            
-            tapGesture.rx
-                .event
-                .subscribe(onNext: { [weak self] _ in
-                    guard let self else { return }
-                    action(self.centerOfView())
-                })
-                .disposed(by: disposeBag)
+            rx.tap.subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                action(self.centerOfView())
+            }).disposed(by: disposeBag)
         }
         
     }
@@ -69,13 +62,15 @@ final class PopoverButton: UIView {
         layer.cornerRadius = 12.0
         layer.borderColor = UIColor.border.cgColor
         backgroundColor = .white
-        isUserInteractionEnabled = true
     }
     
     private func setupTitleLabel() {
-        titleLabel.text = "Filter marketplace"
-        titleLabel.font = .manrope(type: .medium, size: 13)
-        titleLabel.textColor = .lightSubtextColor
+        customTitleLabel.text = "Filter marketplace"
+        customTitleLabel.font = .manrope(
+            type: .medium,
+            size: 13
+        )
+        customTitleLabel.textColor = .lightSubtextColor
     }
     
     private func setupChevronImageView() {
@@ -93,8 +88,8 @@ final class PopoverButton: UIView {
     // MARK: - Add to subview
 
     private func titleLabelToSubview() {
-        addSubview(titleLabel)
-        titleLabel.snp.makeConstraints { make in
+        addSubview(customTitleLabel)
+        customTitleLabel.snp.makeConstraints { make in
             make.leading
                 .equalToSuperview()
                 .inset(10)

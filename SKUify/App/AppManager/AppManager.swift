@@ -48,7 +48,8 @@ final class AppManager {
     private func subscribeToMandatoryDataActivityTracker() {
         mandatoryDataActivityTraker
             .drive(with: self) { owner, isShow in
-                owner.appNavigator.showFakeLuncher(isShow: isShow)
+                owner.appNavigator
+                    .showFakeLuncher(isShow: isShow)
             }
             .disposed(by: disposeBag)
     }
@@ -92,13 +93,13 @@ final class AppManager {
 //    }
     
     private func toLoginFlow() -> Driver<Void> {
-        Driver<Void>.just(appNavigator.toLoginFlow())
+        .just(appNavigator.toLoginFlow())
     }
     
     
     private func toMainFlow() -> Driver<Void> {
-        Driver<Void>.just(appNavigator.toMainFlow())
-
+        .just(appNavigator.toMainFlow())
+        
     }
     private func checkUserLoggedIn() -> Driver<Bool> {
         loginStateUseCase

@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 protocol PopoverManagerProtocol {
+    associatedtype Input
     func setup(from show: UIViewController & UIPopoverPresentationControllerDelegate)
-    func showPopover(_ input: PopoverManager.Input)
+    func showPopover(_ input: Input)
 }

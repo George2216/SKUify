@@ -42,3 +42,30 @@ extension UITableView {
         register(cellClass, forCellReuseIdentifier: cellClass.reuseID)
     }
 }
+
+
+extension UICollectionViewCell: Reusable {}
+
+extension UICollectionView {
+    func dequeueReusableCell<T>(
+        ofType cellType: T.Type = T.self,
+        at indexPath: IndexPath
+    ) -> T where T: UICollectionViewCell {
+        guard let cell = dequeueReusableCell(
+            withReuseIdentifier: cellType.reuseID,
+            for: indexPath
+        ) as? T else {
+            fatalError()
+        }
+        return cell
+    }
+}
+
+extension UICollectionView {
+    func register<T: Reusable>(_ cellClass: T.Type) {
+        register(cellClass, forCellWithReuseIdentifier: cellClass.reuseID)
+    }
+}
+
+
+

@@ -16,7 +16,10 @@ public struct LoginState {
 }
 
 extension LoginState: Equatable {
-    public static func == (lhs: LoginState, rhs: LoginState) -> Bool {
+    public static func == (
+        lhs: LoginState,
+        rhs: LoginState
+    ) -> Bool {
         return lhs.isLogged == rhs.isLogged
     }
 }

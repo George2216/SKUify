@@ -12,39 +12,47 @@ import RxSwift
 import AppEventsPlatform
 
 class DIContainer: DIProtocol {
-           
-//    private let networkUseCaseProvider: Domain.NetworkUseCaseProvider
+    
+    // MARK: Providers
+    
+    private let networkUseCaseProvider: Domain.NetworkUseCaseProvider
     private let realmUseCaseProvider: Domain.RealmUseCaseProvider
     private let appEventsUseCaseProvider: Domain.AppEventsUseCaseProvider
     
-//    private let interceptorFactory: Domain.InterceptorFactory
+    // MARK: Interceptor Factory
+
+    private let interceptorFactory: Domain.InterceptorFactory
+
+    // MARK: Initialization
 
     init() {
-//        let endpoint = "https://api.profitprotectorpro.com/"
-//        let xAuthorization = "9015-2EAB-0FD8-39DD-F30E"
-//
+        let endpoint = "https://skuify.com"
+
         self.realmUseCaseProvider = RealmPlatform.RealmUseCaseProvider()
         self.appEventsUseCaseProvider = AppEventsPlatform.AppEventsUseCaseProvider()
         
-        //        let authDataUseCase = realmUseCaseProvider.makeAuthorizationDataUseCase()
-//
-//        self.interceptorFactory = NetworkPlatform.InterceptorFactory(
-//            xAuthorization: xAuthorization,
-//            authorizationDataUseCase: authDataUseCase
-//        )
-//
-//        let config = Domain.APIConfig(
-//            apiEndpoint: endpoint,
-//            interceptorFactory: interceptorFactory
-//        )
-//
-//        networkUseCaseProvider = NetworkPlatform.NetworkUseCaseProvider(
-//            networkProvider: NetworkProvider(
-//                config: config
-//            )
-//        )
+        let authDataUseCase = realmUseCaseProvider.makeAuthorizationDataUseCase()
+        self.interceptorFactory = NetworkPlatform.InterceptorFactory(
+            authorizationDataUseCase: authDataUseCase
+        )
+        
+        let config = Domain.APIConfig(
+            apiEndpoint: endpoint,
+            interceptorFactory: interceptorFactory
+        )
+
+        networkUseCaseProvider = NetworkPlatform.NetworkUseCaseProvider(
+            networkProvider: NetworkProvider(
+                config: config
+            )
+        )
     }
     
+    // MARK: Make use cases
+
+    func makeLoginUseCase() -> Domain.LoginUseCase {
+        networkUseCaseProvider.makeLoginUseCase(realmUseCase: makeAutorizationDataUseCase())
+    }
     func makeLoginStateUseCase() -> Domain.LoginStateUseCase {
         realmUseCaseProvider.makeLoginStateUseCase()
     }
@@ -52,5 +60,12 @@ class DIContainer: DIProtocol {
     func makeKeyboardUseCase() -> Domain.KeyboardUseCase {
         appEventsUseCaseProvider.makeKeyboardUseCase()
     }
-   
+    
+    func makeAppVersionUseCase() -> Domain.AppVersionUseCase {
+        appEventsUseCaseProvider.makeAppVersionUseCase()
+    }
+    
+    func makeAutorizationDataUseCase() -> Domain.AuthorizationDataUseCase {
+        realmUseCaseProvider.makeAuthorizationDataUseCase()
+    }
 }

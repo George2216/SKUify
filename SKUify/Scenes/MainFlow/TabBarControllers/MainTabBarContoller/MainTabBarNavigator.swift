@@ -28,7 +28,7 @@ final class MainTabBarNavigator {
         
         let dashboardNavigation = makeNavigation(
             title: "Dashboard",
-            image: .dashboard
+            image: .dashboardBar
         )
         let dashboardNavigator = DashboardNavigator(
             navigationController: dashboardNavigation,
@@ -37,7 +37,7 @@ final class MainTabBarNavigator {
         
         let salesNavigation = makeNavigation(
             title: "Sales",
-            image: .sales
+            image: .salesBar
         )
         let salesNavigator = SalesNavigator(
             navigationController: salesNavigation,
@@ -46,7 +46,7 @@ final class MainTabBarNavigator {
         
         let expensesNavigation = makeNavigation(
             title: "Expenses",
-            image: .expenses
+            image: .expensesBar
         )
         let expensesNavigator = ExpensesNavigator(
             navigationController: expensesNavigation,
@@ -55,7 +55,7 @@ final class MainTabBarNavigator {
         
         let inventoryNavigation = makeNavigation(
             title: "Inventory",
-            image: .inventory
+            image: .inventoryBar
         )
         let inventoryNavigator = InventoryNavigator(
             navigationController: inventoryNavigation,

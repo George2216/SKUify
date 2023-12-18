@@ -9,4 +9,5 @@ import Foundation
 
 public protocol AppEventsUseCaseProvider {
     func makeKeyboardUseCase() -> Domain.KeyboardUseCase
+    func makeAppVersionUseCase() -> Domain.AppVersionUseCase
 }

@@ -30,14 +30,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func setupTabBar() {
-        
         UITabBarItem.appearance()
             .setTitleTextAttributes(
                 [
                     NSAttributedString.Key.font: UIFont.manrope(
                         type: .bold,
                         size: 12
-                    )!
+                    )
                 ],
                 for: .normal
             )
