@@ -13,6 +13,8 @@ import RxCocoa
 
 final class TimeSlotPopoverVC: UIViewController {
 
+    // MARK: - UIElemetns
+    
     private lazy var collectionView = TimeSlotCollectionView(
         frame: .zero,
         collectionViewLayout: createCollectionViewLayout()
@@ -24,15 +26,21 @@ final class TimeSlotPopoverVC: UIViewController {
         return layout
     }
     
+    // MARK: - View Did Load
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
     }
     
+    // MARK: - Make binding
+
     func bindToCollection(_ collectionData: Driver<[TimeSlotCell.Input]>) -> Disposable {
         return collectionView.bind(collectionData)
     }
     
+    // MARK: - Setup view
+
     private func setupCollectionView() {
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in

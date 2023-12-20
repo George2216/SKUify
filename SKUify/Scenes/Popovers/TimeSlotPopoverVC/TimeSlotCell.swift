@@ -11,6 +11,8 @@ import SnapKit
 
 final class TimeSlotCell: UICollectionViewCell {
     
+    // MARK: - Is Selected state
+
     override var isSelected: Bool {
         didSet {
             colorsByIsSelected()
@@ -19,10 +21,17 @@ final class TimeSlotCell: UICollectionViewCell {
         }
     }
     
+    // MARK: - Row storage and action of taping on a row
+
     var row: Int?
     private var selectRow: ((Int) -> Void)?
+    
+    // MARK: - UIElements
+    
     private lazy var titleLabel = UILabel()
     
+    // MARK: - Initializers
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupCell()
@@ -34,11 +43,15 @@ final class TimeSlotCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Setup data
+
     func setInput(_ input: Input) {
         titleLabel.text = input.title
         selectRow = input.selectRow
     }
     
+    // MARK: - Setup views
+
     private func setupCell() {
         layer.cornerRadius = 5
         layer.masksToBounds = true
@@ -69,6 +82,8 @@ final class TimeSlotCell: UICollectionViewCell {
     }
     
 }
+
+// MARK: - Cell input
 
 extension TimeSlotCell {
     struct Input {
