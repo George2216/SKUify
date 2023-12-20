@@ -13,20 +13,20 @@ final class DashboardVC: BaseViewController {
     var viewModel: DashboardViewModel!
     
     // nav bar items
-    private let settingsBarButtonItem = DefaultBarButtonItem()
-    private let currencyBarButtonItem = DefaultBarButtonItem()
-    private let notificationBarButtonItem = DefaultBarButtonItem()
-    private let titleImageBarButtonItem = DefaultBarButtonItem()
+    private lazy var settingsBarButtonItem = DefaultBarButtonItem()
+    private lazy var currencyBarButtonItem = DefaultBarButtonItem()
+    private lazy var notificationBarButtonItem = DefaultBarButtonItem()
+    private lazy var titleImageBarButtonItem = DefaultBarButtonItem()
 
-    private let filterByDateButton = PopoverButton()
+    private lazy var filterByDateButton = PopoverButton()
     
     private lazy var collectionView = DashboardCollectionView(
         frame: .zero,
         collectionViewLayout: createCollectionViewLayout()
     )
   
-    private let calendarPopoverController = CalendarPopoverVC()
-    private let currencyPopoverController = CurrencyPopoverVC()
+    private lazy var timeSlotsPopover = TimeSlotPopoverVC()
+    private lazy var currencyPopoverController = CurrencyPopoverVC()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +45,20 @@ final class DashboardVC: BaseViewController {
         bindCalendarPopover(output)
         bindCurrencyPopover(output)
         bindToCollectionView(output)
+        let arrary = ["Today", "Yesterday", "7 Days", "30 Days", "90 Days", "365 Days", "All", "Custom"]
+
+        let dataDriver = Driver<[TimeSlotCell.Input]>
+            .just(arrary
+                .map({ title in
+                    return TimeSlotCell.Input.init(title: title, selectRow: { row in
+                        print(row)
+                    })
+        }))
+        
+        timeSlotsPopover.bindToCollection(dataDriver)
+            .disposed(by: disposeBag)
+
+        
     }
     
     private func createCollectionViewLayout() -> UICollectionViewFlowLayout {
@@ -146,9 +160,9 @@ extension DashboardVC {
                     pointView: center,
                     preferredSize: .init(
                         width: owner.view.frame.width - 50,
-                        height: owner.view.frame.width
+                        height: 450
                     ),
-                    popoverVC: owner.calendarPopoverController
+                    popoverVC: owner.timeSlotsPopover
                 )
             }
             .drive(rx.popover)

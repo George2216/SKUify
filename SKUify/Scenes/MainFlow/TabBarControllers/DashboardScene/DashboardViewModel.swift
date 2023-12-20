@@ -27,7 +27,7 @@ final class DashboardViewModel: ViewModelProtocol {
     
     private lazy var collectionData = BehaviorSubject<[DashboardSectionModel]>(value: makeCollectionData())
     
-    
+    private let dashboardDataState = BehaviorSubject<DashboardDataState>(value: .today)
     private let tapOnMarketplace = PublishSubject<String>()
     
     // Trackers
@@ -146,29 +146,29 @@ final class DashboardViewModel: ViewModelProtocol {
     // MARK: -  Make collection data
 
     private func makeCollectionData() -> [DashboardSectionModel] {
-        let salesValues = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 10.99, 0.0, 25.33, 4.34, 0.0, 0.0, 13.47, 0.0, 14.4, 0.0, 0.0, 10.99, 0.0, 8.32, 6.99]
-        let compareValues = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 6.99, 26.97, 8.99, 17.98, 0.0, 0.0, 9.0, 18.98, 0.0, 8.99]
+        let salesValues = [0.0,0.0,0.0,0.0,11.38,16.38,13.98,21.37,0.0,20.97,20.97,13.17,0.0,0.0,0.0,8.78,18.95,54.27,26.37,47.98,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
+        let compareValues = [79.94,32.93,44.31,35.97,32.01,23.98,31.97,40.83,76.89,63.74,46.27,35.97,38.21,68.93,21.14,44.95,21.98,63.06,40.96,40.36,61.95,19.98,0.0,77.32,27.93,19.98,35.97,55.89,30.37,0.0,51.73,60.0,36.96,27.93,37.92,28.97,50.52,11.99,115.41,35.97,49.95,43.67,44.75,23.98,16.38,35.97,16.38,0.0,49.37,0.0,44.75,20.94,4.39,4.39,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
 
         let maxLength = max(salesValues.count, compareValues.count)
 
         var mockPoints: [CGPoint] = []
+        
+//        for i in 0..<min(salesValues.count, compareValues.count) {
+//            let entry = CGPoint(x: salesValues[i], y: Double(i))
+//            mockPoints.append(entry)
+//        }
+        
+        for i in 0..<salesValues.count {
+            mockPoints.append(CGPoint(x: Double(i), y: salesValues[i]))
 
-        for i in 0..<maxLength {
-            let salesValue = i < salesValues.count ? salesValues[i] : 0.0
-            let compareValue = i < compareValues.count ? compareValues[i] : 0.0
-
-            let entry = CGPoint(x: Double(i), y: salesValue)
-            mockPoints.append(entry)
-
-            let entryCompare = CGPoint(x: Double(i), y: compareValue)
-            mockPoints.append(entryCompare)
         }
 
-           return  [
-                .init(
-                    model: .defaultSection(header: "", footer: ""),
-                    items: [
-                        .financialMetric(
+        
+        return  [
+            .init(
+                model: .defaultSection(header: "", footer: ""),
+                items: [
+                    .financialMetric(
                             .init(
                                 cellType: .sales,
                                 switchState: true,
@@ -410,6 +410,4 @@ final class DashboardViewModel: ViewModelProtocol {
     }
     
 }
-
-
 

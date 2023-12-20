@@ -78,6 +78,9 @@ final class Network<T: Decodable> {
                 interceptor: interceptor
             )
             .debug()
+            .do(onNext: { data in
+                print(String(data: data, encoding: .utf8))
+            })
             .observe(on: scheduler)
     }
 }

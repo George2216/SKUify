@@ -13,6 +13,7 @@ extension UIColor {
     static let border = UIColor(named: "border") ?? .clear
     static let primary = UIColor(named: "primary") ?? .clear
     static let primaryLight = UIColor(named: "primaryLight") ?? .clear
+    static let primaryPurple = UIColor(named: "primaryPurple") ?? .clear
     
     // text
     static let textColor = UIColor(named: "textColor") ?? .clear
