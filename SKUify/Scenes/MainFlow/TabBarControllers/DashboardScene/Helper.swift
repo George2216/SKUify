@@ -35,4 +35,44 @@ enum DashboardDataState: String {
         }
     }
     
+    var startDate: String? {
+        switch self {
+        case .today:
+            return formattedDate(for: .day, value: 0)
+        case .yesterday:
+            return formattedDate(for: .day, value: -1)
+        case .days7:
+            return formattedDate(for: .weekOfYear, value: -1)
+        case .days30:
+            return formattedDate(for: .month, value: -1)
+        case .days90:
+            return formattedDate(for: .day, value: -90)
+        case .days365:
+            return formattedDate(for: .year, value: -1)
+        case .all, .custom:
+            return nil
+        }
+    }
+    
+    private func formattedDate(
+        for component: Calendar.Component,
+        value: Int
+    ) -> String? {
+        let currentDate = Date()
+
+        let calendar = Calendar.current
+
+        if let newDate = calendar.date(
+            byAdding: component,
+            value: value,
+            to: currentDate
+        ) {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            let formattedDate = dateFormatter.string(from: newDate)
+            return formattedDate
+        }
+
+        return nil
+    }
 }

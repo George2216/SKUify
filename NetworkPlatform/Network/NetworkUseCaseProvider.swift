@@ -31,4 +31,9 @@ public final class NetworkUseCaseProvider: Domain.NetworkUseCaseProvider {
             realmUseCase: realmUseCase
         )
     }
+    
+    public func makeChartsUseCase() -> Domain.ChartsUseCase {
+        return ChartsUseCase(network: networkProvider.makeChartsNetwork())
+    }
+    
 }

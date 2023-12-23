@@ -10,6 +10,7 @@
 		150FCE8C2515AA1E52329877 /* Pods_InAppPurchasesPlatform.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4566EBB350B21E3C4C6EB03 /* Pods_InAppPurchasesPlatform.framework */; };
 		4CA92C15904AB3DD85D005E1 /* Pods_SKUify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FAA312A8D927543BC7D00C5 /* Pods_SKUify.framework */; };
 		5C4799F50E6C33BFE6630E35 /* Pods_InAppPurchasesPlatform_InAppPurchasesPlatformTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BE188F0D35234F6252C903B /* Pods_InAppPurchasesPlatform_InAppPurchasesPlatformTests.framework */; };
+		5E0E66902B3769810005E576 /* ChartUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E668F2B3769810005E576 /* ChartUseCase.swift */; };
 		5E41892F2B0669DB0070EDA4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E41892E2B0669DB0070EDA4 /* AppDelegate.swift */; };
 		5E4189312B0669DB0070EDA4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4189302B0669DB0070EDA4 /* SceneDelegate.swift */; };
 		5E4189382B0669DC0070EDA4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5E4189372B0669DC0070EDA4 /* Assets.xcassets */; };
@@ -200,6 +201,10 @@
 		5ED912182B2CBD5E00FC0A66 /* TokensUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED912172B2CBD5E00FC0A66 /* TokensUseCase.swift */; };
 		5ED9121A2B2CBD8D00FC0A66 /* TokensUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED912192B2CBD8D00FC0A66 /* TokensUseCase.swift */; };
 		5EF40E462B3329B40021EEC1 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF40E452B3329B40021EEC1 /* Helper.swift */; };
+		5EF40E482B33335F0021EEC1 /* ChartsNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF40E472B33335F0021EEC1 /* ChartsNetwork.swift */; };
+		5EF40E4A2B35BCB40021EEC1 /* ChartDTOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF40E492B35BCB40021EEC1 /* ChartDTOs.swift */; };
+		5EF40E4C2B35C1C20021EEC1 /* ChartNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF40E4B2B35C1C20021EEC1 /* ChartNetwork.swift */; };
+		5EF40E4E2B35D5E70021EEC1 /* ChartsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF40E4D2B35D5E70021EEC1 /* ChartsUseCase.swift */; };
 		68447411A355AEDF04F006FE /* Pods_DomainTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80259D1E8B54987AD3F0F329 /* Pods_DomainTests.framework */; };
 		7FAB603DE1AC018C66BA63E6 /* Pods_SKUify_SKUifyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA054B4A6EAADFE9931E384C /* Pods_SKUify_SKUifyUITests.framework */; };
 		882167328D4D65290B325069 /* Pods_RealmPlatform.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D079D9983D3D9A8F27883D7 /* Pods_RealmPlatform.framework */; };
@@ -421,6 +426,7 @@
 		4C6CACAD5C993CBF01A24151 /* Pods-NetworkPlatform-NetworkPlatformTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetworkPlatform-NetworkPlatformTests.release.xcconfig"; path = "Target Support Files/Pods-NetworkPlatform-NetworkPlatformTests/Pods-NetworkPlatform-NetworkPlatformTests.release.xcconfig"; sourceTree = "<group>"; };
 		56392AA16C5FCD1107F6ECBC /* Pods_NetworkPlatform.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NetworkPlatform.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		572F9F866FEF8ACE30806780 /* Pods-RxExtensions.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxExtensions.release.xcconfig"; path = "Target Support Files/Pods-RxExtensions/Pods-RxExtensions.release.xcconfig"; sourceTree = "<group>"; };
+		5E0E668F2B3769810005E576 /* ChartUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartUseCase.swift; sourceTree = "<group>"; };
 		5E41892B2B0669DB0070EDA4 /* SKUify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SKUify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E41892E2B0669DB0070EDA4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5E4189302B0669DB0070EDA4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -609,6 +615,10 @@
 		5ED912172B2CBD5E00FC0A66 /* TokensUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensUseCase.swift; sourceTree = "<group>"; };
 		5ED912192B2CBD8D00FC0A66 /* TokensUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensUseCase.swift; sourceTree = "<group>"; };
 		5EF40E452B3329B40021EEC1 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		5EF40E472B33335F0021EEC1 /* ChartsNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsNetwork.swift; sourceTree = "<group>"; };
+		5EF40E492B35BCB40021EEC1 /* ChartDTOs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartDTOs.swift; sourceTree = "<group>"; };
+		5EF40E4B2B35C1C20021EEC1 /* ChartNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartNetwork.swift; sourceTree = "<group>"; };
+		5EF40E4D2B35D5E70021EEC1 /* ChartsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsUseCase.swift; sourceTree = "<group>"; };
 		600C7E97A7A653BF5943C52A /* Pods-SKUify-SKUifyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SKUify-SKUifyUITests.debug.xcconfig"; path = "Target Support Files/Pods-SKUify-SKUifyUITests/Pods-SKUify-SKUifyUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		60A9638939CD20017F5CD177 /* Pods-NetworkPlatform.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetworkPlatform.release.xcconfig"; path = "Target Support Files/Pods-NetworkPlatform/Pods-NetworkPlatform.release.xcconfig"; sourceTree = "<group>"; };
 		63A3B8BAAC808F07DBF47BCB /* Pods_RxExtensions.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RxExtensions.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1110,6 +1120,7 @@
 				5ED911C62B221AF600FC0A66 /* AutorizationDataUseCase.swift */,
 				5ED911E72B23417A00FC0A66 /* LoginUseCase.swift */,
 				5ED912192B2CBD8D00FC0A66 /* TokensUseCase.swift */,
+				5E0E668F2B3769810005E576 /* ChartUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -1606,6 +1617,7 @@
 			isa = PBXGroup;
 			children = (
 				5ED911DF2B233BA600FC0A66 /* LoginNetwork.swift */,
+				5EF40E472B33335F0021EEC1 /* ChartsNetwork.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -1623,6 +1635,7 @@
 			isa = PBXGroup;
 			children = (
 				5ED911DD2B233B3700FC0A66 /* LoginDTO.swift */,
+				5EF40E492B35BCB40021EEC1 /* ChartDTOs.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -1631,6 +1644,7 @@
 			isa = PBXGroup;
 			children = (
 				5ED911E22B233BFE00FC0A66 /* LoginNetwork.swift */,
+				5EF40E4B2B35C1C20021EEC1 /* ChartNetwork.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1639,6 +1653,7 @@
 			isa = PBXGroup;
 			children = (
 				5ED911E52B23402100FC0A66 /* LoginUseCase.swift */,
+				5EF40E4D2B35D5E70021EEC1 /* ChartsUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -2845,11 +2860,14 @@
 				5ED911BF2B2218C000FC0A66 /* Interceptor.swift in Sources */,
 				5ED911D32B221EF300FC0A66 /* NetworkProvider.swift in Sources */,
 				5ED911C52B221A9800FC0A66 /* AutorizationData.swift in Sources */,
+				5E0E66902B3769810005E576 /* ChartUseCase.swift in Sources */,
+				5EF40E4A2B35BCB40021EEC1 /* ChartDTOs.swift in Sources */,
 				5ED910652B13F52300FC0A66 /* KeyboardUseCase.swift in Sources */,
 				5ED911CB2B221C7E00FC0A66 /* InterceptorFactory.swift in Sources */,
 				5ED910672B13F58B00FC0A66 /* AppEventsUseCaseProvider.swift in Sources */,
 				5ED911F22B23649000FC0A66 /* ErrorHandledResponseModel.swift in Sources */,
 				5E418A322B07A7A50070EDA4 /* LoginStateUseCase.swift in Sources */,
+				5EF40E4C2B35C1C20021EEC1 /* ChartNetwork.swift in Sources */,
 				5ED911E32B233BFE00FC0A66 /* LoginNetwork.swift in Sources */,
 				5ED911C72B221AF600FC0A66 /* AutorizationDataUseCase.swift in Sources */,
 				5ED911E82B23417A00FC0A66 /* LoginUseCase.swift in Sources */,
@@ -2875,9 +2893,11 @@
 				5ED911E62B23402100FC0A66 /* LoginUseCase.swift in Sources */,
 				5ED911EF2B23645B00FC0A66 /* ErrorResponseHandler.swift in Sources */,
 				5ED911C12B22191700FC0A66 /* InterceptorFactory.swift in Sources */,
+				5EF40E4E2B35D5E70021EEC1 /* ChartsUseCase.swift in Sources */,
 				5ED911DB2B22211B00FC0A66 /* UrlEncodedContentTypeInterceptor.swift in Sources */,
 				5E418A462B07B6A80070EDA4 /* Encodable + Extesion.swift in Sources */,
 				5ED911D72B221F4C00FC0A66 /* NetworkUseCaseProvider.swift in Sources */,
+				5EF40E482B33335F0021EEC1 /* ChartsNetwork.swift in Sources */,
 				5E418A482B07B6C10070EDA4 /* Data.swift in Sources */,
 				5ED911E02B233BA600FC0A66 /* LoginNetwork.swift in Sources */,
 				5E418A432B07B6490070EDA4 /* Network.swift in Sources */,

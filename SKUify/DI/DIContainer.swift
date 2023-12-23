@@ -26,7 +26,7 @@ class DIContainer: DIProtocol {
     // MARK: Initialization
 
     init() {
-        let endpoint = "https://skuify.com"
+        let endpoint = "https://skuify.com/api/v1/"
 
         self.realmUseCaseProvider = RealmPlatform.RealmUseCaseProvider()
         self.appEventsUseCaseProvider = AppEventsPlatform.AppEventsUseCaseProvider()
@@ -67,5 +67,9 @@ class DIContainer: DIProtocol {
     
     func makeAutorizationDataUseCase() -> Domain.AuthorizationDataUseCase {
         realmUseCaseProvider.makeAuthorizationDataUseCase()
+    }
+    
+    func makeChartsUseCase() -> Domain.ChartsUseCase {
+        networkUseCaseProvider.makeChartsUseCase()
     }
 }

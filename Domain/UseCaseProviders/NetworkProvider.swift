@@ -8,6 +8,7 @@
 import Foundation
 
 public protocol NetworkProvider {
-    func makeLoginNetwork() -> Domain.LoginNetwork
+    func makeLoginNetwork() -> LoginNetwork
+    func makeChartsNetwork() -> ChartsNetwork
 }
 

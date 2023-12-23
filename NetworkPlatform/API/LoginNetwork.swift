@@ -32,7 +32,7 @@ final class LoginNetwork: Domain.LoginNetwork {
             "password": password
         ]
         return network.request(
-            "api/v1/users/token/",
+            "users/token/",
             method: .post,
             parameters: parameters,
             interceptor: CompositeRxAlamofireInterceptor(
