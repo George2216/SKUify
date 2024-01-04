@@ -13,6 +13,7 @@ public struct LoginState {
     public init(isLogged: Bool) {
         self.isLogged = isLogged
     }
+    
 }
 
 extension LoginState: Equatable {
@@ -22,5 +23,6 @@ extension LoginState: Equatable {
     ) -> Bool {
         return lhs.isLogged == rhs.isLogged
     }
+    
 }
 

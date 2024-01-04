@@ -10,12 +10,12 @@ import Domain
 import RxSwift
 
 class TokenToHeaderInterceptor: Domain.Interceptor {
-    private var disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
-    let authorizationDataReadUseCase: AuthorizationDataReadUseCase
+    let tokensReadUseCase: TokensReadUseCase
 
-    init(authorizationDataReadUseCase: AuthorizationDataReadUseCase) {
-        self.authorizationDataReadUseCase = authorizationDataReadUseCase
+    init(tokensReadUseCase: TokensReadUseCase) {
+        self.tokensReadUseCase = tokensReadUseCase
     }
     
     func adapt(
@@ -25,10 +25,10 @@ class TokenToHeaderInterceptor: Domain.Interceptor {
     ) {
         var modifiedRequest = urlRequest
 
-        authorizationDataReadUseCase
-            .getAuthorizationData()
+        tokensReadUseCase
+            .getTokens()
             .take(1)
-            .compactMap({$0?.accessToken})
+            .compactMap({ $0?.accessToken })
             .subscribe(onNext: { token in
                 modifiedRequest
                     .headers

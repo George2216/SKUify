@@ -8,18 +8,27 @@
 import Foundation
 import Domain
 import RxSwift
+import Alamofire
 
 final class ChartsNetwork: Domain.ChartsNetwork {
-   
+    
     private let network: Network<ChartMainDTO>
     private let interceptorFactory: Domain.InterceptorFactory
-
+    private let commonInterceptor: CompositeRxAlamofireInterceptor
+    
     init(
         network: Network<ChartMainDTO>,
         interceptorFactory: Domain.InterceptorFactory
     ) {
         self.network = network
         self.interceptorFactory = interceptorFactory
+        self.commonInterceptor = CompositeRxAlamofireInterceptor(
+            interceptors: [
+                interceptorFactory.makeUrlEncodedContentTypeInterceptor(),
+                interceptorFactory.makeTokenToHeaderInterceptor(),
+                interceptorFactory.makeUserIdToParametersInterceptor()
+            ]
+        )
     }
     
     private func getPath(
@@ -27,117 +36,83 @@ final class ChartsNetwork: Domain.ChartsNetwork {
         _ startDate: String = "",
         _ endDate: String = ""
     ) -> String {
-       return  "/chart/?period=\(period)&start_date=\(startDate)&end_date=\(endDate)&marketplace=all_marketplaces&/&debug_user_id=1"
+        return "chart/?period=\(period)&start_date=\(startDate)&end_date=\(endDate)&marketplace=all_marketplaces&/"
+    }
+    
+    private func makeChartsRequest(
+        _ path: String,
+        _ method: HTTPMethod
+    ) -> Observable<ChartMainDTO> {
+        return network.request(
+            path,
+            method: method,
+            interceptor: commonInterceptor
+        )
     }
     
     func chartsToday(_ startDate: String) -> Observable<ChartMainDTO> {
-        return network.request(
+        return makeChartsRequest(
             getPath(
                 "today",
                 startDate
             ),
-            method: .get,
-            interceptor: CompositeRxAlamofireInterceptor(
-                interceptors: [
-                    interceptorFactory.makeUrlEncodedContentTypeInterceptor(),
-                    interceptorFactory.makeTokenToHeaderInterceptor()
-                ]
-            )
+            .get
         )
     }
     
     func chartsYesterday(_ startDate: String) -> Observable<ChartMainDTO> {
-        return network.request(
+        return makeChartsRequest(
             getPath(
                 "yesterday",
                 startDate
             ),
-            method: .get,
-            interceptor: CompositeRxAlamofireInterceptor(
-                interceptors: [
-                    interceptorFactory.makeUrlEncodedContentTypeInterceptor(),
-                    interceptorFactory.makeTokenToHeaderInterceptor()
-                ]
-            )
+            .get
         )
     }
     
     func chartsWeek(_ startDate: String) -> Observable<ChartMainDTO> {
-        return network.request(
+        return makeChartsRequest(
             getPath(
                 "week",
                 startDate
             ),
-            method: .get,
-            interceptor: CompositeRxAlamofireInterceptor(
-                interceptors: [
-                    interceptorFactory.makeUrlEncodedContentTypeInterceptor(),
-                    interceptorFactory.makeTokenToHeaderInterceptor()
-                ]
-            )
+            .get
         )
     }
     
     func chartsMonth(_ startDate: String) -> Observable<ChartMainDTO> {
-        return network.request(
-            getPath(
-                "month",
-                startDate
-            ),
-            method: .get,
-            interceptor: CompositeRxAlamofireInterceptor(
-                interceptors: [
-                    interceptorFactory.makeUrlEncodedContentTypeInterceptor(),
-                    interceptorFactory.makeTokenToHeaderInterceptor()
-                ]
-            )
+        return makeChartsRequest(
+            getPath("month",
+                    startDate
+                   ),
+            .get
         )
     }
     
     func chartsQuarter(_ startDate: String) -> Observable<ChartMainDTO> {
-        return network.request(
+        return makeChartsRequest(
             getPath(
                 "quarter",
                 startDate
             ),
-            method: .get,
-            interceptor: CompositeRxAlamofireInterceptor(
-                interceptors: [
-                    interceptorFactory.makeUrlEncodedContentTypeInterceptor(),
-                    interceptorFactory.makeTokenToHeaderInterceptor()
-                ]
-            )
+            .get
         )
     }
     
     func chartsYear(_ startDate: String) -> Observable<ChartMainDTO> {
-        return network.request(
+        return makeChartsRequest(
             getPath(
                 "year",
                 startDate
             ),
-            method: .get,
-            interceptor: CompositeRxAlamofireInterceptor(
-                interceptors: [
-                    interceptorFactory.makeUrlEncodedContentTypeInterceptor(),
-                    interceptorFactory.makeTokenToHeaderInterceptor()
-                ]
-            )
+            .get
         )
     }
     
     func chartsAll() -> Observable<ChartMainDTO> {
-        return network.request(
-            getPath(
-                "all"
-            ),
-            method: .get,
-            interceptor: CompositeRxAlamofireInterceptor(
-                interceptors: [
-                    interceptorFactory.makeUrlEncodedContentTypeInterceptor(),
-                    interceptorFactory.makeTokenToHeaderInterceptor()
-                ]
-            )
+        return makeChartsRequest(
+            getPath("all"),
+            .get
         )
     }
     
@@ -145,21 +120,14 @@ final class ChartsNetwork: Domain.ChartsNetwork {
         _ startDate: String,
         _ endDate: String
     ) -> Observable<ChartMainDTO> {
-        return network.request(
+        return makeChartsRequest(
             getPath(
                 "custom",
                 startDate,
                 endDate
             ),
-            method: .get,
-            interceptor: CompositeRxAlamofireInterceptor(
-                interceptors: [
-                    interceptorFactory.makeUrlEncodedContentTypeInterceptor(),
-                    interceptorFactory.makeTokenToHeaderInterceptor()
-                ]
-            )
+            .get
         )
     }
     
-
 }

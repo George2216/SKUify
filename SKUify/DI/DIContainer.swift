@@ -26,14 +26,17 @@ class DIContainer: DIProtocol {
     // MARK: Initialization
 
     init() {
-        let endpoint = "https://skuify.com/api/v1/"
+        let endpoint = "https://skuify.com/api/v1"
 
         self.realmUseCaseProvider = RealmPlatform.RealmUseCaseProvider()
         self.appEventsUseCaseProvider = AppEventsPlatform.AppEventsUseCaseProvider()
         
-        let authDataUseCase = realmUseCaseProvider.makeAuthorizationDataUseCase()
+        let tokensUseCase = realmUseCaseProvider.makeTokensUseCase()
+        let userIdUseCase = realmUseCaseProvider.makeUserIdUseCase()
+        
         self.interceptorFactory = NetworkPlatform.InterceptorFactory(
-            authorizationDataUseCase: authDataUseCase
+            tokensUseCase: tokensUseCase,
+            userIdUseCase: userIdUseCase
         )
         
         let config = Domain.APIConfig(
@@ -51,7 +54,11 @@ class DIContainer: DIProtocol {
     // MARK: Make use cases
 
     func makeLoginUseCase() -> Domain.LoginUseCase {
-        networkUseCaseProvider.makeLoginUseCase(realmUseCase: makeAutorizationDataUseCase())
+        networkUseCaseProvider.makeLoginUseCase(
+            autDataUseCase: makeAutorizationDataUseCase(),
+            tokensUseCase: makeTokensUseCase(),
+            userIdUseCase: makeUserIdUseCase()
+        )
     }
     func makeLoginStateUseCase() -> Domain.LoginStateUseCase {
         realmUseCaseProvider.makeLoginStateUseCase()
@@ -72,4 +79,13 @@ class DIContainer: DIProtocol {
     func makeChartsUseCase() -> Domain.ChartsUseCase {
         networkUseCaseProvider.makeChartsUseCase()
     }
+    
+    func makeTokensUseCase() -> Domain.TokensUseCase {
+        realmUseCaseProvider.makeTokensUseCase()
+    }
+    
+    func makeUserIdUseCase() -> Domain.UserIdUseCase {
+        realmUseCaseProvider.makeUserIdUseCase()
+    }
+    
 }

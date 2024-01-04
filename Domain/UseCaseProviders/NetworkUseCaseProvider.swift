@@ -8,7 +8,11 @@
 import Foundation
 
 public protocol NetworkUseCaseProvider {
-     func makeLoginUseCase(realmUseCase: AuthorizationDataWriteUseCase) -> LoginUseCase
-     func makeChartsUseCase() -> ChartsUseCase 
-
+    func makeLoginUseCase(
+        autDataUseCase: Domain.AuthorizationDataWriteUseCase,
+        tokensUseCase: Domain.TokensWriteUseCase,
+        userIdUseCase: Domain.UserIdUseCase
+    ) -> Domain.LoginUseCase
+    func makeChartsUseCase() -> ChartsUseCase
+    
 }

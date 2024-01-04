@@ -8,25 +8,25 @@
 import Foundation
 
 public struct ChartMainDTO: Decodable {
-    let chart: ChartDTO
+    public let chart: ChartDTO
 }
 
 public struct ChartDTO: Decodable {
-    let currency: String
-    let sales: Double
-    let salesCompared: Double
-    let profit: Double
-    let profitCompared: Double
-    let roi: Double
-    let roiCompared: Double
-    let margin: Double
-    let marginCompared: Double
-    let refunds: Double
-    let refundsCompared: Double
-    let unitsSold: Double
-    let unitsSoldCompared: Double
-    let chartData: ChartDataDTO
-    let marketplaces: [ChartMarketplace]
+    public let currency: String
+    public let sales: Double
+    public let salesCompared: Double?
+    public let profit: Double
+    public let profitCompared: Double?
+    public let roi: Double
+    public let roiCompared: Double?
+    public let margin: Double
+    public let marginCompared: Double?
+    public let refunds: Double
+    public let refundsCompared: Double?
+    public let unitsSold: Double
+    public let unitsSoldCompared: Double?
+    public let chartData: ChartDataDTO
+    public let marketplaces: [ChartMarketplace]
     
     private enum CodingKeys: String, CodingKey {
         case currency = "currency"
@@ -50,17 +50,17 @@ public struct ChartDTO: Decodable {
 }
 
 public struct ChartDataDTO: Decodable {
-    let labels: [String]
-    let legendLabels: [String]
-    let legendLabelsCompared: [String]
-    let dates: [String]
-    let compareDates: [String]
-    let sales: [ChartPoints]
-    let profit: [ChartPoints]
-    let unitsSold: [ChartPoints]
-    let roi: [ChartPoints]
-    let margin: [ChartPoints]
-    let refunds: [ChartPoints]
+    public let labels: [String]
+    public let legendLabels: [String]
+    public let legendLabelsCompared: [String]?
+    public let dates: [String]
+    public let compareDates: [String]?
+    public let sales: ChartPoints
+    public let profit: ChartPoints
+    public let unitsSold: ChartPoints
+    public let roi: ChartPoints
+    public let margin: ChartPoints
+    public let refunds: ChartPoints
     
     private enum CodingKeys: String, CodingKey {
         case labels = "labels"
@@ -79,20 +79,25 @@ public struct ChartDataDTO: Decodable {
 }
 
 public struct ChartPoints: Decodable {
-    let values: [Double]
-    let compare: [Double]
+    public let values: [Double]
+    public let compare: [Double]?
+    
+    private enum CodingKeys: String, CodingKey {
+        case values = "values"
+        case compare = "compare"
+    }
 }
 
 public struct ChartMarketplace: Decodable {
-    let id: String
-    let marketplace: String
-    let sales: Double
-    let profit: Double
-    let refunds: Double
-    let unitsSold: Double
-    let roi: Double
-    let margin: Double
-    let country: String
+    public let id: String
+    public let marketplace: String
+    public let sales: Double
+    public let profit: Double
+    public let refunds: Double
+    public let unitsSold: String
+    public let roi: Double
+    public let margin: Double
+    public let country: String
     
     private enum CodingKeys: String, CodingKey {
         case id = "id"

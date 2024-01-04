@@ -19,12 +19,12 @@ final class PopoverManager: PopoverManagerProtocol {
     func showPopover(_ input: Input) {
         let popoverContentViewController = input.popoverVC
         popoverContentViewController.modalPresentationStyle = .popover
-        
+        popoverContentViewController.isModalInPresentation = false
+
         if let popoverPresentationController = popoverContentViewController.popoverPresentationController {
             popoverPresentationController.sourceView = viewAtPoint(input.pointView)
             popoverPresentationController.permittedArrowDirections = .any
             popoverPresentationController.delegate = baseController
-            
             if let preferredSize = input.preferredSize {
                 popoverContentViewController.preferredContentSize = preferredSize
             }
@@ -32,6 +32,8 @@ final class PopoverManager: PopoverManagerProtocol {
             baseController?.present(popoverContentViewController, animated: true, completion: nil)
         }
     }
+    
+    
     
 }
 

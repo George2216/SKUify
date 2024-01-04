@@ -33,5 +33,14 @@ public final class RealmUseCaseProvider: Domain.RealmUseCaseProvider {
         return AuthorizationDataUseCase(repository: repository)
     }
 
-
+    public func makeTokensUseCase() -> Domain.TokensUseCase {
+        let repository = Repository<Tokens>(configuration: configuration)
+        return TokensUseCase(repository: repository)
+    }
+    
+    public func makeUserIdUseCase() -> Domain.UserIdUseCase {
+        let repository = Repository<UserId>(configuration: configuration)
+        return UserIdUseCase(repository: repository)
+    }
+    
 }

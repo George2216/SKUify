@@ -6,7 +6,8 @@
 //
 
 import Foundation
+import Domain
 
 protocol DashboardUseCases {
-    
+    func makeChartsUseCase() -> Domain.ChartsUseCase
 }

@@ -13,14 +13,20 @@ import RxExtensions
 final class LoginUseCase: Domain.LoginUseCase {
     
     private let network: Domain.LoginNetwork
-    private let realmUseCase: Domain.AuthorizationDataWriteUseCase
+    private let autDataUseCase: Domain.AuthorizationDataWriteUseCase
+    private let tokensUseCase: Domain.TokensWriteUseCase
+    private let userIdUseCase: Domain.UserIdUseCase
     
     init(
         network: Domain.LoginNetwork,
-        realmUseCase: Domain.AuthorizationDataWriteUseCase
+        autDataUseCase: Domain.AuthorizationDataWriteUseCase,
+        tokensUseCase: Domain.TokensWriteUseCase,
+        userIdUseCase: Domain.UserIdUseCase
     ) {
         self.network = network
-        self.realmUseCase = realmUseCase
+        self.autDataUseCase = autDataUseCase
+        self.tokensUseCase = tokensUseCase
+        self.userIdUseCase = userIdUseCase
     }
     
     func login(
@@ -33,16 +39,26 @@ final class LoginUseCase: Domain.LoginUseCase {
                 password: password
             )
             .flatMapLatest(weak: self) { owner, data in
-                return owner.realmUseCase
+                return owner.autDataUseCase
                     .saveAuthorizationData(
                         data:
                             AuthorizationData(
-                                accessToken: data.access,
-                                refreshToken: data.refresh,
                                 email: email,
                                 password: password
                             )
                     )
+                    .flatMapLatest(weak: self) { owner, _ in
+                        owner.tokensUseCase.saveTokens(
+                            data: .init(
+                                accessToken: data.access,
+                                refreshToken: data.refresh
+                            )
+                        )
+                    }
+                    .flatMapLatest(weak: self) { owner, _ in
+                        owner.userIdUseCase
+                            .saveUserId(userId: data.user.id)
+                    }
             }
     }
     

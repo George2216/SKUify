@@ -20,7 +20,7 @@ final class CompositeRxAlamofireInterceptor: RequestInterceptor {
         for session: Session,
         completion: @escaping (Result<URLRequest, Error>) -> Void
     ) {
-
+        
         var request = urlRequest
         var hasModified = false
         
@@ -29,19 +29,30 @@ final class CompositeRxAlamofireInterceptor: RequestInterceptor {
         interceptors.forEach { interceptor in
             
             dispatchGroup.enter()
-            interceptor.adapt(request, for: session) { result in
+            interceptor.adapt(
+                request,
+                for: session
+            ) { [weak self] result in
+                guard let self else { return }
+                
                 switch result {
                 case .success(let modifiedRequest):
                     
-                    modifiedRequest.headers.forEach { header in
-                        request.headers.add(header)
-                    }
-                    if request.httpBody != nil {
-                        request.httpBody?.append(modifiedRequest.httpBody ?? Data())
-                    } else {
-                        request.httpBody = modifiedRequest.httpBody
-                    }
+                    self.addHeadersFromInterceptor(
+                        request: &request,
+                        modifiedRequest: modifiedRequest
+                    )
                     
+                    self.addBodyFromInterceptor(
+                        request: &request,
+                        modifiedRequest: modifiedRequest
+                    )
+                    
+                    self.addQueryItemsFromInterceptor(
+                        request: &request,
+                        modifiedRequest: modifiedRequest
+                    )
+                  
                     hasModified = true
                     dispatchGroup.leave()
                     
@@ -54,6 +65,28 @@ final class CompositeRxAlamofireInterceptor: RequestInterceptor {
         }
         
         dispatchGroup.notify(queue: .main) {
+            
+            print(self.interceptors.count)
+            
+            if let method = request.httpMethod,
+               let url = request.url {
+                
+                print("Request: \(method) \(url)")
+                
+                if let headers = request.allHTTPHeaderFields {
+                
+                    print("Headers: \(headers)")
+                }
+                if let body = request.httpBody {
+                    let bodyString = String(
+                        data: body,
+                        encoding: .utf8
+                    )
+                    print("Body: \(String(describing: bodyString))")
+                }
+            }
+            
+            print("/n/n/n/n")
             if hasModified {
                 completion(.success(request))
             } else {
@@ -61,6 +94,65 @@ final class CompositeRxAlamofireInterceptor: RequestInterceptor {
             }
         }
     }
+    
+    private func addHeadersFromInterceptor(
+        request: inout URLRequest,
+        modifiedRequest: URLRequest
+    ) {
+        modifiedRequest.headers.forEach { header in
+            request.headers.add(header)
+        }
+    }
+    
+    private func addBodyFromInterceptor(
+        request: inout URLRequest,
+        modifiedRequest: URLRequest
+    ) {
+        if request.httpBody != nil {
+            request.httpBody?.append(modifiedRequest.httpBody ?? Data())
+        } else {
+            request.httpBody = modifiedRequest.httpBody
+        }
+    }
+    
+    private func addQueryItemsFromInterceptor(
+        request: inout URLRequest,
+        modifiedRequest: URLRequest
+    ) {
+        if let modifiedURL = modifiedRequest.url, let originalURL = request.url {
+            var originalComponents = URLComponents(
+                url: originalURL,
+                resolvingAgainstBaseURL: false
+            )
+            let modifiedComponents = URLComponents(
+                url: modifiedURL,
+                resolvingAgainstBaseURL: false
+            )
+            
+            // Filter out parameters that already exist in the original URL
+            let newQueryItems = modifiedComponents?.queryItems?.filter { newItem in
+                return !(originalComponents?.queryItems?.contains { $0.name == newItem.name } ?? false)
+            }
+            
+            // Update the URL in the original request
+            if let updatedURL = self.addQueryItems(originalComponents, newQueryItems) {
+                request.url = updatedURL
+            }
+        }
+    }
+    // Function to add query items to URLComponents
+    private func addQueryItems(
+        _ components: URLComponents?,
+        _ items: [URLQueryItem]?) -> URL?
+    {
+        guard var components = components, let items = items else {
+            return nil
+        }
+
+        components.queryItems = (components.queryItems ?? []) + items
+        return components.url
+    }
+
     
      func retry(
             _ request: Request,

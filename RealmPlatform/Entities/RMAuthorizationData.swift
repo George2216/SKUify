@@ -13,8 +13,6 @@ import Realm
 class RMAuthorizationData: Object {
     @Persisted(primaryKey: true) var _id: String = "#"
 
-    @Persisted var accessToken: String
-    @Persisted var refreshToken: String
     @Persisted var email: String
     @Persisted var password: String
 }
@@ -22,8 +20,6 @@ class RMAuthorizationData: Object {
 extension RMAuthorizationData: DomainConvertibleType {
     func asDomain() -> AuthorizationData {
         AuthorizationData(
-            accessToken: accessToken,
-            refreshToken: refreshToken,
             email: email,
             password: password
         )
@@ -37,8 +33,6 @@ extension AuthorizationData: RealmRepresentable {
     
     func asRealm() -> RMAuthorizationData {
         RMAuthorizationData.build { object in
-            object.accessToken = accessToken
-            object.refreshToken = refreshToken
             object.email = email
             object.password = password
         }

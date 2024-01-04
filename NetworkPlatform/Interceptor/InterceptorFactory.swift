@@ -10,18 +10,28 @@ import Domain
 
 public final class InterceptorFactory: Domain.InterceptorFactory {
 
-    private let authorizationDataUseCase: Domain.AuthorizationDataReadUseCase
+    private let tokensUseCase: Domain.TokensReadUseCase
+    private let userIdUseCase: Domain.UserIdReadUseCase
+    
+    public init(
+        tokensUseCase: Domain.TokensReadUseCase,
+        userIdUseCase: Domain.UserIdReadUseCase
+    ) {
+        self.tokensUseCase = tokensUseCase
+        self.userIdUseCase = userIdUseCase
 
-    public init(authorizationDataUseCase: Domain.AuthorizationDataReadUseCase) {
-        self.authorizationDataUseCase = authorizationDataUseCase
     }
     
     public func makeTokenToHeaderInterceptor() -> Domain.Interceptor {
-        return TokenToHeaderInterceptor(authorizationDataReadUseCase: authorizationDataUseCase)
+        return TokenToHeaderInterceptor(tokensReadUseCase: tokensUseCase)
     }
     
     public func makeUrlEncodedContentTypeInterceptor() -> Domain.Interceptor {
         return UrlEncodedContentTypeInterceptor()
+    }
+    
+    public func makeUserIdToParametersInterceptor() -> Domain.Interceptor {
+        return UserIdToParametersInterceptor(userIdReadUseCase: userIdUseCase)
     }
     
 }

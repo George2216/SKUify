@@ -13,8 +13,8 @@ final class FMDetailView: UIView {
     
     private let percentageArrowImageView = UIImageView()
     private let percentageLabel = UILabel()
-    private let last90DaysLabel = UILabel()
-    private let last90DaysValueLabel = UILabel()
+    private let rangeTitleLabel = UILabel()
+    private let rangeValueValue = UILabel()
 
     // Font for all labels
     private let font: UIFont = .manrope(
@@ -42,71 +42,51 @@ final class FMDetailView: UIView {
     }
     
     func setInput(_ input: Input) {
-        let color: UIColor = input.isUp ?
-            .greenTextColor :
-            .red
-        
-        setToPercentageArrowImageView(
-            input,
-            color: color
-        )
-        setToPercentageLabel(
-            input,
-            color: color
-        )
-        setToLast90DaysLabel()
-        setToLast90DaysValueLabel(input)
+        setToRangeTitleLabel(input)
+        setToRangeValueLabel(input)
+        setToPercentageArrowImageView(input)
+        setToPercentageLabel(input)
     }
     
     // MARK: - Set data
     
-    private func setToLast90DaysValueLabel(_ input: Input) {
-        last90DaysValueLabel.text = input.last90Days
+    private func setToRangeValueLabel(_ input: Input) {
+        rangeValueValue.text = input.rangeVaue
     }
     
-    private func setToLast90DaysLabel() {
-        last90DaysLabel.text = "Last 90 Days"
+    private func setToRangeTitleLabel(_ input: Input) {
+        rangeTitleLabel.text = input.rangeTitle
     }
     
-    private func setToPercentageLabel(
-        _ input: Input,
-        color: UIColor
-    ) {
-        percentageLabel.textColor = color
+    private func setToPercentageLabel(_ input: Input) {
+        percentageLabel.textColor = input.percentStatus.color
         percentageLabel.text = input.percentage
     }
     
-    private func setToPercentageArrowImageView(
-        _ input: Input,
-        color: UIColor
-    ) {
-        let image: UIImage? = input.isUp ?
-            UIImage(systemName: "arrow.up") :
-            UIImage(systemName: "arrow.down")
-        
-        percentageArrowImageView.image = image?
+    private func setToPercentageArrowImageView(_ input: Input) {
+        percentageArrowImageView.image = input.percentStatus.image?
             .withConfiguration(
                 UIImage.SymbolConfiguration(
                     font: font
                 )
             )
-        percentageArrowImageView.tintColor = color
+        percentageArrowImageView.tintColor = input.percentStatus.color
     }
     
     // MARK: Setup Views
     
     private func setupLabelsFonts() {
-        last90DaysValueLabel.font = font
-        last90DaysLabel.font = font
+        rangeValueValue.font = font
+        rangeTitleLabel.font = font
         percentageLabel.font = font
     }
     
     private func setuLast90DaysLabel() {
-        last90DaysLabel.textColor = .textColor
+        rangeTitleLabel.textColor = .textColor
     }
     
     private func setuLast90DaysValueLabel() {
-        last90DaysValueLabel.textColor = .textColor
+        rangeValueValue.textColor = .textColor
     }
     
     private func setupView() {
@@ -118,12 +98,12 @@ final class FMDetailView: UIView {
     // MARK: - Add to subview
     
     private func addSubviewLast90DaysValueLabel() {
-        addSubview(last90DaysValueLabel)
-        last90DaysValueLabel.snp.makeConstraints { make in
+        addSubview(rangeValueValue)
+        rangeValueValue.snp.makeConstraints { make in
             make.top
                 .equalTo(percentageArrowImageView.snp.bottom)
             make.leading
-                .equalTo(last90DaysLabel.snp.trailing)
+                .equalTo(rangeTitleLabel.snp.trailing)
                 .offset(4)
             make.bottom
                 .equalToSuperview()
@@ -133,8 +113,8 @@ final class FMDetailView: UIView {
     }
     
     private func addSubviewLast90DaysLabel() {
-        addSubview(last90DaysLabel)
-        last90DaysLabel.snp.makeConstraints { make in
+        addSubview(rangeTitleLabel)
+        rangeTitleLabel.snp.makeConstraints { make in
             make.top
                 .equalTo(percentageArrowImageView.snp.bottom)
             make.leading
@@ -175,8 +155,40 @@ final class FMDetailView: UIView {
 
 extension FMDetailView {
     struct Input {
-        let isUp: Bool
+        let percentStatus: PercentStatus
         let percentage: String
-        let last90Days: String
+        let rangeTitle: String
+        let rangeVaue: String
     }
+    
+    enum PercentStatus {
+        case positive
+        case negative
+        case unchanged
+        
+        fileprivate var color: UIColor {
+            switch self {
+            case .positive:
+                return .greenTextColor
+            case .negative:
+                return .systemRed
+            case .unchanged:
+                return .refundsChart
+            }
+        }
+        
+        
+        fileprivate var image: UIImage? {
+            switch self {
+            case .positive:
+                return UIImage(systemName: "arrow.up")
+            case .negative:
+                return UIImage(systemName: "arrow.down")
+            case .unchanged:
+                return UIImage(systemName: "minus")
+            }
+        }
+        
+    }
+    
 }

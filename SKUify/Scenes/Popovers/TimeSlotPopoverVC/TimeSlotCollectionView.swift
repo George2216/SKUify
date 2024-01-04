@@ -13,6 +13,8 @@ import RxSwift
 final class TimeSlotCollectionView: ContentResizableCollectionView {
     private let disposeBag = DisposeBag()
 
+    let selectOrDeselect = PublishSubject<Void>()
+    
     // MARK: - Initializers
 
     override init(
@@ -121,6 +123,7 @@ extension TimeSlotCollectionView: UICollectionViewDelegate {
             animated: true
         )
         collectionView.performBatchUpdates(nil)
+        selectOrDeselect.onNext(())
         return true
     }
     
@@ -134,11 +137,10 @@ extension TimeSlotCollectionView: UICollectionViewDelegate {
             scrollPosition: []
         )
         collectionView.performBatchUpdates(nil)
+        selectOrDeselect.onNext(())
         return true
     }
     
 }
-
-
 
 

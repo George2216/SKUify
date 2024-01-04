@@ -55,17 +55,17 @@ final class AuthenticationVC: BaseViewController {
         
         bindHeightForScrollingToTxtField(output)
         
-        makeBanner(output)
-        makeFetching(output)
+        bindToBanner(output)
+        bindToLoader(output)
     }
 
-    private func makeBanner(_ output: AuthenticationViewModel.Output) {
+    private func bindToBanner(_ output: AuthenticationViewModel.Output) {
         output.error
             .drive(rx.banner)
             .disposed(by: disposeBag)
     }
     
-    private func makeFetching(_ output: AuthenticationViewModel.Output) {
+    private func bindToLoader(_ output: AuthenticationViewModel.Output) {
         output.fetching
             .drive(rx.loading)
             .disposed(by: disposeBag)

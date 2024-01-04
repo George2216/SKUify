@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import RxCocoa
+import RxSwift
 
 final class DashboardVC: BaseViewController {
     var viewModel: DashboardViewModel!
@@ -31,7 +32,15 @@ final class DashboardVC: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let output = viewModel.transform(.init())
+        let refreshingTriger = collectionView.refreshControl!.rx
+            .controlEvent(.valueChanged)
+            .asDriver()
+        
+        let output = viewModel.transform(
+            .init(
+                reloadData: refreshingTriger
+            )
+        )
 
         setupFilterByDateButton()
         sutupNavBarItems()
@@ -42,23 +51,13 @@ final class DashboardVC: BaseViewController {
         bindToNotificationBarButtonItem(output)
         bindToTitleImageBarButtonItem(output)
         bindToFilterByDateButtonConfig(output)
-        bindCalendarPopover(output)
+        bindTimeSlotsPopover(output)
         bindCurrencyPopover(output)
         bindToCollectionView(output)
-        let arrary = ["Today", "Yesterday", "7 Days", "30 Days", "90 Days", "365 Days", "All", "Custom"]
-
-        let dataDriver = Driver<[TimeSlotCell.Input]>
-            .just(arrary
-                .map({ title in
-                    return TimeSlotCell.Input.init(title: title, selectRow: { row in
-                        print(row)
-                    })
-        }))
-        
-        timeSlotsPopover.bindToCollection(dataDriver)
-            .disposed(by: disposeBag)
-
-        
+        bindToTimeSlotsPopover(output)
+        bindToLoader(output)
+        bindToBanner(output)
+        bindToTopScrolling(output)
     }
     
     private func createCollectionViewLayout() -> UICollectionViewFlowLayout {
@@ -113,6 +112,17 @@ extension DashboardVC {
 // MARK: Make binding
 
 extension DashboardVC {
+    private func bindToLoader(_ output: DashboardViewModel.Output) {
+        output.fetching
+            .drive(collectionView.refreshControl!.rx.isRefreshing)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindToBanner(_ output: DashboardViewModel.Output) {
+        output.error
+            .drive(rx.banner)
+            .disposed(by: disposeBag)
+    }
     
     private func bindToCollectionView(_ output: DashboardViewModel.Output) {
         collectionView.bind(output.collectionData)
@@ -144,16 +154,22 @@ extension DashboardVC {
             .disposed(by: disposeBag)
     }
     
-    // Bind to popover button
+    // Bind to filetr by date popover button
     private func bindToFilterByDateButtonConfig(_ output: DashboardViewModel.Output) {
         output.filterByDatePopoverButtonConfig
             .drive(filterByDateButton.rx.config)
             .disposed(by: disposeBag)
     }
     
+    // Bind to time slots popover view
+    private func bindToTimeSlotsPopover(_ output: DashboardViewModel.Output) {
+        timeSlotsPopover.bindToCollection(output.timeSlots)
+            .disposed(by: disposeBag)
+    }
+    
     // Bind popover view
-    private func bindCalendarPopover(_ output: DashboardViewModel.Output) {
-        output.showCalendarPopover
+    private func bindTimeSlotsPopover(_ output: DashboardViewModel.Output) {
+        output.showTimeSlotsPopover
             .withUnretained(self)
             .map { owner, center in
                 PopoverManager.Input(
@@ -185,5 +201,25 @@ extension DashboardVC {
             .drive(rx.popover)
             .disposed(by: disposeBag)
     }
+    
+    private func bindToTopScrolling(_ output: DashboardViewModel.Output) {
+        output.fetching
+            .withUnretained(self)
+            .drive(onNext: { owner, isFetching in
+                guard isFetching else { return }
+                owner.collectionView
+                    .setContentOffset(
+                        CGPoint(
+                            x: 0,
+                            y: -owner.collectionView
+                                .refreshControl!.frame
+                                .height
+                        ),
+                        animated: true
+                    )
+            })
+            .disposed(by: disposeBag)
+    }
+    
     
 }

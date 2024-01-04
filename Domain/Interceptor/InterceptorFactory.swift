@@ -10,4 +10,5 @@ import Foundation
 public protocol InterceptorFactory {
     func makeTokenToHeaderInterceptor() -> Interceptor
     func makeUrlEncodedContentTypeInterceptor() -> Interceptor
+    func makeUserIdToParametersInterceptor() -> Interceptor
 }

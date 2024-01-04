@@ -20,9 +20,12 @@ final class OverviewCellChartsView: LineChartView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setDataSets(_ dataSets: [LineChartDataSet]) {
+    func setDataSets(_ dataSets: [LineChartDataSet], labels: [String]) {
         let data = LineChartData(dataSets: dataSets)
         self.data = data
+        xAxis.valueFormatter = IndexAxisValueFormatter(values: labels)
+        xAxis.setLabelCount(labels.count , force: false)
+               
     }
         
     private func setupView() {
@@ -41,7 +44,8 @@ final class OverviewCellChartsView: LineChartView {
         leftAxis.drawAxisLineEnabled = false
         rightAxis.drawAxisLineEnabled = false
         xAxis.drawAxisLineEnabled = false
-
+        
+        
         leftAxis.granularity = 6.0
         rightAxis.granularity = 6.0
         rightAxis.axisLineColor = .border
@@ -49,6 +53,14 @@ final class OverviewCellChartsView: LineChartView {
         rightAxis.gridColor = .border
 
         isUserInteractionEnabled = false
+        xAxis.labelRotationAngle = -90
+        xAxis.labelFont = .manrope(
+            type: .medium,
+            size: 6
+        )
+        xAxis.centerAxisLabelsEnabled = true
+        extraBottomOffset = 10.0
+
     }
     
 }

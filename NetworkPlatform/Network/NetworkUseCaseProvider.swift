@@ -24,11 +24,15 @@ public final class NetworkUseCaseProvider: Domain.NetworkUseCaseProvider {
     // MARK: Make Use Cases
     
     public func makeLoginUseCase(
-        realmUseCase: Domain.AuthorizationDataWriteUseCase
+        autDataUseCase: Domain.AuthorizationDataWriteUseCase,
+        tokensUseCase: Domain.TokensWriteUseCase,
+        userIdUseCase: Domain.UserIdUseCase
     ) -> Domain.LoginUseCase {
         return LoginUseCase(
             network: networkProvider.makeLoginNetwork(),
-            realmUseCase: realmUseCase
+            autDataUseCase: autDataUseCase,
+            tokensUseCase: tokensUseCase,
+            userIdUseCase: userIdUseCase
         )
     }
     

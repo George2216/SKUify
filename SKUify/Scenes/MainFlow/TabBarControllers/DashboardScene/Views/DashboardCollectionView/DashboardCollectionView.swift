@@ -21,18 +21,18 @@ final class DashboardCollectionView: UICollectionView {
         
         switch item {
         case .financialMetric(let input):
-            
             let cell = collectionView.dequeueReusableCell(
                 ofType: FinancialMetricDashboardCell.self,
                 at: indexPath
             )
             cell.setInput(input)
             return cell
-        case .overview:
+        case .overview(let input):
             let cell = collectionView.dequeueReusableCell(
                 ofType: OverviewDashboardCell.self,
                 at: indexPath
             )
+            cell.setInput(input)
             return cell
         case .marketplace(let input):
             let cell = collectionView.dequeueReusableCell(
@@ -49,23 +49,34 @@ final class DashboardCollectionView: UICollectionView {
     
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: layout)
-        backgroundColor = .clear
-        alwaysBounceVertical = true
-        showsVerticalScrollIndicator = false
-        allowsMultipleSelection = true
-
-        register(FinancialMetricDashboardCell.self)
-        register(OverviewDashboardCell.self)
-        register(MarketplaceDashboardCell.self)
+        
+        setupCollection()
+        registerCells()
         
         rx.setDelegate(self)
             .disposed(by: disposeBag)
         
-
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: Privete methods
+
+    private func setupCollection() {
+        refreshControl = UIRefreshControl()
+
+        backgroundColor = .clear
+        alwaysBounceVertical = true
+        showsVerticalScrollIndicator = false
+        allowsMultipleSelection = true
+    }
+    
+    private func registerCells() {
+        register(FinancialMetricDashboardCell.self)
+        register(OverviewDashboardCell.self)
+        register(MarketplaceDashboardCell.self)
     }
     
     
@@ -141,6 +152,7 @@ extension DashboardCollectionView: UICollectionViewDelegateFlowLayout {
                 height: height
                )
            case .overview:
+               
                return CGSize(
                 width: width,
                 height: 324
@@ -187,7 +199,7 @@ extension DashboardCollectionView: UICollectionViewDelegate {
         _ collectionView: UICollectionView,
         shouldDeselectItemAt indexPath: IndexPath
     ) -> Bool {
-        guard indexPath.section == 1 else { return true}
+        guard indexPath.section == 2 else { return true}
         
         collectionView.deselectItem(at: indexPath, animated: true)
         collectionView.performBatchUpdates(nil)
@@ -199,7 +211,7 @@ extension DashboardCollectionView: UICollectionViewDelegate {
         _ collectionView: UICollectionView,
         shouldSelectItemAt indexPath: IndexPath
     ) -> Bool {
-        guard indexPath.section == 1 else { return true}
+        guard indexPath.section == 2 else { return true}
 
         collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
         collectionView.performBatchUpdates(nil)

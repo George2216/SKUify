@@ -15,7 +15,7 @@ final class OverviewCellLineChartDataSet: LineChartDataSet {
         super.init()
         
     }
-    
+
     convenience init(
         _ points: [CGPoint],
         color: UIColor

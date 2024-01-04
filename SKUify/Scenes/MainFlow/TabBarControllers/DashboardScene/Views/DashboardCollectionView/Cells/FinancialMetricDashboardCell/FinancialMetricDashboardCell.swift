@@ -11,13 +11,12 @@ import RxSwift
 import RxCocoa
 
 final class FinancialMetricDashboardCell: UICollectionViewCell {
-    
 
     private let metricImageView = FMCellBackgroundImage()
     private let metricSwitch = SmallSwitch()
     private let chartView = FMCellChartsView()
     private let infoButton = DefaultButton()
-    private let moneyLabel = UILabel()
+    private let sumLabel = UILabel()
     private let detailView = FMDetailView()
     
     override init(frame: CGRect) {
@@ -43,19 +42,13 @@ final class FinancialMetricDashboardCell: UICollectionViewCell {
         setToChartsData(input)
         setToInfoButton(input)
         setToDetailView(input)
-        moneyLabel.text = input.sum
+        sumLabel.text = input.sum
         metricSwitch.isOn = input.switchState
     }
     
 
     private func setToDetailView(_ input: Input) {
-        detailView.setInput(
-            .init(
-                isUp: input.isUp,
-                percentage: input.precentage,
-                last90Days: input.last90DaysPrice
-            )
-        )
+        detailView.setInput(input.detailInput)
     }
     
     private func setToChartsData(_ input: Input) {
@@ -77,7 +70,7 @@ final class FinancialMetricDashboardCell: UICollectionViewCell {
         contentView.addSubview(detailView)
         detailView.snp.makeConstraints { make in
             make.top
-                .equalTo(moneyLabel.snp.bottom)
+                .equalTo(sumLabel.snp.bottom)
             make.directionalHorizontalEdges
                 .equalToSuperview()
                 .inset(10)
@@ -87,8 +80,8 @@ final class FinancialMetricDashboardCell: UICollectionViewCell {
     }
     
     private func addSubviewMoneyLabel() {
-        contentView.addSubview(moneyLabel)
-        moneyLabel.snp.makeConstraints { make in
+        contentView.addSubview(sumLabel)
+        sumLabel.snp.makeConstraints { make in
             make.leading
                 .equalToSuperview()
                 .inset(10)
@@ -146,11 +139,11 @@ final class FinancialMetricDashboardCell: UICollectionViewCell {
     // MARK: Setup views
 
     private func setupMoneyLabel() {
-        moneyLabel.font = .manrope(
+        sumLabel.font = .manrope(
             type: .extraBold,
             size: 15
         )
-        moneyLabel.textColor = .textColor
+        sumLabel.textColor = .textColor
     }
     
     private func setupCell() {
@@ -161,68 +154,15 @@ final class FinancialMetricDashboardCell: UICollectionViewCell {
     
 }
 
-
-// MARK: Make Cell type
-
-extension FinancialMetricDashboardCell {
-    enum CellType {
-        case sales
-        case unitsSold
-        case profit
-        case refunds
-        case margin
-        case roi
-    
-        var chartColor: UIColor {
-            switch self {
-            case .sales:
-                return .salesChart
-            case .unitsSold:
-                return .unitsSoldChart
-            case .profit:
-                return .profitChart
-            case .refunds:
-                return .refundsChart
-            case .margin:
-                return .marginChart
-            case .roi:
-                return .roiChart
-            }
-            
-        }
-        
-        var image: UIImage {
-            switch self {
-            case .sales:
-                return .sales
-            case .unitsSold:
-                return .unitsSold
-            case .profit:
-                return .profit
-            case .refunds:
-                return .refunds
-            case .margin:
-                return .margin
-            case .roi:
-                return .roi
-            }
-            
-        }
-    }
-    
-}
-
 // MARK: Make input
 
 extension FinancialMetricDashboardCell {
     struct Input {
-        let cellType: CellType
+        let cellType: ChartType
+        var detailInput: FMDetailView.Input
         var switchState: Bool
         var sum: String
-        var precentage: String
-        var isUp: Bool
         var points: [CGPoint]
-        let last90DaysPrice: String
         let infoConfig: DefaultButton.Config
         let switchChangedOn: ((Bool)->())?
     }

@@ -11,6 +11,14 @@
 		4CA92C15904AB3DD85D005E1 /* Pods_SKUify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FAA312A8D927543BC7D00C5 /* Pods_SKUify.framework */; };
 		5C4799F50E6C33BFE6630E35 /* Pods_InAppPurchasesPlatform_InAppPurchasesPlatformTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BE188F0D35234F6252C903B /* Pods_InAppPurchasesPlatform_InAppPurchasesPlatformTests.framework */; };
 		5E0E66902B3769810005E576 /* ChartUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E668F2B3769810005E576 /* ChartUseCase.swift */; };
+		5E0E66962B4582FB0005E576 /* DashboardStateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E66952B4582FB0005E576 /* DashboardStateHelper.swift */; };
+		5E0E66982B4583170005E576 /* ChartTypeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E66972B4583170005E576 /* ChartTypeHelper.swift */; };
+		5E0E669A2B45CD570005E576 /* MarketplaceDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E66992B45CD570005E576 /* MarketplaceDTO.swift */; };
+		5E0E669C2B45E8650005E576 /* UserIdToParametersInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E669B2B45E8650005E576 /* UserIdToParametersInterceptor.swift */; };
+		5E0E669E2B45EB090005E576 /* UserId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E669D2B45EB080005E576 /* UserId.swift */; };
+		5E0E66A02B45EB730005E576 /* RMUserId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E669F2B45EB730005E576 /* RMUserId.swift */; };
+		5E0E66A22B45EC020005E576 /* UserIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E66A12B45EC020005E576 /* UserIdUseCase.swift */; };
+		5E0E66A42B45EC330005E576 /* UserIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E66A32B45EC330005E576 /* UserIdUseCase.swift */; };
 		5E41892F2B0669DB0070EDA4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E41892E2B0669DB0070EDA4 /* AppDelegate.swift */; };
 		5E4189312B0669DB0070EDA4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4189302B0669DB0070EDA4 /* SceneDelegate.swift */; };
 		5E4189382B0669DC0070EDA4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5E4189372B0669DC0070EDA4 /* Assets.xcassets */; };
@@ -200,7 +208,6 @@
 		5ED912162B2CBCB400FC0A66 /* RMTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED912152B2CBCB400FC0A66 /* RMTokens.swift */; };
 		5ED912182B2CBD5E00FC0A66 /* TokensUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED912172B2CBD5E00FC0A66 /* TokensUseCase.swift */; };
 		5ED9121A2B2CBD8D00FC0A66 /* TokensUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED912192B2CBD8D00FC0A66 /* TokensUseCase.swift */; };
-		5EF40E462B3329B40021EEC1 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF40E452B3329B40021EEC1 /* Helper.swift */; };
 		5EF40E482B33335F0021EEC1 /* ChartsNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF40E472B33335F0021EEC1 /* ChartsNetwork.swift */; };
 		5EF40E4A2B35BCB40021EEC1 /* ChartDTOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF40E492B35BCB40021EEC1 /* ChartDTOs.swift */; };
 		5EF40E4C2B35C1C20021EEC1 /* ChartNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF40E4B2B35C1C20021EEC1 /* ChartNetwork.swift */; };
@@ -427,6 +434,14 @@
 		56392AA16C5FCD1107F6ECBC /* Pods_NetworkPlatform.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NetworkPlatform.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		572F9F866FEF8ACE30806780 /* Pods-RxExtensions.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxExtensions.release.xcconfig"; path = "Target Support Files/Pods-RxExtensions/Pods-RxExtensions.release.xcconfig"; sourceTree = "<group>"; };
 		5E0E668F2B3769810005E576 /* ChartUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartUseCase.swift; sourceTree = "<group>"; };
+		5E0E66952B4582FB0005E576 /* DashboardStateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardStateHelper.swift; sourceTree = "<group>"; };
+		5E0E66972B4583170005E576 /* ChartTypeHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartTypeHelper.swift; sourceTree = "<group>"; };
+		5E0E66992B45CD570005E576 /* MarketplaceDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplaceDTO.swift; sourceTree = "<group>"; };
+		5E0E669B2B45E8650005E576 /* UserIdToParametersInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIdToParametersInterceptor.swift; sourceTree = "<group>"; };
+		5E0E669D2B45EB080005E576 /* UserId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserId.swift; sourceTree = "<group>"; };
+		5E0E669F2B45EB730005E576 /* RMUserId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMUserId.swift; sourceTree = "<group>"; };
+		5E0E66A12B45EC020005E576 /* UserIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIdUseCase.swift; sourceTree = "<group>"; };
+		5E0E66A32B45EC330005E576 /* UserIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIdUseCase.swift; sourceTree = "<group>"; };
 		5E41892B2B0669DB0070EDA4 /* SKUify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SKUify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E41892E2B0669DB0070EDA4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5E4189302B0669DB0070EDA4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -614,7 +629,6 @@
 		5ED912152B2CBCB400FC0A66 /* RMTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMTokens.swift; sourceTree = "<group>"; };
 		5ED912172B2CBD5E00FC0A66 /* TokensUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensUseCase.swift; sourceTree = "<group>"; };
 		5ED912192B2CBD8D00FC0A66 /* TokensUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensUseCase.swift; sourceTree = "<group>"; };
-		5EF40E452B3329B40021EEC1 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		5EF40E472B33335F0021EEC1 /* ChartsNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsNetwork.swift; sourceTree = "<group>"; };
 		5EF40E492B35BCB40021EEC1 /* ChartDTOs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartDTOs.swift; sourceTree = "<group>"; };
 		5EF40E4B2B35C1C20021EEC1 /* ChartNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartNetwork.swift; sourceTree = "<group>"; };
@@ -828,6 +842,15 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		5E0E66942B4581A80005E576 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				5E0E66972B4583170005E576 /* ChartTypeHelper.swift */,
+				5E0E66952B4582FB0005E576 /* DashboardStateHelper.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		5E4189222B0669DB0070EDA4 = {
 			isa = PBXGroup;
 			children = (
@@ -913,7 +936,7 @@
 			children = (
 				5E4189652B066A3F0070EDA4 /* Domain.h */,
 				5E418A352B07B1B50070EDA4 /* Entities */,
-				5ED911BD2B22189700FC0A66 /* Intercaptor */,
+				5ED911BD2B22189700FC0A66 /* Interceptor */,
 				5ED911E12B233BEB00FC0A66 /* Network */,
 				5E418A1B2B067A6C0070EDA4 /* UseCaseProviders */,
 				5E418A2E2B07A5440070EDA4 /* UseCases */,
@@ -1107,6 +1130,7 @@
 				5E418A332B07B17F0070EDA4 /* LoginStateUseCase.swift */,
 				5ED911C22B221A4F00FC0A66 /* AutorizationDataUseCase.swift */,
 				5ED912172B2CBD5E00FC0A66 /* TokensUseCase.swift */,
+				5E0E66A12B45EC020005E576 /* UserIdUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -1121,6 +1145,7 @@
 				5ED911E72B23417A00FC0A66 /* LoginUseCase.swift */,
 				5ED912192B2CBD8D00FC0A66 /* TokensUseCase.swift */,
 				5E0E668F2B3769810005E576 /* ChartUseCase.swift */,
+				5E0E66A32B45EC330005E576 /* UserIdUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -1132,6 +1157,7 @@
 				5ED911C42B221A9800FC0A66 /* AutorizationData.swift */,
 				5ED912132B2CBC0D00FC0A66 /* Tokens.swift */,
 				5E418A362B07B1FD0070EDA4 /* LoginState.swift */,
+				5E0E669D2B45EB080005E576 /* UserId.swift */,
 				5ED911DC2B233AF900FC0A66 /* DTO */,
 			);
 			path = Entities;
@@ -1143,6 +1169,7 @@
 				5E418A392B07B26B0070EDA4 /* RMLoginState.swift */,
 				5ED911C82B221BD900FC0A66 /* RMAuthorizationData.swift */,
 				5ED912152B2CBCB400FC0A66 /* RMTokens.swift */,
+				5E0E669F2B45EB730005E576 /* RMUserId.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -1302,7 +1329,7 @@
 				5E418A832B0B9D640070EDA4 /* DashboardUseCases.swift */,
 				5E418A852B0B9D700070EDA4 /* DashboardVC.swift */,
 				5E418A7F2B0B9D3E0070EDA4 /* DashboardViewModel.swift */,
-				5EF40E452B3329B40021EEC1 /* Helper.swift */,
+				5E0E66942B4581A80005E576 /* Helpers */,
 				5ED9114F2B1CB78400FC0A66 /* Views */,
 			);
 			path = DashboardScene;
@@ -1604,13 +1631,13 @@
 			path = Interceptor;
 			sourceTree = "<group>";
 		};
-		5ED911BD2B22189700FC0A66 /* Intercaptor */ = {
+		5ED911BD2B22189700FC0A66 /* Interceptor */ = {
 			isa = PBXGroup;
 			children = (
 				5ED911BE2B2218C000FC0A66 /* Interceptor.swift */,
 				5ED911CA2B221C7E00FC0A66 /* InterceptorFactory.swift */,
 			);
-			path = Intercaptor;
+			path = Interceptor;
 			sourceTree = "<group>";
 		};
 		5ED911D82B22207500FC0A66 /* API */ = {
@@ -1625,8 +1652,9 @@
 		5ED911D92B22208E00FC0A66 /* Interceptors */ = {
 			isa = PBXGroup;
 			children = (
-				5ED911DA2B22211B00FC0A66 /* UrlEncodedContentTypeInterceptor.swift */,
 				5ED911CC2B221DAF00FC0A66 /* TokenToHeaderInterceptor.swift */,
+				5ED911DA2B22211B00FC0A66 /* UrlEncodedContentTypeInterceptor.swift */,
+				5E0E669B2B45E8650005E576 /* UserIdToParametersInterceptor.swift */,
 			);
 			path = Interceptors;
 			sourceTree = "<group>";
@@ -1634,8 +1662,9 @@
 		5ED911DC2B233AF900FC0A66 /* DTO */ = {
 			isa = PBXGroup;
 			children = (
-				5ED911DD2B233B3700FC0A66 /* LoginDTO.swift */,
 				5EF40E492B35BCB40021EEC1 /* ChartDTOs.swift */,
+				5ED911DD2B233B3700FC0A66 /* LoginDTO.swift */,
+				5E0E66992B45CD570005E576 /* MarketplaceDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -2729,6 +2758,7 @@
 			files = (
 				5E418A2C2B067D300070EDA4 /* ViewModelProtocol.swift in Sources */,
 				5E418A802B0B9D3E0070EDA4 /* DashboardViewModel.swift in Sources */,
+				5E0E66962B4582FB0005E576 /* DashboardStateHelper.swift in Sources */,
 				5ED911432B1A24C500FC0A66 /* DefaultSettingsButton.swift in Sources */,
 				5E418A6D2B07C3470070EDA4 /* BannerViewManagerProtocol.swift in Sources */,
 				5E418A4B2B07B7080070EDA4 /* DIContainer.swift in Sources */,
@@ -2744,6 +2774,7 @@
 				5ED9110C2B160DAD00FC0A66 /* SalesUseCases.swift in Sources */,
 				5ED911232B174FDA00FC0A66 /* UIWindow.swift in Sources */,
 				5ED9113A2B1A0E6E00FC0A66 /* SettingsVC.swift in Sources */,
+				5E0E66982B4583170005E576 /* ChartTypeHelper.swift in Sources */,
 				5ED911262B175DC300FC0A66 /* PopoverManager.swift in Sources */,
 				5E418A5C2B07B8960070EDA4 /* AppNavigatorProtocol.swift in Sources */,
 				5ED9111C2B1614F900FC0A66 /* InventoryNavigator.swift in Sources */,
@@ -2804,7 +2835,6 @@
 				5ED910492B123B6800FC0A66 /* PasswordRecoveryResultView.swift in Sources */,
 				5E418A7B2B0B96810070EDA4 /* MainTabBarController.swift in Sources */,
 				5ED912072B29DB5800FC0A66 /* MarketplaceDashboardCellTopView.swift in Sources */,
-				5EF40E462B3329B40021EEC1 /* Helper.swift in Sources */,
 				5ED911182B1614CA00FC0A66 /* InventoryViewModel.swift in Sources */,
 				5E418A572B07B8780070EDA4 /* AppManagerUseCases.swift in Sources */,
 				5ED911102B16112E00FC0A66 /* ExpensesVC.swift in Sources */,
@@ -2854,6 +2884,7 @@
 				5ED911D52B221F0E00FC0A66 /* NetworkUseCaseProvider.swift in Sources */,
 				5E418A372B07B1FD0070EDA4 /* LoginState.swift in Sources */,
 				5ED911D12B221EC400FC0A66 /* APIConfig.swift in Sources */,
+				5E0E66A42B45EC330005E576 /* UserIdUseCase.swift in Sources */,
 				5ED911492B1A389900FC0A66 /* AppVersionUseCase.swift in Sources */,
 				5ED9121A2B2CBD8D00FC0A66 /* TokensUseCase.swift in Sources */,
 				5ED911DE2B233B3700FC0A66 /* LoginDTO.swift in Sources */,
@@ -2862,12 +2893,14 @@
 				5ED911C52B221A9800FC0A66 /* AutorizationData.swift in Sources */,
 				5E0E66902B3769810005E576 /* ChartUseCase.swift in Sources */,
 				5EF40E4A2B35BCB40021EEC1 /* ChartDTOs.swift in Sources */,
+				5E0E669A2B45CD570005E576 /* MarketplaceDTO.swift in Sources */,
 				5ED910652B13F52300FC0A66 /* KeyboardUseCase.swift in Sources */,
 				5ED911CB2B221C7E00FC0A66 /* InterceptorFactory.swift in Sources */,
 				5ED910672B13F58B00FC0A66 /* AppEventsUseCaseProvider.swift in Sources */,
 				5ED911F22B23649000FC0A66 /* ErrorHandledResponseModel.swift in Sources */,
 				5E418A322B07A7A50070EDA4 /* LoginStateUseCase.swift in Sources */,
 				5EF40E4C2B35C1C20021EEC1 /* ChartNetwork.swift in Sources */,
+				5E0E669E2B45EB090005E576 /* UserId.swift in Sources */,
 				5ED911E32B233BFE00FC0A66 /* LoginNetwork.swift in Sources */,
 				5ED911C72B221AF600FC0A66 /* AutorizationDataUseCase.swift in Sources */,
 				5ED911E82B23417A00FC0A66 /* LoginUseCase.swift in Sources */,
@@ -2898,6 +2931,7 @@
 				5E418A462B07B6A80070EDA4 /* Encodable + Extesion.swift in Sources */,
 				5ED911D72B221F4C00FC0A66 /* NetworkUseCaseProvider.swift in Sources */,
 				5EF40E482B33335F0021EEC1 /* ChartsNetwork.swift in Sources */,
+				5E0E669C2B45E8650005E576 /* UserIdToParametersInterceptor.swift in Sources */,
 				5E418A482B07B6C10070EDA4 /* Data.swift in Sources */,
 				5ED911E02B233BA600FC0A66 /* LoginNetwork.swift in Sources */,
 				5E418A432B07B6490070EDA4 /* Network.swift in Sources */,
@@ -2918,6 +2952,7 @@
 			files = (
 				5ED911C32B221A4F00FC0A66 /* AutorizationDataUseCase.swift in Sources */,
 				5ED912182B2CBD5E00FC0A66 /* TokensUseCase.swift in Sources */,
+				5E0E66A02B45EB730005E576 /* RMUserId.swift in Sources */,
 				5E418A172B0679D90070EDA4 /* RealmRepresentable.swift in Sources */,
 				5E418A0D2B06780B0070EDA4 /* RunLoopThreadScheduler.swift in Sources */,
 				5E418A152B0679B10070EDA4 /* DomainConvertibleType.swift in Sources */,
@@ -2929,6 +2964,7 @@
 				5E418A1F2B067AA10070EDA4 /* RealmUseCaseProvider.swift in Sources */,
 				5E418A3A2B07B26B0070EDA4 /* RMLoginState.swift in Sources */,
 				5ED911C92B221BD900FC0A66 /* RMAuthorizationData.swift in Sources */,
+				5E0E66A22B45EC020005E576 /* UserIdUseCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

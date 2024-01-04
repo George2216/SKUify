@@ -12,6 +12,7 @@ import RxSwift
 import RxCocoa
 
 final class TimeSlotPopoverVC: UIViewController {
+    private let disposeBag = DisposeBag()
 
     // MARK: - UIElemetns
     
@@ -31,13 +32,25 @@ final class TimeSlotPopoverVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
+        subscribeOnItemSelected()
     }
-    
+
     // MARK: - Make binding
 
     func bindToCollection(_ collectionData: Driver<[TimeSlotCell.Input]>) -> Disposable {
         return collectionView.bind(collectionData)
     }
+    
+    private func subscribeOnItemSelected() {
+        collectionView.selectOrDeselect
+            .asDriverOnErrorJustComplete()
+            .withUnretained(self)
+            .drive(onNext: { owner, _ in
+                owner.dismiss(animated: true)
+            })
+            .disposed(by: disposeBag)
+    }
+    
     
     // MARK: - Setup view
 
@@ -50,3 +63,5 @@ final class TimeSlotPopoverVC: UIViewController {
     }
     
 }
+
+

@@ -22,35 +22,21 @@ final class OverviewDashboardCell: UICollectionViewCell {
         setupView()
         setOverviewTitleLabel()
         setupOverviewTitleLabel()
-        
-        let set1 = OverviewCellLineChartDataSet(
-            [
-            .init(x: 0, y: 0),
-            .init(x: 1, y: 10),
-            .init(x: 2, y: 2),
-            .init(x: 5, y: 17),
-            .init(x: 12, y: 25),
-
-            ],
-            color: .roiChart
-        )
-        let set2 = OverviewCellLineChartDataSet(
-            [
-            .init(x: 0, y: 0),
-            .init(x: 3, y: 12),
-            .init(x: 5, y: 18),
-            .init(x: 6, y: 22),
-            .init(x: 8, y: 10),
-
-            ],
-            color: .salesChart
-        )
-        
-        chartsView.setDataSets([set1, set2])
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setInput(_ input: Input) {
+        let dataSets = input.chartsData.map { item in
+            OverviewCellLineChartDataSet(
+                item.points,
+                color: item.chartType.chartColor
+            )
+        }
+        chartsView.setDataSets(dataSets, labels: input.labels)
+
     }
     
     private func setOverviewTitleLabel() {
@@ -70,6 +56,7 @@ final class OverviewDashboardCell: UICollectionViewCell {
         layer.cornerRadius = 8
         layer.masksToBounds = true
     }
+    
     // MARK: Add to subview
     
     private func addSubviewChartsView() {
@@ -93,4 +80,18 @@ final class OverviewDashboardCell: UICollectionViewCell {
                 .inset(10)
         }
     }
+}
+
+extension OverviewDashboardCell {
+    struct Input {
+        var labels: [String]
+        var chartsData: [ChartItem]
+        
+        struct ChartItem {
+            var chartType: ChartType
+            var points: [CGPoint]
+        }
+    }
+    
+    
 }

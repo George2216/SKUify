@@ -1,13 +1,13 @@
 //
-//  Helper.swift
+//  DashboardStateHelper.swift
 //  SKUify
 //
-//  Created by George Churikov on 20.12.2023.
+//  Created by George Churikov on 03.01.2024.
 //
 
 import Foundation
 
-enum DashboardDataState: String {
+enum DashboardDataState: String, CaseIterable {
     case today
     case yesterday
     case days7
@@ -16,7 +16,11 @@ enum DashboardDataState: String {
     case days365
     case all
     case custom
+}
 
+// MARK: Properties
+
+extension DashboardDataState {
     var title: String {
         switch self {
         case .today,
@@ -35,25 +39,30 @@ enum DashboardDataState: String {
         }
     }
     
-    var startDate: String? {
+    var startDate: String {
         switch self {
         case .today:
-            return formattedDate(for: .day, value: 0)
+            return formattedDate(for: .day, value: 0) ?? ""
         case .yesterday:
-            return formattedDate(for: .day, value: -1)
+            return formattedDate(for: .day, value: -1) ?? ""
         case .days7:
-            return formattedDate(for: .weekOfYear, value: -1)
+            return formattedDate(for: .weekOfYear, value: -1) ?? ""
         case .days30:
-            return formattedDate(for: .month, value: -1)
+            return formattedDate(for: .month, value: -1) ?? ""
         case .days90:
-            return formattedDate(for: .day, value: -90)
+            return formattedDate(for: .day, value: -90) ?? ""
         case .days365:
-            return formattedDate(for: .year, value: -1)
+            return formattedDate(for: .year, value: -1) ?? ""
         case .all, .custom:
-            return nil
+            return ""
         }
     }
     
+}
+
+// MARK: Date formater
+
+extension DashboardDataState {
     private func formattedDate(
         for component: Calendar.Component,
         value: Int
@@ -75,4 +84,5 @@ enum DashboardDataState: String {
 
         return nil
     }
+    
 }

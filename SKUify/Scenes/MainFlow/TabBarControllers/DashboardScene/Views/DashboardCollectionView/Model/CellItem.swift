@@ -9,6 +9,6 @@ import Foundation
 
 enum DashboardCollectionItem {
     case financialMetric(_ input: FinancialMetricDashboardCell.Input)
-    case overview
+    case overview(_ input: OverviewDashboardCell.Input)
     case marketplace(_ input: MarketplaceDashboardCell.Input)
 }
