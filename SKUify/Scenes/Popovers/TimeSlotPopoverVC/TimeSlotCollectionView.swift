@@ -41,7 +41,10 @@ final class TimeSlotCollectionView: ContentResizableCollectionView {
     override func reloadData() {
         super.reloadData()
         selectItem(
-            at: .init(row: 0, section: 0),
+            at: .init(
+                row: 0,
+                section: 0
+            ),
             animated: true,
             scrollPosition: []
         )

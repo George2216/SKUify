@@ -17,6 +17,26 @@ public struct MarketplaceDTO: Decodable {
     public let location: String
     public let participate: Bool
     
+    public init(
+        marketplaceId: String,
+        endpoint: String,
+        websiteUrl: String,
+        countryCode: String,
+        country: String,
+        order: Int,
+        location: String,
+        participate: Bool
+    ) {
+        self.marketplaceId = marketplaceId
+        self.endpoint = endpoint
+        self.websiteUrl = websiteUrl
+        self.countryCode = countryCode
+        self.country = country
+        self.order = order
+        self.location = location
+        self.participate = participate
+    }
+    
     private enum CodingKeys: String, CodingKey {
         case marketplaceId = "marketplace_id"
         case endpoint = "endpoint"
@@ -31,3 +51,19 @@ public struct MarketplaceDTO: Decodable {
 }
 
 
+extension MarketplaceDTO: Equatable {
+    public static func == (
+        lhs: MarketplaceDTO,
+        rhs: MarketplaceDTO
+    ) -> Bool {
+        lhs.marketplaceId == rhs.marketplaceId &&
+        lhs.endpoint == rhs.endpoint &&
+        lhs.websiteUrl == rhs.websiteUrl &&
+        lhs.countryCode == rhs.countryCode &&
+        lhs.country == rhs.country &&
+        lhs.order == rhs.order &&
+        lhs.location == rhs.location &&
+        lhs.participate == rhs.participate
+    }
+    
+}

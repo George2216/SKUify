@@ -16,17 +16,20 @@ final class LoginUseCase: Domain.LoginUseCase {
     private let autDataUseCase: Domain.AuthorizationDataWriteUseCase
     private let tokensUseCase: Domain.TokensWriteUseCase
     private let userIdUseCase: Domain.UserIdUseCase
+    private let marketplacesUseCase: Domain.MarketplacesWriteUseCase
     
     init(
         network: Domain.LoginNetwork,
         autDataUseCase: Domain.AuthorizationDataWriteUseCase,
         tokensUseCase: Domain.TokensWriteUseCase,
-        userIdUseCase: Domain.UserIdUseCase
+        userIdUseCase: Domain.UserIdUseCase,
+        marketplacesUseCase: Domain.MarketplacesWriteUseCase
     ) {
         self.network = network
         self.autDataUseCase = autDataUseCase
         self.tokensUseCase = tokensUseCase
         self.userIdUseCase = userIdUseCase
+        self.marketplacesUseCase = marketplacesUseCase
     }
     
     func login(
@@ -58,6 +61,10 @@ final class LoginUseCase: Domain.LoginUseCase {
                     .flatMapLatest(weak: self) { owner, _ in
                         owner.userIdUseCase
                             .saveUserId(userId: data.user.id)
+                    }
+                    .flatMapLatest(weak: self) { owner, _ in
+                        owner.marketplacesUseCase
+                            .saveMarketplaces(marketplaces: data.user.marketplaces)
                     }
             }
     }

@@ -23,10 +23,11 @@ final class TitledMarketplace: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setMarketplace(_ marketplace: String) {
-        imageView.image = UIImage(named: marketplace)
-        titleLabel.text = marketplace
+    func setInput(_ input: Input) {
+        imageView.image = UIImage(named: input.counryCode)
+        titleLabel.text = input.countryTitle
     }
+
     
     private func setupTitleLabel() {
         titleLabel.font = .manrope(
@@ -57,5 +58,12 @@ final class TitledMarketplace: UIView {
             make.size
                 .equalTo(20)
         }
+    }
+}
+
+extension TitledMarketplace {
+    struct Input {
+        let countryTitle: String
+        let counryCode: String
     }
 }

@@ -6,11 +6,12 @@
 //
 
 import UIKit
+import Charts
 
 final class OverviewDashboardCell: UICollectionViewCell {
     
     private let overviewTitleLabel = UILabel()
-    private let chartsView = OverviewCellChartsView()
+    private lazy var chartsView = OverviewCellChartsView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -35,7 +36,13 @@ final class OverviewDashboardCell: UICollectionViewCell {
                 color: item.chartType.chartColor
             )
         }
-        chartsView.setDataSets(dataSets, labels: input.labels)
+        chartsView.setupInput(
+            .init(
+                dataSets: dataSets,
+                labels: input.labels,
+                markerData: input.markerData
+            )
+        )
 
     }
     
@@ -86,6 +93,7 @@ extension OverviewDashboardCell {
     struct Input {
         var labels: [String]
         var chartsData: [ChartItem]
+        var markerData: [OverviewChartMarkerView.Input]
         
         struct ChartItem {
             var chartType: ChartType
@@ -95,3 +103,4 @@ extension OverviewDashboardCell {
     
     
 }
+

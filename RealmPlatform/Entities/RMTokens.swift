@@ -25,6 +25,7 @@ extension RMTokens: DomainConvertibleType {
             refreshToken: refreshToken
         )
     }
+    
 }
 
 extension Tokens: RealmRepresentable {
@@ -38,4 +39,5 @@ extension Tokens: RealmRepresentable {
             object.refreshToken = refreshToken
         }
     }
+    
 }

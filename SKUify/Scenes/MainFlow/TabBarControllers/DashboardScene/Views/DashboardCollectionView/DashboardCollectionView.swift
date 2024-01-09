@@ -155,11 +155,12 @@ extension DashboardCollectionView: UICollectionViewDelegateFlowLayout {
                
                return CGSize(
                 width: width,
-                height: 324
+                height: 350
                )
                
            case .marketplace(let input):
-               let isSelected = collectionView.indexPathsForSelectedItems?.contains(indexPath) ?? false
+               let isSelected = collectionView.indexPathsForSelectedItems?
+                   .contains(indexPath) ?? false
 
                let cell = MarketplaceDashboardCell()
                cell.isSelected = isSelected

@@ -13,12 +13,14 @@ class RMLoginState: Object {
     @Persisted(primaryKey: true) var _id: String = "#"
 
     @Persisted var isLogged: Bool
+    
 }
 
 extension RMLoginState: DomainConvertibleType {
     func asDomain() -> LoginState {
         LoginState(isLogged: isLogged)
     }
+    
 }
 
 extension LoginState: RealmRepresentable {
@@ -31,4 +33,5 @@ extension LoginState: RealmRepresentable {
             object.isLogged = isLogged
         }
     }
+    
 }

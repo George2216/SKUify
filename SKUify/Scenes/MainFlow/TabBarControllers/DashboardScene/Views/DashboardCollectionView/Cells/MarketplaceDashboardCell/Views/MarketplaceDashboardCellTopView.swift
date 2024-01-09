@@ -39,7 +39,7 @@ final class MarketplaceDashboardCellTopView: UIView {
     }
     
     func setInput(_ input: Input) {
-        titledMarketplace.setMarketplace(input.marketplace)
+        titledMarketplace.setInput(.init(countryTitle: "", counryCode: ""))
         titledMarketplaceDecorator.decorate(title: input.title)
     }
     
@@ -91,5 +91,6 @@ extension MarketplaceDashboardCellTopView {
     struct Input {
         let title: String
         let marketplace: String
+        let countryCode: String
     }
 }

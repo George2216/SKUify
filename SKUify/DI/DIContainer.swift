@@ -57,9 +57,11 @@ class DIContainer: DIProtocol {
         networkUseCaseProvider.makeLoginUseCase(
             autDataUseCase: makeAutorizationDataUseCase(),
             tokensUseCase: makeTokensUseCase(),
-            userIdUseCase: makeUserIdUseCase()
+            userIdUseCase: makeUserIdUseCase(),
+            marketplacesUseCase: makeMarketplacesUseCase()
         )
     }
+    
     func makeLoginStateUseCase() -> Domain.LoginStateUseCase {
         realmUseCaseProvider.makeLoginStateUseCase()
     }
@@ -88,4 +90,8 @@ class DIContainer: DIProtocol {
         realmUseCaseProvider.makeUserIdUseCase()
     }
     
+    func makeMarketplacesUseCase() -> Domain.MarketplacesUseCase {
+        realmUseCaseProvider.makeMarketplacesUseCase()
+    }
+
 }

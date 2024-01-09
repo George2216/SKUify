@@ -24,14 +24,14 @@ final class UserIdUseCase<Repository>: Domain.UserIdUseCase where Repository: Ab
             .map({ $0.userId})
     }
     
-    func saveUserId(userId: Int) -> RxSwift.Observable<Void> {
+    func saveUserId(userId: Int) -> Observable<Void> {
         repository
             .saveEntity(
                 entity: UserId(userId: userId)
             )
     }
     
-    func removeUserId() -> RxSwift.Observable<Void> {
+    func removeUserId() -> Observable<Void> {
         return repository
             .deleteAllObjects(type: UserId.self)
     }

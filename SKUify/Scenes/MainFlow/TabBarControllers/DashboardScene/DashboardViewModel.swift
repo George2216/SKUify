@@ -15,13 +15,6 @@ final class DashboardViewModel: ViewModelProtocol {
     
     private let disposeBag = DisposeBag()
 
-    // Dependencies
-    private let navigator: DashboardNavigatorProtocol
-    
-    // Use case storage
-    
-    private let chartUseCase: Domain.ChartsUseCase
-    
     private let showCurrencyPopover = PublishSubject<CGPoint>()
     private let showTimeSlotsPopover = PublishSubject<CGPoint>()
 
@@ -29,6 +22,14 @@ final class DashboardViewModel: ViewModelProtocol {
         
     private let dashboardDataState = BehaviorSubject<DashboardDataState>(value: .today)
     private let tapOnMarketplace = PublishSubject<String>()
+    
+    // Dependencies
+    private let navigator: DashboardNavigatorProtocol
+    
+    // Use case storage
+    
+    private let chartUseCase: Domain.ChartsUseCase
+    private let marketplacesUseCase: Domain.MarketplacesReadUseCase
     
     // Trackers
     private var activityIndicator = ActivityTracker()
@@ -40,8 +41,10 @@ final class DashboardViewModel: ViewModelProtocol {
     ) {
         self.navigator = navigator
         self.chartUseCase = useCases.makeChartsUseCase()
+        self.marketplacesUseCase = useCases.makeMarketplacesUseCase()
         
         navigateToSettings()
+
     }
     
     func transform(_ input: Input) -> Output {
@@ -249,47 +252,169 @@ final class DashboardViewModel: ViewModelProtocol {
     
     // MARK: -  Make collection data
 
+    
+    private func getMarketplacesData(_ marketplaces: [ChartMarketplace]) -> Driver<[(String, String, ChartMarketplace)]> {
+        let observables = marketplaces.map { marketplace in
+            marketplacesUseCase.getMarketplaceById(id: marketplace.marketplace)
+                .map({ ($0.country, $0.countryCode, marketplace) })
+                .catchAndReturn(("Total", "", marketplace))
+                .asDriverOnErrorJustComplete()
+        }
+        
+        return Driver.zip(observables)
+    }
+    
+    private func makeMarketlacesTableItems(
+        marketplaces: [(String, String, ChartMarketplace)],
+        currency: String
+    ) -> [DashboardCollectionItem] {
+        marketplaces.enumerated()
+            .map { (index, arg1) in
+                let (title, countryCode, marketplace) = arg1
+                
+                return .marketplace(
+                    .init(
+                        topViewInput: .init(
+                            title: "Market",
+                            marketplace: title,
+                            countryCode: countryCode
+                        ),
+                        contentInput: .init(
+                            sales: .init(
+                                title: "Sales",
+                                value: "\(currency)\(marketplace.sales)"
+                            ),
+                            profit: .init(
+                                title: "Profit",
+                                value: "\(currency)\(marketplace.profit)"
+                            ),
+                            refunds: .init(
+                                title: "Refunds",
+                                value: "\(currency)\(marketplace.refunds)"
+                            ),
+                            unit: .init(
+                                title: "Unit",
+                                value: "\(marketplace.unitsSold)"
+                            ),
+                            roi: .init(
+                                title: "Roi",
+                                value: "\(marketplace.roi)%"
+                            ),
+                            margin: .init(
+                                title: "Margin",
+                                value: "\(marketplace.margin)%"
+                            )
+                        )
+                    )
+                )
+        }
+    }
+    
     private func makeChartsData() -> Driver<[DashboardSectionModel]> {
         fetchChartsByState()
             .withLatestFrom(dashboardDataState.asDriverOnErrorJustComplete()) { data, state in
-                   return (data, state)
-               }
+                return (data, state)
+            }
+//            .flatMapLatest(
+//                weak: self,
+//                selector: { (owner, arg1) in
+//                    let (data, state) = arg1
+//
+//                    return Driver.combineLatest(
+//                        Driver<ChartMainDTO>.just(data),
+//                        Driver<DashboardDataState>.just(state),
+//                        owner.getMarketplacesData(data.chart.marketplaces)
+//                    )
+//                })
             .withUnretained(self)
-            .map { owner, combinedData -> [DashboardSectionModel] in
-                let state = combinedData.1
-                
-                let data = combinedData.0.chart
+            .map({ owner, combinedData in
+                let (mainData, state) = combinedData
+               
+                let data = mainData.chart
                 let chartsData = data.chartData
+                
+                let markerData = chartsData.labels
+                    .enumerated()
+                    .map { index, label in
+                        OverviewChartMarkerView
+                            .Input(content: [
+                                .init(
+                                    chartType: .sales,
+                                    contentData: .init(
+                                        date: label,
+                                        value: "\(chartsData.sales.values[index])"
+                                    )
+                                ),
+                                .init(
+                                    chartType: .unitsSold,
+                                    contentData: .init(
+                                        date: label,
+                                        value: "\(chartsData.profit.values[index])"
+                                    )
+                                ),
+                                .init(
+                                    chartType: .profit,
+                                    contentData: .init(
+                                        date: label,
+                                        value: "\(chartsData.sales.values[index])"
+                                    )
+                                ),
+                                .init(
+                                    chartType: .refunds,
+                                    contentData: .init(
+                                        date: label,
+                                        value: "\(chartsData.refunds.values[index])"
+                                    )
+                                ),
+                                .init(
+                                    chartType: .margin,
+                                    contentData: .init(
+                                        date: label,
+                                        value: "\(chartsData.margin.values[index])"
+                                    )
+                                ),
+                                .init(
+                                    chartType: .roi,
+                                    contentData: .init(
+                                        date: label,
+                                        value: "\(chartsData.roi.values[index])"
+                                    )
+                                )
+                            ])
+                    }
+                
                 let items: [DashboardCollectionItem] = [
-                    .overview(.init(
-                        labels: chartsData.labels,
-                        chartsData: [
-                            .init(
-                                chartType: .sales,
-                                points: owner.makePoints(from: chartsData.sales.values)
-                            ),
-                            .init(
-                                chartType: .unitsSold,
-                                points: owner.makePoints(from: chartsData.unitsSold.values)
-                            ),
-                            .init(
-                                chartType: .profit,
-                                points: owner.makePoints(from: chartsData.profit.values)
-                            ),
-                            .init(
-                                chartType: .refunds,
-                                points: owner.makePoints(from: chartsData.refunds.values)
-                            ),
-                            .init(
-                                chartType: .margin,
-                                points: owner.makePoints(from: chartsData.margin.values)
-                            ),
-                            .init(
-                                chartType: .roi,
-                                points: owner.makePoints(from: chartsData.roi.values)
-                            )
-                        ]
-                    )
+                    .overview(
+                        .init(
+                            labels: chartsData.labels,
+                            chartsData: [
+                                .init(
+                                    chartType: .sales,
+                                    points: owner.makePoints(from: chartsData.sales.values)
+                                ),
+                                .init(
+                                    chartType: .unitsSold,
+                                    points: owner.makePoints(from: chartsData.unitsSold.values)
+                                ),
+                                .init(
+                                    chartType: .profit,
+                                    points: owner.makePoints(from: chartsData.profit.values)
+                                ),
+                                .init(
+                                    chartType: .refunds,
+                                    points: owner.makePoints(from: chartsData.refunds.values)
+                                ),
+                                .init(
+                                    chartType: .margin,
+                                    points: owner.makePoints(from: chartsData.margin.values)
+                                ),
+                                .init(
+                                    chartType: .roi,
+                                    points: owner.makePoints(from: chartsData.roi.values)
+                                )
+                            ],
+                             markerData: markerData
+                        )
                     )
                 ]
                 return [
@@ -302,94 +427,28 @@ final class DashboardViewModel: ViewModelProtocol {
                             data: data,
                             state: state
                         )
-                    ),
-                    .init(
-                        model: .defaultSection(
-                            header: "",
-                            footer: ""
-                        ),
-                        items: items
-                    ),
-                    .init(
-                        model: .marketplaceSection(
-                            header: "",
-                            footer: ""
-                            ),
-                            items: [
-                                .marketplace(
-                                    .init(
-                                        title: "Marketplace",
-                                        isTopCell: true,
-                                        topViewInput: .init(
-                                            title: "Market",
-                                            marketplace: "US"
-                                        ), contentInput: .init(
-                                            sales: .init(
-                                                title: "Sales",
-                                                value: "$12,545.97"
-                                            ),
-                                            profit: .init(
-                                                title: "Profit",
-                                                value: "$2,545.78"
-                                            ),
-                                            refunds: .init(
-                                                title: "Refunds",
-                                                value: "12,546"
-                                            ),
-                                            unit: .init(
-                                                title: "Unit",
-                                                value: "12,546"
-                                            ),
-                                            roi: .init(
-                                                title: "ROI",
-                                                value: "15.51%"
-                                            ),
-                                            margin: .init(
-                                                title: "Margin",
-                                                value: "0.25%"
-                                            )
-                                        )
-                                    )
-                                ),
-                                .marketplace(
-                                    .init(
-                                        isBottomCell: true,
-                                        topViewInput: .init(
-                                            title: "Market",
-                                            marketplace: "DE"
-                                        ), contentInput: .init(
-                                            sales: .init(
-                                                title: "Sales",
-                                                value: "$12,545.97"
-                                            ),
-                                            profit: .init(
-                                                title: "Profit",
-                                                value: "$2,545.78"
-                                            ),
-                                            refunds: .init(
-                                                title: "Refunds",
-                                                value: "12,546"
-                                            ),
-                                            unit: .init(
-                                                title: "Unit",
-                                                value: "12,546"
-                                            ),
-                                            roi: .init(
-                                                title: "ROI",
-                                                value: "15.51%"
-                                            ),
-                                            margin: .init(
-                                                title: "Margin",
-                                                value: "0.25%"
-                                            )
-                                        )
-                                    )
-                                )
-                            ]
-                        )
-                   ]
+                    )
+//                    .init(
+//                        model: .defaultSection(
+//                            header: "",
+//                            footer: ""
+//                        ),
+//                        items: items
+//                    ),
+//                    .init(
+//                        model: .marketplaceSection(
+//                            header: "",
+//                            footer: ""
+//                            ),
+//                        items: owner.makeMarketlacesTableItems(
+//                            marketplaces: marketplaces,
+//                            currency: data.currency
+//                        )
+//                    )
+                ]
             }
-
+            )
+        
     }
     
     //MARK: - Make items

@@ -51,4 +51,18 @@ enum ChartType: String {
         }
     }
 
+    var title: String {
+        switch self {
+        case .sales,
+                .profit,
+                .refunds,
+                .margin:
+            return rawValue.capitalized
+        case .unitsSold:
+            return "Unit Sold"
+        case .roi:
+           return rawValue.uppercased()
+        }
+    }
+    
 }

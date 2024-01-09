@@ -15,12 +15,14 @@ class RMUserId: Object {
     @Persisted(primaryKey: true) var _id: String = "#"
 
     @Persisted var userId: Int
+    
 }
 
 extension RMUserId: DomainConvertibleType {
     func asDomain() -> UserId {
         UserId(userId: userId)
     }
+    
 }
 
 extension UserId: RealmRepresentable {
@@ -33,5 +35,6 @@ extension UserId: RealmRepresentable {
             object.userId = userId
         }
     }
+    
 }
 

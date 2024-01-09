@@ -99,6 +99,28 @@ public struct ChartMarketplace: Decodable {
     public let margin: Double
     public let country: String
     
+    public init(
+        id: String,
+        marketplace: String,
+        sales: Double,
+        profit: Double,
+        refunds: Double,
+        unitsSold: String,
+        roi: Double,
+        margin: Double,
+        country: String
+    ) {
+        self.id = id
+        self.marketplace = marketplace
+        self.sales = sales
+        self.profit = profit
+        self.refunds = refunds
+        self.unitsSold = unitsSold
+        self.roi = roi
+        self.margin = margin
+        self.country = country
+    }
+    
     private enum CodingKeys: String, CodingKey {
         case id = "id"
         case marketplace = "marketplace"

@@ -11,8 +11,9 @@ public protocol NetworkUseCaseProvider {
     func makeLoginUseCase(
         autDataUseCase: Domain.AuthorizationDataWriteUseCase,
         tokensUseCase: Domain.TokensWriteUseCase,
-        userIdUseCase: Domain.UserIdUseCase
-    ) -> Domain.LoginUseCase
+        userIdUseCase: Domain.UserIdUseCase,
+        marketplacesUseCase: Domain.MarketplacesWriteUseCase
+    ) -> LoginUseCase
     func makeChartsUseCase() -> ChartsUseCase
     
 }

@@ -47,6 +47,13 @@ extension Reactive where Base == Realm {
         }
     }
     
+    func saveEntities<R: RealmRepresentable>(entities: [R], update: Bool = true) -> Observable<Void> where R.RealmType: Object {
+          return performWriteOperation {
+              let realmObjects = entities.map { $0.asRealm() }
+              self.base.add(realmObjects, update: update ? .all : .error)
+          }
+      }
+    
     func deleteEntity<R: RealmRepresentable>(entity: R) -> Observable<Void> where R.RealmType: Object {
         return performWriteOperation {
             guard let object = self.base.object(ofType: R.RealmType.self, forPrimaryKey: entity.uid) else { fatalError() }

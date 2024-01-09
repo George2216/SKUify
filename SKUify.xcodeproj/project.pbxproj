@@ -19,6 +19,12 @@
 		5E0E66A02B45EB730005E576 /* RMUserId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E669F2B45EB730005E576 /* RMUserId.swift */; };
 		5E0E66A22B45EC020005E576 /* UserIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E66A12B45EC020005E576 /* UserIdUseCase.swift */; };
 		5E0E66A42B45EC330005E576 /* UserIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E66A32B45EC330005E576 /* UserIdUseCase.swift */; };
+		5E0E66A62B46D32C0005E576 /* OverviewChartMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E66A52B46D32C0005E576 /* OverviewChartMarkerView.swift */; };
+		5E0E66A92B46ED1D0005E576 /* OverviewChartMarkerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E66A82B46ED1D0005E576 /* OverviewChartMarkerItem.swift */; };
+		5E0E66AB2B46EDA90005E576 /* OverviewChartMarkerContentItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E66AA2B46EDA90005E576 /* OverviewChartMarkerContentItem.swift */; };
+		5E0E66BC2B4C27030005E576 /* RMMarketplaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E66BB2B4C27030005E576 /* RMMarketplaces.swift */; };
+		5E0E66C02B4C32B20005E576 /* MarketplacesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E66BF2B4C32B20005E576 /* MarketplacesUseCase.swift */; };
+		5E0E66C22B4C32E10005E576 /* MarketplacesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E66C12B4C32E10005E576 /* MarketplacesUseCase.swift */; };
 		5E41892F2B0669DB0070EDA4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E41892E2B0669DB0070EDA4 /* AppDelegate.swift */; };
 		5E4189312B0669DB0070EDA4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4189302B0669DB0070EDA4 /* SceneDelegate.swift */; };
 		5E4189382B0669DC0070EDA4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5E4189372B0669DC0070EDA4 /* Assets.xcassets */; };
@@ -442,6 +448,12 @@
 		5E0E669F2B45EB730005E576 /* RMUserId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMUserId.swift; sourceTree = "<group>"; };
 		5E0E66A12B45EC020005E576 /* UserIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIdUseCase.swift; sourceTree = "<group>"; };
 		5E0E66A32B45EC330005E576 /* UserIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIdUseCase.swift; sourceTree = "<group>"; };
+		5E0E66A52B46D32C0005E576 /* OverviewChartMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewChartMarkerView.swift; sourceTree = "<group>"; };
+		5E0E66A82B46ED1D0005E576 /* OverviewChartMarkerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewChartMarkerItem.swift; sourceTree = "<group>"; };
+		5E0E66AA2B46EDA90005E576 /* OverviewChartMarkerContentItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewChartMarkerContentItem.swift; sourceTree = "<group>"; };
+		5E0E66BB2B4C27030005E576 /* RMMarketplaces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMMarketplaces.swift; sourceTree = "<group>"; };
+		5E0E66BF2B4C32B20005E576 /* MarketplacesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplacesUseCase.swift; sourceTree = "<group>"; };
+		5E0E66C12B4C32E10005E576 /* MarketplacesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplacesUseCase.swift; sourceTree = "<group>"; };
 		5E41892B2B0669DB0070EDA4 /* SKUify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SKUify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E41892E2B0669DB0070EDA4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5E4189302B0669DB0070EDA4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -851,6 +863,16 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		5E0E66A72B46ECF40005E576 /* Marker */ = {
+			isa = PBXGroup;
+			children = (
+				5E0E66A52B46D32C0005E576 /* OverviewChartMarkerView.swift */,
+				5E0E66A82B46ED1D0005E576 /* OverviewChartMarkerItem.swift */,
+				5E0E66AA2B46EDA90005E576 /* OverviewChartMarkerContentItem.swift */,
+			);
+			path = Marker;
+			sourceTree = "<group>";
+		};
 		5E4189222B0669DB0070EDA4 = {
 			isa = PBXGroup;
 			children = (
@@ -1131,6 +1153,7 @@
 				5ED911C22B221A4F00FC0A66 /* AutorizationDataUseCase.swift */,
 				5ED912172B2CBD5E00FC0A66 /* TokensUseCase.swift */,
 				5E0E66A12B45EC020005E576 /* UserIdUseCase.swift */,
+				5E0E66BF2B4C32B20005E576 /* MarketplacesUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -1146,6 +1169,7 @@
 				5ED912192B2CBD8D00FC0A66 /* TokensUseCase.swift */,
 				5E0E668F2B3769810005E576 /* ChartUseCase.swift */,
 				5E0E66A32B45EC330005E576 /* UserIdUseCase.swift */,
+				5E0E66C12B4C32E10005E576 /* MarketplacesUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -1170,6 +1194,7 @@
 				5ED911C82B221BD900FC0A66 /* RMAuthorizationData.swift */,
 				5ED912152B2CBCB400FC0A66 /* RMTokens.swift */,
 				5E0E669F2B45EB730005E576 /* RMUserId.swift */,
+				5E0E66BB2B4C27030005E576 /* RMMarketplaces.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -1617,6 +1642,7 @@
 			children = (
 				5ED911762B1F82B700FC0A66 /* OverviewCellChartsView.swift */,
 				5ED911782B1F837800FC0A66 /* OverviewCellLineChartDataSet.swift */,
+				5E0E66A72B46ECF40005E576 /* Marker */,
 			);
 			path = Charts;
 			sourceTree = "<group>";
@@ -2769,6 +2795,7 @@
 				5E418A5F2B07B9B00070EDA4 /* ActivityTracker.swift in Sources */,
 				5E418A782B0B84F00070EDA4 /* UITextField.swift in Sources */,
 				5ED9113C2B1A0E7600FC0A66 /* SettingsViewModel.swift in Sources */,
+				5E0E66AB2B46EDA90005E576 /* OverviewChartMarkerContentItem.swift in Sources */,
 				5ED9115E2B1CBFF500FC0A66 /* FinancialMetricDashboardCell.swift in Sources */,
 				5E418ABD2B0F964B0070EDA4 /* ContainerBorderVerticalStack.swift in Sources */,
 				5ED9110C2B160DAD00FC0A66 /* SalesUseCases.swift in Sources */,
@@ -2800,6 +2827,7 @@
 				5E418AC02B10E8450070EDA4 /* HorizontalStack.swift in Sources */,
 				5E418A292B067D110070EDA4 /* AuthenticationNavigator.swift in Sources */,
 				5ED9115A2B1CB8EC00FC0A66 /* CellItem.swift in Sources */,
+				5E0E66A92B46ED1D0005E576 /* OverviewChartMarkerItem.swift in Sources */,
 				5ED911ED2B23588800FC0A66 /* LoaderManagerProtocol.swift in Sources */,
 				5E418A8A2B0BAA460070EDA4 /* DefaultButton.swift in Sources */,
 				5ED911402B1A0E9600FC0A66 /* SettingsUseCases.swift in Sources */,
@@ -2815,6 +2843,7 @@
 				5ED9111A2B1614E300FC0A66 /* InventoryUseCases.swift in Sources */,
 				5ED910B72B13FECA00FC0A66 /* UIView.swift in Sources */,
 				5ED9120B2B29EC1400FC0A66 /* TitledMarketplace.swift in Sources */,
+				5E0E66A62B46D32C0005E576 /* OverviewChartMarkerView.swift in Sources */,
 				5ED911672B1DD39800FC0A66 /* FMCellBackgroundImage.swift in Sources */,
 				5E5C9DC82B32F779003180FF /* TableView.swift in Sources */,
 				5E418A612B07B9C20070EDA4 /* ErrorTracker.swift in Sources */,
@@ -2891,6 +2920,7 @@
 				5ED911BF2B2218C000FC0A66 /* Interceptor.swift in Sources */,
 				5ED911D32B221EF300FC0A66 /* NetworkProvider.swift in Sources */,
 				5ED911C52B221A9800FC0A66 /* AutorizationData.swift in Sources */,
+				5E0E66C22B4C32E10005E576 /* MarketplacesUseCase.swift in Sources */,
 				5E0E66902B3769810005E576 /* ChartUseCase.swift in Sources */,
 				5EF40E4A2B35BCB40021EEC1 /* ChartDTOs.swift in Sources */,
 				5E0E669A2B45CD570005E576 /* MarketplaceDTO.swift in Sources */,
@@ -2950,12 +2980,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E0E66C02B4C32B20005E576 /* MarketplacesUseCase.swift in Sources */,
 				5ED911C32B221A4F00FC0A66 /* AutorizationDataUseCase.swift in Sources */,
 				5ED912182B2CBD5E00FC0A66 /* TokensUseCase.swift in Sources */,
 				5E0E66A02B45EB730005E576 /* RMUserId.swift in Sources */,
 				5E418A172B0679D90070EDA4 /* RealmRepresentable.swift in Sources */,
 				5E418A0D2B06780B0070EDA4 /* RunLoopThreadScheduler.swift in Sources */,
 				5E418A152B0679B10070EDA4 /* DomainConvertibleType.swift in Sources */,
+				5E0E66BC2B4C27030005E576 /* RMMarketplaces.swift in Sources */,
 				5ED912162B2CBCB400FC0A66 /* RMTokens.swift in Sources */,
 				5E418A122B0678A80070EDA4 /* Observable+Ext.swift in Sources */,
 				5E418A102B06788E0070EDA4 /* Realm+Ext.swift in Sources */,

@@ -48,7 +48,7 @@ extension DashboardDataState {
         case .days7:
             return formattedDate(for: .weekOfYear, value: -1) ?? ""
         case .days30:
-            return formattedDate(for: .month, value: -1) ?? ""
+            return formattedDate(for: .day, value: -29) ?? ""
         case .days90:
             return formattedDate(for: .day, value: -90) ?? ""
         case .days365:

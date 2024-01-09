@@ -15,6 +15,7 @@ class RMAuthorizationData: Object {
 
     @Persisted var email: String
     @Persisted var password: String
+    
 }
 
 extension RMAuthorizationData: DomainConvertibleType {
@@ -24,6 +25,7 @@ extension RMAuthorizationData: DomainConvertibleType {
             password: password
         )
     }
+    
 }
 
 extension AuthorizationData: RealmRepresentable {
@@ -37,4 +39,5 @@ extension AuthorizationData: RealmRepresentable {
             object.password = password
         }
     }
+    
 }

@@ -16,6 +16,7 @@ public protocol AbstractRepository {
     associatedtype T
     func queryAll() -> Observable<[T]>
     func saveEntity(entity: T) -> Observable<Void>
+    func saveEntities(entities: [T]) -> Observable<Void>
     func deleteEntity(entity: T) -> Observable<Void>
     func deleteAllObjects(type: T.Type) -> Observable<Void>
 }
@@ -52,6 +53,13 @@ final class Repository<T: RealmRepresentable>: AbstractRepository where T == T.R
         .subscribe(on: scheduler)
     }
 
+    func saveEntities(entities: [T]) -> Observable<Void> {
+        return Observable.deferred {
+            return self.realm.rx.saveEntities(entities: entities)
+        }
+        .subscribe(on: scheduler)
+    }
+    
     func deleteEntity(entity: T) -> Observable<Void> {
         return Observable.deferred {
             return self.realm.rx.deleteEntity(entity: entity)

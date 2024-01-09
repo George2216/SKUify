@@ -10,4 +10,5 @@ import Domain
 
 protocol DashboardUseCases {
     func makeChartsUseCase() -> Domain.ChartsUseCase
+    func makeMarketplacesUseCase() -> Domain.MarketplacesUseCase
 }
