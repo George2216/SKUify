@@ -39,7 +39,12 @@ final class MarketplaceDashboardCellTopView: UIView {
     }
     
     func setInput(_ input: Input) {
-        titledMarketplace.setInput(.init(countryTitle: "", counryCode: ""))
+        titledMarketplace.setInput(
+            .init(
+                countryTitle: input.marketplace,
+                counryCode: input.countryCode
+            )
+        )
         titledMarketplaceDecorator.decorate(title: input.title)
     }
     

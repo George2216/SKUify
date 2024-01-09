@@ -21,7 +21,27 @@ final class DashboardViewModel: ViewModelProtocol {
     private let toSettings = PublishSubject<Void>()
         
     private let dashboardDataState = BehaviorSubject<DashboardDataState>(value: .today)
-    private let tapOnMarketplace = PublishSubject<String>()
+    
+    private lazy var collectionData = BehaviorSubject<[DashboardSectionModel]>(value: [])
+    
+    // Is Show chart
+    private let slaseIsShow = BehaviorSubject<Bool>(value: true)
+    private let unitSoldIsShow = BehaviorSubject<Bool>(value: true)
+    private let profitIsShow = BehaviorSubject<Bool>(value: true)
+    private let refundsIsShow = BehaviorSubject<Bool>(value: true)
+    private let marginIsShow = BehaviorSubject<Bool>(value: true)
+    private let roiIsShow = BehaviorSubject<Bool>(value: true)
+    
+    private var chartsVisible: Driver<(Bool, Bool, Bool, Bool, Bool, Bool)> {
+        Driver.combineLatest(
+            slaseIsShow.asDriverOnErrorJustComplete(),
+            unitSoldIsShow.asDriverOnErrorJustComplete(),
+            profitIsShow.asDriverOnErrorJustComplete(),
+            refundsIsShow.asDriverOnErrorJustComplete(),
+            marginIsShow.asDriverOnErrorJustComplete(),
+            roiIsShow.asDriverOnErrorJustComplete()
+        )
+    }
     
     // Dependencies
     private let navigator: DashboardNavigatorProtocol
@@ -44,7 +64,7 @@ final class DashboardViewModel: ViewModelProtocol {
         self.marketplacesUseCase = useCases.makeMarketplacesUseCase()
         
         navigateToSettings()
-
+        bindChartsDataToCollectionDataStorage()
     }
     
     func transform(_ input: Input) -> Output {
@@ -55,7 +75,7 @@ final class DashboardViewModel: ViewModelProtocol {
             notificationBarButtonConfig: makeNotificationBarButtonConfig(),
             titleImageBarButtonConfig: makeTitleImageBarButtonConfig(),
             filterByDatePopoverButtonConfig: makeFilterByDatePopoverButtonConfig(),
-            collectionData: makeChartsData(),
+            collectionData: collectionData.asDriverOnErrorJustComplete(),
             showCurrencyPopover: showCurrencyPopover.asDriverOnErrorJustComplete(),
             showTimeSlotsPopover: showTimeSlotsPopover.asDriverOnErrorJustComplete(),
             fetching: activityIndicator.asDriver(),
@@ -191,123 +211,42 @@ final class DashboardViewModel: ViewModelProtocol {
         
     }
     
-  
-    func makePoints(from array: [Double]) -> [CGPoint] {
-        guard array.count > 2 else {
-            return [
-                CGPoint(
-                    x: 0,
-                    y: 0
-                ),
-                CGPoint(
-                    x: 1,
-                    y: 0
-                )
-            ]
-        }
-        return array.enumerated()
-            .map { index, item in
-                CGPoint(
-                    x: Double(index),
-                    y: array[index]
-                )
-            }
-    }
+    // MARK: Collection data changed
     
-    
-    private func calculatePercentageAndStatus(
-        value: Double,
-        compared: Double?
-    ) -> (Double, FMDetailView.PercentStatus) {
-      let percentage = calculatePercentageChange(
-        value: value,
-        compared: compared
-      )
-        if percentage.isZero {
-            return (percentage, .unchanged)
-        } else if percentage.isPositive {
-            return (percentage, .positive)
-        } else if percentage.isNegative {
-            return (abs(percentage), .negative)
-        }
+//    private func changeChartsVisible() {
+//        chartsVisible
+//            .withLatestFrom(collectionData.asDriverOnErrorJustComplete()) { visibles, collectionData in
+//                return (visibles, collectionData)
+//            }
+//            .withUnretained(self)
+//            .drive(onNext: { (owner, arg1) in
+//                let (salesIsShow, unitSoldIsShow, profitIsShow, refundsIsShow, marginIsShow, roiIsShow) = arg1.0
+//                let collectionData = arg1.1
+//
+//                collectionData.map { section in
+//                    section.items.map { item in
+//                        switch item {
+//                        case .financialMetric(var input):
+//                            input
+//                        default: break
+//                        }
+//                    }
+//                    return section
+//                }
+//
+//            })
+//            .disposed(by: disposeBag)
+//
         
-        return (0.0, .unchanged)
+        
     }
-    private func calculatePercentageChange(
-        value: Double,
-        compared: Double?
-    ) -> Double {
-        if let compared, compared != 0 {
-            let percentageChange = ((value - compared) / abs(compared)) * 100
-            return (round(percentageChange * 100) / 100)
-        } else if (compared == 0.0 || compared == nil) && value == 0 {
-            return 0.0
-        } else if compared == 0 && value != 0.0 {
-            return 100.0
-        }
-        return 0.0
-    }
-
-    
     
     // MARK: -  Make collection data
-
-    
-    private func getMarketplacesData(_ marketplaces: [ChartMarketplace]) -> Driver<[(String, String, ChartMarketplace)]> {
-        let observables = marketplaces.map { marketplace in
-            marketplacesUseCase.getMarketplaceById(id: marketplace.marketplace)
-                .map({ ($0.country, $0.countryCode, marketplace) })
-                .catchAndReturn(("Total", "", marketplace))
-                .asDriverOnErrorJustComplete()
-        }
-        
-        return Driver.zip(observables)
-    }
-    
-    private func makeMarketlacesTableItems(
-        marketplaces: [(String, String, ChartMarketplace)],
-        currency: String
-    ) -> [DashboardCollectionItem] {
-        marketplaces.enumerated()
-            .map { (index, arg1) in
-                let (title, countryCode, marketplace) = arg1
-                
-                return .marketplace(
-                    .init(
-                        topViewInput: .init(
-                            title: "Market",
-                            marketplace: title,
-                            countryCode: countryCode
-                        ),
-                        contentInput: .init(
-                            sales: .init(
-                                title: "Sales",
-                                value: "\(currency)\(marketplace.sales)"
-                            ),
-                            profit: .init(
-                                title: "Profit",
-                                value: "\(currency)\(marketplace.profit)"
-                            ),
-                            refunds: .init(
-                                title: "Refunds",
-                                value: "\(currency)\(marketplace.refunds)"
-                            ),
-                            unit: .init(
-                                title: "Unit",
-                                value: "\(marketplace.unitsSold)"
-                            ),
-                            roi: .init(
-                                title: "Roi",
-                                value: "\(marketplace.roi)%"
-                            ),
-                            margin: .init(
-                                title: "Margin",
-                                value: "\(marketplace.margin)%"
-                            )
-                        )
-                    )
-                )
-        }
+   
+    private func bindChartsDataToCollectionDataStorage() {
+        makeChartsData()
+            .drive(collectionData)
+            .disposed(by: disposeBag)
     }
     
     private func makeChartsData() -> Driver<[DashboardSectionModel]> {
@@ -315,143 +254,68 @@ final class DashboardViewModel: ViewModelProtocol {
             .withLatestFrom(dashboardDataState.asDriverOnErrorJustComplete()) { data, state in
                 return (data, state)
             }
-//            .flatMapLatest(
-//                weak: self,
-//                selector: { (owner, arg1) in
-//                    let (data, state) = arg1
-//
-//                    return Driver.combineLatest(
-//                        Driver<ChartMainDTO>.just(data),
-//                        Driver<DashboardDataState>.just(state),
-//                        owner.getMarketplacesData(data.chart.marketplaces)
-//                    )
-//                })
+            .flatMapLatest(
+                weak: self,
+                selector: { (owner, arg1) in
+                    let (data, state) = arg1
+                    
+                    return Driver.combineLatest(
+                        Driver<ChartMainDTO>.just(data),
+                        Driver<DashboardDataState>.just(state),
+                        owner.getMarketplacesData(data.chart.marketplaces)
+                    )
+                }
+            )
             .withUnretained(self)
-            .map({ owner, combinedData in
-                let (mainData, state) = combinedData
-               
-                let data = mainData.chart
-                let chartsData = data.chartData
-                
-                let markerData = chartsData.labels
-                    .enumerated()
-                    .map { index, label in
-                        OverviewChartMarkerView
-                            .Input(content: [
-                                .init(
-                                    chartType: .sales,
-                                    contentData: .init(
-                                        date: label,
-                                        value: "\(chartsData.sales.values[index])"
-                                    )
-                                ),
-                                .init(
-                                    chartType: .unitsSold,
-                                    contentData: .init(
-                                        date: label,
-                                        value: "\(chartsData.profit.values[index])"
-                                    )
-                                ),
-                                .init(
-                                    chartType: .profit,
-                                    contentData: .init(
-                                        date: label,
-                                        value: "\(chartsData.sales.values[index])"
-                                    )
-                                ),
-                                .init(
-                                    chartType: .refunds,
-                                    contentData: .init(
-                                        date: label,
-                                        value: "\(chartsData.refunds.values[index])"
-                                    )
-                                ),
-                                .init(
-                                    chartType: .margin,
-                                    contentData: .init(
-                                        date: label,
-                                        value: "\(chartsData.margin.values[index])"
-                                    )
-                                ),
-                                .init(
-                                    chartType: .roi,
-                                    contentData: .init(
-                                        date: label,
-                                        value: "\(chartsData.roi.values[index])"
-                                    )
-                                )
-                            ])
-                    }
-                
-                let items: [DashboardCollectionItem] = [
-                    .overview(
+            .map(
+                { owner, combinedData in
+                    let (mainData, state, marketplaces) = combinedData
+                    
+                    let data = mainData.chart
+                    let chartsData = data.chartData
+                    
+                    let markerData = owner.makeOverviewMarkerData(chartsData: chartsData)
+                    
+                    return [
                         .init(
-                            labels: chartsData.labels,
-                            chartsData: [
-                                .init(
-                                    chartType: .sales,
-                                    points: owner.makePoints(from: chartsData.sales.values)
-                                ),
-                                .init(
-                                    chartType: .unitsSold,
-                                    points: owner.makePoints(from: chartsData.unitsSold.values)
-                                ),
-                                .init(
-                                    chartType: .profit,
-                                    points: owner.makePoints(from: chartsData.profit.values)
-                                ),
-                                .init(
-                                    chartType: .refunds,
-                                    points: owner.makePoints(from: chartsData.refunds.values)
-                                ),
-                                .init(
-                                    chartType: .margin,
-                                    points: owner.makePoints(from: chartsData.margin.values)
-                                ),
-                                .init(
-                                    chartType: .roi,
-                                    points: owner.makePoints(from: chartsData.roi.values)
-                                )
-                            ],
-                             markerData: markerData
-                        )
-                    )
-                ]
-                return [
-                    .init(
-                        model: .defaultSection(
-                            header: "",
-                            footer: ""
+                            model: .defaultSection(
+                                header: "",
+                                footer: ""
+                            ),
+                            items: owner.makeFinancialMetricItems(
+                                data: data,
+                                state: state
+                            )
                         ),
-                        items: owner.makeFinancialMetricItems(
-                            data: data,
-                            state: state
+                        .init(
+                            model: .defaultSection(
+                                header: "",
+                                footer: ""
+                            ),
+                            items: owner.makeOverviewItems(
+                                chartsData: chartsData,
+                                markerData: markerData
+                            )
+                        ),
+                        .init(
+                            model: .marketplaceSection(
+                                header: "",
+                                footer: ""
+                            ),
+                            items: owner.makeMarketlaceItems(
+                                marketplaces: marketplaces,
+                                currency: data.currency
+                            )
                         )
-                    )
-//                    .init(
-//                        model: .defaultSection(
-//                            header: "",
-//                            footer: ""
-//                        ),
-//                        items: items
-//                    ),
-//                    .init(
-//                        model: .marketplaceSection(
-//                            header: "",
-//                            footer: ""
-//                            ),
-//                        items: owner.makeMarketlacesTableItems(
-//                            marketplaces: marketplaces,
-//                            currency: data.currency
-//                        )
-//                    )
-                ]
-            }
+                    ]
+                }
             )
         
     }
     
-    //MARK: - Make items
+    // MARK: - Make collection view items
+    
+    // MARK: - Financial metric items
     
     private func makeFinancialMetricItems(
         data: ChartDTO,
@@ -510,8 +374,8 @@ final class DashboardViewModel: ViewModelProtocol {
 
                             }
                         ),
-                        switchChangedOn: { _ in
-
+                        switchChangedOn: { isOn in
+                            print("\(isOn)")
                         }
                     )
                 ),
@@ -638,6 +502,223 @@ final class DashboardViewModel: ViewModelProtocol {
             ]
     }
     
+    // MARK: - Overview items
+
+    private func makeOverviewItems(
+        chartsData: ChartDataDTO,
+        markerData: [OverviewChartMarkerView
+            .Input]
+    ) -> [DashboardCollectionItem] {
+        [
+            .overview(
+                .init(
+                    labels: chartsData.labels,
+                    chartsData: [
+                        .init(
+                            chartType: .sales,
+                            points: makePoints(from: chartsData.sales.values)
+                        ),
+                        .init(
+                            chartType: .unitsSold,
+                            points: makePoints(from: chartsData.unitsSold.values)
+                        ),
+                        .init(
+                            chartType: .profit,
+                            points: makePoints(from: chartsData.profit.values)
+                        ),
+                        .init(
+                            chartType: .refunds,
+                            points: makePoints(from: chartsData.refunds.values)
+                        ),
+                        .init(
+                            chartType: .margin,
+                            points: makePoints(from: chartsData.margin.values)
+                        ),
+                        .init(
+                            chartType: .roi,
+                            points: makePoints(from: chartsData.roi.values)
+                        )
+                    ],
+                     markerData: markerData
+                )
+            )
+        ]
+    }
+    
+    private func makeOverviewMarkerData(chartsData: ChartDataDTO) -> [OverviewChartMarkerView
+        .Input] {
+            chartsData.labels
+                .enumerated()
+                .map { index, label in
+                    OverviewChartMarkerView
+                        .Input(content: [
+                            .init(
+                                chartType: .sales,
+                                contentData: .init(
+                                    date: label,
+                                    value: "\(chartsData.sales.values[index])"
+                                )
+                            ),
+                            .init(
+                                chartType: .unitsSold,
+                                contentData: .init(
+                                    date: label,
+                                    value: "\(chartsData.profit.values[index])"
+                                )
+                            ),
+                            .init(
+                                chartType: .profit,
+                                contentData: .init(
+                                    date: label,
+                                    value: "\(chartsData.sales.values[index])"
+                                )
+                            ),
+                            .init(
+                                chartType: .refunds,
+                                contentData: .init(
+                                    date: label,
+                                    value: "\(chartsData.refunds.values[index])"
+                                )
+                            ),
+                            .init(
+                                chartType: .margin,
+                                contentData: .init(
+                                    date: label,
+                                    value: "\(chartsData.margin.values[index])"
+                                )
+                            ),
+                            .init(
+                                chartType: .roi,
+                                contentData: .init(
+                                    date: label,
+                                    value: "\(chartsData.roi.values[index])"
+                                )
+                            )
+                        ])
+                }
+    }
+    
+    // MARK: - Marketplace items
+
+    private func makeMarketlaceItems(
+        marketplaces: [(String, String, ChartMarketplace)],
+        currency: String
+    ) -> [DashboardCollectionItem] {
+        marketplaces.enumerated()
+            .map { (index, arg1) in
+                let (title, countryCode, marketplace) = arg1
+                let isTopCell = index == 0
+                return .marketplace(
+                    .init(
+                        title: isTopCell ? "Marketplace" : "",
+                        isTopCell: isTopCell,
+                        isBottomCell: index == marketplaces.count - 1,
+                        topViewInput: .init(
+                            title: "Market",
+                            marketplace: title.capitalized,
+                            countryCode: countryCode
+                        ),
+                        contentInput: .init(
+                            sales: .init(
+                                title: "Sales",
+                                value: "\(currency)\(marketplace.sales)"
+                            ),
+                            profit: .init(
+                                title: "Profit",
+                                value: "\(currency)\(marketplace.profit)"
+                            ),
+                            refunds: .init(
+                                title: "Refunds",
+                                value: "\(currency)\(marketplace.refunds)"
+                            ),
+                            unit: .init(
+                                title: "Unit",
+                                value: "\(marketplace.unitsSold)"
+                            ),
+                            roi: .init(
+                                title: "Roi",
+                                value: "\(marketplace.roi)%"
+                            ),
+                            margin: .init(
+                                title: "Margin",
+                                value: "\(marketplace.margin)%"
+                            )
+                        )
+                    )
+                )
+        }
+    }
+    
+    private func getMarketplacesData(_ marketplaces: [ChartMarketplace]) -> Driver<[(String, String, ChartMarketplace)]> {
+        let observables = marketplaces.map { marketplace in
+            marketplacesUseCase.getMarketplaceById(id: marketplace.marketplace)
+                .map({ ($0.country, $0.countryCode, marketplace) })
+                .catchAndReturn(("Total", "", marketplace))
+                .asDriverOnErrorJustComplete()
+        }
+        
+        return Driver.zip(observables)
+    }
+    
+    // MARK: - Collection data helpers
+
+    
+    func makePoints(from array: [Double]) -> [CGPoint] {
+        guard array.count > 2 else {
+            return [
+                CGPoint(
+                    x: 0,
+                    y: 0
+                ),
+                CGPoint(
+                    x: 1,
+                    y: 0
+                )
+            ]
+        }
+        return array.enumerated()
+            .map { index, item in
+                CGPoint(
+                    x: Double(index),
+                    y: array[index]
+                )
+            }
+    }
+    
+    
+    private func calculatePercentageAndStatus(
+        value: Double,
+        compared: Double?
+    ) -> (Double, FMDetailView.PercentStatus) {
+      let percentage = calculatePercentageChange(
+        value: value,
+        compared: compared
+      )
+        if percentage.isZero {
+            return (percentage, .unchanged)
+        } else if percentage.isPositive {
+            return (percentage, .positive)
+        } else if percentage.isNegative {
+            return (abs(percentage), .negative)
+        }
+        
+        return (0.0, .unchanged)
+    }
+    
+    private func calculatePercentageChange(
+        value: Double,
+        compared: Double?
+    ) -> Double {
+        if let compared, compared != 0 {
+            let percentageChange = ((value - compared) / abs(compared)) * 100
+            return (round(percentageChange * 100) / 100)
+        } else if (compared == 0.0 || compared == nil) && value == 0 {
+            return 0.0
+        } else if compared == 0 && value != 0.0 {
+            return 100.0
+        }
+        return 0.0
+    }
     
     // MARK: - Navigation
     
@@ -651,6 +732,9 @@ final class DashboardViewModel: ViewModelProtocol {
             .disposed(by: disposeBag)
     }
     
+}
+
+extension DashboardViewModel {
     struct Input {
         let reloadData: Driver<Void>
     }
@@ -675,4 +759,3 @@ final class DashboardViewModel: ViewModelProtocol {
     }
     
 }
-
