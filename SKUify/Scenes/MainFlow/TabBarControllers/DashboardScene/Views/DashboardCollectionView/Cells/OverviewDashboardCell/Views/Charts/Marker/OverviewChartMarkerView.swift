@@ -31,7 +31,8 @@ final class OverviewChartMarkerView: MarkerView {
     }
     
     func setupInput(_ input: Input) {
-        contentStack.views = input.content.map({ input in
+        contentStack.views = input.content.compactMap({ input in
+            guard input.isVisible else { return nil }
             let view = OverviewChartMarkerItem()
             view.setupInput(input)
             return view
@@ -39,6 +40,7 @@ final class OverviewChartMarkerView: MarkerView {
         contentStack.layoutIfNeeded()
         layoutIfNeeded()
         layoutSubviews()
+        setNeedsDisplay()
     }
     
     private func setupContentStack() {
@@ -80,7 +82,7 @@ final class OverviewChartMarkerView: MarkerView {
 
 extension OverviewChartMarkerView {
     struct Input {
-        let content: [OverviewChartMarkerItem.Input]
+        var content: [OverviewChartMarkerItem.Input]
     }
     
 }

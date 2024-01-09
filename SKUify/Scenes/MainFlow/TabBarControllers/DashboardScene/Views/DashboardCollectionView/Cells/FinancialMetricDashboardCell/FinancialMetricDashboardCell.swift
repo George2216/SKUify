@@ -11,7 +11,10 @@ import RxSwift
 import RxCocoa
 
 final class FinancialMetricDashboardCell: UICollectionViewCell {
+    private var disposeBag = DisposeBag()
 
+    // MARK: - UI elements
+    
     private let metricImageView = FMCellBackgroundImage()
     private let metricSwitch = SmallSwitch()
     private let chartView = FMCellChartsView()
@@ -19,6 +22,8 @@ final class FinancialMetricDashboardCell: UICollectionViewCell {
     private let sumLabel = UILabel()
     private let detailView = FMDetailView()
     
+    //MARK: - Initializers
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.autoresizingMask = .flexibleHeight
@@ -38,10 +43,13 @@ final class FinancialMetricDashboardCell: UICollectionViewCell {
     }
     
     func setInput(_ input: Input) {
+        disposeBag = DisposeBag()
         metricImageView.setImage(input.cellType.image)
         setToChartsData(input)
         setToInfoButton(input)
         setToDetailView(input)
+        bindSwitchChanges(input)
+        
         sumLabel.text = input.sum
         metricSwitch.isOn = input.switchState
     }
@@ -62,6 +70,16 @@ final class FinancialMetricDashboardCell: UICollectionViewCell {
     
     private func setToInfoButton(_ input: Input) {
         infoButton.config = input.infoConfig
+    }
+    
+    private func bindSwitchChanges(_ input: Input) {
+        metricSwitch.rx
+            .isOn
+            .changed
+            .subscribe(onNext:{ isOn in
+                input.switchChangedOn?(isOn)
+            })
+            .disposed(by: disposeBag)
     }
     
     // MARK: Add to subview

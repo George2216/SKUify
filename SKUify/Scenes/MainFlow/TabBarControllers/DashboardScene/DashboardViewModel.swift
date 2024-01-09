@@ -25,7 +25,7 @@ final class DashboardViewModel: ViewModelProtocol {
     private lazy var collectionData = BehaviorSubject<[DashboardSectionModel]>(value: [])
     
     // Is Show chart
-    private let slaseIsShow = BehaviorSubject<Bool>(value: true)
+    private let salesIsShow = BehaviorSubject<Bool>(value: true)
     private let unitSoldIsShow = BehaviorSubject<Bool>(value: true)
     private let profitIsShow = BehaviorSubject<Bool>(value: true)
     private let refundsIsShow = BehaviorSubject<Bool>(value: true)
@@ -34,7 +34,7 @@ final class DashboardViewModel: ViewModelProtocol {
     
     private var chartsVisible: Driver<(Bool, Bool, Bool, Bool, Bool, Bool)> {
         Driver.combineLatest(
-            slaseIsShow.asDriverOnErrorJustComplete(),
+            salesIsShow.asDriverOnErrorJustComplete(),
             unitSoldIsShow.asDriverOnErrorJustComplete(),
             profitIsShow.asDriverOnErrorJustComplete(),
             refundsIsShow.asDriverOnErrorJustComplete(),
@@ -65,6 +65,7 @@ final class DashboardViewModel: ViewModelProtocol {
         
         navigateToSettings()
         bindChartsDataToCollectionDataStorage()
+        changeChartsVisible()
     }
     
     func transform(_ input: Input) -> Output {
@@ -132,7 +133,8 @@ final class DashboardViewModel: ViewModelProtocol {
         .just(
             .init(
                 style: .image(.currency),
-                actionType: .popUp({ center in
+                actionType: .popUp({ [weak self] center in
+                    guard let self else { return }
                     self.showCurrencyPopover.onNext(center)
                 })
             )
@@ -211,36 +213,144 @@ final class DashboardViewModel: ViewModelProtocol {
         
     }
     
-    // MARK: Collection data changed
+    // MARK: Charts visibility
     
-//    private func changeChartsVisible() {
-//        chartsVisible
-//            .withLatestFrom(collectionData.asDriverOnErrorJustComplete()) { visibles, collectionData in
-//                return (visibles, collectionData)
-//            }
-//            .withUnretained(self)
-//            .drive(onNext: { (owner, arg1) in
-//                let (salesIsShow, unitSoldIsShow, profitIsShow, refundsIsShow, marginIsShow, roiIsShow) = arg1.0
-//                let collectionData = arg1.1
-//
-//                collectionData.map { section in
-//                    section.items.map { item in
-//                        switch item {
-//                        case .financialMetric(var input):
-//                            input
-//                        default: break
-//                        }
-//                    }
-//                    return section
-//                }
-//
-//            })
-//            .disposed(by: disposeBag)
-//
-        
-        
-//    }
+    private func changeChartsVisible() {
+        chartsVisible
+            .withLatestFrom(collectionData.asDriverOnErrorJustComplete()) { visibles, collectionData in
+                return (visibles, collectionData)
+            }
+            .withUnretained(self)
+            .drive(onNext: { (owner, arg1) in
+                let (salesIsShow, unitSoldIsShow, profitIsShow, refundsIsShow, marginIsShow, roiIsShow) = arg1.0
+                let collectionData = arg1.1
+
+                let updatetCollectionData = collectionData.map { section -> DashboardSectionModel in
+                    
+                    let items = section.items.map { item -> DashboardCollectionItem in
+                        switch item {
+                        case .financialMetric(let input):
+                            let updatedInput = owner.updateFinancialMetricInputBuyIsShowState(
+                                input: input,
+                                salesIsShow: salesIsShow,
+                                unitSoldIsShow: unitSoldIsShow,
+                                profitIsShow: profitIsShow,
+                                refundsIsShow: refundsIsShow,
+                                marginIsShow: marginIsShow,
+                                roiIsShow: roiIsShow
+                            )
+                            return .financialMetric(updatedInput)
+                        case .overview(let input):
+                            let updatedInput = owner.updateOveviewInputBuyIsShowState(
+                                input: input,
+                                salesIsShow: salesIsShow,
+                                unitSoldIsShow: unitSoldIsShow,
+                                profitIsShow: profitIsShow,
+                                refundsIsShow: refundsIsShow,
+                                marginIsShow: marginIsShow,
+                                roiIsShow: roiIsShow
+                            )
+                            return .overview(updatedInput)
+                        default:
+                            return item
+                        }
+                    }
+                    
+                    return .init(
+                        model: section.model,
+                        items: items
+                    )
+                }
+                
+                owner.collectionData.onNext(updatetCollectionData)
+            })
+            .disposed(by: disposeBag)
+
+    }
     
+    private func updateFinancialMetricInputBuyIsShowState(
+        input: FinancialMetricDashboardCell.Input,
+        salesIsShow: Bool,
+        unitSoldIsShow: Bool,
+        profitIsShow: Bool,
+        refundsIsShow: Bool,
+        marginIsShow: Bool,
+        roiIsShow: Bool
+    ) -> FinancialMetricDashboardCell.Input {
+        var input = input
+        switch input.cellType {
+        case .sales:
+            input.switchState = salesIsShow
+        case .unitsSold:
+            input.switchState = unitSoldIsShow
+        case .profit:
+            input.switchState = profitIsShow
+        case .refunds:
+            input.switchState = refundsIsShow
+        case .margin:
+            input.switchState = marginIsShow
+        case .roi:
+            input.switchState = roiIsShow
+        }
+        return input
+    }
+    
+    
+    private func updateOveviewInputBuyIsShowState(
+        input: OverviewDashboardCell.Input,
+        salesIsShow: Bool,
+        unitSoldIsShow: Bool,
+        profitIsShow: Bool,
+        refundsIsShow: Bool,
+        marginIsShow: Bool,
+        roiIsShow: Bool
+    ) -> OverviewDashboardCell.Input {
+        var input = input
+        input.chartsData = input.chartsData.map { item in
+            var item = item
+            switch item.chartType {
+            case .sales:
+                item.isVisible = salesIsShow
+            case .unitsSold:
+                item.isVisible = unitSoldIsShow
+            case .profit:
+                item.isVisible = profitIsShow
+            case .refunds:
+                item.isVisible = refundsIsShow
+            case .margin:
+                item.isVisible = marginIsShow
+            case .roi:
+                item.isVisible = roiIsShow
+            }
+            return item
+        }
+        
+        input.markerData = input.markerData.map { input in
+            var input = input
+            input.content = input.content.map { item in
+                var item = item
+                switch item.chartType {
+                case .sales:
+                    item.isVisible = salesIsShow
+                case .unitsSold:
+                    item.isVisible = unitSoldIsShow
+                case .profit:
+                    item.isVisible = profitIsShow
+                case .refunds:
+                    item.isVisible = refundsIsShow
+                case .margin:
+                    item.isVisible = marginIsShow
+                case .roi:
+                    item.isVisible = roiIsShow
+                }
+                return item
+                
+            }
+            return input
+        }
+        return input
+    }
+
     // MARK: -  Make collection data
    
     private func bindChartsDataToCollectionDataStorage() {
@@ -374,8 +484,9 @@ final class DashboardViewModel: ViewModelProtocol {
 
                             }
                         ),
-                        switchChangedOn: { isOn in
-                            print("\(isOn)")
+                        switchChangedOn: { [weak self] isOn in
+                            guard let self else { return }
+                            self.salesIsShow.onNext(isOn)
                         }
                     )
                 ),
@@ -398,8 +509,9 @@ final class DashboardViewModel: ViewModelProtocol {
 
                             }
                         ),
-                        switchChangedOn: { _ in
-
+                        switchChangedOn: { [weak self] isOn in
+                            guard let self else { return }
+                            self.unitSoldIsShow.onNext(isOn)
                         }
                     )
                 ),
@@ -422,8 +534,9 @@ final class DashboardViewModel: ViewModelProtocol {
 
                             }
                         ),
-                        switchChangedOn: { _ in
-
+                        switchChangedOn: { [weak self] isOn in
+                            guard let self else { return }
+                            self.profitIsShow.onNext(isOn)
                         }
                     )
                 ),
@@ -446,8 +559,9 @@ final class DashboardViewModel: ViewModelProtocol {
 
                             }
                         ),
-                        switchChangedOn: { _ in
-
+                        switchChangedOn: { [weak self] isOn in
+                            guard let self else { return }
+                            self.refundsIsShow.onNext(isOn)
                         }
                     )
                 ),
@@ -470,8 +584,9 @@ final class DashboardViewModel: ViewModelProtocol {
 
                             }
                         ),
-                        switchChangedOn: { _ in
-
+                        switchChangedOn: { [weak self] isOn in
+                            guard let self else { return }
+                            self.marginIsShow.onNext(isOn)
                         }
                     )
                 ),
@@ -494,8 +609,9 @@ final class DashboardViewModel: ViewModelProtocol {
 
                             }
                         ),
-                        switchChangedOn: { _ in
-
+                        switchChangedOn: { [weak self] isOn in
+                            guard let self else { return }
+                            self.roiIsShow.onNext(isOn)
                         }
                     )
                 )
@@ -516,27 +632,33 @@ final class DashboardViewModel: ViewModelProtocol {
                     chartsData: [
                         .init(
                             chartType: .sales,
-                            points: makePoints(from: chartsData.sales.values)
+                            points: makePoints(from: chartsData.sales.values),
+                            isVisible: true
                         ),
                         .init(
                             chartType: .unitsSold,
-                            points: makePoints(from: chartsData.unitsSold.values)
+                            points: makePoints(from: chartsData.unitsSold.values),
+                            isVisible: true
                         ),
                         .init(
                             chartType: .profit,
-                            points: makePoints(from: chartsData.profit.values)
+                            points: makePoints(from: chartsData.profit.values),
+                            isVisible: true
                         ),
                         .init(
                             chartType: .refunds,
-                            points: makePoints(from: chartsData.refunds.values)
+                            points: makePoints(from: chartsData.refunds.values),
+                            isVisible: true
                         ),
                         .init(
                             chartType: .margin,
-                            points: makePoints(from: chartsData.margin.values)
+                            points: makePoints(from: chartsData.margin.values),
+                            isVisible: true
                         ),
                         .init(
                             chartType: .roi,
-                            points: makePoints(from: chartsData.roi.values)
+                            points: makePoints(from: chartsData.roi.values),
+                            isVisible: true
                         )
                     ],
                      markerData: markerData
@@ -554,6 +676,7 @@ final class DashboardViewModel: ViewModelProtocol {
                         .Input(content: [
                             .init(
                                 chartType: .sales,
+                                isVisible: true,
                                 contentData: .init(
                                     date: label,
                                     value: "\(chartsData.sales.values[index])"
@@ -561,6 +684,7 @@ final class DashboardViewModel: ViewModelProtocol {
                             ),
                             .init(
                                 chartType: .unitsSold,
+                                isVisible: true,
                                 contentData: .init(
                                     date: label,
                                     value: "\(chartsData.profit.values[index])"
@@ -568,6 +692,7 @@ final class DashboardViewModel: ViewModelProtocol {
                             ),
                             .init(
                                 chartType: .profit,
+                                isVisible: true,
                                 contentData: .init(
                                     date: label,
                                     value: "\(chartsData.sales.values[index])"
@@ -575,6 +700,7 @@ final class DashboardViewModel: ViewModelProtocol {
                             ),
                             .init(
                                 chartType: .refunds,
+                                isVisible: true,
                                 contentData: .init(
                                     date: label,
                                     value: "\(chartsData.refunds.values[index])"
@@ -582,6 +708,7 @@ final class DashboardViewModel: ViewModelProtocol {
                             ),
                             .init(
                                 chartType: .margin,
+                                isVisible: true,
                                 contentData: .init(
                                     date: label,
                                     value: "\(chartsData.margin.values[index])"
@@ -589,6 +716,7 @@ final class DashboardViewModel: ViewModelProtocol {
                             ),
                             .init(
                                 chartType: .roi,
+                                isVisible: true,
                                 contentData: .init(
                                     date: label,
                                     value: "\(chartsData.roi.values[index])"

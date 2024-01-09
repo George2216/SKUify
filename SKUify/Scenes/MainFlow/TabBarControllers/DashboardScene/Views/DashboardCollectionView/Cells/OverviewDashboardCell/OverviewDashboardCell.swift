@@ -10,9 +10,13 @@ import Charts
 
 final class OverviewDashboardCell: UICollectionViewCell {
     
+    // MARK: UIElements
+
     private let overviewTitleLabel = UILabel()
     private lazy var chartsView = OverviewCellChartsView()
     
+    //MARK: - Initializers
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
@@ -31,10 +35,11 @@ final class OverviewDashboardCell: UICollectionViewCell {
     
     func setInput(_ input: Input) {
         let dataSets = input.chartsData.map { item in
-            OverviewCellLineChartDataSet(
-                item.points,
+            let set = OverviewCellLineChartDataSet(
+                item.isVisible ? item.points : [],
                 color: item.chartType.chartColor
             )
+            return set
         }
         chartsView.setupInput(
             .init(
@@ -89,6 +94,8 @@ final class OverviewDashboardCell: UICollectionViewCell {
     }
 }
 
+//MARK: - Input
+
 extension OverviewDashboardCell {
     struct Input {
         var labels: [String]
@@ -98,6 +105,7 @@ extension OverviewDashboardCell {
         struct ChartItem {
             var chartType: ChartType
             var points: [CGPoint]
+            var isVisible: Bool
         }
     }
     

@@ -13,6 +13,7 @@ final class OverviewCellChartsView: LineChartView {
 
     private lazy var markerView = OverviewChartMarkerView(chartView: self)
     private var markerDataStorage: [OverviewChartMarkerView.Input] = []
+    
     //MARK: - Initializers
 
     override init(frame: CGRect) {
@@ -34,6 +35,7 @@ final class OverviewCellChartsView: LineChartView {
         xAxis.setLabelCount(input.labels.count , force: false)
         xAxis.labelCount = input.labels.count
         markerDataStorage = input.markerData
+        markerView.isHidden = true
     }
     
     
@@ -112,12 +114,15 @@ final class OverviewCellChartsView: LineChartView {
     
 }
 
+//MARK: - Input
+
 extension OverviewCellChartsView {
     struct Input {
         let dataSets: [LineChartDataSet]
         let labels: [String]
         let markerData: [OverviewChartMarkerView.Input]
     }
+    
 }
 
 //MARK: ChartViewDelegate
@@ -132,6 +137,8 @@ extension OverviewCellChartsView: ChartViewDelegate {
         guard xPosition < markerDataStorage.count else { return }
         let markerData = markerDataStorage[xPosition]
         markerView.setupInput(markerData)
+        markerView.isHidden = false
     }
+    
     
 }

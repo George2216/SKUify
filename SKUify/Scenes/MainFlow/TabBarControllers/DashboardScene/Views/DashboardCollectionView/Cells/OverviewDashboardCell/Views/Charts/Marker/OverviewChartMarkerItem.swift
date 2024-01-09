@@ -51,6 +51,7 @@ final class OverviewChartMarkerItem: UIView {
 extension OverviewChartMarkerItem {
     struct Input {
         let chartType: ChartType
+        var isVisible: Bool
         let contentData: OverviewChartMarkerContentItem.Input
     }
     
