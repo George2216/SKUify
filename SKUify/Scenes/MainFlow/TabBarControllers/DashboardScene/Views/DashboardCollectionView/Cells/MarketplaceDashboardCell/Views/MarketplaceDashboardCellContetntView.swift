@@ -35,10 +35,11 @@ final class MarketplaceDashboardCellContentView: UIView {
     private lazy var marginLabelDecorator = TitleDecorator(decoratedView: marginLabel)
     
     // Containers
-    private let contentStack = VerticalStack()
-    private let fristRowStack = HorizontalStack()
-    private let sectondRowStack = HorizontalStack()
-    
+    private let contentStack = HorizontalStack()
+    private let firstRowStack = VerticalStack()
+    private let secondRowStack = VerticalStack()
+    private let thirdRowStack = VerticalStack()
+
     //MARK: - Initializers
 
     override init(frame: CGRect) {
@@ -48,6 +49,7 @@ final class MarketplaceDashboardCellContentView: UIView {
         setupContentStack()
         setupFristRowStack()
         setupSecondRowStack()
+        setupThirdRowStack()
     }
     
     required init?(coder: NSCoder) {
@@ -57,28 +59,33 @@ final class MarketplaceDashboardCellContentView: UIView {
     //MARK: - Setup views
 
     private func setupSecondRowStack() {
-        sectondRowStack.views = [
-            unitLabelDecorator,
+        secondRowStack.views = [
+            profitLabelDecorator,
             roiLabelDecorator,
-            marginLabelDecorator
         ]
     }
 
     private func setupFristRowStack() {
-        fristRowStack.views = [
+        firstRowStack.views = [
             salesLabelDecorator,
-            profitLabelDecorator,
+            unitLabelDecorator
+        ]
+    }
+    
+    private func setupThirdRowStack() {
+        thirdRowStack.views = [
+            marginLabelDecorator,
             refundsLabelDecorator
         ]
     }
     
     private func setupContentStack() {
         contentStack.views = [
-            fristRowStack,
-            sectondRowStack
+            firstRowStack,
+            secondRowStack,
+            thirdRowStack
         ]
-        contentStack.distribution = .fillEqually
-        contentStack.spacing = 0
+        contentStack.distribution = .equalSpacing
         
         addSubview(contentStack)
         contentStack.snp.makeConstraints { make in
@@ -95,11 +102,12 @@ final class MarketplaceDashboardCellContentView: UIView {
     
     private func setupStacks() {
         [
-            fristRowStack,
-            sectondRowStack
+            firstRowStack,
+            secondRowStack,
+            thirdRowStack
         ]
             .forEach { stack in
-                stack.distribution = .equalSpacing
+                stack.distribution = .fillProportionally
             }
     }
     
@@ -118,8 +126,9 @@ final class MarketplaceDashboardCellContentView: UIView {
                     type: .bold,
                     size: 15
                 )
-        }
+            }
     }
+    
 }
 
 // MARK: Input
