@@ -17,7 +17,8 @@ final class DashboardViewModel: ViewModelProtocol {
 
     private let showCurrencyPopover = PublishSubject<CGPoint>()
     private let showTimeSlotsPopover = PublishSubject<CGPoint>()
-
+    private let showCalendarPopover = PublishSubject<Void>()
+    
     private let toSettings = PublishSubject<Void>()
         
     private let dashboardDataState = BehaviorSubject<DashboardDataState>(value: .today)
@@ -70,6 +71,7 @@ final class DashboardViewModel: ViewModelProtocol {
     
     func transform(_ input: Input) -> Output {
         subscribeOnReloadData(input)
+        subscribeOnSelectedCalendarDates(input)
         return Output(
             settingsBarButtonConfig: makeSettingsBarButtonConfig(),
             currencyBarButtonConfig: makeCurrencyBarButtonConfig(),
@@ -79,6 +81,7 @@ final class DashboardViewModel: ViewModelProtocol {
             collectionData: collectionData.asDriverOnErrorJustComplete(),
             showCurrencyPopover: showCurrencyPopover.asDriverOnErrorJustComplete(),
             showTimeSlotsPopover: showTimeSlotsPopover.asDriverOnErrorJustComplete(),
+            showCalendarPopover: showCalendarPopover.asDriverOnErrorJustComplete(),
             fetching: activityIndicator.asDriver(),
             error: errorTracker.asBannerInput(.error),
             timeSlots: makeTimeSlotsInput()
@@ -97,6 +100,20 @@ final class DashboardViewModel: ViewModelProtocol {
             .disposed(by: disposeBag)
     }
     
+    private func subscribeOnSelectedCalendarDates(_ input: Input) {
+        input.selectedCalendarDates
+            .withUnretained(self)
+            .drive(onNext: { (owner, arg1) in
+                let (startDate, endDate) = arg1
+                owner.dashboardDataState.onNext(
+                    .custom(
+                        startDate: startDate,
+                        endDate: endDate
+                    )
+                )
+            })
+            .disposed(by: disposeBag)
+    }
     // MARK: - Make time slots data
     
     private func makeTimeSlotsInput() -> Driver<[TimeSlotCell.Input]> {
@@ -108,7 +125,13 @@ final class DashboardViewModel: ViewModelProtocol {
                         title: item.title,
                         selectRow: { [weak self] row in
                             guard let self else { return }
-                            self.dashboardDataState.onNext(cases[row])
+                            switch cases[row] {
+                            case .custom:
+                                self.showCalendarPopover.onNext(())
+                            default:
+                                self.dashboardDataState.onNext(cases[row])
+
+                            }
                         }
                     )
                 }
@@ -172,45 +195,51 @@ final class DashboardViewModel: ViewModelProtocol {
         )
     }
     
-
+    
     private func fetchChartsByState() -> Driver<ChartMainDTO> {
         dashboardDataState
-            .flatMap(weak: self) { owner, state in
-                let chartUseCase = owner.chartUseCase
-                var chartsObservable: Observable<ChartMainDTO>?
-                
-                switch state {
-                case .today:
-                    chartsObservable = chartUseCase
-                        .chartsToday(state.startDate)
-                case .yesterday:
-                    chartsObservable = chartUseCase
-                         .chartsYesterday(state.startDate)
-                case .days7:
-                    chartsObservable = chartUseCase
-                         .chartsWeek(state.startDate)
-                case .days30:
-                    chartsObservable = chartUseCase
-                         .chartsMonth(state.startDate)
-                case .days90:
-                    chartsObservable = chartUseCase
-                         .chartsQuarter(state.startDate)
-                case .days365:
-                    chartsObservable = chartUseCase
-                         .chartsYear(state.startDate)
-                case .all:
-                    chartsObservable = chartUseCase
-                         .chartsAll()
-                case .custom:
-                    chartsObservable = chartUseCase
-                         .chartsCustom(state.startDate, "")
-                }
-                return chartsObservable?
-                    .trackActivity(owner.activityIndicator)
-                    .trackError(owner.errorTracker) ?? .empty()
-            }
             .asDriverOnErrorJustComplete()
-        
+            .flatMapLatest(weak: self) { owner, state in
+                //chartUseCase methods can return an error if it needs to go inside the FlapMap and return the driver so that the error does not reach the subscriber
+                owner.makeChartsDataByState(state: state)
+            }
+    }
+    
+    private func makeChartsDataByState(state: DashboardDataState) -> Driver<ChartMainDTO> {
+        let observable: Observable<ChartMainDTO>?
+        switch state {
+        case .today:
+            observable =  chartUseCase
+                .chartsToday(state.startDate)
+        case .yesterday:
+            observable = chartUseCase
+                 .chartsYesterday(state.startDate)
+        case .days7:
+            observable = chartUseCase
+                 .chartsWeek(state.startDate)
+        case .days30:
+            observable =  chartUseCase
+                 .chartsMonth(state.startDate)
+        case .days90:
+            observable =  chartUseCase
+                 .chartsQuarter(state.startDate)
+        case .days365:
+            observable =  chartUseCase
+                 .chartsYear(state.startDate)
+        case .all:
+            observable = chartUseCase
+                 .chartsAll()
+        case .custom:
+            observable = chartUseCase
+                .chartsCustom(
+                    state.startDate,
+                    state.endDate
+                )
+        }
+        return observable?
+            .trackActivity(activityIndicator)
+            .trackError(errorTracker)
+            .asDriverOnErrorJustComplete() ?? .empty()
     }
     
     // MARK: Charts visibility
@@ -865,6 +894,7 @@ final class DashboardViewModel: ViewModelProtocol {
 extension DashboardViewModel {
     struct Input {
         let reloadData: Driver<Void>
+        let selectedCalendarDates: Driver<(Date,Date?)>
     }
     
     struct Output {
@@ -879,6 +909,7 @@ extension DashboardViewModel {
         // Popovers points
         let showCurrencyPopover: Driver<CGPoint>
         let showTimeSlotsPopover: Driver<CGPoint>
+        let showCalendarPopover: Driver<Void>
         // Trackers
         let fetching: Driver<Bool>
         let error: Driver<BannerView.Input>

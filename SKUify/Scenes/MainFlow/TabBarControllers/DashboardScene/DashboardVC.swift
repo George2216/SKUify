@@ -13,6 +13,9 @@ import RxSwift
 final class DashboardVC: BaseViewController {
     var viewModel: DashboardViewModel!
     
+    private let selectedCalendarDates = PublishSubject<(Date,Date?)>()
+    // MARK: UI elements
+    
     // nav bar items
     private lazy var settingsBarButtonItem = DefaultBarButtonItem()
     private lazy var currencyBarButtonItem = DefaultBarButtonItem()
@@ -27,6 +30,7 @@ final class DashboardVC: BaseViewController {
     )
   
     private lazy var timeSlotsPopover = TimeSlotPopoverVC()
+    private lazy var calendarPopover = RangedCalendarBuilder.buildRangedCalendarModule(delegate: self)
     private lazy var currencyPopoverController = CurrencyPopoverVC()
     
     override func viewDidLoad() {
@@ -35,10 +39,14 @@ final class DashboardVC: BaseViewController {
         let refreshingTriger = collectionView.refreshControl!.rx
             .controlEvent(.valueChanged)
             .asDriver()
+        let viewWillAppear = rx.sentMessage(#selector(UIViewController.viewWillAppear(_:)))
+            .mapToVoid()
+            .asDriverOnErrorJustComplete()
         
         let output = viewModel.transform(
             .init(
-                reloadData: refreshingTriger
+                reloadData: Driver.merge(refreshingTriger, viewWillAppear),
+                selectedCalendarDates: selectedCalendarDates.asDriverOnErrorJustComplete()
             )
         )
 
@@ -53,6 +61,7 @@ final class DashboardVC: BaseViewController {
         bindToFilterByDateButtonConfig(output)
         bindTimeSlotsPopover(output)
         bindCurrencyPopover(output)
+        bingCalendarPopover(output)
         bindToCollectionView(output)
         bindToTimeSlotsPopover(output)
         bindToLoader(output)
@@ -173,7 +182,7 @@ extension DashboardVC {
             .withUnretained(self)
             .map { owner, center in
                 PopoverManager.Input(
-                    pointView: center,
+                    bindingType: .point(center),
                     preferredSize: .init(
                         width: owner.view.frame.width - 50,
                         height: 450
@@ -190,12 +199,29 @@ extension DashboardVC {
             .withUnretained(self)
             .map { owner, center in
                 PopoverManager.Input(
-                    pointView: center,
+                    bindingType: .point(center),
                     preferredSize: .init(
                         width: 150,
                         height: 250
                     ),
                     popoverVC: owner.currencyPopoverController
+                )
+            }
+            .drive(rx.popover)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bingCalendarPopover(_ output: DashboardViewModel.Output) {
+        output.showCalendarPopover
+            .withUnretained(self)
+            .map { owner, _ in
+                PopoverManager.Input(
+                    bindingType: .view(owner.filterByDateButton),
+                    preferredSize: .init(
+                        width: owner.view.frame.width - 20,
+                        height: owner.view.frame.width - 50
+                    ),
+                    popoverVC: owner.calendarPopover
                 )
             }
             .drive(rx.popover)
@@ -221,5 +247,16 @@ extension DashboardVC {
             .disposed(by: disposeBag)
     }
     
+    
+}
+
+extension DashboardVC: RangedCalendarPopoverDelegate {
+    func selectedCalendarDates(
+        startDate: Date,
+        endDate: Date?
+    ) {
+        selectedCalendarDates.onNext((startDate, endDate))
+        calendarPopover.dismiss(animated: true)
+    }
     
 }

@@ -22,7 +22,14 @@ final class PopoverManager: PopoverManagerProtocol {
         popoverContentViewController.isModalInPresentation = false
 
         if let popoverPresentationController = popoverContentViewController.popoverPresentationController {
-            popoverPresentationController.sourceView = viewAtPoint(input.pointView)
+            
+            switch input.bindingType {
+            case .point(let center):
+                popoverPresentationController.sourceView = viewAtPoint(center)
+            case .view(let view):
+                popoverPresentationController.sourceView = view
+            }
+            
             popoverPresentationController.permittedArrowDirections = .any
             popoverPresentationController.delegate = baseController
             if let preferredSize = input.preferredSize {
@@ -41,11 +48,16 @@ final class PopoverManager: PopoverManagerProtocol {
 
 extension PopoverManager {
     struct Input {
-        let pointView: CGPoint
+        let bindingType: BindingType
         var preferredSize: CGSize? = nil
         let popoverVC: UIViewController
     }
     
+    enum BindingType {
+        case view(_ view: UIView)
+        case point(_ point: CGPoint)
+    }
+
 }
 
 // MARK: - Find view by point

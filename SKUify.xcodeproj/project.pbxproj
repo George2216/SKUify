@@ -25,6 +25,11 @@
 		5E0E66BC2B4C27030005E576 /* RMMarketplaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E66BB2B4C27030005E576 /* RMMarketplaces.swift */; };
 		5E0E66C02B4C32B20005E576 /* MarketplacesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E66BF2B4C32B20005E576 /* MarketplacesUseCase.swift */; };
 		5E0E66C22B4C32E10005E576 /* MarketplacesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E66C12B4C32E10005E576 /* MarketplacesUseCase.swift */; };
+		5E0E67082B517A830005E576 /* RangedCalendarPopoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E67072B517A830005E576 /* RangedCalendarPopoverVC.swift */; };
+		5E0E670A2B517B490005E576 /* RangedCalendarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E67092B517B490005E576 /* RangedCalendarHeaderView.swift */; };
+		5E0E670C2B517B850005E576 /* RangedCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E670B2B517B850005E576 /* RangedCalendarCell.swift */; };
+		5E0E670E2B517C220005E576 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E670D2B517C210005E576 /* Date.swift */; };
+		5E0E67102B517FFC0005E576 /* RangedCalendarBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E670F2B517FFC0005E576 /* RangedCalendarBuilder.swift */; };
 		5E41892F2B0669DB0070EDA4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E41892E2B0669DB0070EDA4 /* AppDelegate.swift */; };
 		5E4189312B0669DB0070EDA4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4189302B0669DB0070EDA4 /* SceneDelegate.swift */; };
 		5E4189382B0669DC0070EDA4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5E4189372B0669DC0070EDA4 /* Assets.xcassets */; };
@@ -122,6 +127,9 @@
 		5E5C9DCD2B32F834003180FF /* TimeSlotPopoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5C9DCC2B32F834003180FF /* TimeSlotPopoverVC.swift */; };
 		5E5C9DCF2B32F85C003180FF /* TimeSlotCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5C9DCE2B32F85C003180FF /* TimeSlotCollectionView.swift */; };
 		5E5C9DD22B32F9EA003180FF /* TimeSlotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5C9DD12B32F9EA003180FF /* TimeSlotCell.swift */; };
+		5E63C3432B5534AC00C30BF7 /* RangedCalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63C3422B5534AC00C30BF7 /* RangedCalendarViewModel.swift */; };
+		5E63C3462B55447E00C30BF7 /* RxFSCalendarDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63C3452B55447E00C30BF7 /* RxFSCalendarDelegateProxy.swift */; };
+		5E63C3482B55A4E100C30BF7 /* RangedCalendarFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63C3472B55A4E100C30BF7 /* RangedCalendarFooterView.swift */; };
 		5ED910402B12045D00FC0A66 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED9103F2B12045D00FC0A66 /* LoginView.swift */; };
 		5ED910422B120AD300FC0A66 /* ClickableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED910412B120AD300FC0A66 /* ClickableLabel.swift */; };
 		5ED910452B121BD200FC0A66 /* PasswordRecoveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED910442B121BD200FC0A66 /* PasswordRecoveryView.swift */; };
@@ -454,6 +462,11 @@
 		5E0E66BB2B4C27030005E576 /* RMMarketplaces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMMarketplaces.swift; sourceTree = "<group>"; };
 		5E0E66BF2B4C32B20005E576 /* MarketplacesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplacesUseCase.swift; sourceTree = "<group>"; };
 		5E0E66C12B4C32E10005E576 /* MarketplacesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplacesUseCase.swift; sourceTree = "<group>"; };
+		5E0E67072B517A830005E576 /* RangedCalendarPopoverVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangedCalendarPopoverVC.swift; sourceTree = "<group>"; };
+		5E0E67092B517B490005E576 /* RangedCalendarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangedCalendarHeaderView.swift; sourceTree = "<group>"; };
+		5E0E670B2B517B850005E576 /* RangedCalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangedCalendarCell.swift; sourceTree = "<group>"; };
+		5E0E670D2B517C210005E576 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		5E0E670F2B517FFC0005E576 /* RangedCalendarBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangedCalendarBuilder.swift; sourceTree = "<group>"; };
 		5E41892B2B0669DB0070EDA4 /* SKUify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SKUify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E41892E2B0669DB0070EDA4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5E4189302B0669DB0070EDA4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -550,6 +563,9 @@
 		5E5C9DCC2B32F834003180FF /* TimeSlotPopoverVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSlotPopoverVC.swift; sourceTree = "<group>"; };
 		5E5C9DCE2B32F85C003180FF /* TimeSlotCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSlotCollectionView.swift; sourceTree = "<group>"; };
 		5E5C9DD12B32F9EA003180FF /* TimeSlotCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSlotCell.swift; sourceTree = "<group>"; };
+		5E63C3422B5534AC00C30BF7 /* RangedCalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangedCalendarViewModel.swift; sourceTree = "<group>"; };
+		5E63C3452B55447E00C30BF7 /* RxFSCalendarDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxFSCalendarDelegateProxy.swift; sourceTree = "<group>"; };
+		5E63C3472B55A4E100C30BF7 /* RangedCalendarFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangedCalendarFooterView.swift; sourceTree = "<group>"; };
 		5ED9103F2B12045D00FC0A66 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		5ED910412B120AD300FC0A66 /* ClickableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClickableLabel.swift; sourceTree = "<group>"; };
 		5ED910442B121BD200FC0A66 /* PasswordRecoveryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRecoveryView.swift; sourceTree = "<group>"; };
@@ -871,6 +887,17 @@
 				5E0E66AA2B46EDA90005E576 /* OverviewChartMarkerContentItem.swift */,
 			);
 			path = Marker;
+			sourceTree = "<group>";
+		};
+		5E0E67062B517A620005E576 /* RangedCalendarPopoverVC */ = {
+			isa = PBXGroup;
+			children = (
+				5E0E670F2B517FFC0005E576 /* RangedCalendarBuilder.swift */,
+				5E0E67072B517A830005E576 /* RangedCalendarPopoverVC.swift */,
+				5E63C3422B5534AC00C30BF7 /* RangedCalendarViewModel.swift */,
+				5E63C3442B55355F00C30BF7 /* Views */,
+			);
+			path = RangedCalendarPopoverVC;
 			sourceTree = "<group>";
 		};
 		5E4189222B0669DB0070EDA4 = {
@@ -1280,6 +1307,7 @@
 				5E418A5E2B07B9B00070EDA4 /* ActivityTracker.swift */,
 				5E418A602B07B9C20070EDA4 /* ErrorTracker.swift */,
 				5E418A622B07B9D30070EDA4 /* Reusable.swift */,
+				5E63C3452B55447E00C30BF7 /* RxFSCalendarDelegateProxy.swift */,
 				5E418A672B07C3190070EDA4 /* Banner */,
 				5E418A762B0B84D90070EDA4 /* Extensions */,
 				5ED911E92B23550D00FC0A66 /* Loader */,
@@ -1334,6 +1362,7 @@
 				5ED910B82B140C8900FC0A66 /* UIScrollView.swift */,
 				5ED911222B174FDA00FC0A66 /* UIWindow.swift */,
 				5ED911302B17979E00FC0A66 /* UIButton.swift */,
+				5E0E670D2B517C210005E576 /* Date.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1421,6 +1450,16 @@
 			children = (
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		5E63C3442B55355F00C30BF7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5E0E670B2B517B850005E576 /* RangedCalendarCell.swift */,
+				5E0E67092B517B490005E576 /* RangedCalendarHeaderView.swift */,
+				5E63C3472B55A4E100C30BF7 /* RangedCalendarFooterView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		5ED910942B13FA3500FC0A66 /* AppEventsPlatform */ = {
@@ -1547,9 +1586,10 @@
 		5ED9114A2B1CB6D200FC0A66 /* Popovers */ = {
 			isa = PBXGroup;
 			children = (
-				5E5C9DCB2B32F82B003180FF /* TimeSlotPopoverVC */,
 				5ED9114B2B1CB6DE00FC0A66 /* CalendarPopoverVC.swift */,
 				5ED9114D2B1CB6E900FC0A66 /* CurrencyPopoverVC.swift */,
+				5E0E67062B517A620005E576 /* RangedCalendarPopoverVC */,
+				5E5C9DCB2B32F82B003180FF /* TimeSlotPopoverVC */,
 			);
 			path = Popovers;
 			sourceTree = "<group>";
@@ -2786,6 +2826,7 @@
 				5E418A802B0B9D3E0070EDA4 /* DashboardViewModel.swift in Sources */,
 				5E0E66962B4582FB0005E576 /* DashboardStateHelper.swift in Sources */,
 				5ED911432B1A24C500FC0A66 /* DefaultSettingsButton.swift in Sources */,
+				5E63C3462B55447E00C30BF7 /* RxFSCalendarDelegateProxy.swift in Sources */,
 				5E418A6D2B07C3470070EDA4 /* BannerViewManagerProtocol.swift in Sources */,
 				5E418A4B2B07B7080070EDA4 /* DIContainer.swift in Sources */,
 				5E418AB72B0EACED0070EDA4 /* CALayer.swift in Sources */,
@@ -2795,6 +2836,7 @@
 				5E418A5F2B07B9B00070EDA4 /* ActivityTracker.swift in Sources */,
 				5E418A782B0B84F00070EDA4 /* UITextField.swift in Sources */,
 				5ED9113C2B1A0E7600FC0A66 /* SettingsViewModel.swift in Sources */,
+				5E0E670A2B517B490005E576 /* RangedCalendarHeaderView.swift in Sources */,
 				5E0E66AB2B46EDA90005E576 /* OverviewChartMarkerContentItem.swift in Sources */,
 				5ED9115E2B1CBFF500FC0A66 /* FinancialMetricDashboardCell.swift in Sources */,
 				5E418ABD2B0F964B0070EDA4 /* ContainerBorderVerticalStack.swift in Sources */,
@@ -2821,6 +2863,8 @@
 				5ED911692B1DD51B00FC0A66 /* SmallSwitch.swift in Sources */,
 				5ED911772B1F82B700FC0A66 /* OverviewCellChartsView.swift in Sources */,
 				5ED9113E2B1A0E8100FC0A66 /* SettingsNavigator.swift in Sources */,
+				5E0E67102B517FFC0005E576 /* RangedCalendarBuilder.swift in Sources */,
+				5E0E67082B517A830005E576 /* RangedCalendarPopoverVC.swift in Sources */,
 				5E418A5A2B07B88D0070EDA4 /* AppNavigator.swift in Sources */,
 				5ED911282B175DF800FC0A66 /* PopoverManagerProtocol.swift in Sources */,
 				5E418A6F2B0AB58F0070EDA4 /* Colors.swift in Sources */,
@@ -2846,6 +2890,7 @@
 				5E0E66A62B46D32C0005E576 /* OverviewChartMarkerView.swift in Sources */,
 				5ED911672B1DD39800FC0A66 /* FMCellBackgroundImage.swift in Sources */,
 				5E5C9DC82B32F779003180FF /* TableView.swift in Sources */,
+				5E0E670C2B517B850005E576 /* RangedCalendarCell.swift in Sources */,
 				5E418A612B07B9C20070EDA4 /* ErrorTracker.swift in Sources */,
 				5E4189312B0669DB0070EDA4 /* SceneDelegate.swift in Sources */,
 				5ED9116B2B1DF08200FC0A66 /* FMCellChartsView.swift in Sources */,
@@ -2857,6 +2902,7 @@
 				5ED9115C2B1CB90300FC0A66 /* SectionModel.swift in Sources */,
 				5E418A7D2B0B969A0070EDA4 /* MainTabBarNavigator.swift in Sources */,
 				5E418AB92B0EB0F40070EDA4 /* TitledTextField.swift in Sources */,
+				5E63C3482B55A4E100C30BF7 /* RangedCalendarFooterView.swift in Sources */,
 				5ED911062B160CDC00FC0A66 /* SalesNavigator.swift in Sources */,
 				5ED911582B1CB8A800FC0A66 /* SectionType.swift in Sources */,
 				5ED911212B16868500FC0A66 /* DefaultBarButtonItem.swift in Sources */,
@@ -2868,6 +2914,7 @@
 				5E418A572B07B8780070EDA4 /* AppManagerUseCases.swift in Sources */,
 				5ED911102B16112E00FC0A66 /* ExpensesVC.swift in Sources */,
 				5ED911452B1A2E6B00FC0A66 /* LogoutSettingsButton.swift in Sources */,
+				5E0E670E2B517C220005E576 /* Date.swift in Sources */,
 				5E418ABB2B0F8A490070EDA4 /* VerticaStack.swift in Sources */,
 				5E418A692B07C3230070EDA4 /* BannerViewManager.swift in Sources */,
 				5ED911602B1CC0D000FC0A66 /* OverviewDashboardCell.swift in Sources */,
@@ -2875,6 +2922,7 @@
 				5ED911512B1CB7A300FC0A66 /* DashboardCollectionView.swift in Sources */,
 				5ED910BB2B14159700FC0A66 /* SignUpView.swift in Sources */,
 				5E418A842B0B9D640070EDA4 /* DashboardUseCases.swift in Sources */,
+				5E63C3432B5534AC00C30BF7 /* RangedCalendarViewModel.swift in Sources */,
 				5ED911722B1F693900FC0A66 /* FMDetailView.swift in Sources */,
 				5E418A632B07B9D40070EDA4 /* Reusable.swift in Sources */,
 				5ED9116D2B1DF3E600FC0A66 /* FMCellLineChartDataSet.swift in Sources */,

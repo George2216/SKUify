@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum DashboardDataState: String, CaseIterable {
+enum DashboardDataState {
     case today
     case yesterday
     case days7
@@ -15,7 +15,10 @@ enum DashboardDataState: String, CaseIterable {
     case days90
     case days365
     case all
-    case custom
+    case custom(
+        startDate: Date,
+        endDate: Date?
+    )
 }
 
 // MARK: Properties
@@ -23,11 +26,14 @@ enum DashboardDataState: String, CaseIterable {
 extension DashboardDataState {
     var title: String {
         switch self {
-        case .today,
-                .yesterday,
-                .all,
-                .custom:
-            return rawValue.capitalized
+        case .today:
+            return "Today"
+        case .yesterday:
+            return "Yesterday"
+        case .all:
+            return "All"
+        case .custom:
+            return "Custom"
         case .days7:
             return "7 Days"
         case .days30:
@@ -42,21 +48,69 @@ extension DashboardDataState {
     var startDate: String {
         switch self {
         case .today:
-            return formattedDate(for: .day, value: 0) ?? ""
+            return formattedDate(
+                for: .day,
+                value: 0
+            ) ?? ""
         case .yesterday:
-            return formattedDate(for: .day, value: -1) ?? ""
+            return formattedDate(
+                for: .day,
+                value: -1
+            ) ?? ""
         case .days7:
-            return formattedDate(for: .weekOfYear, value: -1) ?? ""
+            return formattedDate(
+                for: .weekOfYear,
+                value: -1
+            ) ?? ""
         case .days30:
-            return formattedDate(for: .day, value: -29) ?? ""
+            return formattedDate(
+                for: .day,
+                value: -29
+            ) ?? ""
         case .days90:
-            return formattedDate(for: .day, value: -90) ?? ""
+            return formattedDate(
+                for: .day,
+                value: -90
+            ) ?? ""
         case .days365:
-            return formattedDate(for: .year, value: -1) ?? ""
-        case .all, .custom:
+            return formattedDate(
+                for: .year,
+                value: -1
+            ) ?? ""
+        case .all:
+            return ""
+        case .custom(let startDate,_):
+            return startDate.yyyyMMddString()
+        }
+    }
+    
+    var endDate: String {
+        switch self {
+        case .custom(_, let endDate):
+            guard let endDate else { return "" }
+            return endDate.yyyyMMddString()
+        default:
             return ""
         }
     }
+}
+
+// MARK: You need to implement allCases as it uses an associative value.
+
+extension DashboardDataState: CaseIterable {
+    static var allCases: [DashboardDataState] = [
+        .today,
+            .yesterday,
+            .days7,
+            .days30,
+            .days90,
+            .days365,
+            .all,
+            .custom(
+                startDate: Date(),
+                endDate: nil
+            )
+    ]
     
 }
 
@@ -76,13 +130,12 @@ extension DashboardDataState {
             value: value,
             to: currentDate
         ) {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd"
-            let formattedDate = dateFormatter.string(from: newDate)
-            return formattedDate
+            return newDate.yyyyMMddString()
         }
 
         return nil
     }
     
+    
 }
+

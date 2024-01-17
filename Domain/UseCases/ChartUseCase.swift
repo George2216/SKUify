@@ -19,5 +19,5 @@ public protocol ChartsUseCase {
     func chartsCustom(
         _ startDate: String,
         _ endDate: String
-    )-> Observable<ChartMainDTO>
+    ) -> Observable<ChartMainDTO>
 }

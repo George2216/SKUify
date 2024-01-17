@@ -106,6 +106,14 @@ final class DefaultButton: UIButton {
         case .infoButton:
             setupInfoButton()
             
+        case .custom(let radius, let background, let tint, let image, let borderWidth, let borderColor):
+            backgroundColor = background.color
+            tintColor = tint.color
+            configuration?.image = image?.image
+            layer.borderWidth = borderWidth
+            layer.borderColor = borderColor.color.cgColor
+            layer.cornerRadius = radius
+            layer.masksToBounds = true
         case .none:
             backgroundColor = .white
             configuration?.baseForegroundColor = .textColor
@@ -270,6 +278,14 @@ extension DefaultButton {
         )
         case image(_ image: ImageType)
         case infoButton
+        case custom(
+            radius: CGFloat = 0.0,
+            backgroung: Color = .clear,
+            tint: Color = .clear,
+            image: ImageType?,
+            borderWidth: CGFloat = 0.0,
+            borderColor: Color = .clear
+        )
         case none
         
         fileprivate var height: CGFloat? {
@@ -286,7 +302,8 @@ extension DefaultButton {
                     .chekButton,
                     .none,
                     .image,
-                    .infoButton:
+                    .infoButton,
+                    .custom:
                 return nil
             }
         }
@@ -299,11 +316,32 @@ extension DefaultButton {
     
     enum ImageType {
         case status
-        
-        var image: UIImage {
+        case back
+        case forward
+        var image: UIImage? {
             switch self {
             case .status:
                 return .status
+            case .back:
+                return UIImage(systemName: "chevron.left")
+            case .forward:
+                return UIImage(systemName: "chevron.right")
+            }
+        }
+    }
+    
+    enum Color {
+        case black
+        case clear
+        case lightGray
+        var color: UIColor {
+            switch self {
+            case .black:
+                return .black
+            case .clear:
+                return .clear
+            case .lightGray:
+                return .lightGray
             }
         }
     }
