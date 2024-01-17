@@ -14,6 +14,7 @@ final class DashboardVC: BaseViewController {
     var viewModel: DashboardViewModel!
     
     private let selectedCalendarDates = PublishSubject<(Date,Date?)>()
+    
     // MARK: UI elements
     
     // nav bar items
