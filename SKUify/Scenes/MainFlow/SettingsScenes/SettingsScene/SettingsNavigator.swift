@@ -10,6 +10,7 @@ import UIKit
 
 protocol SettingsNavigatorProtocol {
     func toSettings()
+    func toProfile()
 }
 
 final class SettingsNavigator: SettingsNavigatorProtocol {
@@ -33,6 +34,13 @@ final class SettingsNavigator: SettingsNavigatorProtocol {
         navigationController.pushViewController(vc, animated: true)
     }
     
+    func toProfile() {
+        let profileNavigator = ProfileNavigator(
+            navigationController: navigationController,
+            di: di
+        )
+        profileNavigator.toProfile()
+    }
     
     
     deinit {

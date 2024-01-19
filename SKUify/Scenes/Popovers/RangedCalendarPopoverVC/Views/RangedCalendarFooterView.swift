@@ -106,18 +106,18 @@ final class RangedCalendarFooterView: UIView {
     }
     
     private func setupSeparatorLabel() {
-        setupLabelsAttributed(&separatorLabel)
+        setupLabelAttributed(&separatorLabel)
     }
     
     private func setupStartDateLabel() {
-        setupLabelsAttributed(&startDateLabel)
+        setupLabelAttributed(&startDateLabel)
     }
     
     private func setupEndDateLabel() {
-        setupLabelsAttributed(&endDateLabel)
+        setupLabelAttributed(&endDateLabel)
     }
     
-    private func setupLabelsAttributed(_ label: inout UILabel) {
+    private func setupLabelAttributed(_ label: inout UILabel) {
         label.font = .manrope(
             type: .regular,
             size: 13

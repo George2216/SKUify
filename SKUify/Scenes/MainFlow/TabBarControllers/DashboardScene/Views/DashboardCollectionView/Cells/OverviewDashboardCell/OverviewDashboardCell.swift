@@ -12,8 +12,9 @@ final class OverviewDashboardCell: UICollectionViewCell {
     
     // MARK: UIElements
 
-    private let overviewTitleLabel = UILabel()
+    private lazy var overviewTitleLabel = UILabel()
     private lazy var chartsView = OverviewCellChartsView()
+    private lazy var datesLabelsStack = HorizontalStack()
     
     //MARK: - Initializers
 
@@ -23,10 +24,12 @@ final class OverviewDashboardCell: UICollectionViewCell {
         
         addSubviewOverviewTitleLabel()
         addSubviewChartsView()
+        addSubviewDatesLabelsStack()
         
         setupView()
         setOverviewTitleLabel()
         setupOverviewTitleLabel()
+        setupDatesLabelsStack()
     }
     
     required init?(coder: NSCoder) {
@@ -34,6 +37,11 @@ final class OverviewDashboardCell: UICollectionViewCell {
     }
     
     func setInput(_ input: Input) {
+        setupChartsView(input)
+        setupDatesLabels(input)
+    }
+    
+    private func setupChartsView(_ input: Input) {
         let dataSets = input.chartsData.map { item in
             let set = OverviewCellLineChartDataSet(
                 item.isVisible ? item.points : [],
@@ -44,15 +52,36 @@ final class OverviewDashboardCell: UICollectionViewCell {
         chartsView.setupInput(
             .init(
                 dataSets: dataSets,
-                labels: input.labels,
                 markerData: input.markerData
             )
         )
-
+    }
+    
+    private func setupDatesLabels(_ input: Input) {
+        datesLabelsStack.views =  input.labels.map { title in
+            self.makeDateLabel(title: title)
+        }
+    }
+    
+    private func makeDateLabel(title: String) -> UILabel {
+        let label = UILabel()
+        label.font = .manrope(
+            type: .bold,
+            size: 12
+        )
+        label.text = title
+        label.textColor = .subtextColor
+        label.numberOfLines = 0
+        label.contentMode = .center
+        return label
     }
     
     private func setOverviewTitleLabel() {
         overviewTitleLabel.text = "Overview"
+    }
+    
+    private func setupDatesLabelsStack() {
+        datesLabelsStack.distribution = .equalSpacing
     }
     
     private func setupOverviewTitleLabel() {
@@ -71,13 +100,26 @@ final class OverviewDashboardCell: UICollectionViewCell {
     
     // MARK: Add to subview
     
+    private func addSubviewDatesLabelsStack() {
+        contentView.addSubview(datesLabelsStack)
+        datesLabelsStack.snp.makeConstraints { make in
+            make.top
+                .equalTo(chartsView.snp.bottom)
+            make.horizontalEdges
+                .equalToSuperview()
+                .inset(10)
+            make.bottom
+                .equalToSuperview()
+                .inset(10)
+        }
+    }
+    
     private func addSubviewChartsView() {
         contentView.addSubview(chartsView)
         chartsView.snp.makeConstraints { make in
             make.top
                 .equalTo(overviewTitleLabel.snp.bottom)
             make.directionalHorizontalEdges
-                .bottom
                 .equalToSuperview()
                 .inset(10)
         }

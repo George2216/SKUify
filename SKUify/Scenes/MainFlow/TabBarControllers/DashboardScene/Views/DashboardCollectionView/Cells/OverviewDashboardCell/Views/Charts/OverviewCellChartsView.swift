@@ -31,9 +31,6 @@ final class OverviewCellChartsView: LineChartView {
     func setupInput(_ input: Input) {
         let data = LineChartData(dataSets: input.dataSets)
         self.data = data
-        xAxis.valueFormatter = IndexAxisValueFormatter(values: input.labels)
-        xAxis.setLabelCount(input.labels.count , force: false)
-        xAxis.labelCount = input.labels.count
         markerDataStorage = input.markerData
         markerView.isHidden = true
     }
@@ -60,9 +57,9 @@ final class OverviewCellChartsView: LineChartView {
     
     // Method to configure X-axis properties
     private func configureXAxis() {
-        xAxis.labelPosition = .bottom
         xAxis.drawGridLinesEnabled = false
         xAxis.drawAxisLineEnabled = false
+        xAxis.drawLabelsEnabled = false
     }
     
     // Method to configure left axis properties
@@ -119,7 +116,6 @@ final class OverviewCellChartsView: LineChartView {
 extension OverviewCellChartsView {
     struct Input {
         let dataSets: [LineChartDataSet]
-        let labels: [String]
         let markerData: [OverviewChartMarkerView.Input]
     }
     

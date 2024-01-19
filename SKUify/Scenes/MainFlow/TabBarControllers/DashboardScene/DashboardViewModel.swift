@@ -657,7 +657,7 @@ final class DashboardViewModel: ViewModelProtocol {
         [
             .overview(
                 .init(
-                    labels: chartsData.labels,
+                    labels: makeOverviewLabels(labels: chartsData.labels),
                     chartsData: [
                         .init(
                             chartType: .sales,
@@ -690,11 +690,71 @@ final class DashboardViewModel: ViewModelProtocol {
                             isVisible: true
                         )
                     ],
-                     markerData: markerData
+                    markerData: markerData
                 )
             )
         ]
     }
+    
+    // MARK: - Make overview labels
+    
+    private func makeOverviewLabels(labels: [String]) -> [String] {
+        var datesArray = labels.map { label in
+            var label = label
+            insertNewlineIfNeededOverviewLabels(to: &label)
+            return label
+        }
+        
+        let desiredCount = 6
+        var step = 1
+        var isContinue = true
+        
+        if desiredCount < labels.count {
+            var newArray: [String] = []
+            
+            while isContinue {
+                newArray = generateNewArrayOverviewLabels(from: datesArray, step: step)
+                
+                if step >= datesArray.count {
+                    newArray = [labels.first!, labels.last!]
+                    isContinue = false
+                } else if newArray.last != labels.last || newArray.count > desiredCount {
+                    step += 1
+                    datesArray = labels
+                    newArray = []
+                } else {
+                    isContinue = false
+                }
+            }
+            return newArray
+        }
+        return labels
+    }
+    
+    private func insertNewlineIfNeededOverviewLabels(to label: inout String) {
+        let words = label.components(separatedBy: .whitespacesAndNewlines)
+        if words.count >= 3 {
+            label.insert(
+                contentsOf: "\n",
+                at: label.index(
+                    label.startIndex,
+                    offsetBy: words[0].count + words[1].count + 1
+                )
+            )
+        }
+    }
+    
+    private func generateNewArrayOverviewLabels(from labels: [String], step: Int) -> [String] {
+        var newArray: [String] = []
+        for (index, element) in labels.enumerated() {
+            if index % (step + 1) == 0 {
+                newArray.append(element)
+            }
+        }
+        return newArray
+    }
+    
+    
     
     private func makeOverviewMarkerData(chartsData: ChartDataDTO) -> [OverviewChartMarkerView
         .Input] {
@@ -702,58 +762,60 @@ final class DashboardViewModel: ViewModelProtocol {
                 .enumerated()
                 .map { index, label in
                     OverviewChartMarkerView
-                        .Input(content: [
-                            .init(
-                                chartType: .sales,
-                                isVisible: true,
-                                contentData: .init(
-                                    date: label,
-                                    value: "\(chartsData.sales.values[index])"
+                        .Input(
+                            content: [
+                                .init(
+                                    chartType: .sales,
+                                    isVisible: true,
+                                    contentData: .init(
+                                        date: label,
+                                        value: "\(chartsData.sales.values[index])"
+                                    )
+                                ),
+                                .init(
+                                    chartType: .unitsSold,
+                                    isVisible: true,
+                                    contentData: .init(
+                                        date: label,
+                                        value: "\(chartsData.profit.values[index])"
+                                    )
+                                ),
+                                .init(
+                                    chartType: .profit,
+                                    isVisible: true,
+                                    contentData: .init(
+                                        date: label,
+                                        value: "\(chartsData.sales.values[index])"
+                                    )
+                                ),
+                                .init(
+                                    chartType: .refunds,
+                                    isVisible: true,
+                                    contentData: .init(
+                                        date: label,
+                                        value: "\(chartsData.refunds.values[index])"
+                                    )
+                                ),
+                                .init(
+                                    chartType: .margin,
+                                    isVisible: true,
+                                    contentData: .init(
+                                        date: label,
+                                        value: "\(chartsData.margin.values[index])"
+                                    )
+                                ),
+                                .init(
+                                    chartType: .roi,
+                                    isVisible: true,
+                                    contentData: .init(
+                                        date: label,
+                                        value: "\(chartsData.roi.values[index])"
+                                    )
                                 )
-                            ),
-                            .init(
-                                chartType: .unitsSold,
-                                isVisible: true,
-                                contentData: .init(
-                                    date: label,
-                                    value: "\(chartsData.profit.values[index])"
-                                )
-                            ),
-                            .init(
-                                chartType: .profit,
-                                isVisible: true,
-                                contentData: .init(
-                                    date: label,
-                                    value: "\(chartsData.sales.values[index])"
-                                )
-                            ),
-                            .init(
-                                chartType: .refunds,
-                                isVisible: true,
-                                contentData: .init(
-                                    date: label,
-                                    value: "\(chartsData.refunds.values[index])"
-                                )
-                            ),
-                            .init(
-                                chartType: .margin,
-                                isVisible: true,
-                                contentData: .init(
-                                    date: label,
-                                    value: "\(chartsData.margin.values[index])"
-                                )
-                            ),
-                            .init(
-                                chartType: .roi,
-                                isVisible: true,
-                                contentData: .init(
-                                    date: label,
-                                    value: "\(chartsData.roi.values[index])"
-                                )
-                            )
-                        ])
+                            ]
+                        )
                 }
-    }
+        }
     
     // MARK: - Marketplace items
 
@@ -898,13 +960,14 @@ extension DashboardViewModel {
     }
     
     struct Output {
+        // Navigation buttons configs
         let settingsBarButtonConfig: Driver<DefaultBarButtonItem.Config>
         let currencyBarButtonConfig: Driver<DefaultBarButtonItem.Config>
         let notificationBarButtonConfig: Driver<DefaultBarButtonItem.Config>
         let titleImageBarButtonConfig: Driver<DefaultBarButtonItem.Config>
-        
+        // Buttons config
         let filterByDatePopoverButtonConfig: Driver<PopoverButton.Config>
-        
+        // Collection data
         let collectionData: Driver<[DashboardSectionModel]>
         // Popovers points
         let showCurrencyPopover: Driver<CGPoint>

@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 
 final class SignUpView: ContainerBorderVerticalStack {
-    private var disposeBag = DisposeBag()
+    fileprivate var disposeBag = DisposeBag()
     
     // MARK: - UI Elements
 
@@ -40,9 +40,7 @@ final class SignUpView: ContainerBorderVerticalStack {
     
     // MARK: Make binding to views
 
-    fileprivate func makeBinding(_ input: Input) {
-        disposeBag = DisposeBag()
-        
+    fileprivate func setupInput(_ input: Input) {
         bindToFieldsContainer(input)
         bindToAgreeButton(input)
         bindToTermConditionsButton(input)
@@ -137,7 +135,8 @@ extension SignUpView {
 extension Reactive where Base: SignUpView {
     var input: Binder<SignUpView.Input> {
         return Binder(self.base) { view, input in
-            view.makeBinding(input)
+            view.disposeBag = DisposeBag()
+            view.setupInput(input)
         }
     }
     

@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 
 final class PasswordRecoveryView: ContainerBorderVerticalStack {
-    private var disposeBag = DisposeBag()
+    fileprivate var disposeBag = DisposeBag()
     
     // MARK: - UI Elements
     
@@ -32,7 +32,7 @@ final class PasswordRecoveryView: ContainerBorderVerticalStack {
     
     // MARK: Make binding to views
 
-    fileprivate func makeBinding(_ input: Input) {
+    fileprivate func setupInput(_ input: Input) {
         disposeBag = DisposeBag()
         bindToEmailTxtField(input)
         bindToRecoverPasswordButton(input)
@@ -101,7 +101,8 @@ extension PasswordRecoveryView {
 extension Reactive where Base: PasswordRecoveryView {
     var input: Binder<PasswordRecoveryView.Input> {
         return Binder(self.base) { view, input in
-            view.makeBinding(input)
+            view.disposeBag = DisposeBag()
+            view.setupInput(input)
         }
     }
     

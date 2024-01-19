@@ -240,7 +240,7 @@ extension DefaultButton {
     
     private func setupSimpleStyle() {
         backgroundColor = .white
-        configuration?.baseForegroundColor = .textColor
+        configuration?.baseForegroundColor = .black
         layer.cornerRadius = 12.0
         layer.borderColor = UIColor.border.cgColor
         layer.borderWidth = 2.0

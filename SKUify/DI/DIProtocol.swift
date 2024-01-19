@@ -14,5 +14,6 @@ protocol DIProtocol:
     SalesUseCases,
     ExpensesUseCases,
     InventoryUseCases,
-    SettingsUseCases
+    SettingsUseCases,
+    ProfileUseCases
 {}

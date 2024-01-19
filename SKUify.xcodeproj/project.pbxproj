@@ -130,6 +130,14 @@
 		5E63C3432B5534AC00C30BF7 /* RangedCalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63C3422B5534AC00C30BF7 /* RangedCalendarViewModel.swift */; };
 		5E63C3462B55447E00C30BF7 /* RxFSCalendarDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63C3452B55447E00C30BF7 /* RxFSCalendarDelegateProxy.swift */; };
 		5E63C3482B55A4E100C30BF7 /* RangedCalendarFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63C3472B55A4E100C30BF7 /* RangedCalendarFooterView.swift */; };
+		5EAF2D672B597F4A00EFDA5A /* ProfileNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAF2D662B597F4A00EFDA5A /* ProfileNavigator.swift */; };
+		5EAF2D692B597F9300EFDA5A /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAF2D682B597F9300EFDA5A /* ProfileVC.swift */; };
+		5EAF2D6B2B597FA400EFDA5A /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAF2D6A2B597FA400EFDA5A /* ProfileViewModel.swift */; };
+		5EAF2D6D2B597FBA00EFDA5A /* ProfileUseCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAF2D6C2B597FBA00EFDA5A /* ProfileUseCases.swift */; };
+		5EAF2D702B5987FD00EFDA5A /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAF2D6F2B5987FD00EFDA5A /* ProfileHeaderView.swift */; };
+		5EAF2D722B5A757C00EFDA5A /* ImageUploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAF2D712B5A757C00EFDA5A /* ImageUploadView.swift */; };
+		5EAF2D752B5A7C1F00EFDA5A /* ScrollDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAF2D742B5A7C1F00EFDA5A /* ScrollDecorator.swift */; };
+		5EAF2D772B5A835500EFDA5A /* ProfileContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAF2D762B5A835500EFDA5A /* ProfileContentView.swift */; };
 		5ED910402B12045D00FC0A66 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED9103F2B12045D00FC0A66 /* LoginView.swift */; };
 		5ED910422B120AD300FC0A66 /* ClickableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED910412B120AD300FC0A66 /* ClickableLabel.swift */; };
 		5ED910452B121BD200FC0A66 /* PasswordRecoveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED910442B121BD200FC0A66 /* PasswordRecoveryView.swift */; };
@@ -566,6 +574,14 @@
 		5E63C3422B5534AC00C30BF7 /* RangedCalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangedCalendarViewModel.swift; sourceTree = "<group>"; };
 		5E63C3452B55447E00C30BF7 /* RxFSCalendarDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxFSCalendarDelegateProxy.swift; sourceTree = "<group>"; };
 		5E63C3472B55A4E100C30BF7 /* RangedCalendarFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangedCalendarFooterView.swift; sourceTree = "<group>"; };
+		5EAF2D662B597F4A00EFDA5A /* ProfileNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNavigator.swift; sourceTree = "<group>"; };
+		5EAF2D682B597F9300EFDA5A /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
+		5EAF2D6A2B597FA400EFDA5A /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		5EAF2D6C2B597FBA00EFDA5A /* ProfileUseCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUseCases.swift; sourceTree = "<group>"; };
+		5EAF2D6F2B5987FD00EFDA5A /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
+		5EAF2D712B5A757C00EFDA5A /* ImageUploadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUploadView.swift; sourceTree = "<group>"; };
+		5EAF2D742B5A7C1F00EFDA5A /* ScrollDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollDecorator.swift; sourceTree = "<group>"; };
+		5EAF2D762B5A835500EFDA5A /* ProfileContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileContentView.swift; sourceTree = "<group>"; };
 		5ED9103F2B12045D00FC0A66 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		5ED910412B120AD300FC0A66 /* ClickableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClickableLabel.swift; sourceTree = "<group>"; };
 		5ED910442B121BD200FC0A66 /* PasswordRecoveryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRecoveryView.swift; sourceTree = "<group>"; };
@@ -1229,7 +1245,7 @@
 		5E418A3B2B07B52C0070EDA4 /* MainFlow */ = {
 			isa = PBXGroup;
 			children = (
-				5ED911382B1A0E5900FC0A66 /* SettingsScene */,
+				5EAF2D642B597CC600EFDA5A /* SettingsScenes */,
 				5ED9111D2B162C4300FC0A66 /* TabBarControllers */,
 			);
 			path = MainFlow;
@@ -1338,12 +1354,13 @@
 		5E418A712B0B76900070EDA4 /* ReusableViews */ = {
 			isa = PBXGroup;
 			children = (
+				5EAF2D732B5A7BEE00EFDA5A /* Decorators */,
 				5ED910412B120AD300FC0A66 /* ClickableLabel.swift */,
 				5E418ABC2B0F964B0070EDA4 /* ContainerBorderVerticalStack.swift */,
 				5E418A722B0B76A10070EDA4 /* DefaultTextField.swift */,
 				5E418ABF2B10E8450070EDA4 /* HorizontalStack.swift */,
+				5EAF2D712B5A757C00EFDA5A /* ImageUploadView.swift */,
 				5ED911682B1DD51B00FC0A66 /* SmallSwitch.swift */,
-				5ED911F52B273CBA00FC0A66 /* TitleDecorator.swift */,
 				5ED9120A2B29EC1400FC0A66 /* TitledMarketplace.swift */,
 				5E418AB82B0EB0F40070EDA4 /* TitledTextField.swift */,
 				5E418ABA2B0F8A490070EDA4 /* VerticaStack.swift */,
@@ -1460,6 +1477,45 @@
 				5E63C3472B55A4E100C30BF7 /* RangedCalendarFooterView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		5EAF2D642B597CC600EFDA5A /* SettingsScenes */ = {
+			isa = PBXGroup;
+			children = (
+				5EAF2D652B597F2F00EFDA5A /* ProfileScene */,
+				5ED911382B1A0E5900FC0A66 /* SettingsScene */,
+			);
+			path = SettingsScenes;
+			sourceTree = "<group>";
+		};
+		5EAF2D652B597F2F00EFDA5A /* ProfileScene */ = {
+			isa = PBXGroup;
+			children = (
+				5EAF2D662B597F4A00EFDA5A /* ProfileNavigator.swift */,
+				5EAF2D6C2B597FBA00EFDA5A /* ProfileUseCases.swift */,
+				5EAF2D682B597F9300EFDA5A /* ProfileVC.swift */,
+				5EAF2D6A2B597FA400EFDA5A /* ProfileViewModel.swift */,
+				5EAF2D6E2B5987ED00EFDA5A /* Views */,
+			);
+			path = ProfileScene;
+			sourceTree = "<group>";
+		};
+		5EAF2D6E2B5987ED00EFDA5A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5EAF2D6F2B5987FD00EFDA5A /* ProfileHeaderView.swift */,
+				5EAF2D762B5A835500EFDA5A /* ProfileContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		5EAF2D732B5A7BEE00EFDA5A /* Decorators */ = {
+			isa = PBXGroup;
+			children = (
+				5ED911F52B273CBA00FC0A66 /* TitleDecorator.swift */,
+				5EAF2D742B5A7C1F00EFDA5A /* ScrollDecorator.swift */,
+			);
+			path = Decorators;
 			sourceTree = "<group>";
 		};
 		5ED910942B13FA3500FC0A66 /* AppEventsPlatform */ = {
@@ -2837,6 +2893,7 @@
 				5E418A782B0B84F00070EDA4 /* UITextField.swift in Sources */,
 				5ED9113C2B1A0E7600FC0A66 /* SettingsViewModel.swift in Sources */,
 				5E0E670A2B517B490005E576 /* RangedCalendarHeaderView.swift in Sources */,
+				5EAF2D702B5987FD00EFDA5A /* ProfileHeaderView.swift in Sources */,
 				5E0E66AB2B46EDA90005E576 /* OverviewChartMarkerContentItem.swift in Sources */,
 				5ED9115E2B1CBFF500FC0A66 /* FinancialMetricDashboardCell.swift in Sources */,
 				5E418ABD2B0F964B0070EDA4 /* ContainerBorderVerticalStack.swift in Sources */,
@@ -2851,6 +2908,7 @@
 				5ED9110E2B16111D00FC0A66 /* ExpensesUseCases.swift in Sources */,
 				5E418A232B067CE10070EDA4 /* AuthenticationViewModel.swift in Sources */,
 				5E418A272B067D050070EDA4 /* AuthenticationUseCases.swift in Sources */,
+				5EAF2D672B597F4A00EFDA5A /* ProfileNavigator.swift in Sources */,
 				5E418A6B2B07C3340070EDA4 /* BannerView.swift in Sources */,
 				5E418A822B0B9D4A0070EDA4 /* DashboardNavigator.swift in Sources */,
 				5ED9110A2B160D6500FC0A66 /* SalesViewModel.swift in Sources */,
@@ -2860,6 +2918,7 @@
 				5ED911FC2B27513D00FC0A66 /* MarketplaceDashboardCellContetntView.swift in Sources */,
 				5ED911792B1F837800FC0A66 /* OverviewCellLineChartDataSet.swift in Sources */,
 				5E418A3E2B07B5420070EDA4 /* FakeLauncherViewController.swift in Sources */,
+				5EAF2D6D2B597FBA00EFDA5A /* ProfileUseCases.swift in Sources */,
 				5ED911692B1DD51B00FC0A66 /* SmallSwitch.swift in Sources */,
 				5ED911772B1F82B700FC0A66 /* OverviewCellChartsView.swift in Sources */,
 				5ED9113E2B1A0E8100FC0A66 /* SettingsNavigator.swift in Sources */,
@@ -2878,13 +2937,17 @@
 				5ED911312B17979E00FC0A66 /* UIButton.swift in Sources */,
 				5ED911372B18FDC500FC0A66 /* PopoverButton.swift in Sources */,
 				5ED9114E2B1CB6E900FC0A66 /* CurrencyPopoverVC.swift in Sources */,
+				5EAF2D692B597F9300EFDA5A /* ProfileVC.swift in Sources */,
 				5ED910422B120AD300FC0A66 /* ClickableLabel.swift in Sources */,
 				5ED911162B16149400FC0A66 /* InventoryVC.swift in Sources */,
+				5EAF2D752B5A7C1F00EFDA5A /* ScrollDecorator.swift in Sources */,
 				5E41892F2B0669DB0070EDA4 /* AppDelegate.swift in Sources */,
+				5EAF2D722B5A757C00EFDA5A /* ImageUploadView.swift in Sources */,
 				5ED911082B160D2100FC0A66 /* SalesVC.swift in Sources */,
 				5E5C9DD22B32F9EA003180FF /* TimeSlotCell.swift in Sources */,
 				5ED911EB2B23552900FC0A66 /* LoaderManager.swift in Sources */,
 				5ED9111A2B1614E300FC0A66 /* InventoryUseCases.swift in Sources */,
+				5EAF2D772B5A835500EFDA5A /* ProfileContentView.swift in Sources */,
 				5ED910B72B13FECA00FC0A66 /* UIView.swift in Sources */,
 				5ED9120B2B29EC1400FC0A66 /* TitledMarketplace.swift in Sources */,
 				5E0E66A62B46D32C0005E576 /* OverviewChartMarkerView.swift in Sources */,
@@ -2916,6 +2979,7 @@
 				5ED911452B1A2E6B00FC0A66 /* LogoutSettingsButton.swift in Sources */,
 				5E0E670E2B517C220005E576 /* Date.swift in Sources */,
 				5E418ABB2B0F8A490070EDA4 /* VerticaStack.swift in Sources */,
+				5EAF2D6B2B597FA400EFDA5A /* ProfileViewModel.swift in Sources */,
 				5E418A692B07C3230070EDA4 /* BannerViewManager.swift in Sources */,
 				5ED911602B1CC0D000FC0A66 /* OverviewDashboardCell.swift in Sources */,
 				5ED910452B121BD200FC0A66 /* PasswordRecoveryView.swift in Sources */,

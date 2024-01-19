@@ -12,30 +12,30 @@ import RxCocoa
 final class AuthenticationVC: BaseViewController {
     
     // Dependencies
+    
     var viewModel: AuthenticationViewModel!
 
     // MARK: - UI Elements
     
-    private let scrollView = UIScrollView()
-    private let containerView = UIView()
-    
-    private let titleLabel = UILabel()
-    private let subtitleLabel = UILabel()
-    private let labelsContainer = VerticalStack()
+    private lazy var scrollDecorator = ScrollDecorator(view)
+    private lazy var containerView = scrollDecorator.containerView
+    private lazy var scrollView = scrollDecorator.scrollView
+
+    private lazy var titleLabel = UILabel()
+    private lazy var subtitleLabel = UILabel()
+    private lazy var labelsContainer = VerticalStack()
         
-    private let loginView = LoginView()
-    private let passwordRecoveryView = PasswordRecoveryView()
-    private let passwordRecoveryResultView = PasswordRecoveryResultView()
-    private let signUpView = SignUpView()
+    private lazy var loginView = LoginView()
+    private lazy var passwordRecoveryView = PasswordRecoveryView()
+    private lazy var passwordRecoveryResultView = PasswordRecoveryResultView()
+    private lazy var signUpView = SignUpView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.titleView = UIImageView(image: UIImage.titleImage)
         
         let output = viewModel.transform(AuthenticationViewModel.Input())
-        setupScrollView()
-        setupContainerView()
-        
+
         setupTitleLabel()
         setupSubtitleLabel()
         setupLabelsContainer()
@@ -210,27 +210,6 @@ final class AuthenticationVC: BaseViewController {
         )
         subtitleLabel.textColor = .textColor
         subtitleLabel.textAlignment = .center
-    }
-    
-    private func setupContainerView() {
-        containerView.backgroundColor = .clear
-        scrollView.addSubview(containerView)
-        containerView.snp.makeConstraints { make in
-            make.edges
-                .size
-                .equalToSuperview()
-        }
-    }
-    
-    private func setupScrollView() {
-        scrollView.alwaysBounceVertical = true
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.keyboardDismissMode = .interactive
-        view.addSubview(scrollView)
-        scrollView.snp.makeConstraints { make in
-            make.edges
-                .equalTo(view.safeAreaLayoutGuide.snp.edges)
-        }
     }
     
 }

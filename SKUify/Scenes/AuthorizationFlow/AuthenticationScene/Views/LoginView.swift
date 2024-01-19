@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 
 final class LoginView: ContainerBorderVerticalStack {
-    private var disposeBag = DisposeBag()
+    fileprivate var disposeBag = DisposeBag()
     
     // MARK: - UI Elements
     
@@ -40,8 +40,7 @@ final class LoginView: ContainerBorderVerticalStack {
     
     // MARK: Make binding to views
 
-    fileprivate func makeBinding(_ input: Input) {
-        disposeBag = DisposeBag()
+    fileprivate func setupInput(_ input: Input) {
         
         bindToForgotPasswordButton(input)
         bindToRememberMeButton(input)
@@ -140,27 +139,18 @@ extension LoginView {
         let forgotPasswordButtonConfig: Driver<DefaultButton.Config>
         let createAccountText: Driver<String>
         let createAccountButtonConfig: Driver<DefaultButton.Config>
-        
-        func empty() -> Input {
-            .init(
-                loginTxtFieldConfigs: .empty(),
-                loginButtonConfig: .empty(),
-                rememberMeButtonConfig: .empty(),
-                forgotPasswordButtonConfig: .empty(),
-                createAccountText: .empty(),
-                createAccountButtonConfig: .empty()
-            )
-        }
     }
     
 }
+
 
 // MARK: - Custom binding
 
 extension Reactive where Base: LoginView {
     var input: Binder<LoginView.Input> {
         return Binder(self.base) { view, input in
-            view.makeBinding(input)
+            view.disposeBag = DisposeBag()
+            view.setupInput(input)
         }
     }
     

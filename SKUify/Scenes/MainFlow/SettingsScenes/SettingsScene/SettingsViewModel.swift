@@ -50,8 +50,9 @@ final class SettingsViewModel: ViewModelProtocol {
             [
                 .init(
                     title: "Profile",
-                    action: {
-                        
+                    action: { [weak self] in
+                        guard let self else { return }
+                        self.navigator.toProfile()
                     }
                 ),
                 .init(
