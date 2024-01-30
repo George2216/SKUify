@@ -57,8 +57,9 @@ final class SettingsViewModel: ViewModelProtocol {
                 ),
                 .init(
                     title: "Company Information",
-                    action: {
-                        
+                    action: { [weak self] in
+                        guard let self else { return }
+                        self.navigator.toCompanyInformation()
                     }
                 ),
                 .init(
@@ -109,9 +110,9 @@ final class SettingsViewModel: ViewModelProtocol {
     
 }
 
+// MARK: - Input Output
 
 extension SettingsViewModel {
-    
     struct Input {
         
     }

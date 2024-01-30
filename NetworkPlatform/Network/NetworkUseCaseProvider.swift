@@ -42,4 +42,7 @@ public final class NetworkUseCaseProvider: Domain.NetworkUseCaseProvider {
         return ChartsUseCase(network: networkProvider.makeChartsNetwork())
     }
     
+    public func makeUserDataUseCase() -> Domain.UserDataUseCase {
+        return UserDataUseCase(network: networkProvider.makeUserDataNetwork())
+    }
 }

@@ -9,7 +9,7 @@ import Alamofire
 import Domain
 import RxSwift
 
-class TokenToHeaderInterceptor: Domain.Interceptor {
+final class TokenToHeaderInterceptor: Domain.Interceptor {
     private let disposeBag = DisposeBag()
     
     let tokensReadUseCase: TokensReadUseCase

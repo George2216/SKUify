@@ -23,7 +23,10 @@ final class RunLoopThreadScheduler: ImmediateSchedulerType {
         self.thread.start()
     }
 
-    func schedule<StateType>(_ state: StateType, action: @escaping (StateType) -> Disposable) -> Disposable {
+    func schedule<StateType>(
+        _ state: StateType,
+        action: @escaping (StateType) -> Disposable
+    ) -> Disposable {
         let disposable = SingleAssignmentDisposable()
         
         var action: Action? = Action {

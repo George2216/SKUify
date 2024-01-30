@@ -15,6 +15,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
+        
         let window = UIWindow(windowScene: windowScene)
         let diContainer = DIContainer()
         
@@ -38,8 +39,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         BannerViewManager.shared.setup(with: windowScene)
         LoaderManager.shared.setup(with: windowScene)
+        
+        registerRxImagePickerDelegateProxy()
     }
 
+    private func registerRxImagePickerDelegateProxy() {
+        RxImagePickerDelegateProxy.register { RxImagePickerDelegateProxy(imagePicker: $0) }
+    }
+    
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
         // This occurs shortly after the scene enters the background, or when its session is discarded.

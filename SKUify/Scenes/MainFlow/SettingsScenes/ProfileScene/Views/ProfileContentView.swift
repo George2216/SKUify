@@ -19,7 +19,6 @@ final class ProfileContentView: UIView {
     
     private lazy var fieldsStack = VerticalStack()
     private lazy var contentStack = VerticalStack()
-    private lazy var saveButtonStack = HorizontalStack()
     
     // MARK: - Initializers
 
@@ -27,7 +26,6 @@ final class ProfileContentView: UIView {
         super.init(frame: frame)
         setupContentStack()
         setupFieldsStack()
-        setupSaveButtonStack()
     }
     
     required init?(coder: NSCoder) {
@@ -63,19 +61,12 @@ final class ProfileContentView: UIView {
     private func setupFieldsStack() {
         fieldsStack.spacing = 10
     }
-    
-    private func setupSaveButtonStack() {
-        saveButtonStack.views = [
-            saveButton,
-            UIView.spacer()
-        ]
-    }
-    
+
     private func setupContentStack() {
         contentStack.views = [
             profileHeaderView,
             fieldsStack,
-            saveButtonStack
+            saveButton
         ]
         contentStack.spacing = 20
         addSubview(contentStack)
@@ -91,7 +82,7 @@ final class ProfileContentView: UIView {
 
 extension ProfileContentView {
     struct Input {
-        let profileHeaderViewInput: ProfileHeaderView.Input
+        var profileHeaderViewInput: ProfileHeaderView.Input
         let fieldsConfigs: [TitledTextField.Config]
         let saveButtonConfig: Driver<DefaultButton.Config>
     }

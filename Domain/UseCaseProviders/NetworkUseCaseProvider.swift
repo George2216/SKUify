@@ -15,5 +15,5 @@ public protocol NetworkUseCaseProvider {
         marketplacesUseCase: Domain.MarketplacesWriteUseCase
     ) -> LoginUseCase
     func makeChartsUseCase() -> ChartsUseCase
-    
+    func makeUserDataUseCase() -> UserDataUseCase
 }

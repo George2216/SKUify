@@ -6,7 +6,9 @@
 //
 
 import Foundation
+import Domain
 
 protocol ProfileUseCases {
-    
+    func makeUserDataUseCase() -> Domain.UserDataUseCase
+    func makeUserIdUseCase() -> Domain.UserIdUseCase
 }

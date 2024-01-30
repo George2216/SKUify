@@ -10,7 +10,7 @@ import Alamofire
 import Domain
 import RxSwift
 
-class UserIdToParametersInterceptor: Domain.Interceptor {
+final class UserIdToParametersInterceptor: Domain.Interceptor {
     private let disposeBag = DisposeBag()
     
     let userIdReadUseCase: UserIdReadUseCase

@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import SDWebImage
 
 final class ImageUploadView: UIView {
 
@@ -28,14 +29,27 @@ final class ImageUploadView: UIView {
     }
     
     func setupInput(_ input: Input) {
-        imageView.image = try? UIImage(url: input.imageUrl)
+        setupImage(input)
         uploadButton.config = input.uploadButtonConfig
     }
     
-    private func setupImageView() {
+    private func setupImage(_ input: Input) {
+        switch input.imageType {
+        case .fromData(let data):
+            imageView.image = UIImage(data: data)
+        case .fromURL(let url):
+            imageView.sd_setImage(
+                with: url,
+                placeholderImage: input.placeholderType.image
+            )
+        }
+    }
+    
+     private func setupImageView() {
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 20
         imageView.layer.masksToBounds = true
+        imageView.tintColor = .primary
         imageView.snp.makeConstraints { make in
             make.size
                 .equalTo(40)
@@ -61,8 +75,24 @@ final class ImageUploadView: UIView {
 
 extension ImageUploadView {
     struct Input {
-        let imageUrl: URL
+        var imageType: ImageType
+        let placeholderType: PlaceholderType
         let uploadButtonConfig: DefaultButton.Config
     }
     
+    enum ImageType {
+        case fromURL(_ url: URL?)
+        case fromData(_ data: Data)
+    }
+    
+    enum PlaceholderType {
+        case person
+        
+        fileprivate var image: UIImage? {
+            switch self {
+            case .person:
+                return UIImage(systemName: "person.crop.circle.fill")
+            }
+        }
+    }
 }

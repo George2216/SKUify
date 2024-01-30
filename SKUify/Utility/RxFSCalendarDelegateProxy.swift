@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import FSCalendar
 
-class RxFSCalendarDelegateProxy: DelegateProxy<FSCalendar, FSCalendarDelegate>, DelegateProxyType, FSCalendarDelegate {
+final class RxFSCalendarDelegateProxy: DelegateProxy<FSCalendar, FSCalendarDelegate>, DelegateProxyType, FSCalendarDelegate {
     
     static func currentDelegate(for object: FSCalendar) -> FSCalendarDelegate? {
         return object.delegate

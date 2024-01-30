@@ -10,5 +10,6 @@ import Foundation
 public protocol NetworkProvider {
     func makeLoginNetwork() -> LoginNetwork
     func makeChartsNetwork() -> ChartsNetwork
+    func makeUserDataNetwork() -> UserDataNetwork
 }
 

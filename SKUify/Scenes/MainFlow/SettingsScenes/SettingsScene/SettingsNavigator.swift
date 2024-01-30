@@ -11,6 +11,7 @@ import UIKit
 protocol SettingsNavigatorProtocol {
     func toSettings()
     func toProfile()
+    func toCompanyInformation()
 }
 
 final class SettingsNavigator: SettingsNavigatorProtocol {
@@ -40,6 +41,14 @@ final class SettingsNavigator: SettingsNavigatorProtocol {
             di: di
         )
         profileNavigator.toProfile()
+    }
+    
+    func toCompanyInformation() {
+        let companyInformationNavigator = CompanyInformationNavigator(
+            navigationController: navigationController,
+            di: di
+        )
+        companyInformationNavigator.toCompanyInformation()
     }
     
     

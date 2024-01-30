@@ -42,4 +42,12 @@ final public class NetworkProvider: Domain.NetworkProvider {
             interceptorFactory: interceptorFactory
         )
     }
+    
+    public func makeUserDataNetwork() -> Domain.UserDataNetwork {
+        return UserDataNetwork(
+            network: makeNetwork(UserMainDTO.self),
+            interceptorFactory: interceptorFactory
+        )
+    }
+
 }

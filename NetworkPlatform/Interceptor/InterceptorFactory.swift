@@ -19,7 +19,6 @@ public final class InterceptorFactory: Domain.InterceptorFactory {
     ) {
         self.tokensUseCase = tokensUseCase
         self.userIdUseCase = userIdUseCase
-
     }
     
     public func makeTokenToHeaderInterceptor() -> Domain.Interceptor {
@@ -32,6 +31,20 @@ public final class InterceptorFactory: Domain.InterceptorFactory {
     
     public func makeUserIdToParametersInterceptor() -> Domain.Interceptor {
         return UserIdToParametersInterceptor(userIdReadUseCase: userIdUseCase)
+    }
+    
+    public func makeUserIdToURLPathInterceptor() -> Domain.Interceptor {
+        return UserIdToURLPathInterceptor(userIdReadUseCase: userIdUseCase)
+    }
+        
+    public func makeAddMultipartFormDataInterceptor(
+        parameters: some Encodable,
+        media: [MultipartMediaModel]
+    ) -> Domain.Interceptor {
+        return AddMultipartFormDataInterceptor(
+            parameters: parameters,
+            media: media
+        )
     }
     
 }

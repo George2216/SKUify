@@ -94,4 +94,8 @@ class DIContainer: DIProtocol {
         realmUseCaseProvider.makeMarketplacesUseCase()
     }
 
+    func makeUserDataUseCase() -> Domain.UserDataUseCase {
+        networkUseCaseProvider.makeUserDataUseCase()
+    }
+    
 }

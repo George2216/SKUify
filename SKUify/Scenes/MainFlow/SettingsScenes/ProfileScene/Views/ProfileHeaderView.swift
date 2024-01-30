@@ -53,7 +53,7 @@ final class ProfileHeaderView: UIView {
 
 extension ProfileHeaderView {
     struct Input {
-        let uploadInput: ImageUploadView.Input
+        var uploadInput: ImageUploadView.Input
         let removeButtonConfig: DefaultButton.Config
     }
 }

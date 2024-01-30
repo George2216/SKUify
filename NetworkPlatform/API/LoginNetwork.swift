@@ -23,7 +23,7 @@ final class LoginNetwork: Domain.LoginNetwork {
         self.interceptorFactory = interceptorFactory
     }
     
-    public func login(
+    func login(
         email: String,
         password: String
     ) -> Observable<LoginDTO> {
