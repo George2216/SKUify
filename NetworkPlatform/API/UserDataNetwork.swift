@@ -35,7 +35,7 @@ final class UserDataNetwork: Domain.UserDataNetwork {
         )
     }
     
-    func updateUserData(data: Domain.UserRequestModel) -> Observable<Void> {
+    func updateUserData(data: Domain.UserRequestModel) -> Observable<UserMainDTO> {
         return network.request(
             "users/\(data.userId)/",
             method: .patch,
@@ -54,14 +54,10 @@ final class UserDataNetwork: Domain.UserDataNetwork {
                     ),
                     interceptorFactory.makeTokenToHeaderInterceptor(),
                     interceptorFactory.makeUserIdToURLPathInterceptor()
-                    
                 ]
             )
         )
-        .mapToVoid()
-        .catch { error in
-            return Observable<Void>.just(())
-        }
     }
+    
     
 }

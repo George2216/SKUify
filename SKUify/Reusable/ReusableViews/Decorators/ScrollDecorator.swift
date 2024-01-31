@@ -15,14 +15,14 @@ final class ScrollDecorator: UIView {
     private(set) lazy var scrollView = UIScrollView()
     private(set) lazy var containerView = UIView()
     
-    private var decoratedView: UIView
+    private weak var decoratedView: UIView?
 
     // MARK: - Initializers
 
     init(_ decoratedView: UIView) {
         self.decoratedView = decoratedView
         super.init(frame: .zero)
-        setupScrollView()
+        setupScrollView(decoratedView)
         setupContainerView()
     }
     
@@ -32,7 +32,7 @@ final class ScrollDecorator: UIView {
     
     // MARK: - Setup views
 
-    private func setupScrollView() {
+    private func setupScrollView(_ decoratedView: UIView) {
         // Base scroll settings
         scrollView.alwaysBounceVertical = true
         scrollView.showsVerticalScrollIndicator = false

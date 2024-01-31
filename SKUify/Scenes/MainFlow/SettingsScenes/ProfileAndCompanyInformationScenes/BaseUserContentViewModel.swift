@@ -12,6 +12,8 @@ import RxCocoa
 
 class BaseUserContentViewModel: ViewModelProtocol {
     
+    // MARK: - Base transform
+
     func transform(_ input: Input) -> Output {
         Output(
             contentData: .empty(),
@@ -21,6 +23,8 @@ class BaseUserContentViewModel: ViewModelProtocol {
         )
     }
     
+    // MARK: - Input Output
+
     struct Input {
         let updateImage: Driver<Data>
     }

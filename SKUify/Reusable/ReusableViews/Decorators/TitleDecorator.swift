@@ -19,7 +19,7 @@ final class TitleDecorator: UIView {
     
     // MARK: - UIElements
     
-    private let decoratedView: UIView
+    private weak var decoratedView: UIView?
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -40,9 +40,9 @@ final class TitleDecorator: UIView {
     ) {
         self.decoratedView = decoratedView
         super.init(frame: .zero)
-        setupStack()
+        setupStack(decoratedView)
         setupTitleLabel()
-        setupDecoratedView()
+        setupDecoratedView(decoratedView)
         setupTitleAttributed(
             font: font,
             textColor: textColor,
@@ -64,7 +64,7 @@ final class TitleDecorator: UIView {
         titleLabel.numberOfLines = numberOfLines
     }
     
-    private func setupStack() {
+    private func setupStack(_ decoratedView: UIView) {
         let stackView = UIStackView(
             arrangedSubviews: [
                 titleLabel,
@@ -95,7 +95,7 @@ final class TitleDecorator: UIView {
         )
     }
     
-    private func setupDecoratedView() {
+    private func setupDecoratedView(_ decoratedView: UIView) {
         decoratedView.setContentHuggingPriority(
             .defaultLow,
             for: .vertical

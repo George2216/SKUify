@@ -374,18 +374,3 @@ final class ProfileViewModel: BaseUserContentViewModel {
     
 }
 
-// MARK: - Input Output
-
-//extension ProfileViewModel {
-//    struct Input {
-//        let updateImage: Driver<Data>
-//    }
-//
-//    struct Output {
-//        let contentData: Driver<AccountContentView.Input>
-//        let tapOnUploadImage: Driver<Void>
-//        // Trackers
-//        let fetching: Driver<Bool>
-//        let error: Driver<BannerView.Input>
-//    }
-//}

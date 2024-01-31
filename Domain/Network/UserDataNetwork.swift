@@ -10,5 +10,5 @@ import RxSwift
 
 public protocol UserDataNetwork {
     func getUserData() -> Observable<UserMainDTO>
-    func updateUserData(data: UserRequestModel) -> Observable<Void>
+    func updateUserData(data: Domain.UserRequestModel) -> Observable<UserMainDTO>
 }
