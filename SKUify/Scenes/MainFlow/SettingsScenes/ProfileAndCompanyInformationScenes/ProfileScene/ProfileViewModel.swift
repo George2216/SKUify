@@ -13,7 +13,7 @@ import RxSwift
 import RxCocoa
 import RxExtensions
 
-final class ProfileViewModel: ViewModelProtocol {
+final class ProfileViewModel: BaseUserContentViewModel {
     private let disposeBag = DisposeBag()
 
     private let changeEmail = PublishSubject<String>()
@@ -27,7 +27,7 @@ final class ProfileViewModel: ViewModelProtocol {
     private let tapOnSave = PublishSubject<Void>()
     
     private let userDataRequestStorage = BehaviorSubject<UserRequestModel?>(value: nil)
-    private let contentDataStorage = BehaviorSubject<ProfileContentView.Input?>(value: nil)
+    private let contentDataStorage = BehaviorSubject<UserContentContentView.Input?>(value: nil)
     
     // Dependencies
     private let navigator: ProfileNavigatorProtocol
@@ -46,11 +46,13 @@ final class ProfileViewModel: ViewModelProtocol {
         self.navigator = navigator
         userDataUseCase = useCases.makeUserDataUseCase()
         userIdUseCase = useCases.makeUserIdUseCase()
+        super.init()
         makeContentData()
         subscibers()
     }
     
-    func transform(_ input: Input) -> Output {
+    override func transform(_ input: Input) -> Output {
+       _ = super.transform(input)
         subscribeToUpdateImage(input)
         
         return Output(
@@ -253,7 +255,7 @@ final class ProfileViewModel: ViewModelProtocol {
     
     private func makeContentDataInput(
         _ userData: Driver<(ProfileViewModel, UserDTO)>
-    ) -> Driver<ProfileContentView.Input> {
+    ) -> Driver<UserContentContentView.Input> {
         userData
             .map({ owner, user in
                 let imageUrlText = user.avatarImage?
@@ -339,7 +341,7 @@ final class ProfileViewModel: ViewModelProtocol {
     }
     
     private func saveToContentDataStorage(
-        _ contentDataInput: Driver<ProfileContentView.Input>
+        _ contentDataInput: Driver<UserContentContentView.Input>
     ) -> Driver<Void> {
         contentDataInput
             .withUnretained(self)
@@ -369,20 +371,21 @@ final class ProfileViewModel: ViewModelProtocol {
             .asDriverOnErrorJustComplete()
         
     }
+    
 }
 
 // MARK: - Input Output
 
-extension ProfileViewModel {
-    struct Input {
-        let updateImage: Driver<Data>
-    }
-    
-    struct Output {
-        let contentData: Driver<ProfileContentView.Input>
-        let tapOnUploadImage: Driver<Void>
-        // Trackers
-        let fetching: Driver<Bool>
-        let error: Driver<BannerView.Input>
-    }
-}
+//extension ProfileViewModel {
+//    struct Input {
+//        let updateImage: Driver<Data>
+//    }
+//
+//    struct Output {
+//        let contentData: Driver<AccountContentView.Input>
+//        let tapOnUploadImage: Driver<Void>
+//        // Trackers
+//        let fetching: Driver<Bool>
+//        let error: Driver<BannerView.Input>
+//    }
+//}

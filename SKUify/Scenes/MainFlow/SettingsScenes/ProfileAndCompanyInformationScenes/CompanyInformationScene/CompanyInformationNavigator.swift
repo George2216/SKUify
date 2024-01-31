@@ -24,7 +24,7 @@ final class CompanyInformationNavigator: CompanyInformationNavigatorProtocol {
     }
     
     func toCompanyInformation() {
-        let vc = CompanyInformationVC()
+        let vc = UserContentVC()
         vc.viewModel = CompanyInformationViewModel(
             useCases: di,
             navigator: self

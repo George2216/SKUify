@@ -13,10 +13,10 @@ import SnapKit
 import RxExtensions
 import SDWebImage
 
-final class ProfileVC: BaseViewController {
+final class UserContentVC: BaseViewController {
     
     // Dependencies
-    var viewModel: ProfileViewModel!
+    var viewModel: BaseUserContentViewModel!
     
     // MARK: UI elements
     
@@ -24,7 +24,7 @@ final class ProfileVC: BaseViewController {
     private lazy var containerView = scrollDecarator.containerView
     private lazy var scrollView = scrollDecarator.scrollView
 
-    private lazy var contentView = ProfileContentView()
+    private lazy var contentView = UserContentContentView()
     
     private let updateImage = PublishSubject<Data>()
         
@@ -57,7 +57,7 @@ final class ProfileVC: BaseViewController {
 
 // MARK: Make binding
 
-extension ProfileVC {
+extension UserContentVC {
     
     private func bindToLoader(_ output: ProfileViewModel.Output) {
         output.fetching

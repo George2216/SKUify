@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import RxExtensions
 
-final class CompanyInformationViewModel: ViewModelProtocol {
+final class CompanyInformationViewModel: BaseUserContentViewModel {
     
     // Dependencies
     private let navigator: CompanyInformationNavigatorProtocol
@@ -29,16 +29,15 @@ final class CompanyInformationViewModel: ViewModelProtocol {
         self.navigator = navigator
         
     }
-    func transform(_ input: Input) -> Output {
-        return Output()
-    }
     
-    struct Input {
-        
-    }
-    
-    struct Output {
-        
+    override func transform(_ input: Input) -> Output {
+        _ = super.transform(input)
+        return Output(
+            contentData: .empty(),
+            tapOnUploadImage: .empty(),
+            fetching: .empty(),
+            error: .empty()
+        )
     }
     
 }

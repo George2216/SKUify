@@ -1,13 +1,14 @@
 //
-//  ProfileHeaderView.swift
+//  ImageControlView.swift
 //  SKUify
 //
-//  Created by George Churikov on 18.01.2024.
+//  Created by George Churikov on 30.01.2024.
 //
 
+import Foundation
 import UIKit
 
-final class ProfileHeaderView: UIView {
+final class ImageControlView: UIView {
 
     // MARK: - UI elements
     
@@ -51,10 +52,11 @@ final class ProfileHeaderView: UIView {
 
 // MARK: - Input
 
-extension ProfileHeaderView {
+extension ImageControlView {
     struct Input {
         var uploadInput: ImageUploadView.Input
         let removeButtonConfig: DefaultButton.Config
     }
+    
 }
 

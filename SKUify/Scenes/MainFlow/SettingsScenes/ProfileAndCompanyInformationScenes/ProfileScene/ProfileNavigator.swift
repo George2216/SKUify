@@ -26,7 +26,7 @@ final class ProfileNavigator: ProfileNavigatorProtocol {
     }
     
     func toProfile() {
-        let vc = ProfileVC()
+        let vc = UserContentVC()
         vc.viewModel = ProfileViewModel(
             useCases: di,
             navigator: self

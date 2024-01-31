@@ -9,12 +9,12 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class ProfileContentView: UIView {
+final class UserContentContentView: UIView {
     fileprivate var disposeBag = DisposeBag()
 
     // MARK: - UI elements
     
-    private lazy var profileHeaderView = ProfileHeaderView()
+    private lazy var userConentHeaderView = ImageControlView()
     private lazy var saveButton = DefaultButton()
     
     private lazy var fieldsStack = VerticalStack()
@@ -35,13 +35,13 @@ final class ProfileContentView: UIView {
     // MARK: - Setup input
 
     func setupInput(_ input: Input) {
-        setupProfileHeaderView(input)
+        setupUserContentHeaderView(input)
         setupFieldsStack(input)
         bindToSaveButton(input)
     }
 
-    private func setupProfileHeaderView(_ input: Input) {
-        profileHeaderView.setupInput(input.profileHeaderViewInput)
+    private func setupUserContentHeaderView(_ input: Input) {
+        userConentHeaderView.setupInput(input.profileHeaderViewInput)
     }
     
     private func setupFieldsStack(_ input: Input) {
@@ -64,7 +64,7 @@ final class ProfileContentView: UIView {
 
     private func setupContentStack() {
         contentStack.views = [
-            profileHeaderView,
+            userConentHeaderView,
             fieldsStack,
             saveButton
         ]
@@ -80,9 +80,9 @@ final class ProfileContentView: UIView {
 
 // MARK: - Input
 
-extension ProfileContentView {
+extension UserContentContentView {
     struct Input {
-        var profileHeaderViewInput: ProfileHeaderView.Input
+        var profileHeaderViewInput: ImageControlView.Input
         let fieldsConfigs: [TitledTextField.Config]
         let saveButtonConfig: Driver<DefaultButton.Config>
     }
@@ -92,8 +92,8 @@ extension ProfileContentView {
 
 // MARK: - Custom binding
 
-extension Reactive where Base: ProfileContentView {
-    var input: Binder<ProfileContentView.Input> {
+extension Reactive where Base: UserContentContentView {
+    var input: Binder<UserContentContentView.Input> {
         return Binder(self.base) { view, input in
             view.disposeBag = DisposeBag()
             view.setupInput(input)
