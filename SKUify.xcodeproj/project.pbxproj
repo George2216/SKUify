@@ -125,7 +125,6 @@
 		5E4ABCBD2B5E9ECC00E878DF /* UserIdToURLPathInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4ABCBC2B5E9ECC00E878DF /* UserIdToURLPathInterceptor.swift */; };
 		5E4ABCBF2B5FF05C00E878DF /* MultipartFormDataBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4ABCBE2B5FF05C00E878DF /* MultipartFormDataBuilder.swift */; };
 		5E4ABCC12B5FF0B400E878DF /* MultipartMediaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4ABCC02B5FF0B400E878DF /* MultipartMediaModel.swift */; };
-		5E4ABCC42B5FF15300E878DF /* UserImageRequesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4ABCC32B5FF15300E878DF /* UserImageRequesModel.swift */; };
 		5E4ABCC62B5FF1B100E878DF /* AddMultipartFormDataInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4ABCC52B5FF1B100E878DF /* AddMultipartFormDataInterceptor.swift */; };
 		5E5C9DC82B32F779003180FF /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5C9DC72B32F779003180FF /* TableView.swift */; };
 		5E5C9DCA2B32F79A003180FF /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5C9DC92B32F79A003180FF /* CollectionView.swift */; };
@@ -251,6 +250,8 @@
 		5EFB39892B694F1D0024FD14 /* ImageControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFB39882B694F1D0024FD14 /* ImageControlView.swift */; };
 		5EFB39912B6A58A50024FD14 /* BaseUserContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFB39902B6A58A50024FD14 /* BaseUserContentViewModel.swift */; };
 		5EFB39932B6A5C190024FD14 /* MapFromNever.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFB39922B6A5C190024FD14 /* MapFromNever.swift */; };
+		5EFB39952B6AB5A40024FD14 /* UserRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFB39942B6AB5A40024FD14 /* UserRequestModel.swift */; };
+		5EFB39972B6AB76D0024FD14 /* CompanyInformationRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFB39962B6AB76D0024FD14 /* CompanyInformationRequestModel.swift */; };
 		68447411A355AEDF04F006FE /* Pods_DomainTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80259D1E8B54987AD3F0F329 /* Pods_DomainTests.framework */; };
 		7FAB603DE1AC018C66BA63E6 /* Pods_SKUify_SKUifyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA054B4A6EAADFE9931E384C /* Pods_SKUify_SKUifyUITests.framework */; };
 		882167328D4D65290B325069 /* Pods_RealmPlatform.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D079D9983D3D9A8F27883D7 /* Pods_RealmPlatform.framework */; };
@@ -586,7 +587,6 @@
 		5E4ABCBC2B5E9ECC00E878DF /* UserIdToURLPathInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIdToURLPathInterceptor.swift; sourceTree = "<group>"; };
 		5E4ABCBE2B5FF05C00E878DF /* MultipartFormDataBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartFormDataBuilder.swift; sourceTree = "<group>"; };
 		5E4ABCC02B5FF0B400E878DF /* MultipartMediaModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartMediaModel.swift; sourceTree = "<group>"; };
-		5E4ABCC32B5FF15300E878DF /* UserImageRequesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserImageRequesModel.swift; sourceTree = "<group>"; };
 		5E4ABCC52B5FF1B100E878DF /* AddMultipartFormDataInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMultipartFormDataInterceptor.swift; sourceTree = "<group>"; };
 		5E5C9DC72B32F779003180FF /* TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
 		5E5C9DC92B32F79A003180FF /* CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
@@ -711,6 +711,8 @@
 		5EFB39882B694F1D0024FD14 /* ImageControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageControlView.swift; sourceTree = "<group>"; };
 		5EFB39902B6A58A50024FD14 /* BaseUserContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUserContentViewModel.swift; sourceTree = "<group>"; };
 		5EFB39922B6A5C190024FD14 /* MapFromNever.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFromNever.swift; sourceTree = "<group>"; };
+		5EFB39942B6AB5A40024FD14 /* UserRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRequestModel.swift; sourceTree = "<group>"; };
+		5EFB39962B6AB76D0024FD14 /* CompanyInformationRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyInformationRequestModel.swift; sourceTree = "<group>"; };
 		600C7E97A7A653BF5943C52A /* Pods-SKUify-SKUifyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SKUify-SKUifyUITests.debug.xcconfig"; path = "Target Support Files/Pods-SKUify-SKUifyUITests/Pods-SKUify-SKUifyUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		60A9638939CD20017F5CD177 /* Pods-NetworkPlatform.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetworkPlatform.release.xcconfig"; path = "Target Support Files/Pods-NetworkPlatform/Pods-NetworkPlatform.release.xcconfig"; sourceTree = "<group>"; };
 		63A3B8BAAC808F07DBF47BCB /* Pods_RxExtensions.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RxExtensions.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1487,7 +1489,8 @@
 		5E4ABCC22B5FF11500E878DF /* RequestInput */ = {
 			isa = PBXGroup;
 			children = (
-				5E4ABCC32B5FF15300E878DF /* UserImageRequesModel.swift */,
+				5EFB39942B6AB5A40024FD14 /* UserRequestModel.swift */,
+				5EFB39962B6AB76D0024FD14 /* CompanyInformationRequestModel.swift */,
 			);
 			path = RequestInput;
 			sourceTree = "<group>";
@@ -3114,6 +3117,7 @@
 				5E4ABCC12B5FF0B400E878DF /* MultipartMediaModel.swift in Sources */,
 				5ED911D52B221F0E00FC0A66 /* NetworkUseCaseProvider.swift in Sources */,
 				5E418A372B07B1FD0070EDA4 /* LoginState.swift in Sources */,
+				5EFB39952B6AB5A40024FD14 /* UserRequestModel.swift in Sources */,
 				5ED911D12B221EC400FC0A66 /* APIConfig.swift in Sources */,
 				5E0E66A42B45EC330005E576 /* UserIdUseCase.swift in Sources */,
 				5ED911492B1A389900FC0A66 /* AppVersionUseCase.swift in Sources */,
@@ -3128,10 +3132,10 @@
 				5EF40E4A2B35BCB40021EEC1 /* ChartDTOs.swift in Sources */,
 				5E0E669A2B45CD570005E576 /* MarketplaceDTO.swift in Sources */,
 				5EAF2D792B5A993700EFDA5A /* UserDTO.swift in Sources */,
-				5E4ABCC42B5FF15300E878DF /* UserImageRequesModel.swift in Sources */,
 				5ED910652B13F52300FC0A66 /* KeyboardUseCase.swift in Sources */,
 				5ED911CB2B221C7E00FC0A66 /* InterceptorFactory.swift in Sources */,
 				5ED910672B13F58B00FC0A66 /* AppEventsUseCaseProvider.swift in Sources */,
+				5EFB39972B6AB76D0024FD14 /* CompanyInformationRequestModel.swift in Sources */,
 				5ED911F22B23649000FC0A66 /* ErrorHandledResponseModel.swift in Sources */,
 				5E418A322B07A7A50070EDA4 /* LoginStateUseCase.swift in Sources */,
 				5EF40E4C2B35C1C20021EEC1 /* ChartNetwork.swift in Sources */,

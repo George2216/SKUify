@@ -20,6 +20,19 @@ final class UserDataNetwork: Domain.UserDataNetwork {
     ) {
         self.network = network
         self.interceptorFactory = interceptorFactory
+        
+    }
+    
+    private func makeMedia(
+        by key: String,
+        imageData: Data?
+    ) -> MultipartMediaModel {
+        return MultipartMediaModel(
+            key: key,
+            filename: "\(UUID().uuidString).jpg",
+            data: imageData,
+            mimeType: "image/jpeg"
+        )
     }
     
     func getUserData() -> Observable<UserMainDTO> {
@@ -44,11 +57,9 @@ final class UserDataNetwork: Domain.UserDataNetwork {
                     interceptorFactory.makeAddMultipartFormDataInterceptor(
                         parameters: data.parameters,
                         media: [
-                            MultipartMediaModel(
-                                key: "avatar_image",
-                                filename: "2995440.jpg",
-                                data: data.imageData ,
-                                mimeType: "image/jpeg"
+                            makeMedia(
+                                by: "avatar_image",
+                                imageData: data.imageData
                             )
                         ]
                     ),
@@ -59,5 +70,26 @@ final class UserDataNetwork: Domain.UserDataNetwork {
         )
     }
     
+    func updateCompanyInformation(data: Domain.CompanyInformationRequestModel) -> Observable<UserMainDTO> {
+        return network.request(
+            "users/\(data.userId)/",
+            method: .patch,
+            interceptor: CompositeRxAlamofireInterceptor(
+                interceptors: [
+                    interceptorFactory.makeAddMultipartFormDataInterceptor(
+                        parameters: data.parameters,
+                        media: [
+                            makeMedia(
+                                by: "company_image",
+                                imageData: data.imageData
+                            )
+                        ]
+                    ),
+                    interceptorFactory.makeTokenToHeaderInterceptor(),
+                    interceptorFactory.makeUserIdToURLPathInterceptor()
+                ]
+            )
+        )
+    }
     
 }
