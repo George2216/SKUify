@@ -6,7 +6,10 @@
 //
 
 import Foundation
+import Domain
 
 protocol CompanyInformationUseCases {
-    
+    func makeUserDataUseCase() -> Domain.UserDataUseCase
+    func makeUserIdUseCase() -> Domain.UserIdUseCase
+    func makeKeyboardUseCase() -> Domain.KeyboardUseCase
 }

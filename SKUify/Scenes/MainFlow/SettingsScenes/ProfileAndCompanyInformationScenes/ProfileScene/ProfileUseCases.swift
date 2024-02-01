@@ -11,4 +11,5 @@ import Domain
 protocol ProfileUseCases {
     func makeUserDataUseCase() -> Domain.UserDataUseCase
     func makeUserIdUseCase() -> Domain.UserIdUseCase
+    func makeKeyboardUseCase() -> Domain.KeyboardUseCase
 }

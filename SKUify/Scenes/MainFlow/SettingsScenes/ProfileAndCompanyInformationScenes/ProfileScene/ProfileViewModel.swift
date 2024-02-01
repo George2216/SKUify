@@ -35,6 +35,8 @@ final class ProfileViewModel: BaseUserContentViewModel {
     // Use case storage
     private let userDataUseCase: Domain.UserDataUseCase
     private let userIdUseCase: Domain.UserIdUseCase
+    private let keyboardUseCase: Domain.KeyboardUseCase
+    
     // Trackers
     private var activityIndicator = ActivityTracker()
     private var errorTracker = ErrorTracker()
@@ -46,6 +48,7 @@ final class ProfileViewModel: BaseUserContentViewModel {
         self.navigator = navigator
         userDataUseCase = useCases.makeUserDataUseCase()
         userIdUseCase = useCases.makeUserIdUseCase()
+        keyboardUseCase = useCases.makeKeyboardUseCase()
         super.init()
         makeContentData()
         subscibers()
@@ -56,6 +59,7 @@ final class ProfileViewModel: BaseUserContentViewModel {
         subscribeToUpdateImage(input)
         
         return Output(
+            keyboardHeight: getKeyboardHeight(),
             contentData: contentDataStorage.compactMap({ $0 }).asDriverOnErrorJustComplete(),
             tapOnUploadImage: tapOnSelectImage.asDriverOnErrorJustComplete(),
             fetching: activityIndicator.asDriver(),
@@ -285,46 +289,50 @@ final class ProfileViewModel: BaseUserContentViewModel {
                         )
                     ),
                     fieldsConfigs: [
-                        .init(title: "First Name",
-                              config: .init(
+                        .init(
+                            title: "First Name",
+                            config: .init(
                                 style: .bordered,
                                 text: user.firstName ?? "",
                                 textObserver: { [weak self] text in
                                     guard let self else { return }
                                     self.changeFirstName.onNext(text)
                                 }
-                              )
-                             ),
-                        .init(title: "Last Name",
-                              config: .init(
+                            )
+                        ),
+                        .init(
+                            title: "Last Name",
+                            config: .init(
                                 style: .bordered,
                                 text: user.lastName ?? "",
                                 textObserver: { [weak self] text in
                                     guard let self else { return }
                                     self.changeLastName.onNext(text)
                                 }
-                              )
-                             ),
-                        .init(title: "Email",
-                              config: .init(
+                            )
+                        ),
+                        .init(
+                            title: "Email",
+                            config: .init(
                                 style: .bordered,
                                 text: user.email ?? "",
                                 textObserver: { [weak self] text in
                                     guard let self else { return }
                                     self.changeEmail.onNext(text)
                                 }
-                              )
-                             ),
-                        .init(title: "Mobile Number",
-                              config: .init(
+                            )
+                        ),
+                        .init(
+                            title: "Mobile Number",
+                            config: .init(
                                 style: .bordered,
                                 text: user.phone ?? "",
                                 textObserver: { [weak self] text in
                                     guard let self else { return }
                                     self.changePhone.onNext(text)
                                 }
-                              )
-                             )
+                            )
+                        )
                     ],
                     saveButtonConfig: .just(
                         .init(
@@ -349,6 +357,14 @@ final class ProfileViewModel: BaseUserContentViewModel {
                 owner.contentDataStorage.onNext(contentData)
             })
             .map({ _ in () })
+    }
+    
+    // MARK: Get keyboard height
+
+    private func getKeyboardHeight() -> Driver<CGFloat> {
+        keyboardUseCase
+            .getKeyboardHeight()
+            .asDriverOnErrorJustComplete()
     }
     
     // MARK: Get user data

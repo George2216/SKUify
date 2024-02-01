@@ -35,6 +35,7 @@ final class UserContentVC: BaseViewController {
         let output = viewModel.transform(.init(updateImage: updateImage.asDriverOnErrorJustComplete()))
         setupContentView()
         
+        bindHeightForScrollingToTxtField(output)
         bindToContentView(output)
         bindToLoader(output)
         bindToBanner(output)
@@ -49,6 +50,8 @@ final class UserContentVC: BaseViewController {
             make.top.horizontalEdges
                 .equalToSuperview()
                 .inset(16)
+            make.bottom
+                .equalToSuperview()
         }
     }
     
@@ -58,6 +61,19 @@ final class UserContentVC: BaseViewController {
 // MARK: Make binding
 
 extension UserContentVC {
+    
+    private func bindHeightForScrollingToTxtField(_ output: ProfileViewModel.Output) {
+        output.keyboardHeight
+            .withUnretained(self)
+            .map { owner, height in
+                UIScrollView.ScrollToVisibleContext(
+                    height: height,
+                    view: owner.view
+                )
+            }
+            .drive(scrollView.rx.scrollToVisibleTextField)
+            .disposed(by: disposeBag)
+    }
     
     private func bindToLoader(_ output: ProfileViewModel.Output) {
         output.fetching

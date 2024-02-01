@@ -174,6 +174,8 @@ final class AuthenticationVC: BaseViewController {
             make.horizontalEdges
                 .equalToSuperview()
                 .inset(16)
+            make.bottom
+                .equalToSuperview()
         }
     }
     

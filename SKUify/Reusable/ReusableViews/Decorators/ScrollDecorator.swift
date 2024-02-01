@@ -40,7 +40,7 @@ final class ScrollDecorator: UIView {
         
         decoratedView.addSubview(scrollView)
         scrollView.snp.makeConstraints { make in
-            make.edges
+            make.edges 
                 .equalTo(decoratedView.safeAreaLayoutGuide.snp.edges)
         }
     }
@@ -50,8 +50,9 @@ final class ScrollDecorator: UIView {
         scrollView.addSubview(containerView)
         containerView.snp.makeConstraints { make in
             make.edges
-                .size
                 .equalToSuperview()
+            make.width
+                .equalTo(scrollView.snp.width)
         }
     }
     

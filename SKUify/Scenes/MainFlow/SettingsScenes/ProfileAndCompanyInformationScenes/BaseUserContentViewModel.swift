@@ -16,6 +16,7 @@ class BaseUserContentViewModel: ViewModelProtocol {
 
     func transform(_ input: Input) -> Output {
         Output(
+            keyboardHeight: .empty(),
             contentData: .empty(),
             tapOnUploadImage: .empty(),
             fetching: .empty(),
@@ -30,7 +31,11 @@ class BaseUserContentViewModel: ViewModelProtocol {
     }
 
     struct Output {
+        // Scroll to
+        let keyboardHeight: Driver<CGFloat>
+        // Scroll content
         let contentData: Driver<UserContentContentView.Input>
+        // Show image picker
         let tapOnUploadImage: Driver<Void>
         // Trackers
         let fetching: Driver<Bool>

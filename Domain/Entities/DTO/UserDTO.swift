@@ -11,7 +11,6 @@ public struct UserMainDTO: Codable {
     public let user: UserDTO
 }
 
-
 public struct UserDTO: Codable {
     public var firstName: String?
     public var lastName: String?
@@ -24,8 +23,8 @@ public struct UserDTO: Codable {
     public var companyWebsite: String?
     public var addressOne: String?
     public var addressTwo: String?
+    public var postCode: String?
     public var city: String?
-
     
     private enum CodingKeys: String, CodingKey {
         case firstName = "first_name"
@@ -39,6 +38,7 @@ public struct UserDTO: Codable {
         case companyWebsite = "company_website"
         case addressOne = "address_1"
         case addressTwo = "address_2"
+        case postCode = "post_code"
         case city = "town_city"
     }
     
