@@ -31,6 +31,10 @@ final class DefaultTextField: UITextField {
         disposeBag = DisposeBag()
        
         rx.controlEvent(config.controlEvent)
+            .debounce(
+                .milliseconds(config.debounce),
+                scheduler: MainScheduler.instance
+            )
             .withLatestFrom(rx.text.orEmpty)
             .asDriverOnErrorJustComplete()
             .drive(onNext: { text in
@@ -39,7 +43,9 @@ final class DefaultTextField: UITextField {
             .disposed(by: disposeBag)
         
         text = config.text
+        
         setupStyle(style: config.style)
+        setupPlaceholder(config: config)
         
         if !config.text.isEmpty {
             config.textObserver(config.text)
@@ -73,6 +79,20 @@ final class DefaultTextField: UITextField {
         }
     }
     
+    private func setupPlaceholder(config: Config) {
+        let attributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.lightSubtextColor,
+            .font: UIFont.manrope(
+                type: .medium,
+                size: 14
+            )
+        ]
+
+        attributedPlaceholder = NSAttributedString(
+            string: config.plaseholder,
+            attributes: attributes
+        )
+    }
 }
 
 // MARK: - Config
@@ -82,6 +102,7 @@ extension DefaultTextField {
         var style: Style
         var text: String = ""
         var plaseholder: String = ""
+        var debounce: Int = 0 // milliseconds
         var textObserver: ((String)->())
         var controlEvent: UIControl.Event = .editingChanged
         

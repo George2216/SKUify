@@ -27,4 +27,9 @@ final class UserDataUseCase: Domain.UserDataUseCase {
             .map { _ in }
     }
     
+    func updateCompanyInformation(data: Domain.CompanyInformationRequestModel) -> Observable<Void> {
+        network.updateCompanyInformation(data: data)
+            .map { _ in }
+    }
+    
 }

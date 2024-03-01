@@ -21,6 +21,7 @@ public struct UserDTO: Codable {
     public var companyName: String?
     public var companyEmail: String?
     public var companyWebsite: String?
+    public var companyPhone: String?
     public var addressOne: String?
     public var addressTwo: String?
     public var postCode: String?
@@ -36,6 +37,7 @@ public struct UserDTO: Codable {
         case companyName = "company_name"
         case companyEmail = "company_email"
         case companyWebsite = "company_website"
+        case companyPhone = "company_phone"
         case addressOne = "address_1"
         case addressTwo = "address_2"
         case postCode = "post_code"

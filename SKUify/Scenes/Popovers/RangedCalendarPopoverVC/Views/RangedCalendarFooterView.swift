@@ -21,6 +21,7 @@ final class RangedCalendarFooterView: UIView {
     private lazy var separatorLabel = UILabel()
     
     private lazy var confirmButton = DefaultButton()
+    private lazy var cancelButton = DefaultButton()
     
     private lazy var labelsStack = HorizontalStack()
     private lazy var contentStack = HorizontalStack()
@@ -47,6 +48,7 @@ final class RangedCalendarFooterView: UIView {
         bindToEndDateLabel(input)
         bindToStartDateLabel(input)
         bindToConfirmButton(input)
+        bindToCancelButton(input)
     }
     
     private func bindToSeparatorLabel(_ input: Input) {
@@ -73,13 +75,21 @@ final class RangedCalendarFooterView: UIView {
             .disposed(by: disposeBag)
     }
     
+    private func bindToCancelButton(_ input: Input) {
+        input.cancelButtonConfig
+            .drive(cancelButton.rx.config)
+            .disposed(by: disposeBag)
+    }
+    
     // MARK: Setup views
     
     private func setupContentStack() {
         contentStack.views = [
             labelsStack,
             UIView.spacer(),
+            cancelButton,
             confirmButton
+
         ]
         contentStack.layoutMargins = UIEdgeInsets(
             top: 0,
@@ -119,7 +129,7 @@ final class RangedCalendarFooterView: UIView {
     
     private func setupLabelAttributed(_ label: inout UILabel) {
         label.font = .manrope(
-            type: .regular,
+            type: .extraBold,
             size: 13
         )
         label.textColor = .primary
@@ -136,6 +146,7 @@ extension RangedCalendarFooterView {
         let endDate: Driver<String>
         let separator: Driver<String>
         let confirmButtonConfig: Driver<DefaultButton.Config>
+        let cancelButtonConfig: Driver<DefaultButton.Config>
     }
     
 }

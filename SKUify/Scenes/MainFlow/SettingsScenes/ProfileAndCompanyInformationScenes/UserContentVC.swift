@@ -30,11 +30,11 @@ final class UserContentVC: BaseViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Profile"
         
         let output = viewModel.transform(.init(updateImage: updateImage.asDriverOnErrorJustComplete()))
         setupContentView()
         
+        bindToTitle(output)
         bindHeightForScrollingToTxtField(output)
         bindToContentView(output)
         bindToLoader(output)
@@ -47,7 +47,8 @@ final class UserContentVC: BaseViewController {
     private func setupContentView() {
         containerView.addSubview(contentView)
         contentView.snp.makeConstraints { make in
-            make.top.horizontalEdges
+            make.top
+                .horizontalEdges
                 .equalToSuperview()
                 .inset(16)
             make.bottom
@@ -61,6 +62,11 @@ final class UserContentVC: BaseViewController {
 // MARK: Make binding
 
 extension UserContentVC {
+    private func bindToTitle(_ output: ProfileViewModel.Output) {
+        output.navigationTitle
+            .drive(rx.title)
+            .disposed(by: disposeBag)
+    }
     
     private func bindHeightForScrollingToTxtField(_ output: ProfileViewModel.Output) {
         output.keyboardHeight

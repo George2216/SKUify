@@ -45,4 +45,12 @@ public final class NetworkUseCaseProvider: Domain.NetworkUseCaseProvider {
     public func makeUserDataUseCase() -> Domain.UserDataUseCase {
         return UserDataUseCase(network: networkProvider.makeUserDataNetwork())
     }
+    
+    public func makeSalesRefundsUseCase() -> Domain.SalesRefundsUseCase {
+        return SalesRefundsUseCase(
+            refundsNetwork: networkProvider.makeSalesRefundsNetwork(),
+            orderssNetwork: networkProvider.makeSalesOrdersNetwork()
+        )
+    }
+    
 }

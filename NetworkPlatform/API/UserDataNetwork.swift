@@ -80,7 +80,7 @@ final class UserDataNetwork: Domain.UserDataNetwork {
                         parameters: data.parameters,
                         media: [
                             makeMedia(
-                                by: "company_image",
+                                by: "company_avatar_image",
                                 imageData: data.imageData
                             )
                         ]

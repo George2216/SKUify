@@ -21,7 +21,7 @@ final class ProfileViewModel: BaseUserContentViewModel {
     private let changeLastName = PublishSubject<String>()
     private let changePhone = PublishSubject<String>()
 
-    private let tapOnSelectImage = PublishSubject<Void>()
+    private let tapOnUploadImage = PublishSubject<Void>()
     private let tapOnRemoveImage = PublishSubject<Void>()
 
     private let tapOnSave = PublishSubject<Void>()
@@ -59,9 +59,10 @@ final class ProfileViewModel: BaseUserContentViewModel {
         subscribeToUpdateImage(input)
         
         return Output(
+            navigationTitle: makeTitle(),
             keyboardHeight: getKeyboardHeight(),
             contentData: contentDataStorage.compactMap({ $0 }).asDriverOnErrorJustComplete(),
-            tapOnUploadImage: tapOnSelectImage.asDriverOnErrorJustComplete(),
+            tapOnUploadImage: tapOnUploadImage.asDriverOnErrorJustComplete(),
             fetching: activityIndicator.asDriver(),
             error: errorTracker.asBannerInput(.error)
         )
@@ -71,37 +72,11 @@ final class ProfileViewModel: BaseUserContentViewModel {
     
     private func subscibers() {
         subscribeOnSaveData()
-        subscribeOnEmailChanged()
-        subscribeOnFirstNameChanged()
-        subscribeOnLastNameChanged()
-        subscriveOnPhoneChaged()
         subscribeOnRemoveImage()
-    }
-    
-    private func subscribeOnRemoveImage() {
-        tapOnRemoveImage.asDriverOnErrorJustComplete()
-            .withLatestFrom(
-                Driver.combineLatest(
-                    contentDataStorage.asDriverOnErrorJustComplete(),
-                    userDataRequestStorage.asDriverOnErrorJustComplete()
-                )
-            )
-            .withUnretained(self)
-            .do(onNext: { owner, arg0 in
-                // Remove image from content storage
-                var (contentData, _) = arg0
-                contentData?.profileHeaderViewInput.uploadInput.imageType = .fromURL(nil)
-                owner.contentDataStorage.onNext(contentData)
-            })
-            .do(onNext: { owner, arg0 in
-                // Remove image from request data storage
-                var (_, contentRequestData) = arg0
-                contentRequestData?.imageData = nil
-                owner.userDataRequestStorage.onNext(contentRequestData)
-            })
-            .drive()
-            .disposed(by: disposeBag)
-        
+        updateEmailForUserDataRequestStorage()
+        updateFirstNameForUserDataRequestStorage()
+        updateLastNameForUserDataRequestStorage()
+        updatePhoneForUserDataRequestStorage()
     }
     
     private func subscribeOnSaveData() {
@@ -115,62 +90,49 @@ final class ProfileViewModel: BaseUserContentViewModel {
             .disposed(by: disposeBag)
     }
     
-    private func subscribeOnEmailChanged() {
-        changeEmail
-            .asDriverOnErrorJustComplete()
-            .withLatestFrom(userDataRequestStorage.asDriverOnErrorJustComplete()) { email, requestDataStorage in
-                return (email, requestDataStorage)
+    private func updateProfileInformation<T>(
+        property: Driver<T>,
+        updateClosure: @escaping(inout UserRequestModel?, T) -> Void
+    ) {
+        property
+            .withLatestFrom(userDataRequestStorage.asDriverOnErrorJustComplete()) { value, requestDataStorage in
+                return (value, requestDataStorage)
             }
-            .map { email, requestDataStorage in
+            .map { value, requestDataStorage in
                 var requestDataStorage = requestDataStorage
-                requestDataStorage?.parameters?.email = email
+                updateClosure(&requestDataStorage, value)
                 return requestDataStorage
             }
             .drive(userDataRequestStorage)
             .disposed(by: disposeBag)
     }
-    
-    private func subscribeOnFirstNameChanged() {
-        changeFirstName.asDriverOnErrorJustComplete()
-            .withLatestFrom(userDataRequestStorage.asDriverOnErrorJustComplete()) { firstName, requestDataStorage in
-                return (firstName, requestDataStorage)
-            }
-            .map { firstName, requestDataStorage in
-                var requestDataStorage = requestDataStorage
-                requestDataStorage?.parameters?.firstName = firstName
-                return requestDataStorage
-            }
-            .drive(userDataRequestStorage)
-            .disposed(by: disposeBag)
+
+    private func updateEmailForUserDataRequestStorage() {
+        updateProfileInformation(property: changeEmail.asDriverOnErrorJustComplete()) { requestDataStorage, email in
+            requestDataStorage?.parameters?.email = email
+        }
     }
     
-    private func subscribeOnLastNameChanged() {
-        changeLastName.asDriverOnErrorJustComplete()
-            .withLatestFrom(userDataRequestStorage.asDriverOnErrorJustComplete()) { lastName, requestDataStorage in
-                return (lastName, requestDataStorage)
-            }
-            .map { lastName, requestDataStorage in
-                var requestDataStorage = requestDataStorage
-                requestDataStorage?.parameters?.lastName = lastName
-                return requestDataStorage
-            }
-            .drive(userDataRequestStorage)
-            .disposed(by: disposeBag)
+    private func updateFirstNameForUserDataRequestStorage() {
+        updateProfileInformation(property: changeFirstName.asDriverOnErrorJustComplete()) { requestDataStorage, firstName in
+            requestDataStorage?.parameters?.firstName = firstName
+        }
     }
     
-    private func subscriveOnPhoneChaged() {
-        changePhone.asDriverOnErrorJustComplete()
-            .withLatestFrom(userDataRequestStorage.asDriverOnErrorJustComplete()) { phone, requestDataStorage in
-                return (phone, requestDataStorage)
-            }.map { phone, requestDataStorage in
-                var requestDataStorage = requestDataStorage
-                requestDataStorage?.parameters?.phone = phone
-                return requestDataStorage
-            }
-            .drive(userDataRequestStorage)
-            .disposed(by: disposeBag)
+    private func updateLastNameForUserDataRequestStorage() {
+        updateProfileInformation(property: changeLastName.asDriverOnErrorJustComplete()) { requestDataStorage, lastName in
+            requestDataStorage?.parameters?.lastName = lastName
+        }
     }
     
+    private func updatePhoneForUserDataRequestStorage() {
+        updateProfileInformation(property: changePhone.asDriverOnErrorJustComplete()) { requestDataStorage, phone in
+            requestDataStorage?.parameters?.phone = phone
+        }
+    }
+    
+    // MARK: - Image subscribers
+
     private func subscribeToUpdateImage(_ input: Input) {
         input.updateImage
             .withLatestFrom(
@@ -198,6 +160,32 @@ final class ProfileViewModel: BaseUserContentViewModel {
             })
             .drive()
             .disposed(by: disposeBag)
+    }
+    
+    private func subscribeOnRemoveImage() {
+        tapOnRemoveImage.asDriverOnErrorJustComplete()
+            .withLatestFrom(
+                Driver.combineLatest(
+                    contentDataStorage.asDriverOnErrorJustComplete(),
+                    userDataRequestStorage.asDriverOnErrorJustComplete()
+                )
+            )
+            .withUnretained(self)
+            .do(onNext: { owner, arg0 in
+                // Remove image from content storage
+                var (contentData, _) = arg0
+                contentData?.profileHeaderViewInput.uploadInput.imageType = .fromURL(nil)
+                owner.contentDataStorage.onNext(contentData)
+            })
+            .do(onNext: { owner, arg0 in
+                // Remove image from request data storage
+                var (_, contentRequestData) = arg0
+                contentRequestData?.imageData = nil
+                owner.userDataRequestStorage.onNext(contentRequestData)
+            })
+            .drive()
+            .disposed(by: disposeBag)
+        
     }
     
     // MARK: Make content data
@@ -275,7 +263,7 @@ final class ProfileViewModel: BaseUserContentViewModel {
                                 style: .primaryPlus,
                                 action: { [weak self] in
                                     guard let self else { return }
-                                    self.tapOnSelectImage.onNext(())
+                                    self.tapOnUploadImage.onNext(())
                                 }
                             )
                         ),
@@ -359,7 +347,13 @@ final class ProfileViewModel: BaseUserContentViewModel {
             .map({ _ in () })
     }
     
-    // MARK: Get keyboard height
+    // MARK: - Make title
+    
+    private func makeTitle() -> Driver<String> {
+        .just("Profile")
+    }
+    
+    // MARK: - Get keyboard height
 
     private func getKeyboardHeight() -> Driver<CGFloat> {
         keyboardUseCase
@@ -367,7 +361,7 @@ final class ProfileViewModel: BaseUserContentViewModel {
             .asDriverOnErrorJustComplete()
     }
     
-    // MARK: Get user data
+    // MARK: - Get user data
     
     private func getUserData() -> Driver<UserDTO> {
         userDataUseCase
@@ -378,7 +372,7 @@ final class ProfileViewModel: BaseUserContentViewModel {
             .map({ $0.user })
     }
     
-    // MARK: Save user data
+    // MARK: - Save user data
 
     private func saveUserData(_ data: UserRequestModel) -> Driver<Void> {
         userDataUseCase.updateUserData(data: data)

@@ -120,7 +120,10 @@ final class DefaultButton: UIButton {
       
       
       
+        case .simplePrimaryText:
+            setupSimplePrimaryText()
         }
+        
         clipsToBounds = true
     }
     
@@ -246,6 +249,11 @@ extension DefaultButton {
         layer.borderWidth = 2.0
     }
     
+    private func setupSimplePrimaryText() {
+        setupSimpleStyle()
+        configuration?.baseForegroundColor = .primary
+    }
+    
 }
 
 
@@ -272,6 +280,7 @@ extension DefaultButton {
         case primary
         case fullyRoundedPrimary
         case primaryPlus
+        case simplePrimaryText
         case chekButton(
             isSelected: Bool,
             substile: CheckButtonSubstyle
@@ -282,7 +291,7 @@ extension DefaultButton {
             radius: CGFloat = 0.0,
             backgroung: Color = .clear,
             tint: Color = .clear,
-            image: ImageType?,
+            image: ImageType? = nil,
             borderWidth: CGFloat = 0.0,
             borderColor: Color = .clear
         )
@@ -294,6 +303,7 @@ extension DefaultButton {
                 return 50.0
                 
             case .simple,
+                    .simplePrimaryText,
                     .primary,
                     .primaryPlus:
                 return 40.0
@@ -334,6 +344,9 @@ extension DefaultButton {
         case black
         case clear
         case lightGray
+        case red
+        case primary
+        case white
         var color: UIColor {
             switch self {
             case .black:
@@ -342,6 +355,12 @@ extension DefaultButton {
                 return .clear
             case .lightGray:
                 return .lightGray
+            case .red:
+                return .systemRed
+            case .primary:
+                return .primary
+            case .white:
+                return .white
             }
         }
     }

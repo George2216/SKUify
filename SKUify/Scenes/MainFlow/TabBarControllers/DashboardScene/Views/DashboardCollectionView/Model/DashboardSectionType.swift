@@ -1,5 +1,5 @@
 //
-//  SectionType.swift
+//  DashboardSectionType.swift
 //  SKUify
 //
 //  Created by George Churikov on 03.12.2023.

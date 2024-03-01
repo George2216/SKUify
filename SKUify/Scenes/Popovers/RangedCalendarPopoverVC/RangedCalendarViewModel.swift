@@ -56,7 +56,7 @@ final class RangedCalendarViewModel: ViewModelProtocol {
                 var action: (() -> Void)?
                 
                 let formatter = DateFormatter()
-                formatter.dateFormat = "MMMM/yyyy/dd"
+                formatter.dateFormat = "dd/MM/yyyy"
                 
                 if dates.isEmpty {
                     startDate = formatter.string(from: Date())
@@ -85,14 +85,35 @@ final class RangedCalendarViewModel: ViewModelProtocol {
                         confirmButtonConfig: .just(
                             .init(
                                 title: "Ok",
-                                style: .light,
+                                style: .custom(
+                                    radius: 17.0,
+                                    backgroung: .primary,
+                                    tint: .white
+                                    ),
                                 action: action
+                            )
+                        ),
+                        cancelButtonConfig: .just(
+                            .init(
+                                title: "Cancel",
+                                style: .custom(tint: .primary),
+                                action: { [weak self] in
+                                    guard let self else { return }
+                                    self.cancelAction(selectedDates: dates)
+                                }
                             )
                         )
                     )
             }
             .asDriverOnErrorJustComplete()
     }
+    
+    private func cancelAction(selectedDates: [Date]) {
+        deselectDates.onNext(selectedDates)
+        self.selectedDates.onNext([])
+        confirmSelectionDate.onNext(Date())
+    }
+    
     // MARK: Header events
     
     private func makeHeaderInput(_ input: Input) -> Driver<RangedCalendarHeaderView.Input> {

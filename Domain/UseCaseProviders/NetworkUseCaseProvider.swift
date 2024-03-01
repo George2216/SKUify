@@ -16,4 +16,5 @@ public protocol NetworkUseCaseProvider {
     ) -> LoginUseCase
     func makeChartsUseCase() -> ChartsUseCase
     func makeUserDataUseCase() -> UserDataUseCase
+    func makeSalesRefundsUseCase() -> SalesRefundsUseCase
 }

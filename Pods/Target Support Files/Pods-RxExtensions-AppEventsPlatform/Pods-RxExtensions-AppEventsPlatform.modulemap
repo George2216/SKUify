@@ -1,0 +1,6 @@
+framework module Pods_RxExtensions_AppEventsPlatform {
+  umbrella header "Pods-RxExtensions-AppEventsPlatform-umbrella.h"
+
+  export *
+  module * { export * }
+}

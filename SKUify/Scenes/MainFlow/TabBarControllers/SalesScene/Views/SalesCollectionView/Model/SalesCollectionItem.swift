@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+enum SalesCollectionItem {
+    case orders(_ input: SalesOrdersCell.Input)
+    case refunds(_ input: SalesRefundsCell.Input)
+}

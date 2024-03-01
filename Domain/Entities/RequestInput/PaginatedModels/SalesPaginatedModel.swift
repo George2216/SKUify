@@ -6,3 +6,54 @@
 //
 
 import Foundation
+ 
+public struct SalesPaginatedModel {
+    public let limit = 15
+    public var offset: Int? = nil
+    public var noCOGs: Bool? = nil
+    public var searchText: String? = nil
+    public var period: SalesPeriodType
+    public var tableType: SalesTableType
+    public var marketplaceType: SalesMarketplaceType
+  
+    public init(
+        offset: Int? = nil,
+        searchText: String? = nil,
+        period: SalesPeriodType,
+        tableType: SalesTableType,
+        marketplaceType: SalesMarketplaceType
+    ) {
+        self.offset = offset
+        self.searchText = searchText
+        self.period = period
+        self.tableType = tableType
+        self.marketplaceType = marketplaceType
+    }
+    
+    public static func base() -> SalesPaginatedModel {
+        .init(
+            period: .all,
+            tableType: .orders,
+            marketplaceType: .all
+        )
+    }
+}
+
+public enum SalesPeriodType {
+    case all
+    case byRange(
+        _ startDate: String,
+        _ endDate: String
+    )
+}
+
+public enum SalesTableType {
+    case orders
+    case refunds
+}
+
+public enum SalesMarketplaceType {
+    case all
+    case marketplace(_ marketplaceCode: String)
+}
+

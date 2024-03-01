@@ -44,7 +44,7 @@ extension UITableView {
     }
 }
 
-extension UICollectionViewCell: Reusable {}
+extension UICollectionReusableView: Reusable {}
 
 extension UICollectionView {
     func dequeueReusableCell<T>(
@@ -59,11 +59,35 @@ extension UICollectionView {
         }
         return cell
     }
+    
+    func dequeueReusableSupplementaryView<T>(
+        ofType cellType: T.Type = T.self,
+        at indexPath: IndexPath,
+        kind: String
+    ) -> T where T: UICollectionReusableView {
+        guard let supplementaryView = dequeueReusableSupplementaryView(
+            ofKind: kind,
+            withReuseIdentifier: cellType.reuseID,
+            for: indexPath
+        ) as? T else {
+            fatalError()
+        }
+        return supplementaryView
+    }
+    
 }
 
 extension UICollectionView {
     func register<T: Reusable>(_ cellClass: T.Type) {
         register(cellClass, forCellWithReuseIdentifier: cellClass.reuseID)
+    }
+    
+    func registerFooter<T: Reusable>(_ cellClass: T.Type) {
+        register(
+            cellClass,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+            withReuseIdentifier: cellClass.reuseID
+        )
     }
 }
 

@@ -6,7 +6,9 @@
 //
 
 import Foundation
+import Domain
 
 protocol SalesUseCases {
-    
+    func makeSalesRefundsUseCase() -> Domain.SalesRefundsUseCase
+    func makeMarketplacesUseCase() -> Domain.MarketplacesUseCase
 }

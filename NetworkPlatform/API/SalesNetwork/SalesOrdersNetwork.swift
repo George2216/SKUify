@@ -9,7 +9,7 @@ import Foundation
 import Domain
 import RxSwift
 
-final class SalesOrdersNetwork: Domain.SalesOrdersNetwork {
+final class SalesOrdersNetwork: SalesBaseNetwork, Domain.SalesOrdersNetwork {
 
     private let network: Network<SalesOrdersMainDTO>
     private let interceptorFactory: Domain.InterceptorFactory
@@ -33,14 +33,6 @@ final class SalesOrdersNetwork: Domain.SalesOrdersNetwork {
             )
         )
     }
-    
-    private func makeUrl(from paginatedModel: SalesPaginatedModel) -> String {
-        var urlString = "sales/?period=all&page_name=sales&salesOnly=true&autoRefresh=true"
-            let parameters = paginatedModel.toDictionary()
-            .toURLParameters()
-        urlString += parameters
-        return urlString
-    }
-    
+
 }
 

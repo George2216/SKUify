@@ -7,16 +7,157 @@
 
 import Foundation
 import UIKit
+import SnapKit
+import RxSwift
+import RxCocoa
 
 final class SalesVC: BaseViewController {
-    var viewModel: SalesViewModel!
+
+    private let visibleSection = PublishSubject<Int>()
     
+    private lazy var setupView = SalesSetupView()
+    private lazy var collectionView = SalesCollectionView(
+        frame: .zero,
+        collectionViewLayout: createCollectionViewLayout()
+    )
+
+    private lazy var calendarPopover = RangedCalendarBuilder.buildRangedCalendarModule(delegate: self)
+    
+    var viewModel: SalesViewModel!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Sales"
-
+        
+        let refreshingTriger = collectionView.refreshControl!.rx
+            .controlEvent(.valueChanged)
+            .asDriver()
+        
+        let viewWillAppear = rx.sentMessage(#selector(UIViewController.viewWillAppear(_:)))
+            .mapToVoid()
+            .asDriverOnErrorJustComplete()
+        
+        let output = viewModel.transform(
+            .init(
+                reloadData: Driver.merge(refreshingTriger, viewWillAppear),
+                visibleSection: visibleSection.asDriverOnErrorJustComplete()
+            )
+        )
+        
+        setupSetupView()
+        setupCollection()
+        subscribeOnVisebleSection()
+        
+        bindToBanner(output)
+        bindToSetupView(output)
+        bindToCollectionView(output)
+        bindToLoader(output)
+        bindToPaginatedCollectionLoader(output)
+        bingCalendarPopover(output)
     }
     
-   
+    private func createCollectionViewLayout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        layout.scrollDirection = .vertical
+        return layout
+    }
     
+    private func setupSetupView() {
+        view.addSubview(setupView)
+        setupView.snp.makeConstraints { make in
+            make.top
+                .horizontalEdges
+                .equalToSuperview()
+                .inset(10)
+        }
+    }
+    
+    private func setupCollection() {
+        view.addSubview(collectionView)
+        collectionView.snp.makeConstraints { make in
+            make.top
+                .equalTo(setupView.snp.bottom)
+            make.horizontalEdges
+                .bottom
+                .equalToSuperview()
+        }
+    }
+    
+}
+
+// MARK: Subscrivers
+
+extension SalesVC {
+    
+    private func subscribeOnVisebleSection() {
+        collectionView
+            .subscribeOnVisibleSection()
+            .drive(visibleSection)
+            .disposed(by: disposeBag)
+    }
+    
+}
+
+// MARK: Make binding
+
+extension SalesVC {
+
+    private func bindToLoader(_ output: SalesViewModel.Output) {
+        output.fetching
+            .drive(collectionView.refreshControl!.rx.isRefreshing)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindToBanner(_ output: SalesViewModel.Output) {
+        output.error
+            .drive(rx.banner)
+            .disposed(by: disposeBag)
+    }
+    
+    
+    func bindToSetupView(_ output: SalesViewModel.Output) {
+        output.setupViewInput
+            .drive(setupView.rx.input)
+            .disposed(by: disposeBag)
+    }
+    
+    func bindToCollectionView(_ output: SalesViewModel.Output) {
+        collectionView.bind(output.collectionData)
+            .disposed(by: disposeBag)
+    }
+    
+    func bindToPaginatedCollectionLoader(_ output: SalesViewModel.Output) {
+        collectionView.bindToPaginatedLoader(output.isShowPaginatedLoader)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bingCalendarPopover(_ output: SalesViewModel.Output) {
+        output.showCalendarPopover
+            .withUnretained(self)
+            .map { owner, point in
+                PopoverManager.Input(
+                    bindingType: .point(point),
+                    preferredSize: .init(
+                        width: owner.view.frame.width - 20,
+                        height: owner.view.frame.width - 50
+                    ),
+                    popoverVC: owner.calendarPopover
+                )
+            }
+            .drive(rx.popover)
+            .disposed(by: disposeBag)
+    }
+    
+}
+
+// Calendar delegate methods
+
+extension SalesVC: RangedCalendarPopoverDelegate {
+    func selectedCalendarDates(
+        startDate: Date,
+        endDate: Date?
+    ) {
+        calendarPopover.dismiss(animated: true)
+    }
 }

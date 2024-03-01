@@ -184,7 +184,7 @@ extension DashboardCollectionView: UICollectionViewDelegateFlowLayout {
                           withHorizontalFittingPriority: .required,
                           verticalFittingPriority: .defaultLow
                       )
-              
+
                return size
            }
        }

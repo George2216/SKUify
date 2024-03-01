@@ -24,6 +24,8 @@ public struct LoginDTO: Decodable, ErrorHandledResponseModel {
 
 public struct LoginUserDataDTO: Decodable {
     public let id: Int
+    public let amazon_settings: [AmazonSettingsDTO]
     public let marketplaces: [MarketplaceDTO]
 }
+
 

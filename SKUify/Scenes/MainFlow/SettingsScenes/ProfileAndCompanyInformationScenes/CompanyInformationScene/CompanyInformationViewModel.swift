@@ -14,7 +14,22 @@ import RxExtensions
 final class CompanyInformationViewModel: BaseUserContentViewModel {
     private let disposeBag = DisposeBag()
 
-    private let userDataRequestStorage = BehaviorSubject<CompanyInformationRequestModel?>(value: nil)
+    private let changeCompanyName = PublishSubject<String>()
+    private let changeCompanyEmail = PublishSubject<String>()
+    private let changeCompanyWebsite = PublishSubject<String>()
+    private let changeCompanyPhone = PublishSubject<String>()
+    private let changeCompanyAddressOne = PublishSubject<String>()
+    private let changeCompanyAddressTwo = PublishSubject<String>()
+    private let changeCity = PublishSubject<String>()
+    private let changePostCode = PublishSubject<String>()
+    
+    
+    private let tapOnUploadImage = PublishSubject<Void>()
+    private let tapOnRemoveImage = PublishSubject<Void>()
+
+    private let tapOnSave = PublishSubject<Void>()
+    
+    private let companyDataRequestStorage = BehaviorSubject<CompanyInformationRequestModel?>(value: nil)
     private let contentDataStorage = BehaviorSubject<UserContentContentView.Input?>(value: nil)
     
     // Dependencies
@@ -39,17 +54,169 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
         self.keyboardUseCase = useCases.makeKeyboardUseCase()
         super.init()
         makeContentData()
+        subscribers()
     }
     
     override func transform(_ input: Input) -> Output {
         _ = super.transform(input)
+        subscribeToUpdateImage(input)
         return Output(
+            navigationTitle: makeTitle(),
             keyboardHeight: getKeyboardHeight(),
             contentData: contentDataStorage.compactMap({ $0 }).asDriverOnErrorJustComplete(),
-            tapOnUploadImage: .empty(),
-            fetching: .empty(),
-            error: .empty()
+            tapOnUploadImage: tapOnUploadImage.asDriverOnErrorJustComplete(),
+            fetching: activityIndicator.asDriver(),
+            error: errorTracker.asBannerInput(.error)
         )
+    }
+    
+    // MARK: - Subscribers
+    
+    private func subscribers() {
+        subscribeOnSaveData()
+        subscribeOnRemoveImage()
+        updateCompanyNameForRequestDataStorage()
+        updateCompanyEmailForRequestDataStorage()
+        updateCompanyWebsiteForRequestDataStorage()
+        updateCompanyAddressOneForRequestDataStorage()
+        updateCompanyAddressTwoForRequestDataStorage()
+        updateCityForRequestDataStorage()
+        updatePostCodeForRequestDataStorage()
+        updateCompanyPhoneForRequestDataStorage()
+    }
+    
+    private func subscribeOnSaveData() {
+        tapOnSave.asDriverOnErrorJustComplete()
+            .withLatestFrom(companyDataRequestStorage.asDriverOnErrorJustComplete())
+            .compactMap({ $0 })
+            .flatMapLatest(weak: self) { owner, requestData in
+                return owner.saveCompanyData(requestData)
+            }
+            .drive()
+            .disposed(by: disposeBag)
+    }
+    
+    // MARK: - Update companyDataRequestStorage by changes
+    
+    private func updateCompanyInformation<T>(
+        property: Driver<T>,
+        updateClosure: @escaping (inout CompanyInformationRequestModel?, T) -> Void
+    ) {
+        property
+            .withLatestFrom(companyDataRequestStorage.asDriverOnErrorJustComplete()) { value, requestDataStorage in
+                return (value, requestDataStorage)
+            }
+            .map { value, requestDataStorage in
+                var requestDataStorage = requestDataStorage
+                updateClosure(&requestDataStorage, value)
+                return requestDataStorage
+            }
+            .drive(companyDataRequestStorage)
+            .disposed(by: disposeBag)
+    }
+
+    private func updateCompanyNameForRequestDataStorage() {
+        updateCompanyInformation(property: changeCompanyName.asDriverOnErrorJustComplete()) { requestDataStorage, companyName in
+            requestDataStorage?.parameters?.companyName = companyName
+        }
+    }
+    
+    private func updateCompanyEmailForRequestDataStorage() {
+        updateCompanyInformation(property: changeCompanyEmail.asDriverOnErrorJustComplete()) { requestDataStorage, companyEmail in
+            requestDataStorage?.parameters?.companyEmail = companyEmail
+        }
+    }
+    
+    private func updateCompanyWebsiteForRequestDataStorage() {
+        updateCompanyInformation(property: changeCompanyWebsite.asDriverOnErrorJustComplete()) { requestDataStorage, companyWebsite in
+            requestDataStorage?.parameters?.companyWebsite = companyWebsite
+        }
+    }
+    
+    private func updateCompanyAddressOneForRequestDataStorage() {
+        updateCompanyInformation(property: changeCompanyAddressOne.asDriverOnErrorJustComplete()) { requestDataStorage, companyAddressOne in
+            requestDataStorage?.parameters?.addressOne = companyAddressOne
+        }
+    }
+    
+    private func updateCompanyAddressTwoForRequestDataStorage() {
+        updateCompanyInformation(property: changeCompanyAddressTwo.asDriverOnErrorJustComplete()) { requestDataStorage, companyAddressTwo in
+            requestDataStorage?.parameters?.addressTwo = companyAddressTwo
+        }
+    }
+    
+    private func updateCityForRequestDataStorage() {
+        updateCompanyInformation(property: changeCity.asDriverOnErrorJustComplete()) { requestDataStorage, city in
+            requestDataStorage?.parameters?.city = city
+        }
+    }
+    
+    private func updatePostCodeForRequestDataStorage() {
+        updateCompanyInformation(property: changePostCode.asDriverOnErrorJustComplete()) { requestDataStorage, postCode in
+            requestDataStorage?.parameters?.postCode = postCode
+        }
+    }
+    
+    private func updateCompanyPhoneForRequestDataStorage() {
+        updateCompanyInformation(property: changeCompanyPhone.asDriverOnErrorJustComplete()) { requestDataStorage, companyPhone in
+            requestDataStorage?.parameters?.companyPhone = companyPhone
+        }
+    }
+
+    // MARK: - Image subscribers
+    
+    private func subscribeToUpdateImage(_ input: Input) {
+        input.updateImage
+            .withLatestFrom(
+                Driver
+                    .combineLatest(
+                        companyDataRequestStorage.asDriverOnErrorJustComplete(),
+                        contentDataStorage.asDriverOnErrorJustComplete()
+                    )
+            ) { imageData, arg0 in
+                return (imageData, arg0.0, arg0.1)
+            }
+            .withUnretained(self)
+            .do(onNext: { owner, arg0 in
+                // Save image to request data storage
+                var (imageData, requestDataStorage, _) = arg0
+                requestDataStorage?.imageData = imageData
+                owner.companyDataRequestStorage.onNext(requestDataStorage)
+            })
+            .do(onNext: { owner, arg0 in
+                // Save image to content data storage
+                var (imageData, _, contentDataStorage) = arg0
+                contentDataStorage?.profileHeaderViewInput.uploadInput.imageType = .fromData(imageData)
+                owner.contentDataStorage.onNext(contentDataStorage)
+                
+            })
+            .drive()
+            .disposed(by: disposeBag)
+    }
+    
+    private func subscribeOnRemoveImage() {
+        tapOnRemoveImage.asDriverOnErrorJustComplete()
+            .withLatestFrom(
+                Driver.combineLatest(
+                    contentDataStorage.asDriverOnErrorJustComplete(),
+                    companyDataRequestStorage.asDriverOnErrorJustComplete()
+                )
+            )
+            .withUnretained(self)
+            .do(onNext: { owner, arg0 in
+                // Remove image from content storage
+                var (contentData, _) = arg0
+                contentData?.profileHeaderViewInput.uploadInput.imageType = .fromURL(nil)
+                owner.contentDataStorage.onNext(contentData)
+            })
+            .do(onNext: { owner, arg0 in
+                // Remove image from request data storage
+                var (_, contentRequestData) = arg0
+                contentRequestData?.imageData = nil
+                owner.companyDataRequestStorage.onNext(contentRequestData)
+            })
+            .drive()
+            .disposed(by: disposeBag)
     }
     
     // MARK: Make content data
@@ -75,7 +242,7 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
                 Driver.combineLatest(
                     userIdUseCase.getUserId()
                         .asDriverOnErrorJustComplete(),
-                    userDataRequestStorage.asDriverOnErrorJustComplete()
+                    companyDataRequestStorage.asDriverOnErrorJustComplete()
                 )
             ) { data, arg0 in
                 let (userId, dataStorage) = arg0
@@ -95,7 +262,6 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
                     userId: userId,
                     imageData: Data(),
                     parameters: .init(
-                        companyAvatarImage: data.companyAvatarImage,
                         companyName: data.companyName,
                         companyEmail: data.companyEmail,
                         companyWebsite: data.companyWebsite ,
@@ -105,7 +271,7 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
                         city: data.city
                     )
                 )
-                owner.userDataRequestStorage.onNext(dataStorage)
+                owner.companyDataRequestStorage.onNext(dataStorage)
             })
             .map({ owner, arg0 in
                 let (user, _, _) = arg0
@@ -131,7 +297,7 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
                                 style: .primaryPlus,
                                 action: { [weak self] in
                                     guard let self else { return }
-                                    //                                    self.tapOnSelectImage.onNext(())
+                                    self.tapOnUploadImage.onNext(())
                                 }
                             )
                         ),
@@ -140,7 +306,7 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
                             style: .simple,
                             action: { [weak self] in
                                 guard let self else { return }
-                                //                                self.tapOnRemoveImage.onNext(())
+                                self.tapOnRemoveImage.onNext(())
                             }
                         )
                     ),
@@ -152,7 +318,7 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
                                 text: user.companyName ?? "",
                                 textObserver: { [weak self] text in
                                     guard let self else { return }
-                                    //                                    self.changeFirstName.onNext(text)
+                                    self.changeCompanyName.onNext(text)
                                 }
                             )
                         ),
@@ -163,7 +329,7 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
                                 text: user.companyEmail ?? "",
                                 textObserver: { [weak self] text in
                                     guard let self else { return }
-                                    //                                    self.changeLastName.onNext(text)
+                                    self.changeCompanyEmail.onNext(text)
                                 }
                             )
                         ),
@@ -174,7 +340,7 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
                                 text: user.companyWebsite ?? "",
                                 textObserver: { [weak self] text in
                                     guard let self else { return }
-                                    //                                    self.changeEmail.onNext(text)
+                                    self.changeCompanyWebsite.onNext(text)
                                 }
                             )
                         ),
@@ -185,7 +351,7 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
                                 text: user.addressOne ?? "",
                                 textObserver: { [weak self] text in
                                     guard let self else { return }
-                                    //                                    self.changePhone.onNext(text)
+                                    self.changeCompanyAddressOne.onNext(text)
                                 }
                             )
                         ),
@@ -196,7 +362,7 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
                                 text: user.addressTwo ?? "",
                                 textObserver: { [weak self] text in
                                     guard let self else { return }
-                                    //                                    self.changePhone.onNext(text)
+                                    self.changeCompanyAddressTwo.onNext(text)
                                 }
                             )
                         ),
@@ -207,7 +373,7 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
                                 text: user.city ?? "",
                                 textObserver: { [weak self] text in
                                     guard let self else { return }
-                                    //                                    self.changePhone.onNext(text)
+                                    self.changeCity.onNext(text)
                                 }
                             )
                         ),
@@ -218,23 +384,21 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
                                 text: user.postCode ?? "",
                                 textObserver: { [weak self] text in
                                     guard let self else { return }
-                                    //                                    self.changePhone.onNext(text)
+                                    self.changePostCode.onNext(text)
                                 }
                             )
                         ),
                         .init(
-                            title: "Country",
+                            title: "Company phone",
                             config: .init(
                                 style: .bordered,
-                                text: user.city ?? "",
+                                text: user.companyPhone ?? "",
                                 textObserver: { [weak self] text in
                                     guard let self else { return }
-                                    //                                    self.changePhone.onNext(text)
+                                    self.changeCompanyPhone.onNext(text)
                                 }
                             )
                         )
-                        
-                        
                     ],
                     saveButtonConfig: .just(
                         .init(
@@ -242,7 +406,7 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
                             style: .primary,
                             action: { [weak self] in
                                 guard let self else { return }
-                                // self.tapOnSave.onNext(())
+                                 self.tapOnSave.onNext(())
                             }
                         )
                     )
@@ -269,6 +433,12 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
             .asDriverOnErrorJustComplete()
     }
     
+    // MARK: - Make title
+    
+    private func makeTitle() -> Driver<String> {
+        .just("Company information")
+    }
+    
     // MARK: Get user data
     
     private func getUserData() -> Driver<UserDTO> {
@@ -280,14 +450,13 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
             .map({ $0.user })
     }
     
-    // MARK: Save user data
+    // MARK: Save company data
 
-    private func saveUserData(_ data: UserRequestModel) -> Driver<Void> {
-        userDataUseCase.updateUserData(data: data)
+    private func saveCompanyData(_ data: CompanyInformationRequestModel) -> Driver<Void> {
+        userDataUseCase.updateCompanyInformation(data: data)
             .trackActivity(activityIndicator)
             .trackError(errorTracker)
             .asDriverOnErrorJustComplete()
-        
     }
     
 }

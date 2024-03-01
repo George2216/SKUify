@@ -66,8 +66,7 @@ final class UserContentContentView: UIView {
         contentStack.views = [
             userConentHeaderView,
             fieldsStack,
-            saveButton,
-            UIView.spacer()
+            saveButton
         ]
         contentStack.spacing = 20
         addSubview(contentStack)

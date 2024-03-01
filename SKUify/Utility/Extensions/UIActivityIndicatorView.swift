@@ -6,3 +6,15 @@
 //
 
 import Foundation
+import UIKit
+import RxSwift
+import RxCocoa
+
+extension Reactive where Base: UIActivityIndicatorView {
+    var isAnimating: Binder<Bool> {
+        return Binder(self.base) { indicator, isActive in
+            isActive ? indicator.startAnimating() : indicator.stopAnimating()
+        }
+    }
+    
+}

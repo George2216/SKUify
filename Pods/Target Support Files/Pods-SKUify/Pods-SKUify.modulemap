@@ -1,0 +1,6 @@
+framework module Pods_SKUify {
+  umbrella header "Pods-SKUify-umbrella.h"
+
+  export *
+  module * { export * }
+}

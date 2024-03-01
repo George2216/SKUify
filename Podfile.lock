@@ -1,0 +1,138 @@
+PODS:
+  - Alamofire (5.8.0)
+  - DGCharts (5.1.0):
+    - DGCharts/Core (= 5.1.0)
+  - DGCharts/Core (5.1.0)
+  - Differentiator (5.0.0)
+  - FSCalendar (2.8.4)
+  - Kingfisher (6.3.1)
+  - Nimble (10.0.0)
+  - QueryKit (0.14.1)
+  - Realm (10.43.1):
+    - Realm/Headers (= 10.43.1)
+  - Realm/Headers (10.43.1)
+  - RealmSwift (10.43.1):
+    - Realm (= 10.43.1)
+  - RxAlamofire (6.1.1):
+    - RxAlamofire/Core (= 6.1.1)
+  - RxAlamofire/Core (6.1.1):
+    - Alamofire (~> 5.4)
+    - RxSwift (~> 6.0)
+  - RxBlocking (6.5.0):
+    - RxSwift (= 6.5.0)
+  - RxCocoa (6.5.0):
+    - RxRelay (= 6.5.0)
+    - RxSwift (= 6.5.0)
+  - RxDataSources (5.0.0):
+    - Differentiator (~> 5.0)
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
+  - RxRealm (5.0.4):
+    - Realm (~> 10.21)
+    - RealmSwift (~> 10.21)
+    - RxCocoa (~> 6.1)
+    - RxSwift (~> 6.1)
+  - RxRelay (6.5.0):
+    - RxSwift (= 6.5.0)
+  - RxSwift (6.5.0)
+  - RxTest (6.5.0):
+    - RxSwift (= 6.5.0)
+  - SDWebImage (5.18.3):
+    - SDWebImage/Core (= 5.18.3)
+  - SDWebImage/Core (5.18.3)
+  - SnapKit (5.6.0)
+  - SwifterSwift (5.2.0):
+    - SwifterSwift/AppKit (= 5.2.0)
+    - SwifterSwift/CoreAnimation (= 5.2.0)
+    - SwifterSwift/CoreGraphics (= 5.2.0)
+    - SwifterSwift/CoreLocation (= 5.2.0)
+    - SwifterSwift/Dispatch (= 5.2.0)
+    - SwifterSwift/Foundation (= 5.2.0)
+    - SwifterSwift/MapKit (= 5.2.0)
+    - SwifterSwift/SceneKit (= 5.2.0)
+    - SwifterSwift/SpriteKit (= 5.2.0)
+    - SwifterSwift/StoreKit (= 5.2.0)
+    - SwifterSwift/SwiftStdlib (= 5.2.0)
+    - SwifterSwift/UIKit (= 5.2.0)
+  - SwifterSwift/AppKit (5.2.0)
+  - SwifterSwift/CoreAnimation (5.2.0)
+  - SwifterSwift/CoreGraphics (5.2.0)
+  - SwifterSwift/CoreLocation (5.2.0)
+  - SwifterSwift/Dispatch (5.2.0)
+  - SwifterSwift/Foundation (5.2.0)
+  - SwifterSwift/MapKit (5.2.0)
+  - SwifterSwift/SceneKit (5.2.0)
+  - SwifterSwift/SpriteKit (5.2.0)
+  - SwifterSwift/StoreKit (5.2.0)
+  - SwifterSwift/SwiftStdlib (5.2.0)
+  - SwifterSwift/UIKit (5.2.0)
+
+DEPENDENCIES:
+  - Alamofire
+  - DGCharts
+  - FSCalendar
+  - Kingfisher
+  - Nimble
+  - QueryKit
+  - Realm
+  - RealmSwift
+  - RxAlamofire
+  - RxBlocking (~> 6.5.0)
+  - RxCocoa
+  - RxDataSources
+  - RxRealm
+  - RxRelay
+  - RxSwift
+  - RxTest (~> 6.5.0)
+  - SDWebImage
+  - SnapKit
+  - SwifterSwift
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - DGCharts
+    - Differentiator
+    - FSCalendar
+    - Kingfisher
+    - Nimble
+    - QueryKit
+    - Realm
+    - RealmSwift
+    - RxAlamofire
+    - RxBlocking
+    - RxCocoa
+    - RxDataSources
+    - RxRealm
+    - RxRelay
+    - RxSwift
+    - RxTest
+    - SDWebImage
+    - SnapKit
+    - SwifterSwift
+
+SPEC CHECKSUMS:
+  Alamofire: 0e92e751b3e9e66d7982db43919d01f313b8eb91
+  DGCharts: 1c6daf585b6cfc78807af44ea690d357c410627f
+  Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
+  FSCalendar: 2d1d0d9398f12d439f55c1fe0f01525b151b8260
+  Kingfisher: 016c8b653a35add51dd34a3aba36b580041acc74
+  Nimble: 5316ef81a170ce87baf72dd961f22f89a602ff84
+  QueryKit: 60dae8ff75d5805f9c703c68c0ef4294c9dd7de6
+  Realm: d97b438de77459e443bd2c8ad5ca0f95107aee4b
+  RealmSwift: 6be3f27a7fd3f5cc8f99f4b187cc4e7150299e32
+  RxAlamofire: beb75a1c452d0de225651db4903f5d29d034a620
+  RxBlocking: 04b5fd28bb5ea49f7d64b80db8bbfe50d9cc1c7d
+  RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
+  RxDataSources: aa47cc1ed6c500fa0dfecac5c979b723542d79cf
+  RxRealm: 666c8785327fe2fff972a3093b35dc7055c1ca38
+  RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
+  RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
+  RxTest: eb2d23adefc5a5ebf5779c7792fa3edfe6ebcc17
+  SDWebImage: 96e0c18ef14010b7485210e92fac888587ebb958
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+  SwifterSwift: 334181863c416882d97b7a60c05054d9e4d799e2
+
+PODFILE CHECKSUM: e8fe0cd30076a3347d89863458da7724e42d4a64
+
+COCOAPODS: 1.13.0

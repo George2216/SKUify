@@ -6,15 +6,86 @@
 //
 
 import UIKit
+import SnapKit
+import RxSwift
+import RxCocoa
 
 class TitledSwitchView: UIView {
+    private var disposeBag = DisposeBag()
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    // MARK: UI elements
+    
+    private lazy var titleLabel = UILabel()
+    private lazy var smallSwitch = SmallSwitch()
+    
+    private lazy var contentStack = HorizontalStack()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupTitleLabel()
+        setupContentStack()
     }
-    */
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setupInput(_ input: Input) {
+        disposeBag = DisposeBag()
+        setupTitleText(input)
+        setupSwitchState(input)
+        setupSwitchAction(input)
+    }
+    
+    private func setupTitleText(_ input: Input) {
+        titleLabel.text = input.title
+    }
+    
+    private func setupSwitchState(_ input: Input) {
+        smallSwitch.isOn = input.switchState
+    }
+    
+    private func setupSwitchAction(_ input: Input) {
+        smallSwitch.rx.controlEvent(.valueChanged)
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                input.switchChanged?(owner.smallSwitch.isOn)
+            })
+            .disposed(by: disposeBag)
+           
+    }
+    
+    private func setupTitleLabel() {
+        titleLabel.font = .manrope(
+            type: .bold,
+            size: 15
+        )
+        titleLabel.textAlignment = .left
+        titleLabel.textColor = .black
+    }
+    
+    private func setupContentStack() {
+        contentStack.views = [
+            titleLabel,
+            UIView.spacer(),
+            smallSwitch
+        ]
+        contentStack.distribution = .fill
+        addSubview(contentStack)
+        contentStack.snp.makeConstraints { make in
+            make.edges
+                .equalToSuperview()
+        }
+    }
+    
+}
 
+// MARK: Input
+
+extension TitledSwitchView {
+    struct Input {
+        let title: String
+        let switchState: Bool
+        let switchChanged: ((Bool) -> ())?
+    }
 }

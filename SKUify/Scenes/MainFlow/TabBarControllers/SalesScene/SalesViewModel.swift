@@ -1,5 +1,5 @@
 //
-//  SalesViewModel2.swift
+//  SalesViewModel.swift
 //  SKUify
 //
 //  Created by George Churikov on 22.02.2024.
@@ -21,6 +21,8 @@ final class SalesViewModel: ViewModelProtocol {
     private let selectOrders = PublishSubject<Void>()
     private let selectRefunds = PublishSubject<Void>()
 
+    private let isShowPaginatedLoader = PublishSubject<Bool>()
+    
     private let tableType = BehaviorSubject<SalesTableType>(value: .orders)
     private let periodType = BehaviorSubject<SalesPeriodType>(value: .all)
     private let marketplaceType = BehaviorSubject<SalesMarketplaceType>(value: .all)
@@ -43,6 +45,7 @@ final class SalesViewModel: ViewModelProtocol {
     
     // Use case storage
     private let salesRefundsUseCase: Domain.SalesRefundsUseCase
+    private let marketplacesUseCase: Domain.MarketplacesReadUseCase
     
     // Trackers
     private var activityIndicator = ActivityTracker()
@@ -54,16 +57,28 @@ final class SalesViewModel: ViewModelProtocol {
     ) {
         self.navigator = navigator
         self.salesRefundsUseCase = useCases.makeSalesRefundsUseCase()
+        self.marketplacesUseCase = useCases.makeMarketplacesUseCase()
         
         paginatedDataScribers()
         collectionViewSubscribers()
+        makeCollectionData()
+        marketplacesUseCase
+            .getMarketplaces()
+            .subscribe(onNext: { marketplaces in
+            print(marketplaces)
+                print("")
+            }).disposed(by: disposeBag)
     }
     
     func transform(_ input: Input) -> Output {
         subscribeOnVisibleSection(input)
+        subscribeOnReloadData(input)
         return Output(
             setupViewInput: makeSetupViewInput(),
-            collectionData: makeCollectionData(),
+            collectionData: collectionDataStorage.asDriverOnErrorJustComplete(),
+            showCalendarPopover: tapOnCalendar.asDriverOnErrorJustComplete(),
+            showMarketplacesPopover: tapOnMarketplaces.asDriverOnErrorJustComplete(),
+            isShowPaginatedLoader: isShowPaginatedLoader.asDriverOnErrorJustComplete(),
             fetching: activityIndicator.asDriver(),
             error: errorTracker.asBannerInput(.error)
         )
@@ -80,33 +95,9 @@ final class SalesViewModel: ViewModelProtocol {
     }
     
     private func paginatedDataScribers() {
-        subscribeOnSelectRefunds()
-        subscribeOnSelectOrders()
         subscribeOnTableTypeChanged()
         subscribeOnSearchTextChanged()
-        subscribeOnPaginatedCounter()
-    }
-    
-    private func subscribeOnSelectRefunds() {
-        selectOrders
-            .asDriverOnErrorJustComplete()
-            .withUnretained(self)
-            .do(onNext: { owner, _ in
-                owner.tableType.onNext(.orders)
-            })
-            .drive()
-            .disposed(by: disposeBag)
-    }
-    
-    private func subscribeOnSelectOrders() {
-        selectRefunds
-            .asDriverOnErrorJustComplete()
-            .withUnretained(self)
-            .do(onNext: { owner, _ in
-                owner.tableType.onNext(.refunds)
-            })
-            .drive()
-            .disposed(by: disposeBag)
+        subscribeOnChangeCOGs()
     }
     
     private func subscribeOnTableTypeChanged() {
@@ -137,29 +128,37 @@ final class SalesViewModel: ViewModelProtocol {
                 return (searchText, paginatedData)
             }
             .withUnretained(self)
+        // Save to paginated data
+        
             .do(onNext: { (owner, arg1) in
                 var (searchText, paginatedData) = arg1
                 paginatedData.searchText = searchText
                 owner.paginatedData.onNext(paginatedData)
             })
-            .do(onNext: { owner, _ in
-                owner.reloadData()
-            })
-            .drive()
-            .disposed(by: disposeBag)
-    }
+        // Clear storages
+                
+                .do(onNext: { owner, _ in
+                    owner.reloadData()
+                })
+                    .drive()
+                    .disposed(by: disposeBag)
+                    }
     
-    private func subscribeOnPaginatedCounter() {
-        paginationCounter
+    private func subscribeOnChangeCOGs() {
+        changeCOGs
             .asDriverOnErrorJustComplete()
-            .withLatestFrom(paginatedData.asDriverOnErrorJustComplete()) { paginationCounter, paginatedData in
-                return (paginationCounter, paginatedData)
+            .withLatestFrom(paginatedData.asDriverOnErrorJustComplete()) { isNoCOGs, paginatedData in
+                return (isNoCOGs, paginatedData)
             }
             .withUnretained(self)
             .do(onNext: { (owner, arg1) in
-                var (paginationCounter, paginatedData) = arg1
-                paginatedData.offset = paginationCounter
+                var (isNoCOGs, paginatedData) = arg1
+                paginatedData.noCOGs = isNoCOGs
                 owner.paginatedData.onNext(paginatedData)
+            })
+        // Clear storages
+            .do(onNext: { owner, _ in
+                owner.reloadData()
             })
             .drive()
             .disposed(by: disposeBag)
@@ -217,7 +216,7 @@ final class SalesViewModel: ViewModelProtocol {
                     style: type == .orders ? .primary : .simplePrimaryText,
                     action: { [weak self] in
                         guard let self else { return }
-                        self.selectOrders.onNext(())
+                        self.tableType.onNext(.orders)
                     }
                 )
             }
@@ -232,7 +231,7 @@ final class SalesViewModel: ViewModelProtocol {
                     style: type == .refunds ? .primary : .simplePrimaryText,
                     action: { [weak self] in
                         guard let self else { return }
-                        self.selectRefunds.onNext(())
+                        self.tableType.onNext(.refunds)
                     }
                 )
             }
@@ -247,16 +246,16 @@ extension SalesViewModel {
     // Set paginated counter
     private func subscribeOnVisibleSection(_ input: Input) {
         let visibleSectionDriver = input.visibleSection
-             .withLatestFrom(activityIndicator.asDriver()) { visibleSection, isItLoading in
-                 return (visibleSection, isItLoading)
-             }
-             .filter { _, isItLoading in
+            .withLatestFrom(activityIndicator.asDriver()) { visibleSection, isItLoading in
+                return (visibleSection, isItLoading)
+            }
+            .filter { _, isItLoading in
                 return !isItLoading
-             }
-             .map { visibleSection, _ in visibleSection }
+            }
+            .map { visibleSection, _ in visibleSection }
         
         let filterNotLastIndecesDriver = visibleSectionDriver
-                   .withLatestFrom(collectionDataStorage.asDriverOnErrorJustComplete()) { visibleSection, collectionDataStorage in
+            .withLatestFrom(collectionDataStorage.asDriverOnErrorJustComplete()) { visibleSection, collectionDataStorage in
                 return (visibleSection, collectionDataStorage.count)
             }
         // I filter out the cell index if it does not match the last one
@@ -280,10 +279,25 @@ extension SalesViewModel {
             return paginationCounter + 15
         }
         
+        // Show paginated loader
+        newPaginatedCounterDriver
+            .map { _ in true }
+            .drive(isShowPaginatedLoader)
+            .disposed(by: disposeBag)
+        
+        // Start load data
         newPaginatedCounterDriver
             .drive(paginationCounter)
             .disposed(by: disposeBag)
-
+    }
+    
+    private func subscribeOnReloadData(_ input: Input) {
+        input.reloadData
+            .withUnretained(self)
+            .drive(onNext: { owner, _ in
+                owner.reloadData()
+            })
+            .disposed(by: disposeBag)
     }
     
 }
@@ -347,12 +361,14 @@ extension SalesViewModel {
 
 extension SalesViewModel {
     
-    private func makeCollectionData() -> Driver<[SalesSectionModel]> {
+    private func makeCollectionData() {
         Driver.merge(makeOrdersCollectionData(), makeRefundsCollectionData())
-            .do(onNext: { [weak self] data in
+            .do(onNext: { [weak self] _ in
                 guard let self else { return }
-                self.collectionDataStorage.onNext(data)
+                self.isShowPaginatedLoader.onNext(false)
             })
+            .drive(collectionDataStorage)
+            .disposed(by: disposeBag)
     }
     
     private func makeOrdersCollectionData() -> Driver<[SalesSectionModel]> {
@@ -453,20 +469,44 @@ extension SalesViewModel {
 extension SalesViewModel {
 
     private func fetchOrdersSalesData() -> Driver<SalesOrdersResultsDTO> {
-        paginationCounter.asDriverOnErrorJustComplete()
-            .withLatestFrom(paginatedData.asDriverOnErrorJustComplete())
-            .filter { $0.tableType == .orders }
-            .flatMapLatest(weak: self) { owner, paginatedData in
-                owner.salesRefundsUseCase
-                    .getOrdersSales(paginatedData)
-                    .trackActivity(owner.activityIndicator)
-                    .trackError(owner.errorTracker)
-                    .asDriverOnErrorJustComplete()
+        paginationCounter
+            .withLatestFrom(paginatedData) { paginationCounter, paginatedData in
+                return (paginationCounter, paginatedData)
             }
+            .withUnretained(self)
+        // Change counter for paginatedData
+            .do(onNext: { (owner, arg1) in
+                let (paginationCounter, paginatedData) = arg1
+                var paginatedDataVariable = paginatedData
+                paginatedDataVariable.offset = paginationCounter
+                owner.paginatedData.onNext(paginatedDataVariable)
+            })
+                .asDriverOnErrorJustComplete()
+                .withLatestFrom(paginatedData.asDriverOnErrorJustComplete())
+                .filter { $0.tableType == .orders }
+                .flatMapLatest(weak: self) { owner, paginatedData in
+                    owner.salesRefundsUseCase
+                        .getOrdersSales(paginatedData)
+                        .trackActivity(owner.activityIndicator)
+                        .trackError(owner.errorTracker)
+                        .asDriverOnErrorJustComplete()
+                }
     }
     
     private func fetchRefundsSalesData() -> Driver<SalesRefundsResultsDTO> {
-        paginationCounter.asDriverOnErrorJustComplete()
+        paginationCounter
+            .withLatestFrom(paginatedData) { paginationCounter, paginatedData in
+                return (paginationCounter, paginatedData)
+            }
+            .withUnretained(self)
+        // Change counter for paginatedData
+            .do(onNext: { (owner, arg1) in
+                let (paginationCounter, paginatedData) = arg1
+                var paginatedDataVariable = paginatedData
+                paginatedDataVariable.offset = paginationCounter
+                owner.paginatedData.onNext(paginatedDataVariable)
+            })
+            .asDriverOnErrorJustComplete()
             .withLatestFrom(paginatedData.asDriverOnErrorJustComplete())
             .filter { $0.tableType == .refunds }
             .flatMapLatest(weak: self) { owner, paginatedData in
@@ -482,18 +522,22 @@ extension SalesViewModel {
 
 extension SalesViewModel {
     struct Input {
+        let reloadData: Driver<Void>
         let visibleSection: Driver<Int>
     }
     
     struct Output {
         let setupViewInput: Driver<SalesSetupView.Input>
         let collectionData: Driver<[SalesSectionModel]>
+        // Popovers
+        let showCalendarPopover: Driver<CGPoint>
+        let showMarketplacesPopover: Driver<CGPoint>
+        // Bottom loader
+        let isShowPaginatedLoader: Driver<Bool>
         // Trackers
+        // Refresh control
         let fetching: Driver<Bool>
         let error: Driver<BannerView.Input>
     }
     
 }
-
-
-

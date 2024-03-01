@@ -11,4 +11,5 @@ import RxSwift
 public protocol UserDataUseCase {
     func getUserData() -> Observable<UserMainDTO>
     func updateUserData(data: UserRequestModel) -> Observable<Void>
+    func updateCompanyInformation(data: CompanyInformationRequestModel) -> Observable<Void>
 }

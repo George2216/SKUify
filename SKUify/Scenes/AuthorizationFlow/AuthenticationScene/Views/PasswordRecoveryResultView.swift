@@ -77,3 +77,4 @@ extension Reactive where Base: PasswordRecoveryResultView {
     }
     
 }
+

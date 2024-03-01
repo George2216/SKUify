@@ -8,10 +8,10 @@
 import Foundation
 
 public struct SalesRefundsMainDTO: Decodable {
-    public let refunds: SalesRefunsResultsDTO
+    public let refunds: SalesRefundsResultsDTO
 }
 
-public struct SalesRefunsResultsDTO: Decodable {
+public struct SalesRefundsResultsDTO: Decodable {
     public let results: [SalesRefundsDTO]
     public let count: Int
 }
@@ -26,17 +26,13 @@ public struct SalesRefundsDTO: Decodable {
     public let marketplace: String
     public let refund_date: String
     public let quantity_ordered: Int
-    public let original_price: SalesRefundsOriginalPriceDTO
-    public let amz_fees: Double
-    public let cog: Double
-    public let profit: Double
+    public let original_price: SalesOriginalPriceDTO
+    public let amz_fees: Double?
+    public let total_cog: Double
+    public let profit: Double?
     public let order__order_status: String
     public let order__fulfillment_channel: String
     public let note: String?
-    
-    }
-
-public struct SalesRefundsOriginalPriceDTO: Decodable {
-    public let price: Double
-    public let currency: String
+    public let product__vat_rate: Int
 }
+

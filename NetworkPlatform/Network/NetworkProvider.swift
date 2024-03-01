@@ -49,5 +49,19 @@ final public class NetworkProvider: Domain.NetworkProvider {
             interceptorFactory: interceptorFactory
         )
     }
+    
+    public func makeSalesRefundsNetwork() -> Domain.SalesRefundsNetwork {
+        return SalesRefundsNetwork(
+            network: makeNetwork(SalesRefundsMainDTO.self),
+            interceptorFactory: interceptorFactory
+        )
+    }
+    
+    public func makeSalesOrdersNetwork() -> Domain.SalesOrdersNetwork {
+        return SalesOrdersNetwork(
+            network: makeNetwork(SalesOrdersMainDTO.self),
+            interceptorFactory: interceptorFactory
+        )
+    }
 
 }

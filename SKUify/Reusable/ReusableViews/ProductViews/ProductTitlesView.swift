@@ -61,7 +61,7 @@ final class ProductTitlesView: UIView {
     
     private func setupTitlesStack() {
         titlesStack.alignment = .leading
-        titlesStack.distribution = .fill
+        titlesStack.distribution = .equalSpacing
         
         addSubview(titlesStack)
         titlesStack.snp.makeConstraints { make in
@@ -75,7 +75,7 @@ final class ProductTitlesView: UIView {
 
     private func setupValuesStack() {
         valuesStack.alignment = .leading
-        valuesStack.distribution = .fillProportionally
+        valuesStack.distribution = .equalSpacing
         addSubview(valuesStack)
         valuesStack.snp.makeConstraints { make in
             make.verticalEdges

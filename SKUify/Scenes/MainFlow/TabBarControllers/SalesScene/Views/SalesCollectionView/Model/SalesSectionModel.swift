@@ -6,3 +6,7 @@
 //
 
 import Foundation
+import RxSwift
+import RxDataSources
+
+typealias SalesSectionModel = SectionModel<SalesSectionType, SalesCollectionItem>

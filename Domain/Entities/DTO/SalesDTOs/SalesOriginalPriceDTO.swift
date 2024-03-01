@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+public struct SalesOriginalPriceDTO: Decodable {
+    public let price: Double
+    public let currency: String
+}
