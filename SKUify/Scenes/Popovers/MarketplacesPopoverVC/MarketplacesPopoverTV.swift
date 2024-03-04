@@ -6,15 +6,33 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
-class MarketplacesPopoverTV: UITableView {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+final class MarketplacesPopoverTV: UITableView {
+    
+    override init(frame: CGRect, style: UITableView.Style) {
+        super.init(frame: frame, style: style)
+        registerCell()
     }
-    */
-
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func registerCell() {
+        register(MarketplacesPopoverTVCell.self)
+    }
+    
+    func bind(_ tableData: Driver<[MarketplacesPopoverTVCell.Input]>) -> Disposable {
+        tableData.drive(
+            rx.items(
+                cellIdentifier: MarketplacesPopoverTVCell.reuseID,
+                cellType: MarketplacesPopoverTVCell.self
+            )
+        ) { index, element, cell in
+            cell.setupInput(element)
+        }
+    }
 }
+

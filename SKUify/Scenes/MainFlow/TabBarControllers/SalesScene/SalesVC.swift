@@ -22,13 +22,14 @@ final class SalesVC: BaseViewController {
     )
 
     private lazy var calendarPopover = RangedCalendarBuilder.buildRangedCalendarModule(delegate: self)
+    private lazy var marketplacesPopover = MarketplacesPopoverVC()
     
     var viewModel: SalesViewModel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Sales"
-        
+
         let refreshingTriger = collectionView.refreshControl!.rx
             .controlEvent(.valueChanged)
             .asDriver()
@@ -40,7 +41,8 @@ final class SalesVC: BaseViewController {
         let output = viewModel.transform(
             .init(
                 reloadData: Driver.merge(refreshingTriger, viewWillAppear),
-                visibleSection: visibleSection.asDriverOnErrorJustComplete()
+                visibleSection: visibleSection.asDriverOnErrorJustComplete(), 
+                marketplaceSelected: marketplacesPopover.itemSelected()
             )
         )
         
@@ -53,7 +55,9 @@ final class SalesVC: BaseViewController {
         bindToCollectionView(output)
         bindToLoader(output)
         bindToPaginatedCollectionLoader(output)
+        bindToMarketplaces(output)
         bingCalendarPopover(output)
+        bindMarketplacesPopover(output)
     }
     
     private func createCollectionViewLayout() -> UICollectionViewFlowLayout {
@@ -116,19 +120,25 @@ extension SalesVC {
     }
     
     
-    func bindToSetupView(_ output: SalesViewModel.Output) {
+    private func bindToSetupView(_ output: SalesViewModel.Output) {
         output.setupViewInput
             .drive(setupView.rx.input)
             .disposed(by: disposeBag)
     }
     
-    func bindToCollectionView(_ output: SalesViewModel.Output) {
+    private func bindToCollectionView(_ output: SalesViewModel.Output) {
         collectionView.bind(output.collectionData)
             .disposed(by: disposeBag)
     }
     
-    func bindToPaginatedCollectionLoader(_ output: SalesViewModel.Output) {
+    private func bindToPaginatedCollectionLoader(_ output: SalesViewModel.Output) {
         collectionView.bindToPaginatedLoader(output.isShowPaginatedLoader)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindToMarketplaces(_ output: SalesViewModel.Output) {
+        marketplacesPopover
+            .bind(output.marketplacesData)
             .disposed(by: disposeBag)
     }
     
@@ -143,6 +153,23 @@ extension SalesVC {
                         height: owner.view.frame.width - 50
                     ),
                     popoverVC: owner.calendarPopover
+                )
+            }
+            .drive(rx.popover)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindMarketplacesPopover(_ output: SalesViewModel.Output) {
+        output.showMarketplacesPopover
+            .withUnretained(self)
+            .map { owner, point in
+                PopoverManager.Input(
+                    bindingType: .point(point),
+                    preferredSize: .init(
+                        width: 200,
+                        height: 250
+                    ),
+                    popoverVC: owner.marketplacesPopover
                 )
             }
             .drive(rx.popover)

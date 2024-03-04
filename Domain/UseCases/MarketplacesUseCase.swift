@@ -13,6 +13,7 @@ public protocol MarketplacesUseCase: MarketplacesReadUseCase, MarketplacesWriteU
 public protocol MarketplacesReadUseCase {
     func getMarketplaces() -> Observable<[MarketplaceDTO]>
     func getMarketplaceById(id: String) -> Observable<MarketplaceDTO>
+    func getMarketplaceByCountryCode(_ countryCode: String) -> Observable<MarketplaceDTO>
 }
 
 public protocol MarketplacesWriteUseCase {

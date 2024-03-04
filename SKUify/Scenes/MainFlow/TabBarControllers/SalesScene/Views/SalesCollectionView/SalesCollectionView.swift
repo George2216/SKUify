@@ -81,6 +81,7 @@ final class SalesCollectionView: UICollectionView {
         alwaysBounceVertical = true
         showsVerticalScrollIndicator = false
         allowsMultipleSelection = true
+        alwaysBounceVertical = true
     }
     
     private func registerCells() {

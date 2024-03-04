@@ -62,8 +62,24 @@ final class TitledMarketplace: UIView {
 }
 
 extension TitledMarketplace {
-    struct Input {
+    struct Input: Equatable {
         let countryTitle: String
         let counryCode: String
+        
+        static func allMarketplaces() -> Input {
+            return .init(
+                countryTitle: "All marketplaces",
+                counryCode: "allMarketplaces"
+            )
+        }
+        
+        static func ==(
+            lhs: Input,
+            rhs: Input
+        ) -> Bool {
+            return lhs.countryTitle == rhs.countryTitle &&
+            lhs.counryCode == rhs.counryCode
+        }
     }
+    
 }

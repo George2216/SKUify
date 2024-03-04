@@ -11,19 +11,32 @@ import RxCocoa
 import SnapKit
 
 final class MarketplacesPopoverVC: UIViewController {
+    private let disposeBag = DisposeBag()
 
-    var viewModel: MarketplacesPopoverViewModel!
-        
+    private lazy var tableView = MarketplacesPopoverTV()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        setupTableView()
     }
     
-
-}
-
-extension MarketplacesPopoverVC {
-    struct Input {
-        
+    private func setupTableView() {
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { make in
+            make.edges
+                .equalToSuperview()
+        }
     }
+    
+    func bind(_ tableData: Driver<[MarketplacesPopoverTVCell.Input]>) -> Disposable {
+        tableView.bind(tableData)
+    }
+
+    func itemSelected() -> Driver<String> {
+        tableView.rx.modelSelected(MarketplacesPopoverTVCell.Input.self)
+            .map { $0.marketplace.counryCode }
+            .asDriverOnErrorJustComplete()
+    }
+    
 }
+

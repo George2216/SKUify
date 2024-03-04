@@ -42,6 +42,16 @@ final class MarketplacesUseCase<Repository>: Domain.MarketplacesUseCase where Re
              }
      }
     
+    func getMarketplaceByCountryCode(_ countryCode: String) -> Observable<MarketplaceDTO> {
+        return getMarketplaces()
+            .flatMapLatest { marketplaces -> Observable<MarketplaceDTO> in
+                guard let marketplace = marketplaces.first(where: { $0.countryCode == countryCode }) else {
+                    return Observable.error(CustomError.novValue)
+                }
+                return Observable.just(marketplace)
+            }
+    }
+    
     private enum CustomError: Error {
         case novValue
 

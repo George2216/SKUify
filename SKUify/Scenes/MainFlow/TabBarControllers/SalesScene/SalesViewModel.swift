@@ -40,6 +40,8 @@ final class SalesViewModel: ViewModelProtocol {
     private let tapOnMarketplaces = PublishSubject<CGPoint>()
     private let changeCOGs = PublishSubject<Bool>()
     
+    private let startSelectedMarketplace = PublishSubject<Int>()
+    
     // Dependencies
     private let navigator: SalesNavigatorProtocol
     
@@ -62,22 +64,19 @@ final class SalesViewModel: ViewModelProtocol {
         paginatedDataScribers()
         collectionViewSubscribers()
         makeCollectionData()
-        marketplacesUseCase
-            .getMarketplaces()
-            .subscribe(onNext: { marketplaces in
-            print(marketplaces)
-                print("")
-            }).disposed(by: disposeBag)
     }
     
     func transform(_ input: Input) -> Output {
         subscribeOnVisibleSection(input)
         subscribeOnReloadData(input)
+        subscribeOnMarketplaceSelected(input)
         return Output(
             setupViewInput: makeSetupViewInput(),
             collectionData: collectionDataStorage.asDriverOnErrorJustComplete(),
             showCalendarPopover: tapOnCalendar.asDriverOnErrorJustComplete(),
-            showMarketplacesPopover: tapOnMarketplaces.asDriverOnErrorJustComplete(),
+            showMarketplacesPopover: tapOnMarketplaces.asDriverOnErrorJustComplete(), 
+            marketplacesData: makeMarketplacesData(), 
+            startSelectedMarketplace: startSelectedMarketplace.asDriverOnErrorJustComplete(),
             isShowPaginatedLoader: isShowPaginatedLoader.asDriverOnErrorJustComplete(),
             fetching: activityIndicator.asDriver(),
             error: errorTracker.asBannerInput(.error)
@@ -98,6 +97,7 @@ final class SalesViewModel: ViewModelProtocol {
         subscribeOnTableTypeChanged()
         subscribeOnSearchTextChanged()
         subscribeOnChangeCOGs()
+        subscribeOnMarketplaceChange()
     }
     
     private func subscribeOnTableTypeChanged() {
@@ -129,20 +129,18 @@ final class SalesViewModel: ViewModelProtocol {
             }
             .withUnretained(self)
         // Save to paginated data
-        
             .do(onNext: { (owner, arg1) in
                 var (searchText, paginatedData) = arg1
                 paginatedData.searchText = searchText
                 owner.paginatedData.onNext(paginatedData)
             })
         // Clear storages
-                
-                .do(onNext: { owner, _ in
-                    owner.reloadData()
-                })
-                    .drive()
-                    .disposed(by: disposeBag)
-                    }
+            .do(onNext: { owner, _ in
+                owner.reloadData()
+            })
+            .drive()
+            .disposed(by: disposeBag)
+    }
     
     private func subscribeOnChangeCOGs() {
         changeCOGs
@@ -161,6 +159,43 @@ final class SalesViewModel: ViewModelProtocol {
                 owner.reloadData()
             })
             .drive()
+            .disposed(by: disposeBag)
+    }
+    
+    private func subscribeOnMarketplaceChange() {
+        marketplaceType
+            .asDriverOnErrorJustComplete()
+            .withLatestFrom(paginatedData.asDriverOnErrorJustComplete()) { marketplaceType, paginatedData in
+                return (marketplaceType, paginatedData)
+            }
+            .withUnretained(self)
+            .do(onNext: { (owner, arg1) in
+                var (marketplaceType, paginatedData) = arg1
+                paginatedData.marketplaceType = marketplaceType
+                owner.paginatedData.onNext(paginatedData)
+            })
+        // Clear storages
+            .do(onNext: { owner, _ in
+                owner.reloadData()
+            })
+            .drive()
+            .disposed(by: disposeBag)
+    }
+    
+    // MARK: - Popover subscribers
+    
+    private func subscribeOnMarketplaceSelected(_ input: Input) {
+        input.marketplaceSelected
+            .flatMapLatest(weak: self) { owner, countryCode in
+                owner.marketplacesUseCase
+                    .getMarketplaceByCountryCode(countryCode)
+                    .map { marketplace in
+                        SalesMarketplaceType.marketplace(marketplace.countryCode)
+                    }
+                // All marketplaces if we don’t find them in storage
+                    .asDriver(onErrorJustReturn: .all)
+            }
+            .drive(marketplaceType)
             .disposed(by: disposeBag)
     }
     
@@ -464,6 +499,31 @@ extension SalesViewModel {
     
 }
 
+// MARK: Make marketplaces data
+
+extension SalesViewModel {
+    
+    private func makeMarketplacesData() -> Driver<[MarketplacesPopoverTVCell.Input]> {
+        marketplacesUseCase
+            .getMarketplaces()
+            .asDriverOnErrorJustComplete()
+            .map { marketplaces in
+                var input = marketplaces.map { marketplace -> MarketplacesPopoverTVCell.Input in
+                    return .init(
+                        marketplace: .init(
+                            countryTitle: marketplace.country.capitalized,
+                            counryCode: marketplace.countryCode
+                        )
+                    )
+                }
+                input.append(.init(marketplace: TitledMarketplace.Input.allMarketplaces()))
+                return input
+            }
+    }
+    
+}
+
+
 // MARK: Fetch data
 
 extension SalesViewModel {
@@ -524,6 +584,8 @@ extension SalesViewModel {
     struct Input {
         let reloadData: Driver<Void>
         let visibleSection: Driver<Int>
+        // Country code selected
+        let marketplaceSelected: Driver<String>
     }
     
     struct Output {
@@ -532,6 +594,9 @@ extension SalesViewModel {
         // Popovers
         let showCalendarPopover: Driver<CGPoint>
         let showMarketplacesPopover: Driver<CGPoint>
+        // Popover data
+        let marketplacesData: Driver<[MarketplacesPopoverTVCell.Input]>
+        let startSelectedMarketplace: Driver<Int>
         // Bottom loader
         let isShowPaginatedLoader: Driver<Bool>
         // Trackers
