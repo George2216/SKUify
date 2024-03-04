@@ -49,7 +49,8 @@ final class RangedCalendarPopoverVC: UIViewController {
         bindToMonth(output)
         bindToSelectedDateDeledate(output)
         bindToSelectedDatesRangeDeledate(output)
-
+        bindToCancelDelegate(output)
+        
         bindToConfigureCellWhenDisplay()
         
         setupCustomHeader()
@@ -143,6 +144,15 @@ final class RangedCalendarPopoverVC: UIViewController {
 // MARK: Make binding
 
 extension RangedCalendarPopoverVC {
+    
+    private func bindToCancelDelegate(_ output: RangedCalendarViewModel.Output) {
+        output.cancelCalendar
+            .withUnretained(self)
+            .drive(onNext: { owner, _ in
+                owner.delegate?.cancelCalendar()
+            })
+            .disposed(by: disposeBag)
+    }
     
     private func bindToSelectedDateDeledate(_ output: RangedCalendarViewModel.Output) {
         output.confirmSelectionDate

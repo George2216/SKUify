@@ -23,6 +23,7 @@ final class RangedCalendarViewModel: ViewModelProtocol {
     
     private let toMonth = PublishSubject<Date>()
 
+    private let cancelCalendar = PublishSubject<Void>()
     private let confirmSelectionDate = PublishSubject<Date>()
     private let confirmSelectionDatesRange = PublishSubject<(Date, Date)>()
     
@@ -35,7 +36,8 @@ final class RangedCalendarViewModel: ViewModelProtocol {
             deselectDates: deselectDates.asDriverOnErrorJustComplete(),
             toMonth: toMonth.asDriverOnErrorJustComplete(),
             headerInput: makeHeaderInput(input),
-            footerInput: makeFooterInput(),
+            footerInput: makeFooterInput(), 
+            cancelCalendar: cancelCalendar.asDriverOnErrorJustComplete(),
             confirmSelectionDate: confirmSelectionDate.asDriverOnErrorJustComplete(),
             confirmSelectionDatesRange: confirmSelectionDatesRange.asDriverOnErrorJustComplete()
             )
@@ -284,6 +286,7 @@ final class RangedCalendarViewModel: ViewModelProtocol {
         let headerInput: Driver<RangedCalendarHeaderView.Input>
         let footerInput: Driver<RangedCalendarFooterView.Input>
         // Selecting dates for delegate methods
+        let cancelCalendar: Driver<Void>
         let confirmSelectionDate: Driver<Date>
         let confirmSelectionDatesRange: Driver<(Date, Date)>
     }

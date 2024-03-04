@@ -70,6 +70,8 @@ final class SalesViewModel: ViewModelProtocol {
         subscribeOnVisibleSection(input)
         subscribeOnReloadData(input)
         subscribeOnMarketplaceSelected(input)
+        subscribeOnSelectedCalendarDates(input)
+        subscribeOnCancelCalendar(input)
         return Output(
             setupViewInput: makeSetupViewInput(),
             collectionData: collectionDataStorage.asDriverOnErrorJustComplete(),
@@ -98,6 +100,7 @@ final class SalesViewModel: ViewModelProtocol {
         subscribeOnSearchTextChanged()
         subscribeOnChangeCOGs()
         subscribeOnMarketplaceChange()
+        subscribeonPeriodChange()
     }
     
     private func subscribeOnTableTypeChanged() {
@@ -182,20 +185,23 @@ final class SalesViewModel: ViewModelProtocol {
             .disposed(by: disposeBag)
     }
     
-    // MARK: - Popover subscribers
-    
-    private func subscribeOnMarketplaceSelected(_ input: Input) {
-        input.marketplaceSelected
-            .flatMapLatest(weak: self) { owner, countryCode in
-                owner.marketplacesUseCase
-                    .getMarketplaceByCountryCode(countryCode)
-                    .map { marketplace in
-                        SalesMarketplaceType.marketplace(marketplace.countryCode)
-                    }
-                // All marketplaces if we don’t find them in storage
-                    .asDriver(onErrorJustReturn: .all)
+    private func subscribeonPeriodChange() {
+        periodType
+            .asDriverOnErrorJustComplete()
+            .withLatestFrom(paginatedData.asDriverOnErrorJustComplete()) { period, paginatedData in
+                return (period, paginatedData)
             }
-            .drive(marketplaceType)
+            .withUnretained(self)
+            .do(onNext: { (owner, arg1) in
+                var (period, paginatedData) = arg1
+                paginatedData.period = period
+                owner.paginatedData.onNext(paginatedData)
+            })
+        // Clear storages
+            .do(onNext: { owner, _ in
+                owner.reloadData()
+            })
+            .drive()
             .disposed(by: disposeBag)
     }
     
@@ -332,6 +338,50 @@ extension SalesViewModel {
             .drive(onNext: { owner, _ in
                 owner.reloadData()
             })
+            .disposed(by: disposeBag)
+    }
+    
+    // Popover subscribers
+    
+    private func subscribeOnMarketplaceSelected(_ input: Input) {
+        input.marketplaceSelected
+            .flatMapLatest(weak: self) { owner, countryCode in
+                owner.marketplacesUseCase
+                    .getMarketplaceByCountryCode(countryCode)
+                    .map { marketplace in
+                        SalesMarketplaceType.marketplace(marketplace.countryCode)
+                    }
+                // All marketplaces if we don’t find them in storage
+                    .asDriver(onErrorJustReturn: .all)
+            }
+            .drive(marketplaceType)
+            .disposed(by: disposeBag)
+    }
+    
+    private func subscribeOnSelectedCalendarDates(_ input: Input) {
+        input.selectedCalendarDates
+            .withUnretained(self)
+            .do(onNext: { (owner, arg1) in
+                let (startDate, endDate) = arg1
+                owner.periodType.onNext(
+                    .byRange(
+                        startDate.mmDdYyyyString(),
+                        endDate?.mmDdYyyyString() ?? ""
+                    )
+                )
+                
+            })
+            .drive()
+            .disposed(by: disposeBag)
+    }
+    
+    private func subscribeOnCancelCalendar(_ input: Input) {
+        input.selectedCancelCalendar
+            .withUnretained(self)
+            .do(onNext: { owner, _ in
+                owner.periodType.onNext(.all)
+            })
+            .drive()
             .disposed(by: disposeBag)
     }
     
@@ -586,6 +636,10 @@ extension SalesViewModel {
         let visibleSection: Driver<Int>
         // Country code selected
         let marketplaceSelected: Driver<String>
+        // Calendar actions
+        let selectedCalendarDates: Driver<(Date, Date?)>
+        let selectedCancelCalendar: Driver<Void>
+        
     }
     
     struct Output {

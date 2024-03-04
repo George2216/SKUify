@@ -14,7 +14,9 @@ import RxCocoa
 final class SalesVC: BaseViewController {
 
     private let visibleSection = PublishSubject<Int>()
-    
+    private let selectedCalendarDates = PublishSubject<(Date,Date?)>()
+    private let selectedCancelCalendar = PublishSubject<Void>()
+
     private lazy var setupView = SalesSetupView()
     private lazy var collectionView = SalesCollectionView(
         frame: .zero,
@@ -42,7 +44,9 @@ final class SalesVC: BaseViewController {
             .init(
                 reloadData: Driver.merge(refreshingTriger, viewWillAppear),
                 visibleSection: visibleSection.asDriverOnErrorJustComplete(), 
-                marketplaceSelected: marketplacesPopover.itemSelected()
+                marketplaceSelected: marketplacesPopover.itemSelected(),
+                selectedCalendarDates: selectedCalendarDates.asDriverOnErrorJustComplete(), 
+                selectedCancelCalendar: selectedCancelCalendar.asDriverOnErrorJustComplete()
             )
         )
         
@@ -181,10 +185,16 @@ extension SalesVC {
 // Calendar delegate methods
 
 extension SalesVC: RangedCalendarPopoverDelegate {
+    func cancelCalendar() {
+        selectedCancelCalendar.onNext(())
+        calendarPopover.dismiss(animated: true)
+    }
+    
     func selectedCalendarDates(
         startDate: Date,
         endDate: Date?
     ) {
+        selectedCalendarDates.onNext((startDate, endDate))
         calendarPopover.dismiss(animated: true)
     }
 }

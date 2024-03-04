@@ -72,6 +72,7 @@ final class DashboardViewModel: ViewModelProtocol {
     func transform(_ input: Input) -> Output {
         subscribeOnReloadData(input)
         subscribeOnSelectedCalendarDates(input)
+        subscribeOnCancelCalendarSelected(input)
         return Output(
             settingsBarButtonConfig: makeSettingsBarButtonConfig(),
             currencyBarButtonConfig: makeCurrencyBarButtonConfig(),
@@ -109,6 +110,20 @@ final class DashboardViewModel: ViewModelProtocol {
                     .custom(
                         startDate: startDate,
                         endDate: endDate
+                    )
+                )
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func subscribeOnCancelCalendarSelected(_ input: Input) {
+        input.selectedCancelCalendar
+            .withUnretained(self)
+            .drive(onNext: { (owner, _) in
+                owner.dashboardDataState.onNext(
+                    .custom(
+                        startDate: Date(),
+                        endDate: nil
                     )
                 )
             })
@@ -957,6 +972,7 @@ extension DashboardViewModel {
     struct Input {
         let reloadData: Driver<Void>
         let selectedCalendarDates: Driver<(Date,Date?)>
+        let selectedCancelCalendar: Driver<Void>
     }
     
     struct Output {
