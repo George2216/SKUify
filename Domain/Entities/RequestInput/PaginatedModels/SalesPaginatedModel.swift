@@ -15,20 +15,6 @@ public struct SalesPaginatedModel {
     public var period: SalesPeriodType
     public var tableType: SalesTableType
     public var marketplaceType: SalesMarketplaceType
-  
-    public init(
-        offset: Int? = nil,
-        searchText: String? = nil,
-        period: SalesPeriodType,
-        tableType: SalesTableType,
-        marketplaceType: SalesMarketplaceType
-    ) {
-        self.offset = offset
-        self.searchText = searchText
-        self.period = period
-        self.tableType = tableType
-        self.marketplaceType = marketplaceType
-    }
     
     public static func base() -> SalesPaginatedModel {
         .init(

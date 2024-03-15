@@ -23,9 +23,11 @@ final class InventoryVC: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Inventory"
+        
         let output = viewModel.transform(.init())
         
         setupSetupView()
+        setupCollection()
         
         bindToSetupView(output)
     }
@@ -47,11 +49,24 @@ final class InventoryVC: BaseViewController {
         }
     }
     
+    private func setupCollection() {
+        view.addSubview(collectionView)
+        collectionView.snp.makeConstraints { make in
+            make.top
+                .equalTo(setupView.snp.bottom)
+                .offset(10)
+            make.horizontalEdges
+                .bottom
+                .equalToSuperview()
+        }
+    }
+    
 }
 
 // MARK: Make binding
 
 extension InventoryVC {
+    
     private func bindToSetupView(_ output: InventoryViewModel.Output) {
         output.setupViewInput
             .drive(setupView.rx.input)
