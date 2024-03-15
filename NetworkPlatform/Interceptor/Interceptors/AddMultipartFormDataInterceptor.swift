@@ -31,7 +31,7 @@ final class AddMultipartFormDataInterceptor: Domain.Interceptor {
             .build()
         
         var modifiedRequest = urlRequest
-  
+        
         let headers = (modifiedRequest.allHTTPHeaderFields ?? [:])
             .merging(
                 multipartData.headers,
@@ -43,9 +43,10 @@ final class AddMultipartFormDataInterceptor: Domain.Interceptor {
         body.append(multipartData.body)
         
         modifiedRequest.allHTTPHeaderFields = headers
-
+        
         modifiedRequest.httpBody = body
-
+        
         completion(.success(modifiedRequest))
     }
+    
 }

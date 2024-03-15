@@ -26,7 +26,6 @@ final class ProductContentCell: UICollectionViewCell {
     // Constraint for collapsed condition
     private var collapsedConstraint: Constraint!
     
-    
     // Update appearance by isSelected cahnged
     override var isSelected: Bool {
         didSet {
@@ -39,31 +38,24 @@ final class ProductContentCell: UICollectionViewCell {
     private func updateAppearance() {
         self.collapsedConstraint.isActive = !self.isSelected
         self.expandedConstraint.isActive = self.isSelected
-        
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        clipsToBounds = true
-        
-        setupRowStacks()
-        setupContainerView()
-        setupContentStack()
-
-        
-        
     }
     
     //MARK: - Initializers
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        clipsToBounds = true
+        backgroundColor = .white
+
+        setupRowStacks()
+        setupContainerView()
+        setupContentStack()
+    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        backgroundColor = .white
-    }
+
     
     func setupWigth(_ width: CGFloat) {
         contentView.snp.makeConstraints { make in
@@ -75,13 +67,9 @@ final class ProductContentCell: UICollectionViewCell {
     }
     
     func setupInput(_ input: Input) {
-        let firstRow = input.firstRow
-        let secondRow = input.secondRow
-        let thirdRow = input.thirdRow
-        
-        firstRowStack.views = inputToViews(items: firstRow)
-        secondRowStack.views = inputToViews(items: secondRow)
-        thirdRowStack.views = inputToViews(items: thirdRow)
+        firstRowStack.views = inputToViews(items: input.firstRow)
+        secondRowStack.views = inputToViews(items: input.secondRow)
+        thirdRowStack.views = inputToViews(items: input.thirdRow)
     }
     
     private func setupRowStacks() {
@@ -102,7 +90,15 @@ final class ProductContentCell: UICollectionViewCell {
             make.edges
                 .equalToSuperview()
         }
+        
+        containerView.snp.makeConstraints { make in
+            collapsedConstraint = make.bottom
+                .equalTo(contentView.snp.top)
+                .constraint
+            collapsedConstraint.layoutConstraints.first?.priority = .defaultHigh
+        }
     }
+    
     private func setupContentStack() {
         contentStack.views = [
             firstRowStack,
@@ -134,14 +130,6 @@ final class ProductContentCell: UICollectionViewCell {
             
             expandedConstraint.layoutConstraints.first?.priority = .defaultLow
         }
-        
-        containerView.snp.makeConstraints { make in
-            collapsedConstraint = make.bottom
-                .equalTo(contentView.snp.top)
-                .constraint
-            collapsedConstraint.layoutConstraints.first?.priority = .defaultHigh
-        }
-        
     }
     
 }
@@ -210,19 +198,8 @@ extension ProductContentCell {
     }
     
     private func toDecoratedView(input: ProductViewInput) -> UIView {
-        var heightType: TitleDecorator.DecoratedViewHeight = .none
-        switch input.viewType {
-        case .image:
-            heightType = .productCellMinimalHeight
-        default:
-            heightType = .productCellHeight
-        }
         let view = makeView(by: input.viewType)
-     
-        let decorator = TitleDecorator(
-            decoratedView: view,
-            heightDecoratedView: .productCellHeight
-        )
+        let decorator = TitleDecorator(decoratedView: view)
         decorator.decorate(title: input.title)
         return decorator
     }
@@ -237,6 +214,8 @@ extension ProductContentCell {
     }
     
 }
+
+// MARK: - Input
 
 extension ProductContentCell {
     struct Input {

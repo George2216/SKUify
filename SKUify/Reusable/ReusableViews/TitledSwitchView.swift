@@ -67,10 +67,11 @@ class TitledSwitchView: UIView {
     private func setupContentStack() {
         contentStack.views = [
             titleLabel,
-            UIView.spacer(),
+//            UIView.spacer(for: .horizontal),
             smallSwitch
         ]
-        contentStack.distribution = .fill
+        contentStack.alignment = .fill
+        contentStack.distribution = .equalCentering
         addSubview(contentStack)
         contentStack.snp.makeConstraints { make in
             make.edges

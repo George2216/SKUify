@@ -12,3 +12,20 @@ enum ProductsCollectionItem {
     case contentCell(_ input: ProductContentCell.Input)
     case showDetail
 }
+
+extension ProductsCollectionItem: Matchable {
+    static func ~= (lhs: Self, rhs: Self) -> Bool {
+        switch (lhs, rhs) {
+        case
+            (.main, .main),
+            (.contentCell, .contentCell),
+            (.showDetail, .showDetail):
+            return true
+        default:
+            return false
+        }
+    }
+    
+}
+
+

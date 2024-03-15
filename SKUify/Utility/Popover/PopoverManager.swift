@@ -18,8 +18,13 @@ final class PopoverManager: PopoverManagerProtocol {
     
     func showPopover(_ input: Input) {
         let popoverContentViewController = input.popoverVC
+        
+        //Exit if the controller has already been presented
+        guard popoverContentViewController.presentingViewController == nil else { return }
+
         popoverContentViewController.modalPresentationStyle = .popover
         popoverContentViewController.isModalInPresentation = false
+        
 
         if let popoverPresentationController = popoverContentViewController.popoverPresentationController {
             
@@ -35,7 +40,7 @@ final class PopoverManager: PopoverManagerProtocol {
             if let preferredSize = input.preferredSize {
                 popoverContentViewController.preferredContentSize = preferredSize
             }
-            
+
             baseController?.present(popoverContentViewController, animated: true, completion: nil)
         }
     }

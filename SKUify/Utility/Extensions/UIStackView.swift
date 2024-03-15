@@ -6,3 +6,18 @@
 //
 
 import Foundation
+import UIKit
+
+extension UIStackView {
+    
+    func setPagging(_ padding: CGFloat) {
+        layoutMargins = .init(
+            top: padding,
+            left: padding,
+            bottom: padding,
+            right: padding
+        )
+        isLayoutMarginsRelativeArrangement = true
+    }
+    
+}

@@ -16,18 +16,20 @@ final class SalesVC: BaseViewController {
     private let visibleSection = PublishSubject<Int>()
     private let selectedCalendarDates = PublishSubject<(Date,Date?)>()
     private let selectedCancelCalendar = PublishSubject<Void>()
-
+    
+    // MARK: - UI elements
+    
     private lazy var setupView = SalesSetupView()
-    private lazy var collectionView = SalesCollectionView(
+    private lazy var collectionView = ProductsCollectionView(
         frame: .zero,
         collectionViewLayout: createCollectionViewLayout()
     )
-
+    
     private lazy var calendarPopover = RangedCalendarBuilder.buildRangedCalendarModule(delegate: self)
     private lazy var marketplacesPopover = MarketplacesPopoverVC()
     
     var viewModel: SalesViewModel!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Sales"
@@ -35,20 +37,27 @@ final class SalesVC: BaseViewController {
         let refreshingTriger = collectionView.refreshControl!.rx
             .controlEvent(.valueChanged)
             .asDriver()
-        
-        let viewWillAppear = rx.sentMessage(#selector(UIViewController.viewWillAppear(_:)))
+
+        let viewDidAppear = rx.sentMessage(#selector(UIViewController.viewDidAppear(_:)))
+            .mapToVoid()
+            .asDriverOnErrorJustComplete()
+
+        // Hide the refresh control when dismiss the screen, otherwise it will hang.
+        let viewDidDisappear = rx.sentMessage(#selector(UIViewController.viewDidDisappear(_:)))
             .mapToVoid()
             .asDriverOnErrorJustComplete()
         
         let output = viewModel.transform(
             .init(
-                reloadData: Driver.merge(refreshingTriger, viewWillAppear),
-                visibleSection: visibleSection.asDriverOnErrorJustComplete(), 
+                reloadData: Driver.merge(refreshingTriger, viewDidAppear), 
+                screenDisappear: viewDidDisappear,
+                visibleSection: visibleSection.asDriverOnErrorJustComplete(),
                 marketplaceSelected: marketplacesPopover.itemSelected(),
                 selectedCalendarDates: selectedCalendarDates.asDriverOnErrorJustComplete(), 
                 selectedCancelCalendar: selectedCancelCalendar.asDriverOnErrorJustComplete()
             )
         )
+        
         
         setupSetupView()
         setupCollection()
@@ -86,6 +95,7 @@ final class SalesVC: BaseViewController {
         collectionView.snp.makeConstraints { make in
             make.top
                 .equalTo(setupView.snp.bottom)
+                .offset(10)
             make.horizontalEdges
                 .bottom
                 .equalToSuperview()

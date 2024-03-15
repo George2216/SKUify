@@ -18,29 +18,62 @@ public struct SalesOrdersResultsDTO: Decodable {
 
 public struct SalesOrdersDTO: Decodable {
     public let id: Int
-    public let image_url: String?
+    public let imageUrl: String?
     public let title: String
-    public let seller_sku: String
+    public let sellerSku: String
     public let asin: String
-    public let order__amazon_order_id: String
+    public let amazonOrderId: String
     public let marketplace: String
-    public let order__purchase_date: String
-    public let quantity_ordered: Int
-    public let original_price: SalesOriginalPriceDTO
-    public let amz_fees: Double
-    public let cog: Double
+    public let purchaseDate: String
+    public let quantityOrdered: Int
+    public let originalPrice: SalesOriginalPriceDTO
+    public let amzFees: Double?
+    public let totalCog: Double
+    public let currencySymbol: String
     public let profit: Double
     public let roi: Double?
     public let margin: Double?
-    public let order__order_status: String
-    public let shipping_to: SalesOriginShippingToDTO?
-    public let order__fulfillment_channel: String
+    public let orderStatus: String
+    public let shippingTo: SalesOriginShippingToDTO?
+    public let fulfillment: String
     public let note: String?
-    public let product__vat_rate: Int
+    public let vatRate: Int
+    
+    private enum CodingKeys: String, CodingKey {
+        case id = "id"
+        case imageUrl = "full_image_url"
+        case title = "title"
+        case sellerSku = "seller_sku"
+        case asin = "asin"
+        case amazonOrderId = "order__amazon_order_id"
+        case marketplace = "marketplace"
+        case purchaseDate = "order__purchase_date"
+        case quantityOrdered = "quantity_ordered"
+        case originalPrice = "original_price"
+        case amzFees = "amz_fees"
+        case totalCog = "total_cog"
+        case currencySymbol = "currency_symbol"
+        case profit = "profit"
+        case roi = "roi"
+        case margin = "margin"
+        case orderStatus = "order__order_status"
+        case shippingTo = "shipping_to"
+        case fulfillment = "order__fulfillment_channel"
+        case note = "note"
+        case vatRate = "product__vat_rate"
+    }
+    
 }
 
 public struct SalesOriginShippingToDTO: Decodable {
-    let country_code: String?
-    let city: String?
-    let state_or_region: String?
+    public let countryCode: String?
+    public let city: String?
+    public let region: String?
+    
+    private enum CodingKeys: String, CodingKey {
+        case countryCode = "country_code"
+        case city = "city"
+        case region = "state_or_region"
+    }
+    
 }

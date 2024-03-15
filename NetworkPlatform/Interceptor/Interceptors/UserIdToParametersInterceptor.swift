@@ -25,32 +25,32 @@ final class UserIdToParametersInterceptor: Domain.Interceptor {
         completion: @escaping (Result<URLRequest, Error>) -> Void
     ) {
         var modifiedRequest = urlRequest
-
+            
         userIdReadUseCase
-            .getUserId()
-            .take(1)
-            .subscribe(onNext: { userId in
-                if let url = modifiedRequest.url,
-                   var components = URLComponents(
-                    url: url,
-                    resolvingAgainstBaseURL: false
-                   )
-                {
-                    var queryItems = components.queryItems ?? []
-                    queryItems.append(
-                        URLQueryItem(
-                            name: "debug_user_id",
-                            value: "\(userId)"
+                .getUserId()
+                .take(1)
+                .subscribe(onNext: { userId in
+                    if let url = modifiedRequest.url,
+                       var components = URLComponents(
+                        url: url,
+                        resolvingAgainstBaseURL: false
+                       )
+                    {
+                        var queryItems = components.queryItems ?? []
+                        queryItems.append(
+                            URLQueryItem(
+                                name: "debug_user_id",
+                                value: "\(userId)"
+                            )
                         )
-                    )
+                        
+                        components.queryItems = queryItems
+                        modifiedRequest.url = components.url
+                    }
                     
-                    components.queryItems = queryItems
-                    modifiedRequest.url = components.url
-                }
-                
-                completion(.success(modifiedRequest))
-            })
-            .disposed(by: disposeBag)
+                    completion(.success(modifiedRequest))
+                })
+                .disposed(by: disposeBag)
     }
     
 }

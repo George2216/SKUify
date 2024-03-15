@@ -17,9 +17,10 @@ final class ProductMainCell: UICollectionViewCell {
     private lazy var titlesView = ProductTitlesView()
     private lazy var contentStack = HorizontalStack()
     
+    // MARK: - Initializers
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         setupImageView()
         setupContentStack()
     }
@@ -70,15 +71,15 @@ final class ProductMainCell: UICollectionViewCell {
                 .priority(.high)
         }
     }
-    private func setupContentStack() {
     
+    private func setupContentStack() {
         contentStack.views = [
             imageView,
             titlesView
         ]
         contentStack.distribution = .fill
         contentStack.spacing = 10
-        
+
         contentView.addSubview(contentStack)
         contentStack.snp.makeConstraints { make in
             make.edges
@@ -87,6 +88,8 @@ final class ProductMainCell: UICollectionViewCell {
         }
     }
 }
+
+// MARK: - Input
 
 extension ProductMainCell {
     struct Input {

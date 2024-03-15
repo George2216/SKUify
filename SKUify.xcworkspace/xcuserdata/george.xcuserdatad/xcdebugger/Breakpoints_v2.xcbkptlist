@@ -20,5 +20,53 @@
             landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0ABF3314-A94F-4555-B290-EACD0B7193F3"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SKUify/Utility/Popover/PopoverManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
+            landmarkName = "viewAtPoint(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "0ABF3314-A94F-4555-B290-EACD0B7193F3 - 6259ec937edd8a2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SKUify.PopoverManager.viewAtPoint(__C.CGPoint) -&gt; Swift.Optional&lt;__C.UIView&gt;"
+                  moduleName = "SKUify"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/george/Desktop/SKUify/SKUify/Utility/Popover/PopoverManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "76"
+                  endingLineNumber = "76"
+                  offsetFromSymbolStart = "196">
+               </Location>
+               <Location
+                  uuid = "0ABF3314-A94F-4555-B290-EACD0B7193F3 - 6259ec937eddb41"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SKUify.PopoverManager.viewAtPoint(__C.CGPoint) -&gt; Swift.Optional&lt;__C.UIView&gt;"
+                  moduleName = "SKUify"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/george/Desktop/SKUify/SKUify/Utility/Popover/PopoverManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "75"
+                  endingLineNumber = "75"
+                  offsetFromSymbolStart = "196">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

@@ -24,7 +24,7 @@ final class RangedCalendarPopoverVC: UIViewController {
 
     var viewModel: RangedCalendarViewModel!
     
-    var delegate: RangedCalendarPopoverDelegate?
+    weak var delegate: RangedCalendarPopoverDelegate?
             
     override func viewDidLoad() {
         super.viewDidLoad()

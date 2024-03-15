@@ -46,19 +46,18 @@ final class TitledMarketplace: UIView {
     }
     
     private func setupImageView() {
-        imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 7.0
-        imageView.layer.masksToBounds = true
+        imageView.contentMode = .scaleAspectFit
         addSubview(imageView)
         imageView.snp.makeConstraints { make in
+            make.size
+                .lessThanOrEqualTo(20)
             make.directionalVerticalEdges
                 .equalToSuperview()
             make.leading
                 .equalToSuperview()
-            make.size
-                .equalTo(20)
         }
     }
+    
 }
 
 extension TitledMarketplace {
@@ -68,7 +67,7 @@ extension TitledMarketplace {
         
         static func allMarketplaces() -> Input {
             return .init(
-                countryTitle: "All marketplaces",
+                countryTitle: "All Marketplaces",
                 counryCode: "allMarketplaces"
             )
         }

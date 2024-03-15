@@ -18,6 +18,8 @@ final class ProductMainView: UIView {
     private lazy var titlesView = ProductTitlesView()
     private lazy var contentStack = HorizontalStack()
     
+    // MARK: - Initializers
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupImageView()
@@ -49,12 +51,13 @@ final class ProductMainView: UIView {
                 .priority(.high)
         }
     }
-    private func setupContentStack() {
     
+    private func setupContentStack() {
         contentStack.views = [
             imageView,
             titlesView
         ]
+        
         contentStack.distribution = .fill
         contentStack.spacing = 10
         
@@ -65,6 +68,8 @@ final class ProductMainView: UIView {
         }
     }
 }
+
+// MARK: - Input
 
 extension ProductMainView {
     struct Input {

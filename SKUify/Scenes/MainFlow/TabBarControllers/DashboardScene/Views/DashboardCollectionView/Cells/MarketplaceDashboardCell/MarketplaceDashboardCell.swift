@@ -101,7 +101,8 @@ final class MarketplaceDashboardCell: UICollectionViewCell {
                 .inset(padding)
             make.height
                 .equalTo(1)
-            make.bottom.equalToSuperview()
+            make.bottom
+                .equalToSuperview()
                 .inset(1)
         }
     }

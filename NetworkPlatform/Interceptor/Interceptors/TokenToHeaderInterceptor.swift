@@ -24,7 +24,7 @@ final class TokenToHeaderInterceptor: Domain.Interceptor {
         completion: @escaping (Result<URLRequest, Error>) -> Void
     ) {
         var modifiedRequest = urlRequest
-
+        
         tokensReadUseCase
             .getTokens()
             .take(1)

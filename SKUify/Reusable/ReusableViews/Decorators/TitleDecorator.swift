@@ -36,7 +36,7 @@ final class TitleDecorator: UIView {
             size: 12
         ),
         textColor: UIColor = .subtextColor,
-        numberOfLines: Int = 0
+        numberOfLines: Int = 1
     ) {
         self.decoratedView = decoratedView
         super.init(frame: .zero)
@@ -48,6 +48,7 @@ final class TitleDecorator: UIView {
             textColor: textColor,
             numberOfLines: numberOfLines
         )
+                
     }
     
     required init?(coder: NSCoder) {
@@ -90,7 +91,7 @@ final class TitleDecorator: UIView {
             for: .vertical
         )
         titleLabel.setContentCompressionResistancePriority(
-            .defaultLow,
+            .defaultHigh,
             for: .vertical
         )
     }
@@ -116,3 +117,5 @@ extension TitleDecorator: TitleDecoratorProtocol {
     }
     
 }
+
+

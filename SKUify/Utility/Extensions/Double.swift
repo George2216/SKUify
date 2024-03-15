@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+extension Double {
+    func toDecimalString(decimal: Int) -> String {
+        String(
+            format: "%.\(decimal)f",
+            self
+        )
+    }
+}

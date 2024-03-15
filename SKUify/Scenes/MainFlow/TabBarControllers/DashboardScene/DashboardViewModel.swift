@@ -21,7 +21,7 @@ final class DashboardViewModel: ViewModelProtocol {
     
     private let toSettings = PublishSubject<Void>()
         
-    private let dashboardDataState = BehaviorSubject<DashboardDataState>(value: .today)
+    private let dashboardDataState = BehaviorSubject<DashboardDataState?>(value: nil)
     
     private lazy var collectionData = BehaviorSubject<[DashboardSectionModel]>(value: [])
     
@@ -73,6 +73,7 @@ final class DashboardViewModel: ViewModelProtocol {
         subscribeOnReloadData(input)
         subscribeOnSelectedCalendarDates(input)
         subscribeOnCancelCalendarSelected(input)
+        subscribeOnScreenDisappear(input)
         return Output(
             settingsBarButtonConfig: makeSettingsBarButtonConfig(),
             currencyBarButtonConfig: makeCurrencyBarButtonConfig(),
@@ -96,7 +97,7 @@ final class DashboardViewModel: ViewModelProtocol {
             .withLatestFrom(dashboardDataState.asDriverOnErrorJustComplete())
             .withUnretained(self)
             .drive(onNext: { owner, state in
-                owner.dashboardDataState.onNext(state)
+                owner.dashboardDataState.onNext(state ?? .today)
             })
             .disposed(by: disposeBag)
     }
@@ -129,6 +130,15 @@ final class DashboardViewModel: ViewModelProtocol {
             })
             .disposed(by: disposeBag)
     }
+    
+    private func subscribeOnScreenDisappear(_ input: Input) {
+        input.screenDisappear
+            .drive(with: self) { owner, _ in
+                owner.activityIndicator.stopTracker()
+            }
+            .disposed(by: disposeBag)
+    }
+    
     // MARK: - Make time slots data
     
     private func makeTimeSlotsInput() -> Driver<[TimeSlotCell.Input]> {
@@ -211,12 +221,16 @@ final class DashboardViewModel: ViewModelProtocol {
     }
     
     
-    private func fetchChartsByState() -> Driver<ChartMainDTO> {
+    private func fetchChartsByState() -> Driver<(ChartMainDTO, DashboardDataState)> {
         dashboardDataState
+            .compactMap { $0 }
             .asDriverOnErrorJustComplete()
             .flatMapLatest(weak: self) { owner, state in
                 //chartUseCase methods can return an error if it needs to go inside the FlapMap and return the driver so that the error does not reach the subscriber
                 owner.makeChartsDataByState(state: state)
+                    .map { dto in
+                    return (dto, state)
+                }
             }
     }
     
@@ -405,9 +419,6 @@ final class DashboardViewModel: ViewModelProtocol {
     
     private func makeChartsData() -> Driver<[DashboardSectionModel]> {
         fetchChartsByState()
-            .withLatestFrom(dashboardDataState.asDriverOnErrorJustComplete()) { data, state in
-                return (data, state)
-            }
             .flatMapLatest(
                 weak: self,
                 selector: { (owner, arg1) in
@@ -464,7 +475,6 @@ final class DashboardViewModel: ViewModelProtocol {
                     ]
                 }
             )
-        
     }
     
     // MARK: - Make collection view items
@@ -885,9 +895,17 @@ final class DashboardViewModel: ViewModelProtocol {
     
     private func getMarketplacesData(_ marketplaces: [ChartMarketplace]) -> Driver<[(String, String, ChartMarketplace)]> {
         let observables = marketplaces.map { marketplace in
-            marketplacesUseCase.getMarketplaceById(id: marketplace.marketplace)
+            marketplacesUseCase
+                .getMarketplaceById(id: marketplace.marketplace)
                 .map({ ($0.country, $0.countryCode, marketplace) })
-                .catchAndReturn(("Total", "", marketplace))
+                .catchAndReturn(
+                    (
+                        "Total",
+                        TitledMarketplace.Input.allMarketplaces()
+                            .counryCode,
+                        marketplace
+                    )
+                )
                 .asDriverOnErrorJustComplete()
         }
         
@@ -971,6 +989,7 @@ final class DashboardViewModel: ViewModelProtocol {
 extension DashboardViewModel {
     struct Input {
         let reloadData: Driver<Void>
+        let screenDisappear: Driver<Void>
         let selectedCalendarDates: Driver<(Date,Date?)>
         let selectedCancelCalendar: Driver<Void>
     }

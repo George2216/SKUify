@@ -16,10 +16,15 @@ public class ActivityTracker: SharedSequenceConvertibleType {
     private let _lock = NSRecursiveLock()
     private let _behavior = BehaviorRelay<Bool>(value: false)
     private let _loading: SharedSequence<SharingStrategy, Bool>
-    
+        
     public init() {
         _loading = _behavior.asDriver()
-            .distinctUntilChanged()
+//            .distinctUntilChanged() When the screen is relaunched, if the previous event has not completed, it is necessary to retrieve the same event.
+    }
+
+    public func stopTracker() {
+        _lock.unlock()
+        _behavior.accept(false)
     }
     
     fileprivate func trackActivityOfObservable<O: ObservableConvertibleType>(
@@ -41,7 +46,7 @@ public class ActivityTracker: SharedSequenceConvertibleType {
         _lock.unlock()
     }
     
-    private func sendStopLoading() {
+    public func sendStopLoading() {
         _lock.lock()
         _behavior.accept(false)
         _lock.unlock()

@@ -17,7 +17,7 @@ final class DashboardCollectionView: UICollectionView {
         
     // MARK: Data source
 
-    private lazy var customSource =  RxCollectionViewSectionedReloadDataSource<DashboardSectionModel> { dataSource, collectionView, indexPath, item in
+    private lazy var customSource = RxCollectionViewSectionedReloadDataSource<DashboardSectionModel> { dataSource, collectionView, indexPath, item in
         
         switch item {
         case .financialMetric(let input):
@@ -65,7 +65,7 @@ final class DashboardCollectionView: UICollectionView {
     // MARK: Privete methods
 
     private func setupCollection() {
-        refreshControl = UIRefreshControl()
+        refreshControl = VisibleRefreshControl()
 
         backgroundColor = .clear
         alwaysBounceVertical = true
@@ -151,8 +151,8 @@ extension DashboardCollectionView: UICollectionViewDelegateFlowLayout {
                 width: (width - 10) / 2,
                 height: height
                )
-           case .overview:
                
+           case .overview:
                return CGSize(
                 width: width,
                 height: 350

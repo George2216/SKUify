@@ -16,11 +16,11 @@ final class SalesViewModel: ViewModelProtocol {
     
     private let paginatedData = BehaviorSubject<SalesPaginatedModel>(value: .base())
     
-    private let collectionDataStorage = BehaviorSubject<[SalesSectionModel]>(value: [])
+    private let collectionDataStorage = BehaviorSubject<[ProductsSectionModel]>(value: [])
     
     private let selectOrders = PublishSubject<Void>()
     private let selectRefunds = PublishSubject<Void>()
-
+    
     private let isShowPaginatedLoader = PublishSubject<Bool>()
     
     private let tableType = BehaviorSubject<SalesTableType>(value: .orders)
@@ -69,6 +69,7 @@ final class SalesViewModel: ViewModelProtocol {
     func transform(_ input: Input) -> Output {
         subscribeOnVisibleSection(input)
         subscribeOnReloadData(input)
+        subscribeOnScreenDisappear(input)
         subscribeOnMarketplaceSelected(input)
         subscribeOnSelectedCalendarDates(input)
         subscribeOnCancelCalendar(input)
@@ -76,8 +77,8 @@ final class SalesViewModel: ViewModelProtocol {
             setupViewInput: makeSetupViewInput(),
             collectionData: collectionDataStorage.asDriverOnErrorJustComplete(),
             showCalendarPopover: tapOnCalendar.asDriverOnErrorJustComplete(),
-            showMarketplacesPopover: tapOnMarketplaces.asDriverOnErrorJustComplete(), 
-            marketplacesData: makeMarketplacesData(), 
+            showMarketplacesPopover: tapOnMarketplaces.asDriverOnErrorJustComplete(),
+            marketplacesData: makeMarketplacesData(),
             startSelectedMarketplace: startSelectedMarketplace.asDriverOnErrorJustComplete(),
             isShowPaginatedLoader: isShowPaginatedLoader.asDriverOnErrorJustComplete(),
             fetching: activityIndicator.asDriver(),
@@ -92,8 +93,10 @@ final class SalesViewModel: ViewModelProtocol {
         // Remove products count
         productsCount.onNext(0)
         // Reload data
-        paginationCounter.onNext(nil)
+        paginationCounter.onNext(0)
     }
+    
+    // MARK: - Subscriptions to filters with SetupView
     
     private func paginatedDataScribers() {
         subscribeOnTableTypeChanged()
@@ -101,27 +104,6 @@ final class SalesViewModel: ViewModelProtocol {
         subscribeOnChangeCOGs()
         subscribeOnMarketplaceChange()
         subscribeonPeriodChange()
-    }
-    
-    private func subscribeOnTableTypeChanged() {
-        tableType
-            .asDriverOnErrorJustComplete()
-            .withLatestFrom(paginatedData.asDriverOnErrorJustComplete()) { tableType, paginatedData in
-                return (tableType, paginatedData)
-            }
-            .withUnretained(self)
-        // Save to paginated data
-            .do(onNext: { (owner, arg1) in
-                var (tableType, paginatedData) = arg1
-                paginatedData.tableType = tableType
-                owner.paginatedData.onNext(paginatedData)
-            })
-        // Clear storages
-            .do(onNext: { (owner, _) in
-                owner.reloadData()
-            })
-            .drive()
-            .disposed(by: disposeBag)
     }
     
     private func subscribeOnSearchTextChanged() {
@@ -165,8 +147,35 @@ final class SalesViewModel: ViewModelProtocol {
             .disposed(by: disposeBag)
     }
     
+    
+    // MARK: - Skip the first events so as not to start loading ahead of time
+
+    
+    private func subscribeOnTableTypeChanged() {
+        tableType
+            .skip(1)
+            .asDriverOnErrorJustComplete()
+            .withLatestFrom(paginatedData.asDriverOnErrorJustComplete()) { tableType, paginatedData in
+                return (tableType, paginatedData)
+            }
+            .withUnretained(self)
+        // Save to paginated data
+            .do(onNext: { (owner, arg1) in
+                var (tableType, paginatedData) = arg1
+                paginatedData.tableType = tableType
+                owner.paginatedData.onNext(paginatedData)
+            })
+        // Clear storages
+            .do(onNext: { (owner, _) in
+                owner.reloadData()
+            })
+            .drive()
+            .disposed(by: disposeBag)
+    }
+    
     private func subscribeOnMarketplaceChange() {
         marketplaceType
+            .skip(1)
             .asDriverOnErrorJustComplete()
             .withLatestFrom(paginatedData.asDriverOnErrorJustComplete()) { marketplaceType, paginatedData in
                 return (marketplaceType, paginatedData)
@@ -187,6 +196,7 @@ final class SalesViewModel: ViewModelProtocol {
     
     private func subscribeonPeriodChange() {
         periodType
+            .skip(1)
             .asDriverOnErrorJustComplete()
             .withLatestFrom(paginatedData.asDriverOnErrorJustComplete()) { period, paginatedData in
                 return (period, paginatedData)
@@ -303,22 +313,22 @@ extension SalesViewModel {
             .filter { visibleSection, collectionDataStorageCount in
                 return collectionDataStorageCount - 1 == visibleSection
             }
-
+        
         let filterWhenLastProductDriver = filterNotLastIndecesDriver
             .withLatestFrom(paginationCounter.asDriverOnErrorJustComplete()) { (arg0, paginationCounter) in
-            let (_, productsCount) = arg0
-            return (paginationCounter, productsCount)
-        }
+                let (_, productsCount) = arg0
+                return (paginationCounter, productsCount)
+            }
         // If the paginationCountert is greater than the number of valid products, then you no longer need to download products
-        .filter { paginationCounter, productsCount in
-            return (paginationCounter ?? 0) < productsCount
-        }
-
+            .filter { paginationCounter, productsCount in
+                return (paginationCounter ?? 0) < productsCount
+            }
+        
         let newPaginatedCounterDriver = filterWhenLastProductDriver
             .map { paginationCounter, _ in
-            guard let paginationCounter else { return 15 }
-            return paginationCounter + 15
-        }
+                guard let paginationCounter else { return 15 }
+                return paginationCounter + 15
+            }
         
         // Show paginated loader
         newPaginatedCounterDriver
@@ -338,6 +348,14 @@ extension SalesViewModel {
             .drive(onNext: { owner, _ in
                 owner.reloadData()
             })
+            .disposed(by: disposeBag)
+    }
+    
+    private func subscribeOnScreenDisappear(_ input: Input) {
+        input.screenDisappear
+            .drive(with: self) { owner, _ in
+                owner.activityIndicator.stopTracker()
+            }
             .disposed(by: disposeBag)
     }
     
@@ -363,13 +381,15 @@ extension SalesViewModel {
             .withUnretained(self)
             .do(onNext: { (owner, arg1) in
                 let (startDate, endDate) = arg1
+                guard startDate != Date() && endDate != nil else {
+                    return owner.periodType.onNext(.all)
+                }
                 owner.periodType.onNext(
                     .byRange(
-                        startDate.mmDdYyyyString(),
-                        endDate?.mmDdYyyyString() ?? ""
+                        startDate.mmddyyyyString("/"),
+                        endDate?.mmddyyyyString("/") ?? ""
                     )
                 )
-                
             })
             .drive()
             .disposed(by: disposeBag)
@@ -395,7 +415,7 @@ extension SalesViewModel {
         subscribeOnOrdersSalesData()
         subscribeOnRefundsSalesData()
     }
-   
+    
     private func subscribeOnOrdersSalesData() {
         fetchOrdersSalesData()
             .withUnretained(self)
@@ -444,8 +464,8 @@ extension SalesViewModel {
 
 // MARK: Make collection data
 
+
 extension SalesViewModel {
-    
     private func makeCollectionData() {
         Driver.merge(makeOrdersCollectionData(), makeRefundsCollectionData())
             .do(onNext: { [weak self] _ in
@@ -456,99 +476,456 @@ extension SalesViewModel {
             .disposed(by: disposeBag)
     }
     
-    private func makeOrdersCollectionData() -> Driver<[SalesSectionModel]> {
+}
+
+// MARK: Make orders collection data
+
+extension SalesViewModel {
+    
+    private func makeOrdersCollectionData() -> Driver<[ProductsSectionModel]> {
         ordersDataStorage
-            .compactMap { $0 }
+            .asDriverOnErrorJustComplete()
+            .flatMapLatest(
+                weak: self,
+                selector: { owner, orders in
+                    Observable.just(
+                        orders.map { order in
+                            // Get marketplace by identifier
+                            owner.marketplacesUseCase
+                                .getMarketplaceById(id: order.marketplace)
+                                .map { marketplace in
+                                    return (order, marketplace)
+                                }
+                        })
+                    .flatMap { observables in
+                        Observable.combineLatest(observables)
+                            .map { $0.map { $0 } }
+                    }
+                    .asDriverOnErrorJustComplete()
+                }
+            )
             .withUnretained(self)
-            .map { owner, orders  in
-                orders.map { order -> SalesSectionModel in
+            .map { (owner, productMarketplaceArray) in
+                productMarketplaceArray.map { order, markeplace in
                     return .init(
                         model: .defaultSection(
                             header: "",
                             footer: ""
                         ),
                         items: [
-                            .orders(
-                                .init(
-                                    mainViewInput: .init(
-                                        imageUrl: URL(string: order.image_url ?? ""),
-                                        titlesViewInput: .init(
-                                            content: [
-                                                .init(
-                                                    title: "Title:",
-                                                    value: order.title
-                                                ),
-                                                .init(
-                                                    title: "SKU:",
-                                                    value: order.seller_sku
-                                                ),
-                                                .init(
-                                                    title: "ASIN:",
-                                                    value: order.asin
-                                                ),
-                                                .init(
-                                                    title: "Order:",
-                                                    value: order.order__amazon_order_id
-                                                )
-                                            ]
-                                        )
-                                    )
+                            .main(
+                                owner.makeOrderMainCellInput(order)),
+                            .contentCell(
+                                owner.makeOrderContentCellInput(
+                                    order,
+                                    marketplace: markeplace
                                 )
-                            )
+                            ),
+                            .showDetail
                         ]
                     )
                     
                 }
+                
             }
-            .asDriverOnErrorJustComplete()
     }
     
-    private func makeRefundsCollectionData() -> Driver<[SalesSectionModel]> {
-        refundsDataStorage
-            .compactMap { $0 }
-            .withUnretained(self)
-            .map { owner, refunds in
-                refunds.map { refund -> SalesSectionModel in
-                    return .init(
-                        model: .defaultSection(
-                            header: "",
-                            footer: ""
-                        ),
-                        items: [
-                            .refunds(
-                                .init(
-                                    mainViewInput: .init(
-                                        imageUrl: URL(string: refund.image_url ?? ""),
-                                        titlesViewInput: .init(
-                                            content: [
-                                                .init(
-                                                    title: "Title:",
-                                                    value: refund.title
-                                                ),
-                                                .init(
-                                                    title: "SKU:",
-                                                    value: refund.seller_sku
-                                                ),
-                                                .init(
-                                                    title: "ASIN:",
-                                                    value: refund.asin
-                                                )
-                                            ]
-                                        )
-                                    )
-                                )
-                            )
-                        ]
+    private func makeOrderMainCellInput(_ order: SalesOrdersDTO) -> ProductMainCell.Input {
+        .init(
+            imageUrl: URL(string: order.imageUrl ?? ""),
+            titlesViewInput: .init(
+                content: [
+                    .init(
+                        title: "Title:",
+                        value: order.title
+                    ),
+                    .init(
+                        title: "SKU:",
+                        value: order.sellerSku
+                    ),
+                    .init(
+                        title: "ASIN:",
+                        value: order.asin
+                    ),
+                    .init(
+                        title: "Order:",
+                        value: order.amazonOrderId
                     )
-                    
-                }
-            }
-            .asDriverOnErrorJustComplete()
+                ]
+            )
+        )
     }
-
+    
+    private func makeOrderContentCellInput(
+        _ order: SalesOrdersDTO,
+        marketplace: MarketplaceDTO
+    ) -> ProductContentCell.Input {
+        .init(
+            firstRow: makeOrderContentFirstRowInput(
+                order,
+                marketplace: marketplace
+            ),
+            secondRow: makeOrderContentSecondRowInput(order),
+            thirdRow: makeOrderContentThirdRowInput(order)
+        )
+    }
+    
+    private func makeOrderContentFirstRowInput(
+        _ order: SalesOrdersDTO,
+        marketplace: MarketplaceDTO
+    ) -> [ProductViewInput] {
+        [
+            .init(
+                title: "Marketplace",
+                viewType: .titledMarketplace(
+                    .init(
+                        countryTitle: marketplace.countryCode,
+                        counryCode:  marketplace.countryCode
+                    )
+                )
+            ),
+            .init(
+                title: "Unit Price",
+                viewType: .text(
+                    order.currencySymbol + String(order.originalPrice.price)
+                        .doubleDecimalString(2)
+                )
+            ),
+            .init(
+                title: "Gross Profit",
+                viewType: .text(
+                    order.currencySymbol + String(order.profit)
+                        .doubleDecimalString(2)
+                )
+            ),
+            .init(
+                title: "Status",
+                viewType: .image(.status(.init(rawValue: order.orderStatus)))
+            ),
+            .init(
+                title: "Notes",
+                viewType: .button(
+                    .init(
+                        title: "",
+                        style: .image(.notes),
+                        action: {}
+                    )
+                )
+            )
+        ]
+    }
+    
+    private func makeOrderContentSecondRowInput( _ order: SalesOrdersDTO) -> [ProductViewInput] {
+        [
+            .init(
+                title: "Time & Date",
+                viewType: .text(order.purchaseDate.dateTTimeToShort())
+            ),
+            .init(
+                title: "Amazon Fees",
+                viewType: .text(
+                    order.currencySymbol + String(order.amzFees ?? 0)
+                        .doubleDecimalString(2)
+                )
+            ),
+            .init(
+                title: "ROI",
+                viewType: .text(
+                    String(order.roi ?? 0.0)
+                        .doubleDecimalString(2) + "%")
+            ),
+            .init(
+                title: "Shipped To",
+                viewType: .image(.shippingTo(.init(rawValue: order.shippingTo?.countryCode)))
+            ),
+            .init(
+                title: "Add Info",
+                viewType: .addInfo(
+                    .init(
+                        vatButtonConfig: .init(
+                            title: "\(order.vatRate)% VAT",
+                            style: .vat,
+                            action: {
+                                
+                            }
+                        ),
+                        sellerCentralButtonConfig: .init(
+                            title: "",
+                            style: .image(.sellerCentral),
+                            action: {
+                                
+                            }
+                        ),
+                        amazonButtonConfig: .init(
+                            title: "",
+                            style: .image(.amazon),
+                            action: {
+                                
+                            }
+                        )
+                    )
+                )
+            )
+        ]
+    }
+    
+    
+    private func makeOrderContentThirdRowInput( _ order: SalesOrdersDTO) -> [ProductViewInput] {
+        [
+            .init(
+                title: "Units",
+                viewType: .text(
+                    String(order.quantityOrdered)
+                )
+            ),
+            .init(
+                title: "COG",
+                viewType: .button(
+                    .init(
+                        title: order.currencySymbol + String(order.totalCog)
+                            .doubleDecimalString(2),
+                        style: .cog,
+                        action: {
+                            
+                        }
+                    )
+                )
+            ),
+            .init(
+                title: "Margin",
+                viewType: .text(
+                    String(order.margin ?? 0.0)
+                        .doubleDecimalString(2) + "%"
+                )
+            ),
+            .init(
+                title: "Fulfillment",
+                viewType: .image(.fulfillment(.init(rawValue: order.fulfillment)))
+            ),
+            .init(
+                title: "",
+                viewType: .spacer
+            )
+        ]
+    }
     
 }
 
+// MARK: Make refunds collection data
+
+extension SalesViewModel {
+    
+    private func makeRefundsCollectionData() -> Driver<[ProductsSectionModel]> {
+        refundsDataStorage
+            .asDriverOnErrorJustComplete()
+            .flatMapLatest(
+                weak: self,
+                selector: { owner, refunds in
+                    Observable.just(
+                        refunds.map { refund in
+                            // Get marketplace by identifier
+                            owner.marketplacesUseCase
+                                .getMarketplaceById(id: refund.marketplace)
+                                .map { marketplace in
+                                    return (refund, marketplace)
+                                }
+                        })
+                    .flatMap { observables in
+                        Observable.combineLatest(observables)
+                            .map { $0.map { $0 } }
+                    }
+                    .asDriverOnErrorJustComplete()
+                }
+            )
+            .withUnretained(self)
+            .map { (owner, productMarketplaceArray) in
+                productMarketplaceArray.map { refund, marketplace in
+                    return .init(
+                        model: .defaultSection(
+                            header: "",
+                            footer: ""
+                        ),
+                        items: [
+                            .main(owner.makeRefundMainCellInput(refund)),
+                            .contentCell(
+                                owner.makeRefundContentCellInput(
+                                    refund: refund,
+                                    marketplace: marketplace
+                                )
+                            ),
+                            .showDetail
+                        ]
+                    )
+                    
+                }
+                
+            }
+    }
+    
+    private func makeRefundMainCellInput(_ refund: SalesRefundsDTO) -> ProductMainCell.Input {
+        .init(
+            imageUrl: URL(string: refund.imageUrl ?? ""),
+            titlesViewInput: .init(
+                content: [
+                    .init(
+                        title: "Title:",
+                        value: refund.title
+                    ),
+                    .init(
+                        title: "SKU:",
+                        value: refund.sellerSku
+                    ),
+                    .init(
+                        title: "ASIN:",
+                        value: refund.asin
+                    ),
+                    .init(
+                        title: "Order:",
+                        value: refund.amazonOrderId
+                    )
+                ]
+            )
+        )
+    }
+    
+    
+    private func makeRefundContentFirstRow(
+        refund: SalesRefundsDTO,
+        marketplace: MarketplaceDTO
+    ) -> [ProductViewInput] {
+        [
+            .init(
+                title: "Marketplace",
+                viewType: .titledMarketplace(
+                    .init(
+                        countryTitle: marketplace.countryCode,
+                        counryCode:  marketplace.countryCode
+                    )
+                )
+            ),
+            .init(
+                title: "Unit Price",
+                viewType: .text(
+                    refund.currencySymbol + String(refund.originalPrice.price)
+                        .doubleDecimalString(2)
+                )
+            ),
+            .init(
+                title: "Refund Cost",
+                viewType: .text(
+                    refund.currencySymbol + String(refund.refundСost)
+                        .doubleDecimalString(2)
+                )
+            ),
+            .init(
+                title: "Notes",
+                viewType: .button(
+                    .init(
+                        title: "",
+                        style: .image(.notes),
+                        action: {}
+                    )
+                )
+            )
+        ]
+    }
+    
+    private func makeRefundContentSecondRow(refund: SalesRefundsDTO) -> [ProductViewInput] {
+        [
+            .init(
+                title: "Time & Date",
+                viewType: .text(refund.refundDate.dateTTimeToShort())
+            ),
+            .init(
+                title: "Amazon Fees",
+                viewType: .text(
+                    refund.currencySymbol + String(refund.amzFees ?? 0)
+                        .doubleDecimalString(2)
+                )
+            ),
+            .init(
+                title: "Status",
+                viewType: .image(.status(.init(rawValue: refund.orderStatus)))
+            ),
+            .init(
+                title: "Add Info",
+                viewType: .addInfo(
+                    .init(
+                        vatButtonConfig: .init(
+                            title: "\(refund.vatRate)% VAT",
+                            style: .vat,
+                            action: {
+                                
+                            }
+                        ),
+                        sellerCentralButtonConfig: .init(
+                            title: "",
+                            style: .image(.sellerCentral),
+                            action: {
+                                
+                            }
+                        ),
+                        amazonButtonConfig: .init(
+                            title: "",
+                            style: .image(.amazon),
+                            action: {
+                                
+                            }
+                        )
+                    )
+                )
+            )
+        ]
+    }
+    
+    private func makeRefundContentThirdRow(refund: SalesRefundsDTO) -> [ProductViewInput] {
+        [
+            .init(
+                title: "Units",
+                viewType: .text(
+                    String(refund.quantityOrdered)
+                )
+            ),
+            .init(
+                title: "COG",
+                viewType: .button(
+                    .init(
+                        title: refund.currencySymbol + String(refund.totalCog)
+                            .doubleDecimalString(2),
+                        style: .cog,
+                        action: {
+                            
+                        }
+                    )
+                )
+            ),
+            .init(
+                title: "Fulfillment",
+                viewType: .image(.fulfillment(.init(rawValue: refund.fulfillment)))
+            ),
+            .init(
+                title: "",
+                viewType: .spacer
+            )
+        ]
+    }
+    
+    
+    private func makeRefundContentCellInput(
+        refund: SalesRefundsDTO,
+        marketplace: MarketplaceDTO
+    ) -> ProductContentCell.Input {
+        .init(
+            firstRow: makeRefundContentFirstRow(
+                refund: refund,
+                marketplace: marketplace
+            ),
+            secondRow: makeRefundContentSecondRow(refund: refund) ,
+            thirdRow: makeRefundContentThirdRow(refund: refund)
+        )
+    }
+    
+}
 // MARK: Make marketplaces data
 
 extension SalesViewModel {
@@ -577,9 +954,10 @@ extension SalesViewModel {
 // MARK: Fetch data
 
 extension SalesViewModel {
-
+    
     private func fetchOrdersSalesData() -> Driver<SalesOrdersResultsDTO> {
         paginationCounter
+            .compactMap({ $0 })
             .withLatestFrom(paginatedData) { paginationCounter, paginatedData in
                 return (paginationCounter, paginatedData)
             }
@@ -591,20 +969,21 @@ extension SalesViewModel {
                 paginatedDataVariable.offset = paginationCounter
                 owner.paginatedData.onNext(paginatedDataVariable)
             })
-                .asDriverOnErrorJustComplete()
-                .withLatestFrom(paginatedData.asDriverOnErrorJustComplete())
-                .filter { $0.tableType == .orders }
-                .flatMapLatest(weak: self) { owner, paginatedData in
-                    owner.salesRefundsUseCase
-                        .getOrdersSales(paginatedData)
-                        .trackActivity(owner.activityIndicator)
-                        .trackError(owner.errorTracker)
-                        .asDriverOnErrorJustComplete()
-                }
+            .asDriverOnErrorJustComplete()
+            .withLatestFrom(paginatedData.asDriverOnErrorJustComplete())
+            .filter { $0.tableType == .orders }
+            .flatMapLatest(weak: self) { owner, paginatedData in
+                owner.salesRefundsUseCase
+                    .getOrdersSales(paginatedData)
+                    .trackActivity(owner.activityIndicator)
+                    .trackError(owner.errorTracker)
+                    .asDriverOnErrorJustComplete()
+            }
     }
     
     private func fetchRefundsSalesData() -> Driver<SalesRefundsResultsDTO> {
         paginationCounter
+            .compactMap({ $0 })
             .withLatestFrom(paginatedData) { paginationCounter, paginatedData in
                 return (paginationCounter, paginatedData)
             }
@@ -632,7 +1011,11 @@ extension SalesViewModel {
 
 extension SalesViewModel {
     struct Input {
+        // viewDidAppear or swipe
         let reloadData: Driver<Void>
+        // viewDidDisappear
+        let screenDisappear: Driver<Void>
+        // currently visible collection section
         let visibleSection: Driver<Int>
         // Country code selected
         let marketplaceSelected: Driver<String>
@@ -644,7 +1027,7 @@ extension SalesViewModel {
     
     struct Output {
         let setupViewInput: Driver<SalesSetupView.Input>
-        let collectionData: Driver<[SalesSectionModel]>
+        let collectionData: Driver<[ProductsSectionModel]>
         // Popovers
         let showCalendarPopover: Driver<CGPoint>
         let showMarketplacesPopover: Driver<CGPoint>

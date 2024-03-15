@@ -14,7 +14,6 @@ final class ProductShowDetailsView: UIView {
 
     private lazy var titleLabel = UILabel()
     private lazy var arrowImageView = UIImageView()
-
     
     // Rotate arrow image by isSelected changes
     var isSelected: Bool = false {
@@ -56,7 +55,9 @@ final class ProductShowDetailsView: UIView {
                     scale: .medium
                 )
             )
+        
         arrowImageView.contentMode = .scaleAspectFit
+        
         addSubview(arrowImageView)
         arrowImageView.snp.makeConstraints { make in
             make.leading
@@ -64,7 +65,6 @@ final class ProductShowDetailsView: UIView {
             make.centerY
                 .equalToSuperview()
         }
-
     }
     
     private func setupTitleLabel() {
@@ -76,6 +76,7 @@ final class ProductShowDetailsView: UIView {
             type: .bold,
             size: 13
         )
+        
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.edges

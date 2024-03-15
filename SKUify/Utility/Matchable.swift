@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+// Use to ignore associative values
+protocol Matchable {
+  static func ~= (lhs: Self, rhs: Self) -> Bool
+}

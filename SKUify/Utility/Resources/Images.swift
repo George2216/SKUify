@@ -39,6 +39,17 @@ extension UIImage {
     static let logout = UIImage(named: "logout") ?? .init()
     
     //Button images
-    static let status = UIImage(named: "status") ?? .init()
+    static let amazon = UIImage(named: "amazon") ?? .init()
+    static let sellerCentral = UIImage(named: "sellerCentral") ?? .init()
+
+    // Cell images
+    static let statusComplete = UIImage(named: "statusComplete") ?? .init()
+    static let statusCanceled = UIImage(named: "statusCanceled") ?? .init()
+    static let statusRefund = UIImage(named: "statusRefund") ?? .init()
+    static let shippingToCheckLater = UIImage(named: "shippingToCheckLater") ?? .init()
+    static let fulfillmentFBA = UIImage(named: "fulfillmentFBA") ?? .init()
+    static let notes = UIImage(named: "notes") ?? .init()
+    static let pensill = UIImage(named: "pensill") ?? .init()
+    static let arrow = UIImage(named: "arrow") ?? .init()
     
 }

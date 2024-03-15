@@ -32,11 +32,11 @@ final class DefaultButton: UIButton {
         
         var configuration = Configuration.plain()
         configuration.title = config.title
-        
+
         setupTextFont(
             .manrope(
-                type: .extraBold,
-                size: 13)
+                type: .bold,
+                size: 15)
         )
         
         setupAction(config)
@@ -102,6 +102,8 @@ final class DefaultButton: UIButton {
             
         case .image(let image):
             configuration?.image = image.image
+            configuration?.contentInsets = .zero
+
             
         case .infoButton:
             setupInfoButton()
@@ -114,14 +116,19 @@ final class DefaultButton: UIButton {
             layer.borderColor = borderColor.color.cgColor
             layer.cornerRadius = radius
             layer.masksToBounds = true
+            
         case .none:
             backgroundColor = .white
             configuration?.baseForegroundColor = .textColor
       
-      
-      
         case .simplePrimaryText:
             setupSimplePrimaryText()
+            
+        case .cog:
+            setupCogButton()
+            
+        case .vat:
+             setupVatButton()
         }
         
         clipsToBounds = true
@@ -254,8 +261,43 @@ extension DefaultButton {
         configuration?.baseForegroundColor = .primary
     }
     
-}
+    private func setupCogButton() {
+        tintColor = .textColor
+        
+        configuration?.image = UIImage.pensill
+        configuration?.imagePlacement = .trailing
+        configuration?.titleAlignment = .leading
+        configuration?.contentInsets = .zero
 
+        contentHorizontalAlignment = .leading
+        
+        setupTextFont(
+            .manrope(
+                type: .bold,
+                size: 15
+            )
+        )
+    }
+    
+    private func setupVatButton() {
+        configuration?.title = config.title
+        configuration?.baseForegroundColor = .white
+        
+        backgroundColor = .primaryPink
+        
+        layer.cornerRadius = 7.0
+        layer.masksToBounds = true
+        
+        setupTextFont(
+            .manrope(
+                type: .bold,
+                size: 12
+            )
+        )
+    
+    }
+
+}
 
 // MARK: - Config for button
 
@@ -281,6 +323,7 @@ extension DefaultButton {
         case fullyRoundedPrimary
         case primaryPlus
         case simplePrimaryText
+        case vat
         case chekButton(
             isSelected: Bool,
             substile: CheckButtonSubstyle
@@ -295,6 +338,7 @@ extension DefaultButton {
             borderWidth: CGFloat = 0.0,
             borderColor: Color = .clear
         )
+        case cog
         case none
         
         fileprivate var height: CGFloat? {
@@ -313,7 +357,10 @@ extension DefaultButton {
                     .none,
                     .image,
                     .infoButton,
-                    .custom:
+                    .custom,
+                    .cog,
+                    .vat
+                :
                 return nil
             }
         }
@@ -325,17 +372,26 @@ extension DefaultButton {
     }
     
     enum ImageType {
-        case status
         case back
         case forward
+        case notes
+        case pensill
+        case amazon
+        case sellerCentral
         var image: UIImage? {
             switch self {
-            case .status:
-                return .status
             case .back:
                 return UIImage(systemName: "chevron.left")
             case .forward:
                 return UIImage(systemName: "chevron.right")
+            case .notes:
+                return .notes
+            case .pensill:
+                return .pensill
+            case .amazon:
+                return .amazon
+            case .sellerCentral:
+                return .sellerCentral
             }
         }
     }
@@ -347,6 +403,7 @@ extension DefaultButton {
         case red
         case primary
         case white
+        
         var color: UIColor {
             switch self {
             case .black:
@@ -376,4 +433,5 @@ extension Reactive where Base: DefaultButton {
             button.config = config
         }
     }
+    
 }

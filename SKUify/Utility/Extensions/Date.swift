@@ -38,9 +38,9 @@ extension Date {
         return formattedDate
     }
     
-    func mmDdYyyyString() -> String {
+    func mmddyyyyString(_ separator: String = "-") -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "mm-dd-yyyy"
+        dateFormatter.dateFormat = "MM\(separator)dd\(separator)yyyy"
         let formattedDate = dateFormatter.string(from: self)
         return formattedDate
     }

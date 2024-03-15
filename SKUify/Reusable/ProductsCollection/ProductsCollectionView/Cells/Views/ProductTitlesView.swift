@@ -16,16 +16,15 @@ final class ProductTitlesView: UIView {
     private lazy var titlesStack = VerticalStack()
     private lazy var valuesStack = VerticalStack()
     
+    // MARK: - Initializers
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         clipsToBounds = true
         setupTitlesStack()
         setupValuesStack()
-        
     }
-    
-    // MARK: - Initializers
-    
+        
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

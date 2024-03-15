@@ -8,38 +8,19 @@
 import Foundation
 import UIKit
 import CoreImage
-import SDWebImage
-import AssetsLibrary
 
 extension UIImage {
-    func convertToJPEG(quality: CGFloat = 0.8) -> Data? {
-        if let ciImage = CIImage(image: self) {
-            
-            // Создаем CIContext
-            let context = CIContext(options: nil)
-            
-            // Создаем CGImage из CIImage с помощью CIContext
-            if let cgImage = context.createCGImage(ciImage, from: ciImage.extent) {
-                // Создаем UIImage из CGImage
-                let finalImage = UIImage(cgImage: cgImage)
-                
-                // Используем finalImage по вашему усмотрению
-                return finalImage.jpegData(compressionQuality: quality)
-            }
-        }
-        return nil
-    }
-            /**
-            - Convert heic image to jpeg format
-        */
-    public func getJpegData(imageData: Data, referenceUrl: URL) -> Data? {
-        var newImageSize: Data?
-
-        if FileManager.default.fileExists(atPath: referenceUrl.path) {
-            let image = UIImage(data: imageData)
-            newImageSize = image?.jpegData(compressionQuality: 1.0)
-        }
-
-        return newImageSize
-    }
+    func round(_ radius: CGFloat) -> UIImage {
+           let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+           let renderer = UIGraphicsImageRenderer(size: rect.size)
+           let result = renderer.image { c in
+               let rounded = UIBezierPath(roundedRect: rect, cornerRadius: radius)
+               rounded.addClip()
+               if let cgImage = self.cgImage {
+                   UIImage(cgImage: cgImage, scale: self.scale, orientation: self.imageOrientation).draw(in: rect)
+               }
+           }
+           return result
+       }
+    
 }

@@ -30,11 +30,15 @@ final class UserIdToURLPathInterceptor: Domain.Interceptor {
             .getUserId()
             .take(1)
             .subscribe(onNext: { userId in
-                if let url = urlRequest.url, let newURL = URL(string: url.absoluteString + "/787/") {
+                if
+                    let url = urlRequest.url,
+                    let newURL = URL(string: url.absoluteString + "/\(userId)/")
+                {
                     modifiedRequest.url = newURL
                 }
                 completion(.success(modifiedRequest))
-            }) .disposed(by: disposeBag)
+            })
+            .disposed(by: disposeBag)
     }
     
 }

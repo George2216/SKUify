@@ -20,77 +20,82 @@ final class CompositeRxAlamofireInterceptor: RequestInterceptor {
         for session: Session,
         completion: @escaping (Result<URLRequest, Error>) -> Void
     ) {
-        
-        var request = urlRequest
-        var hasModified = false
-        
-        let dispatchGroup = DispatchGroup()
-        
-        interceptors.forEach { interceptor in
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            guard let self else { return }
+            var request = urlRequest
+            var hasModified = false
             
-            dispatchGroup.enter()
-            interceptor.adapt(
-                request,
-                for: session
-            ) { [weak self] result in
-                guard let self else { return }
+            let dispatchGroup = DispatchGroup()
+            let semaphore = DispatchSemaphore(value: 0)
+            
+            
+            self.interceptors.forEach { interceptor in
                 
-                switch result {
-                case .success(let modifiedRequest):
+                dispatchGroup.enter()
+                
+                interceptor.adapt(
+                    request,
+                    for: session
+                ) { [weak self] result in
+                    guard let self else { return }
                     
-                    self.addHeadersFromInterceptor(
-                        request: &request,
-                        modifiedRequest: modifiedRequest
-                    )
-                    
-                    self.addBodyFromInterceptor(
-                        request: &request,
-                        modifiedRequest: modifiedRequest
-                    )
-                    
-                    self.addQueryItemsFromInterceptor(
-                        request: &request,
-                        modifiedRequest: modifiedRequest
-                    )
-                  
-                    hasModified = true
+                    switch result {
+                    case .success(let modifiedRequest):
+                        print(modifiedRequest.headers)
+                        self.addHeadersFromInterceptor(
+                            request: &request,
+                            modifiedRequest: modifiedRequest
+                        )
+                        
+                        self.addBodyFromInterceptor(
+                            request: &request,
+                            modifiedRequest: modifiedRequest
+                        )
+                        
+                        self.addQueryItemsFromInterceptor(
+                            request: &request,
+                            modifiedRequest: modifiedRequest
+                        )
+                        
+                        hasModified = true
+                        
+                    case .failure(let error):
+                        completion(.failure(error))
+                    }
+                    semaphore.signal()
                     dispatchGroup.leave()
-                    
-                case .failure(let error):
-                    completion(.failure(error))
-                    dispatchGroup.leave()
-                    
                 }
-            }
-        }
-        
-        dispatchGroup.notify(queue: .main) {
-            
-            print(self.interceptors.count)
-            
-            if let method = request.httpMethod,
-               let url = request.url {
-                
-                print("Request: \(method) \(url)")
-                
-                if let headers = request.allHTTPHeaderFields {
-                
-                    print("Headers: \(headers)")
-                }
-                if let body = request.httpBody {
-                    let bodyString = String(
-                        data: body,
-                        encoding: .utf8
-                    )
-                    print("Body: \(String(describing: bodyString))")
-                }
+                semaphore.wait()
             }
             
-            print("/n/n/n/n")
-            if hasModified {
-                completion(.success(request))
-            } else {
-                completion(.success(urlRequest))
+            dispatchGroup.notify(queue: .main) {
+                
+                print(self.interceptors.count)
+                
+                if let method = request.httpMethod,
+                   let url = request.url {
+                    
+                    print("Request: \(method) \(url)")
+                    
+                    if let headers = request.allHTTPHeaderFields {
+                        
+                        print("Headers: \(headers)")
+                    }
+                    if let body = request.httpBody {
+                        let bodyString = String(
+                            data: body,
+                            encoding: .utf8
+                        )
+                        print("Body: \(String(describing: bodyString))")
+                    }
+                }
+                
+                print("/n/n/n/n")
+                if hasModified {
+                    completion(.success(request))
+                } else {
+                    completion(.success(urlRequest))
+                }
             }
         }
     }
@@ -120,7 +125,7 @@ final class CompositeRxAlamofireInterceptor: RequestInterceptor {
         modifiedRequest: URLRequest
     ) {
         if let modifiedURL = modifiedRequest.url, let originalURL = request.url {
-            var originalComponents = URLComponents(
+            let originalComponents = URLComponents(
                 url: originalURL,
                 resolvingAgainstBaseURL: false
             )

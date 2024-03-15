@@ -1,5 +1,5 @@
 //
-//  SalesCollectionView.swift
+//  ProductsCollectionView.swift
 //  SKUify
 //
 //  Created by George Churikov on 05.02.2024.
@@ -85,34 +85,32 @@ final class ProductsCollectionView: UICollectionView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: Privete methods
+
+    // MARK: - Privete methods
 
     private func setupCollection() {
-        refreshControl = UIRefreshControl()
-
+        refreshControl = VisibleRefreshControl()
         backgroundColor = .clear
         alwaysBounceVertical = true
         showsVerticalScrollIndicator = false
         allowsMultipleSelection = true
-        alwaysBounceVertical = true
     }
     
+    // MARK: - Register cells
+
     private func registerCells() {
         register(ProductMainCell.self)
         register(ProductShowDetailCell.self)
         register(ProductContentCell.self)
-        
 
         register(
             LoaderCollectionReusableView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
             withReuseIdentifier: LoaderCollectionReusableView.reuseID
         )
-        
     }
     
-    // MARK: Bind to collection
+    // MARK: - Bind to collection
 
     func bind(_ sections: Driver<[ProductsSectionModel]>) -> Disposable {
        return sections.drive(rx.items(dataSource: customSource))
@@ -127,6 +125,8 @@ final class ProductsCollectionView: UICollectionView {
     }
      
 }
+
+// MARK: - DelegateFlowLayout
 
 extension ProductsCollectionView: UICollectionViewDelegateFlowLayout {
     func collectionView(
@@ -200,7 +200,11 @@ extension ProductsCollectionView: UICollectionViewDelegate {
         _ collectionView: UICollectionView,
         shouldSelectItemAt indexPath: IndexPath
     ) -> Bool {
-        guard indexPath.row == 2 else { return false }
+        let item = customSource
+            .sectionModels[indexPath.section]
+            .items[indexPath.item]
+        
+        guard item ~= .showDetail else { return false }
 
         let previousCellIndexPath = IndexPath(
             row: indexPath.row - 1,

@@ -41,13 +41,19 @@ final class DashboardVC: BaseViewController {
         let refreshingTriger = collectionView.refreshControl!.rx
             .controlEvent(.valueChanged)
             .asDriver()
+        
         let viewDidAppear = rx.sentMessage(#selector(UIViewController.viewDidAppear(_:)))
+            .mapToVoid()
+            .asDriverOnErrorJustComplete()
+        // Hide the refresh control when dismiss the screen, otherwise it will hang.
+        let viewDidDisappear = rx.sentMessage(#selector(UIViewController.viewDidDisappear(_:)))
             .mapToVoid()
             .asDriverOnErrorJustComplete()
         
         let output = viewModel.transform(
             .init(
-                reloadData: Driver.merge(refreshingTriger, viewWillAppear),
+                reloadData: Driver.merge(refreshingTriger, viewDidAppear),
+                screenDisappear: viewDidDisappear,
                 selectedCalendarDates: selectedCalendarDates.asDriverOnErrorJustComplete(),
                 selectedCancelCalendar: selectedCancelCalendar.asDriverOnErrorJustComplete()
             )
