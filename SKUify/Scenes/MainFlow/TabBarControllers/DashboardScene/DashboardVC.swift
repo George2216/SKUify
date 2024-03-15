@@ -41,7 +41,7 @@ final class DashboardVC: BaseViewController {
         let refreshingTriger = collectionView.refreshControl!.rx
             .controlEvent(.valueChanged)
             .asDriver()
-        let viewWillAppear = rx.sentMessage(#selector(UIViewController.viewWillAppear(_:)))
+        let viewDidAppear = rx.sentMessage(#selector(UIViewController.viewDidAppear(_:)))
             .mapToVoid()
             .asDriverOnErrorJustComplete()
         
