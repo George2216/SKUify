@@ -9,18 +9,18 @@ import Foundation
 import Domain
 import RxSwift
 
-final class SalesRefundsUseCase: Domain.SalesRefundsUseCase {
+final class SalesUseCase: Domain.SalesUseCase {
     
     private let refundsNetwork: Domain.SalesRefundsNetwork
     private let ordersNetwork: Domain.SalesOrdersNetwork
 
     init(
         refundsNetwork: Domain.SalesRefundsNetwork,
-        orderssNetwork: Domain.SalesOrdersNetwork
+        ordersNetwork: Domain.SalesOrdersNetwork
 
     ) {
         self.refundsNetwork = refundsNetwork
-        self.ordersNetwork = orderssNetwork
+        self.ordersNetwork = ordersNetwork
     }
     
     func getRefundsSales(_ paginatedModel: SalesPaginatedModel) -> Observable<SalesRefundsResultsDTO> {
