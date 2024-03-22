@@ -50,6 +50,8 @@ final public class NetworkProvider: Domain.NetworkProvider {
         )
     }
     
+    // MARK: - Sales
+    
     public func makeSalesRefundsNetwork() -> Domain.SalesRefundsNetwork {
         return SalesRefundsNetwork(
             network: makeNetwork(SalesRefundsMainDTO.self),
@@ -64,4 +66,20 @@ final public class NetworkProvider: Domain.NetworkProvider {
         )
     }
 
+    // MARK: - Inventory
+    
+    public func makeInventoryOrdersNetwork() -> Domain.InventoryOrdersNetwork {
+        return InventoryOrdersNetwork(
+            network: makeNetwork(InventoryOrdersResultsDTO.self),
+            interceptorFactory: interceptorFactory
+        )
+    }
+    
+    public func makeInventoryBuyBotImportsNetwork() -> Domain.InventoryBuyBotImportsNetwork {
+        return InventoryBuyBotImportsNetwork(
+            network: makeNetwork(InventoryBuyBotImportsResultsDTO.self),
+            interceptorFactory: interceptorFactory
+        )
+    }
+    
 }

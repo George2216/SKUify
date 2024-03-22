@@ -12,6 +12,9 @@ public protocol NetworkProvider {
     func makeChartsNetwork() -> ChartsNetwork
     func makeUserDataNetwork() -> UserDataNetwork
     func makeSalesRefundsNetwork() -> SalesRefundsNetwork
-    func makeSalesOrdersNetwork() -> Domain.SalesOrdersNetwork
+    func makeSalesOrdersNetwork() -> SalesOrdersNetwork
+    func makeInventoryOrdersNetwork() -> InventoryOrdersNetwork
+    func makeInventoryBuyBotImportsNetwork() -> InventoryBuyBotImportsNetwork
+
 }
 

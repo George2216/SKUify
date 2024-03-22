@@ -1,5 +1,5 @@
 //
-//  SalesRefundsUseCase.swift
+//  SalesUseCase.swift
 //  NetworkPlatform
 //
 //  Created by George Churikov on 07.02.2024.

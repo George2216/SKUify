@@ -98,8 +98,12 @@ class DIContainer: DIProtocol {
         networkUseCaseProvider.makeUserDataUseCase()
     }
     
-    func makeSalesRefundsUseCase() -> Domain.SalesRefundsUseCase {
-        networkUseCaseProvider.makeSalesRefundsUseCase()
+    func makeSalesUseCase() -> Domain.SalesUseCase {
+        networkUseCaseProvider.makeSalesUseCase()
+    }
+    
+    func makeInventoryUseCase() -> Domain.InventoryUseCase {
+        networkUseCaseProvider.makeInventoryUseCase()
     }
     
 }

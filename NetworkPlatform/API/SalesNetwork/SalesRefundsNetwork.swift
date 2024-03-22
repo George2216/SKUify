@@ -28,6 +28,7 @@ final class SalesRefundsNetwork: SalesBaseNetwork, Domain.SalesRefundsNetwork {
             method: .get,
             interceptor: CompositeRxAlamofireInterceptor(
                 interceptors: [
+                    interceptorFactory.makeUrlEncodedContentTypeInterceptor(),
                     interceptorFactory.makeTokenToHeaderInterceptor()
                 ]
             )

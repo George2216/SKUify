@@ -87,7 +87,7 @@ final class DefaultButton: UIButton {
             
         case .fullyRoundedPrimary:
             setupFullyRoundedPrimaryStyle()
-            
+
         case .primaryPlus:
             setupPrimaryPlusStyle()
 
@@ -103,8 +103,8 @@ final class DefaultButton: UIButton {
         case .image(let image):
             configuration?.image = image.image
             configuration?.contentInsets = .zero
-
-            
+            configuration?.imagePlacement = .all
+      
         case .infoButton:
             setupInfoButton()
             
@@ -378,6 +378,9 @@ extension DefaultButton {
         case pensill
         case amazon
         case sellerCentral
+        case add
+        case tax
+        case delete
         var image: UIImage? {
             switch self {
             case .back:
@@ -392,6 +395,12 @@ extension DefaultButton {
                 return .amazon
             case .sellerCentral:
                 return .sellerCentral
+            case .add:
+                return .add
+            case .tax:
+                return .taxSettings
+            case .delete:
+                return .delete
             }
         }
     }

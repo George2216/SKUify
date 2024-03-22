@@ -68,7 +68,7 @@ final class ProductMainCell: UICollectionViewCell {
         imageView.snp.makeConstraints { make in
             make.size
                 .equalTo(70)
-                .priority(.high)
+                .priority(.required)
         }
     }
     
@@ -77,6 +77,7 @@ final class ProductMainCell: UICollectionViewCell {
             imageView,
             titlesView
         ]
+        contentStack.alignment = .fill
         contentStack.distribution = .fill
         contentStack.spacing = 10
 

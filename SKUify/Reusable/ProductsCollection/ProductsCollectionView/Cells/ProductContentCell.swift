@@ -81,6 +81,7 @@ final class ProductContentCell: UICollectionViewCell {
             .forEach { stack in
                 stack.alignment = .fill
                 stack.distribution = .fillEqually
+                stack.spacing = 5
             }
     }
     
@@ -122,7 +123,6 @@ final class ProductContentCell: UICollectionViewCell {
             make.horizontalEdges
                 .equalToSuperview()
         }
-        
         contentStack.snp.prepareConstraints { make in
             expandedConstraint = make.bottom
                 .equalToSuperview()
@@ -152,6 +152,7 @@ extension ProductContentCell {
         let defaultButton = DefaultButton()
         defaultButton.config = config
         defaultButton.contentHorizontalAlignment = .left
+        defaultButton.contentMode = .scaleAspectFit
         return defaultButton
     }
     
@@ -199,7 +200,13 @@ extension ProductContentCell {
     
     private func toDecoratedView(input: ProductViewInput) -> UIView {
         let view = makeView(by: input.viewType)
-        let decorator = TitleDecorator(decoratedView: view)
+        let viewWithSpacing = HorizontalStack()
+        viewWithSpacing.views = [
+            view,
+            UIView()
+        ]
+
+        let decorator = TitleDecorator(decoratedView: viewWithSpacing)
         decorator.decorate(title: input.title)
         return decorator
     }

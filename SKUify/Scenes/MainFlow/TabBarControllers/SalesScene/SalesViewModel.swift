@@ -17,10 +17,7 @@ final class SalesViewModel: ViewModelProtocol {
     private let paginatedData = BehaviorSubject<SalesPaginatedModel>(value: .base())
     
     private let collectionDataStorage = BehaviorSubject<[ProductsSectionModel]>(value: [])
-    
-    private let selectOrders = PublishSubject<Void>()
-    private let selectRefunds = PublishSubject<Void>()
-    
+        
     private let isShowPaginatedLoader = PublishSubject<Bool>()
     
     private let tableType = BehaviorSubject<SalesTableType>(value: .orders)
@@ -33,6 +30,10 @@ final class SalesViewModel: ViewModelProtocol {
     private let ordersDataStorage = BehaviorSubject<[SalesOrdersDTO]>(value: [])
     private let refundsDataStorage = BehaviorSubject<[SalesRefundsDTO]>(value: [])
     
+    // MARK: - Start loading events for a specific table type
+    
+    private let loadingStarted = PublishSubject<Void>()
+
     // MARK: - Setup view actions
     
     private let searchTextChanged = PublishSubject<String>()
@@ -46,7 +47,7 @@ final class SalesViewModel: ViewModelProtocol {
     private let navigator: SalesNavigatorProtocol
     
     // Use case storage
-    private let salesRefundsUseCase: Domain.SalesRefundsUseCase
+    private let salesRefundsUseCase: Domain.SalesUseCase
     private let marketplacesUseCase: Domain.MarketplacesReadUseCase
     
     // Trackers
@@ -58,7 +59,7 @@ final class SalesViewModel: ViewModelProtocol {
         navigator: SalesNavigatorProtocol
     ) {
         self.navigator = navigator
-        self.salesRefundsUseCase = useCases.makeSalesRefundsUseCase()
+        self.salesRefundsUseCase = useCases.makeSalesUseCase()
         self.marketplacesUseCase = useCases.makeMarketplacesUseCase()
         
         paginatedDataScribers()
@@ -407,7 +408,7 @@ extension SalesViewModel {
     
 }
 
-// MARK: Collection view subscribers
+// MARK: - Network data subscribers
 
 extension SalesViewModel {
     
@@ -463,7 +464,6 @@ extension SalesViewModel {
 }
 
 // MARK: Make collection data
-
 
 extension SalesViewModel {
     private func makeCollectionData() {
@@ -972,10 +972,16 @@ extension SalesViewModel {
             .asDriverOnErrorJustComplete()
             .withLatestFrom(paginatedData.asDriverOnErrorJustComplete())
             .filter { $0.tableType == .orders }
+            .withUnretained(self)
+            .do(onNext: { owner, _  in
+                owner.loadingStarted.onNext(())
+            })
+            .map { $1 }
             .flatMapLatest(weak: self) { owner, paginatedData in
                 owner.salesRefundsUseCase
                     .getOrdersSales(paginatedData)
                     .trackActivity(owner.activityIndicator)
+                    .take(until: owner.loadingStarted)
                     .trackError(owner.errorTracker)
                     .asDriverOnErrorJustComplete()
             }
@@ -998,10 +1004,16 @@ extension SalesViewModel {
             .asDriverOnErrorJustComplete()
             .withLatestFrom(paginatedData.asDriverOnErrorJustComplete())
             .filter { $0.tableType == .refunds }
+            .withUnretained(self)
+            .do(onNext: { owner, _  in
+                owner.loadingStarted.onNext(())
+            })
+            .map { $1 }
             .flatMapLatest(weak: self) { owner, paginatedData in
                 owner.salesRefundsUseCase
                     .getRefundsSales(paginatedData)
                     .trackActivity(owner.activityIndicator)
+                    .take(until: owner.loadingStarted)
                     .trackError(owner.errorTracker)
                     .asDriverOnErrorJustComplete()
             }

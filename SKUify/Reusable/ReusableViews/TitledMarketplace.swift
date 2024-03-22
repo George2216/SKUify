@@ -42,6 +42,8 @@ final class TitledMarketplace: UIView {
             make.leading
                 .equalTo(imageView.snp.trailing)
                 .offset(5)
+            make.trailing
+                .equalToSuperview()
         }
     }
     
@@ -50,7 +52,7 @@ final class TitledMarketplace: UIView {
         addSubview(imageView)
         imageView.snp.makeConstraints { make in
             make.size
-                .lessThanOrEqualTo(20)
+                .equalTo(22)
             make.directionalVerticalEdges
                 .equalToSuperview()
             make.leading

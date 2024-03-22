@@ -60,7 +60,7 @@ final class ProductTitlesView: UIView {
     
     private func setupTitlesStack() {
         titlesStack.alignment = .leading
-        titlesStack.distribution = .equalSpacing
+        titlesStack.distribution = .fillEqually
         
         addSubview(titlesStack)
         titlesStack.snp.makeConstraints { make in
@@ -81,9 +81,6 @@ final class ProductTitlesView: UIView {
             make.leading
                 .equalTo(titlesStack.snp.trailing)
                 .offset(10)
-            make.trailing
-                .equalToSuperview()
-                .priority(.low)
         }
     }
     

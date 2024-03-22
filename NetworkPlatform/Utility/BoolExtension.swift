@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+public extension Bool {
+    var trueOrEmptyString: String {
+        return self ? "true" : ""
+    }
+    
+}

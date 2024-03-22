@@ -1,5 +1,5 @@
 //
-//  SalesRefundsUseCase.swift
+//  SalesUseCase.swift
 //  Domain
 //
 //  Created by George Churikov on 07.02.2024.

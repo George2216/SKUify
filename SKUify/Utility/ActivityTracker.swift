@@ -46,7 +46,7 @@ public class ActivityTracker: SharedSequenceConvertibleType {
         _lock.unlock()
     }
     
-    public func sendStopLoading() {
+    private func sendStopLoading() {
         _lock.lock()
         _behavior.accept(false)
         _lock.unlock()
@@ -62,4 +62,5 @@ extension ObservableConvertibleType {
     public func trackActivity(_ activityIndicator: ActivityTracker) -> Observable<Element> {
         return activityIndicator.trackActivityOfObservable(self)
     }
+    
 }

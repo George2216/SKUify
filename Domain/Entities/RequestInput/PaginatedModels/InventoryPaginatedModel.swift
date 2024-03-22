@@ -16,7 +16,7 @@ public struct InventoryPaginatedModel {
     public var searchText: String? = nil
     public var tableType: InventoryTableType
     
-    static func base() -> Self {
+    public static func base() -> Self {
         .init(tableType: .orders)
     }
     

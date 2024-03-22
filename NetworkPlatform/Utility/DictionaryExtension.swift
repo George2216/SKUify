@@ -16,7 +16,6 @@ extension Dictionary {
         let str = parameterPairs
             .filter({ $0 != ""})
             .joined(separator: "&")
-        print(str)
         return str
     }
     

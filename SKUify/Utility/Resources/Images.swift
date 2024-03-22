@@ -41,6 +41,7 @@ extension UIImage {
     //Button images
     static let amazon = UIImage(named: "amazon") ?? .init()
     static let sellerCentral = UIImage(named: "sellerCentral") ?? .init()
+    static let add = UIImage(named: "add") ?? .init()
 
     // Cell images
     static let statusComplete = UIImage(named: "statusComplete") ?? .init()
@@ -51,5 +52,7 @@ extension UIImage {
     static let notes = UIImage(named: "notes") ?? .init()
     static let pensill = UIImage(named: "pensill") ?? .init()
     static let arrow = UIImage(named: "arrow") ?? .init()
+    static let taxSettings = UIImage(named: "taxSettings") ?? .init()
+    static let delete = UIImage(named: "delete") ?? .init()
     
 }

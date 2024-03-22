@@ -28,6 +28,7 @@ final class SalesOrdersNetwork: SalesBaseNetwork, Domain.SalesOrdersNetwork {
             method: .get,
             interceptor: CompositeRxAlamofireInterceptor(
                 interceptors: [
+                    interceptorFactory.makeUrlEncodedContentTypeInterceptor(),
                     interceptorFactory.makeTokenToHeaderInterceptor()
                 ]
             )

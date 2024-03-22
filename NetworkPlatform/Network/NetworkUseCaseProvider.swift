@@ -46,10 +46,19 @@ public final class NetworkUseCaseProvider: Domain.NetworkUseCaseProvider {
         return UserDataUseCase(network: networkProvider.makeUserDataNetwork())
     }
     
-    public func makeSalesRefundsUseCase() -> Domain.SalesRefundsUseCase {
-        return SalesRefundsUseCase(
+    // MARK: - I'm not sure that passing two Networks to UseCase is a very clean approach, but it seems to me that it will be more readable
+
+    public func makeSalesUseCase() -> Domain.SalesUseCase {
+        return SalesUseCase(
             refundsNetwork: networkProvider.makeSalesRefundsNetwork(),
-            orderssNetwork: networkProvider.makeSalesOrdersNetwork()
+            ordersNetwork: networkProvider.makeSalesOrdersNetwork()
+        )
+    }
+    
+    public func makeInventoryUseCase() -> Domain.InventoryUseCase {
+        return InventoryUseCase(
+            buyBotImportsNetwork: networkProvider.makeInventoryBuyBotImportsNetwork(),
+            ordersNetwork: networkProvider.makeInventoryOrdersNetwork()
         )
     }
     

@@ -104,7 +104,7 @@ final class SalesVC: BaseViewController {
     
 }
 
-// MARK: Subscrivers
+// MARK: Subscribers
 
 extension SalesVC {
     
@@ -132,7 +132,6 @@ extension SalesVC {
             .drive(rx.banner)
             .disposed(by: disposeBag)
     }
-    
     
     private func bindToSetupView(_ output: SalesViewModel.Output) {
         output.setupViewInput
@@ -195,6 +194,7 @@ extension SalesVC {
 // Calendar delegate methods
 
 extension SalesVC: RangedCalendarPopoverDelegate {
+    
     func cancelCalendar() {
         selectedCancelCalendar.onNext(())
         calendarPopover.dismiss(animated: true)
@@ -207,4 +207,5 @@ extension SalesVC: RangedCalendarPopoverDelegate {
         selectedCalendarDates.onNext((startDate, endDate))
         calendarPopover.dismiss(animated: true)
     }
+    
 }

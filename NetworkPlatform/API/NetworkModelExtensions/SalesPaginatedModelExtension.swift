@@ -10,11 +10,11 @@ import Domain
 
 extension SalesPaginatedModel {
     func toDictionary() -> [String: String] {
-       var baseDict =  [
-            "limit": "\(limit)",
-            "offset": "\(offset.stringValue)",
-            "no_inventory_cost": makeNoCOGs(),
-            "q": "\(searchText.stringValue)"
+        var baseDict = [
+            "limit": limit.description,
+            "offset": offset.toStringOrEmpty,
+            "no_inventory_cost": noCOGs?.trueOrEmptyString ?? "",
+            "q": searchText.toStringOrEmpty
         ]
         
         baseDict.merge(
@@ -72,9 +72,4 @@ extension SalesPaginatedModel {
         }
     }
     
-    private func makeNoCOGs() -> String {
-        guard let noCOGs else { return "" }
-        guard noCOGs else { return "" }
-        return "\(noCOGs)"
-    }
 }

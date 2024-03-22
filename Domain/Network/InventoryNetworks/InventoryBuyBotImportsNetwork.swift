@@ -6,3 +6,8 @@
 //
 
 import Foundation
+import RxSwift
+
+public protocol InventoryBuyBotImportsNetwork {
+    func getBuyBotImports(_ paginatedModel: InventoryPaginatedModel) -> Observable<InventoryBuyBotImportsResultsDTO>
+}

@@ -6,7 +6,9 @@
 //
 
 import Foundation
+import Domain
 
 protocol InventoryUseCases {
-    
+    func makeInventoryUseCase() -> Domain.InventoryUseCase
+    func makeMarketplacesUseCase() -> Domain.MarketplacesUseCase
 }

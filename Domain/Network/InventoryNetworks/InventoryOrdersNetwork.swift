@@ -6,3 +6,9 @@
 //
 
 import Foundation
+import RxSwift
+
+public protocol InventoryOrdersNetwork {
+    func getOrders(_ paginatedModel: InventoryPaginatedModel) -> Observable<InventoryOrdersResultsDTO>
+}
+

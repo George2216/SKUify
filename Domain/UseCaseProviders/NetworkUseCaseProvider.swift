@@ -9,12 +9,13 @@ import Foundation
 
 public protocol NetworkUseCaseProvider {
     func makeLoginUseCase(
-        autDataUseCase: Domain.AuthorizationDataWriteUseCase,
-        tokensUseCase: Domain.TokensWriteUseCase,
-        userIdUseCase: Domain.UserIdUseCase,
-        marketplacesUseCase: Domain.MarketplacesWriteUseCase
+        autDataUseCase: AuthorizationDataWriteUseCase,
+        tokensUseCase: TokensWriteUseCase,
+        userIdUseCase: UserIdUseCase,
+        marketplacesUseCase: MarketplacesWriteUseCase
     ) -> LoginUseCase
     func makeChartsUseCase() -> ChartsUseCase
     func makeUserDataUseCase() -> UserDataUseCase
-    func makeSalesRefundsUseCase() -> SalesRefundsUseCase
+    func makeSalesUseCase() -> SalesUseCase
+    func makeInventoryUseCase() -> InventoryUseCase
 }
