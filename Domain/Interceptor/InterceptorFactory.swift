@@ -12,6 +12,7 @@ public protocol InterceptorFactory {
     func makeUrlEncodedContentTypeInterceptor() -> Interceptor
     func makeUserIdToParametersInterceptor() -> Interceptor
     func makeUserIdToURLPathInterceptor() -> Interceptor
+    func makeContentTypeJsonInterceptor() -> Interceptor
     func makeAddMultipartFormDataInterceptor(
         parameters: some Encodable,
         media: [MultipartMediaModel]

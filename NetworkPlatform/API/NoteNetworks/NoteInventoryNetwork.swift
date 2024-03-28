@@ -6,3 +6,36 @@
 //
 
 import Foundation
+import Domain
+import RxSwift
+import Alamofire
+import RxAlamofire
+
+final class NoteInventoryNetwork: Domain.NoteNetwork {
+    
+    private let network: Network<NoteDTO>
+    private let interceptorFactory: Domain.InterceptorFactory
+    
+    init(
+        network: Network<NoteDTO>,
+        interceptorFactory: Domain.InterceptorFactory
+    ) {
+        self.network = network
+        self.interceptorFactory = interceptorFactory
+    }
+    
+    func updateNote(_ data: NoteRequestModel) -> Observable<NoteDTO> {
+        return network.request(
+            "product/\(data.id)/update_note/",
+            method: .post,
+            parameters: NoteDTO(note: data.note).toDictionary() ?? [:],
+            interceptor: CompositeRxAlamofireInterceptor(
+                interceptors: [
+                    interceptorFactory.makeContentTypeJsonInterceptor(),
+                    interceptorFactory.makeTokenToHeaderInterceptor()
+                ]
+            )
+        )
+    }
+    
+}

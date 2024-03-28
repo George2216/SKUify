@@ -16,5 +16,6 @@ protocol DIProtocol:
     InventoryUseCases,
     SettingsUseCases,
     ProfileUseCases,
-    CompanyInformationUseCases
+    CompanyInformationUseCases,
+    NoteAlertUseCases
 {}

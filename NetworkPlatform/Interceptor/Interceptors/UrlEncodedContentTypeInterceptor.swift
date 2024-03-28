@@ -21,7 +21,7 @@ final class UrlEncodedContentTypeInterceptor: Domain.Interceptor {
             .add(
                 HTTPHeader(
                     name: "Content-Type",
-                    value: "application/x-www-form-urlencoded"
+                    value: "application/json"
                 )
             )
         

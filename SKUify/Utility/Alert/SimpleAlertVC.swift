@@ -6,24 +6,57 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
-class SimpleAlertVC: UIViewController {
+final class SimpleAlertVC: UIViewController {
+    private let disposeBag = DisposeBag()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    private lazy var visualEffectView = UIVisualEffectView()
+    
+    override init(
+        nibName nibNameOrNil: String?,
+        bundle nibBundleOrNil: Bundle?
+    ) {
+        super.init(nibName: nil, bundle: nil)
+        modalPresentationStyle = .overFullScreen
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
-    */
-
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupVisualEffectView()
+    }
+    
+    override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+        view.window?.layer.add(CATransition.alertTransition(), forKey: kCATransition)
+        super.dismiss(animated: flag, completion: completion)
+    }
+    
+    private func setupVisualEffectView() {
+        visualEffectView.effect = UIBlurEffect(style: .light)
+        view.addSubview(visualEffectView)
+        visualEffectView.snp.makeConstraints { make in
+            make.size
+                .equalToSuperview()
+        }
+    }
+    
+    private func setupDismissGesture() {
+        let tapGesture = UITapGestureRecognizer()
+        
+        tapGesture.rx.event
+            .bind { [weak self] gesture in
+                guard let self = self else { return }
+                self.dismiss(animated: false)
+            }
+            .disposed(by: disposeBag)
+        
+        view.addGestureRecognizer(tapGesture)
+    }
+    
 }
+

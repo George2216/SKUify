@@ -36,11 +36,15 @@ final class TitleDecorator: UIView {
             size: 12
         ),
         textColor: UIColor = .subtextColor,
+        spacing: CGFloat = 0.0,
         numberOfLines: Int = 1
     ) {
         self.decoratedView = decoratedView
         super.init(frame: .zero)
-        setupStack(decoratedView)
+        setupStack(
+            decoratedView,
+            spacing: spacing
+        )
         setupTitleLabel()
         setupDecoratedView(decoratedView)
         setupTitleAttributed(
@@ -65,7 +69,10 @@ final class TitleDecorator: UIView {
         titleLabel.numberOfLines = numberOfLines
     }
     
-    private func setupStack(_ decoratedView: UIView) {
+    private func setupStack(
+        _ decoratedView: UIView,
+        spacing: CGFloat
+    ) {
         let stackView = UIStackView(
             arrangedSubviews: [
                 titleLabel,
@@ -75,7 +82,7 @@ final class TitleDecorator: UIView {
         stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.alignment = .fill
-        stackView.spacing = 0
+        stackView.spacing = spacing
         
         addSubview(stackView)
         stackView.snp.makeConstraints { make in

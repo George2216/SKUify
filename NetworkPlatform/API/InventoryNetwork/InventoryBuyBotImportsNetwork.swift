@@ -28,7 +28,7 @@ final class InventoryBuyBotImportsNetwork: InventoryBaseNetwork, Domain.Inventor
             method: .get,
             interceptor: CompositeRxAlamofireInterceptor(
                 interceptors: [
-                    interceptorFactory.makeUrlEncodedContentTypeInterceptor(),
+                    interceptorFactory.makeContentTypeJsonInterceptor(),
                     interceptorFactory.makeTokenToHeaderInterceptor()
                 ]
             )

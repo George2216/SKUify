@@ -82,4 +82,20 @@ final public class NetworkProvider: Domain.NetworkProvider {
         )
     }
     
+    // MARK: - Note
+    
+    public func makeNoteInventoryNetwork() -> Domain.NoteNetwork {
+        return NoteInventoryNetwork(
+            network: makeNetwork(NoteDTO.self),
+            interceptorFactory: interceptorFactory
+        )
+    }
+    
+    public func makeNoteSalesNetwork() -> Domain.NoteNetwork {
+        return NoteSalesNetwork(
+            network: makeNetwork(NoteDTO.self),
+            interceptorFactory: interceptorFactory
+        )
+    }
+    
 }

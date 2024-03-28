@@ -67,19 +67,19 @@ final class Network<T: Decodable> {
     ) -> Observable<Data> {
         
         let absolutePath = "\(endPoint)/\(path)"
-
+        let encoding: ParameterEncoding = method == .get ? URLEncoding.default : JSONEncoding.default
         return RxAlamofire
             .data(
                 method,
                 absolutePath,
                 parameters: parameters,
-                encoding: URLEncoding.default,
+                encoding: encoding,
                 headers: HTTPHeaders(headers),
                 interceptor: interceptor
             )
             .debug()
             .do(onNext: { data in
-                print(String(data: data, encoding: .utf8))
+//                print(String(data: data, encoding: .utf8))
             })
             .observe(on: scheduler)
     }

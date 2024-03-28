@@ -41,7 +41,7 @@ final class UserDataNetwork: Domain.UserDataNetwork {
             method: .get,
             interceptor: CompositeRxAlamofireInterceptor(
                 interceptors: [
-                    interceptorFactory.makeUrlEncodedContentTypeInterceptor(),
+                    interceptorFactory.makeContentTypeJsonInterceptor(),
                     interceptorFactory.makeTokenToHeaderInterceptor()
                 ]
             )

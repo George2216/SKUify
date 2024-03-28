@@ -12,8 +12,8 @@ final class PopoverManager: PopoverManagerProtocol {
     
     private weak var baseController: (UIViewController & UIPopoverPresentationControllerDelegate)?
         
-    func setup(from show: (UIViewController & UIPopoverPresentationControllerDelegate)) {
-        baseController = show
+    func setup(from vc: (UIViewController & UIPopoverPresentationControllerDelegate)) {
+        baseController = vc
     }
     
     func showPopover(_ input: Input) {

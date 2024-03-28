@@ -37,6 +37,10 @@ public final class InterceptorFactory: Domain.InterceptorFactory {
         return UserIdToURLPathInterceptor(userIdReadUseCase: userIdUseCase)
     }
         
+    public func makeContentTypeJsonInterceptor() -> Domain.Interceptor {
+        return ContentTypeJsonInterceptor()
+    }
+    
     public func makeAddMultipartFormDataInterceptor(
         parameters: some Encodable,
         media: [MultipartMediaModel]

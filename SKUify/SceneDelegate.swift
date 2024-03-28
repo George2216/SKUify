@@ -39,6 +39,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         BannerViewManager.shared.setup(with: windowScene)
         LoaderManager.shared.setup(with: windowScene)
+        AlertManager.share.setup(
+            window: window,
+            di: diContainer
+        )
         
         registerRxImagePickerDelegateProxy()
     }

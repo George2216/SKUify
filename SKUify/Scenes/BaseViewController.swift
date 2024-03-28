@@ -17,6 +17,7 @@ class BaseViewController: UIViewController {
     let disposeBag = DisposeBag()
   
     private let popoverManager = PopoverManager()
+    private let alertManager = AlertManager.share
     private let bannerManager = BannerViewManager.shared
     private let loaderManager = LoaderManager.shared
     
@@ -28,7 +29,7 @@ class BaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .background
-        
+
         setNavBarTranslucent()
         popoverManager.setup(from: self)
     }
@@ -54,6 +55,10 @@ class BaseViewController: UIViewController {
 
     fileprivate func startLoadingIndicator(_ isLoading: Bool) {
        loaderManager.showLoader(isLoading)
+    }
+    
+    fileprivate func showAlert(_ type: AlertManager.AlertType) {
+        alertManager.showAlert(type)
     }
     
     // MARK: - Navigation bar settings
@@ -117,6 +122,12 @@ extension Reactive where Base: BaseViewController {
     var popover: Binder<PopoverManager.Input> {
         return Binder(base) { controller, popoverInput in
             controller.showPopover(popoverInput)
+        }
+    }
+    
+    var alert: Binder<AlertManager.AlertType> {
+        return Binder(base) { controller, alertType in
+            controller.showAlert(alertType)
         }
     }
     

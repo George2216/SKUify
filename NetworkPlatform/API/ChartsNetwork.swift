@@ -24,7 +24,7 @@ final class ChartsNetwork: Domain.ChartsNetwork {
         self.interceptorFactory = interceptorFactory
         self.commonInterceptor = CompositeRxAlamofireInterceptor(
             interceptors: [
-                interceptorFactory.makeUrlEncodedContentTypeInterceptor(),
+                interceptorFactory.makeContentTypeJsonInterceptor(),
                 interceptorFactory.makeTokenToHeaderInterceptor(),
                 interceptorFactory.makeUserIdToParametersInterceptor()
             ]

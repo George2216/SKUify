@@ -20,3 +20,17 @@ extension Dictionary {
     }
     
 }
+
+extension Dictionary {
+    
+    func toData() -> Data? {
+        do {
+            let data = try JSONSerialization.data(withJSONObject: self, options: .prettyPrinted)
+            return data
+        } catch {
+            print(error.localizedDescription)
+            return nil
+        }
+    }
+    
+}

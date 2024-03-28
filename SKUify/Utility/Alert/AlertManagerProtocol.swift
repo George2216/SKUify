@@ -6,3 +6,13 @@
 //
 
 import Foundation
+import UIKit
+
+protocol AlertManagerProtocol {
+    func showAlert(_ type: AlertManager.AlertType)
+    func hideAlert()
+    func setup(
+        window: UIWindow,
+        di: DIProtocol
+    )
+}

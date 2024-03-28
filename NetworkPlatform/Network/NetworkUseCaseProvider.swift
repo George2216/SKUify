@@ -62,4 +62,14 @@ public final class NetworkUseCaseProvider: Domain.NetworkUseCaseProvider {
         )
     }
     
+    // MARK: - Note
+    
+    public func makeNoteInventoryUseCase() -> Domain.NoteUseCase {
+        return NoteInventoryUseCase(network: networkProvider.makeNoteInventoryNetwork())
+    }
+    
+    public func makeNoteSalesUseCase() -> Domain.NoteUseCase {
+        return NoteSalesUseCase(network: networkProvider.makeNoteSalesNetwork())
+    }
+    
 }

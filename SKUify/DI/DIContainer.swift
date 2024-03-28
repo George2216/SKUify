@@ -106,4 +106,14 @@ class DIContainer: DIProtocol {
         networkUseCaseProvider.makeInventoryUseCase()
     }
     
+    // MARK: Note use case
+    
+    func makeNoteInventoryUseCase() -> Domain.NoteUseCase {
+        return networkUseCaseProvider.makeNoteInventoryUseCase()
+    }
+    
+    func makeNoteSalesUseCase() -> Domain.NoteUseCase {
+        return networkUseCaseProvider.makeNoteSalesUseCase()
+    }
+    
 }

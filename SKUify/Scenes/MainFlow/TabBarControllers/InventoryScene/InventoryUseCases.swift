@@ -11,4 +11,5 @@ import Domain
 protocol InventoryUseCases {
     func makeInventoryUseCase() -> Domain.InventoryUseCase
     func makeMarketplacesUseCase() -> Domain.MarketplacesUseCase
+    func makeNoteInventoryUseCase() -> Domain.NoteUseCase
 }

@@ -64,6 +64,7 @@ final class SalesVC: BaseViewController {
         subscribeOnVisebleSection()
         
         bindToBanner(output)
+        bindToAlert(output)
         bindToSetupView(output)
         bindToCollectionView(output)
         bindToLoader(output)
@@ -130,6 +131,12 @@ extension SalesVC {
     private func bindToBanner(_ output: SalesViewModel.Output) {
         output.error
             .drive(rx.banner)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindToAlert(_ output: SalesViewModel.Output) {
+        output.alert
+            .drive(rx.alert)
             .disposed(by: disposeBag)
     }
     

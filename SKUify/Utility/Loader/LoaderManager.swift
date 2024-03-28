@@ -38,6 +38,7 @@ final class LoaderManager: LoaderManagerProtocol {
             loadingIndicator.startAnimating()
         } else {
             loadingIndicator.stopAnimating()
+            loadingIndicator.removeFromSuperview()
         }
         window?.isUserInteractionEnabled = !isLoading
     }

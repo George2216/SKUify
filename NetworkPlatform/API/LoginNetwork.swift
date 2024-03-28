@@ -37,7 +37,7 @@ final class LoginNetwork: Domain.LoginNetwork {
             parameters: parameters,
             interceptor: CompositeRxAlamofireInterceptor(
                 interceptors: [
-                    interceptorFactory.makeUrlEncodedContentTypeInterceptor()
+                    interceptorFactory.makeContentTypeJsonInterceptor()
                 ]
             )
         )

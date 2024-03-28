@@ -82,6 +82,9 @@ final class DefaultButton: UIButton {
         case .primary:
             setupPrimaryStyle()
 
+        case .primaryGray:
+            setupPrimaryGrey()
+            
         case .light:
             setupLightStyle()
             
@@ -155,6 +158,11 @@ extension DefaultButton {
         backgroundColor = .primary
         layer.cornerRadius = 12.0
         configuration?.baseForegroundColor = .white
+    }
+    
+    private func setupPrimaryGrey() {
+        setupPrimaryStyle()
+        backgroundColor = .lightSubtextColor
     }
     
     private func setupLightStyle() {
@@ -314,12 +322,20 @@ extension DefaultButton {
                 style: .none
             )
         }
+        
+        func toButton() -> DefaultButton {
+            let button = DefaultButton()
+            button.config = self
+            return button
+        }
+        
     }
     
     enum Style {
         case simple
         case light
         case primary
+        case primaryGray
         case fullyRoundedPrimary
         case primaryPlus
         case simplePrimaryText
@@ -349,6 +365,7 @@ extension DefaultButton {
             case .simple,
                     .simplePrimaryText,
                     .primary,
+                    .primaryGray,
                     .primaryPlus:
                 return 40.0
 
@@ -375,12 +392,14 @@ extension DefaultButton {
         case back
         case forward
         case notes
+        case noteAdded
         case pensill
         case amazon
         case sellerCentral
         case add
         case tax
         case delete
+        
         var image: UIImage? {
             switch self {
             case .back:
@@ -389,6 +408,8 @@ extension DefaultButton {
                 return UIImage(systemName: "chevron.right")
             case .notes:
                 return .notes
+            case .noteAdded:
+                return .noteAdded
             case .pensill:
                 return .pensill
             case .amazon:

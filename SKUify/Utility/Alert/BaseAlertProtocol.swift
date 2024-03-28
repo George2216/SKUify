@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+protocol BaseAlertProtocol: AnyObject {
+    func hideAlert()
+}

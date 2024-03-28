@@ -27,7 +27,7 @@ final class InventoryOrdersNetwork: InventoryBaseNetwork, Domain.InventoryOrders
             method: .get,
             interceptor: CompositeRxAlamofireInterceptor(
                 interceptors: [
-                    interceptorFactory.makeUrlEncodedContentTypeInterceptor(),
+                    interceptorFactory.makeContentTypeJsonInterceptor(),
                     interceptorFactory.makeTokenToHeaderInterceptor()
                 ]
             )

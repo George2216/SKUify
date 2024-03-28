@@ -15,6 +15,8 @@ public protocol NetworkProvider {
     func makeSalesOrdersNetwork() -> SalesOrdersNetwork
     func makeInventoryOrdersNetwork() -> InventoryOrdersNetwork
     func makeInventoryBuyBotImportsNetwork() -> InventoryBuyBotImportsNetwork
+    func makeNoteInventoryNetwork() -> NoteNetwork
+    func makeNoteSalesNetwork() -> NoteNetwork
 
 }
 

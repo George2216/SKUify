@@ -18,4 +18,6 @@ public protocol NetworkUseCaseProvider {
     func makeUserDataUseCase() -> UserDataUseCase
     func makeSalesUseCase() -> SalesUseCase
     func makeInventoryUseCase() -> InventoryUseCase
+    func makeNoteInventoryUseCase() -> NoteUseCase
+    func makeNoteSalesUseCase() -> NoteUseCase
 }

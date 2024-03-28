@@ -54,5 +54,6 @@ extension UIImage {
     static let arrow = UIImage(named: "arrow") ?? .init()
     static let taxSettings = UIImage(named: "taxSettings") ?? .init()
     static let delete = UIImage(named: "delete") ?? .init()
+    static let noteAdded = UIImage(named: "noteAdded") ?? .init()
     
 }

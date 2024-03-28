@@ -42,13 +42,15 @@ final class InventoryViewModel: ViewModelProtocol {
     private let changeStockOrInactive = PublishSubject<Bool>()
     private let changeWarningsOnly = PublishSubject<Bool>()
 
+    private let showAlert = PublishSubject<AlertManager.AlertType>()
+
     // Dependencies
     private let navigator: InventoryNavigatorProtocol
     
     // Use case storage
     private let inventoryUseCase: Domain.InventoryUseCase
     private let marketplacesUseCase: Domain.MarketplacesReadUseCase
-
+    private let noteUseCase: Domain.NoteUseCase
     // Trackers
     private var activityIndicator = ActivityTracker()
     private var errorTracker = ErrorTracker()
@@ -60,6 +62,7 @@ final class InventoryViewModel: ViewModelProtocol {
         self.navigator = navigator
         self.inventoryUseCase = useCases.makeInventoryUseCase()
         self.marketplacesUseCase = useCases.makeMarketplacesUseCase()
+        self.noteUseCase = useCases.makeNoteInventoryUseCase()
         
         makeCollectionData()
         collectionViewSubscribers()
@@ -73,9 +76,10 @@ final class InventoryViewModel: ViewModelProtocol {
         return Output(
             setupViewInput: makeSetupViewInput(),
             collectionData: collectionDataStorage.asDriverOnErrorJustComplete(), 
-            isShowPaginatedLoader: isShowPaginatedLoader.asDriverOnErrorJustComplete(),
+            isShowPaginatedLoader: isShowPaginatedLoader.asDriverOnErrorJustComplete(), 
             fetching: activityIndicator.asDriver(),
-            error: errorTracker.asBannerInput(.error)
+            error: errorTracker.asBannerInput(.error),
+            alert: showAlert.asDriverOnErrorJustComplete()
         )
     }
     
@@ -523,7 +527,7 @@ extension InventoryViewModel {
         marketplace: MarketplaceDTO
     ) -> [ProductViewInput] {
         let currencySymbol = order.originalPrice.currency
-        
+        let noteImageType: DefaultButton.ImageType = (order.note ?? "").isEmpty ? .notes : .noteAdded
         return [
             .init(
                 title: "Marketplace",
@@ -549,12 +553,19 @@ extension InventoryViewModel {
                 )
             ),
             .init(
-                title: "Notes",
+                title: "Note",
                 viewType: .button(
                     .init(
                         title: "",
-                        style: .image(.notes),
-                        action: {}
+                        style: .image(noteImageType),
+                        action: { [weak self] in
+                            guard let self else { return }
+                            let alertInput = self.makeNoteAlertInput(
+                                note: order.note ?? "",
+                                orderId: order.id
+                            )
+                            self.showAlert.onNext(alertInput)
+                        }
                     )
                 )
             )
@@ -580,8 +591,9 @@ extension InventoryViewModel {
                         title: currencySymbol + String(order.cog)
                             .doubleDecimalString(2),
                         style: .cog,
-                        action: {
-                            
+                        action: { [weak self] in
+                            guard let self else { return }
+
                         }
                     )
                 )
@@ -751,7 +763,8 @@ extension InventoryViewModel {
         marketplace: MarketplaceDTO
     ) -> [ProductViewInput] {
         let currencySymbol = bbImport.originalPrice.currency
-        
+        let noteImageType: DefaultButton.ImageType = (bbImport.note ?? "").isEmpty ? .notes : .noteAdded
+
         return [
             .init(
                 title: "Marketplace",
@@ -777,12 +790,19 @@ extension InventoryViewModel {
                 )
             ),
             .init(
-                title: "Notes",
+                title: "Note",
                 viewType: .button(
                     .init(
                         title: "",
-                        style: .image(.notes),
-                        action: {}
+                        style: .image(noteImageType),
+                        action: { [weak self] in
+                            guard let self else { return }
+                            let alertInput = self.makeNoteAlertInput(
+                                note: bbImport.note ?? "",
+                                orderId: bbImport.id
+                            )
+                            self.showAlert.onNext(alertInput)
+                        }
                     )
                 )
             )
@@ -870,7 +890,50 @@ extension InventoryViewModel {
     
 }
 
-// MARK: Fetch data
+// MARK: Make alert inputs
+
+extension InventoryViewModel {
+    
+    private func makeNoteAlertInput(
+        note: String,
+        orderId: Int
+    ) -> AlertManager.AlertType {
+        let subscriber = BehaviorSubject<String>(value: "")
+        
+        return .note(
+            .init(
+                title: "Note",
+                content: note,
+                subscriber: subscriber,
+                buttonsConfigs: [
+                    .init(
+                        title: "Cancel",
+                        style: .primaryGray,
+                        action: {
+                            print("Action")
+                        }
+                    ),
+                    .init(
+                        title: "Ok",
+                        style: .primary,
+                        action: { [weak self] in
+                            guard let self else { return }
+                            self.updateNote(
+                                note: subscriber,
+                                id: orderId
+                            )
+                        }
+                    )
+                ]
+            )
+        )
+    }
+    
+}
+
+// MARK: - Requests
+
+// MARK: Fetch collection data
 
 extension InventoryViewModel {
     
@@ -942,6 +1005,37 @@ extension InventoryViewModel {
 
 }
 
+// MARK: - Update note
+
+extension InventoryViewModel {
+    
+    private func updateNote(
+        note: BehaviorSubject<String>,
+        id: Int
+    ) {
+        note.asDriverOnErrorJustComplete()
+            .flatMapFirst(weak: self) { owner, note in
+                owner.noteUseCase
+                    .updateNote(
+                        .init(
+                            id: id,
+                            note: note
+                        )
+                    )
+                    .trackActivity(owner.activityIndicator)
+                    .trackError(owner.errorTracker)
+                    .asDriverOnErrorJustComplete()
+            }
+            .withUnretained(self)
+            .do(onNext: { owner, _ in
+                owner.reloadData()
+            })
+            .drive()
+            .disposed(by: disposeBag)
+    }
+    
+}
+
 // MARK: - Input, Output
 
 extension InventoryViewModel {
@@ -960,9 +1054,10 @@ extension InventoryViewModel {
         // Bottom loader
         let isShowPaginatedLoader: Driver<Bool>
         // Trackers
-        // Refresh control
         let fetching: Driver<Bool>
         let error: Driver<BannerView.Input>
+        // Alert
+        let alert: Driver<AlertManager.AlertType>
     }
     
 }

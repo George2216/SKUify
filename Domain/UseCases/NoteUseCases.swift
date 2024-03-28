@@ -8,6 +8,6 @@
 import Foundation
 import RxSwift
 
-public protocol NoteInventoryUseCase {
-    func updateNote(_ note: String?) -> Observable<Void>
+public protocol NoteUseCase {
+    func updateNote(_ data: NoteRequestModel) -> Observable<Void>
 }

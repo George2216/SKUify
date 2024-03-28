@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+public struct NoteDTO: Codable {
+    public var note: String?
+    
+    public init(note: String? = nil) {
+        self.note = note
+    }
+    
+}

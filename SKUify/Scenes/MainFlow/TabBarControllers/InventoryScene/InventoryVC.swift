@@ -57,6 +57,7 @@ final class InventoryVC: BaseViewController {
         bindToSetupView(output)
         bindToCollectionView(output)
         bindToPaginatedCollectionLoader(output)
+        bindToAlert(output)
     }
     
     private func createCollectionViewLayout() -> UICollectionViewFlowLayout {
@@ -116,6 +117,12 @@ extension InventoryVC {
     private func bindToBanner(_ output: InventoryViewModel.Output) {
         output.error
             .drive(rx.banner)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindToAlert(_ output: InventoryViewModel.Output) {
+        output.alert
+            .drive(rx.alert)
             .disposed(by: disposeBag)
     }
     

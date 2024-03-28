@@ -6,3 +6,17 @@
 //
 
 import Foundation
+
+public struct NoteRequestModel {
+    public let id: Int
+    public let note: String
+    
+    public init(
+        id: Int,
+        note: String
+    ) {
+        self.id = id
+        self.note = note
+    }
+    
+}

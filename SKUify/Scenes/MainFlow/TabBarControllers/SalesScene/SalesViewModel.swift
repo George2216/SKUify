@@ -34,6 +34,8 @@ final class SalesViewModel: ViewModelProtocol {
     
     private let loadingStarted = PublishSubject<Void>()
 
+    private let showAlert = PublishSubject<AlertManager.AlertType>()
+
     // MARK: - Setup view actions
     
     private let searchTextChanged = PublishSubject<String>()
@@ -49,6 +51,7 @@ final class SalesViewModel: ViewModelProtocol {
     // Use case storage
     private let salesRefundsUseCase: Domain.SalesUseCase
     private let marketplacesUseCase: Domain.MarketplacesReadUseCase
+    private let noteUseCase: Domain.NoteUseCase
     
     // Trackers
     private var activityIndicator = ActivityTracker()
@@ -61,6 +64,7 @@ final class SalesViewModel: ViewModelProtocol {
         self.navigator = navigator
         self.salesRefundsUseCase = useCases.makeSalesUseCase()
         self.marketplacesUseCase = useCases.makeMarketplacesUseCase()
+        self.noteUseCase = useCases.makeNoteSalesUseCase()
         
         paginatedDataScribers()
         collectionViewSubscribers()
@@ -83,7 +87,8 @@ final class SalesViewModel: ViewModelProtocol {
             startSelectedMarketplace: startSelectedMarketplace.asDriverOnErrorJustComplete(),
             isShowPaginatedLoader: isShowPaginatedLoader.asDriverOnErrorJustComplete(),
             fetching: activityIndicator.asDriver(),
-            error: errorTracker.asBannerInput(.error)
+            error: errorTracker.asBannerInput(.error),
+            alert: showAlert.asDriverOnErrorJustComplete()
         )
     }
     
@@ -574,7 +579,9 @@ extension SalesViewModel {
         _ order: SalesOrdersDTO,
         marketplace: MarketplaceDTO
     ) -> [ProductViewInput] {
-        [
+        let noteImageType: DefaultButton.ImageType = (order.note ?? "").isEmpty ? .notes : .noteAdded
+        
+        return [
             .init(
                 title: "Marketplace",
                 viewType: .titledMarketplace(
@@ -603,12 +610,19 @@ extension SalesViewModel {
                 viewType: .image(.status(.init(rawValue: order.orderStatus)))
             ),
             .init(
-                title: "Notes",
+                title: "Note",
                 viewType: .button(
                     .init(
                         title: "",
-                        style: .image(.notes),
-                        action: {}
+                        style: .image(noteImageType),
+                        action: { [weak self] in
+                            guard let self else { return }
+                            let alertInput = self.makeNoteAlertInput(
+                                note: order.note ?? "",
+                                orderId: order.id
+                            )
+                            self.showAlert.onNext(alertInput)
+                        }
                     )
                 )
             )
@@ -793,7 +807,9 @@ extension SalesViewModel {
         refund: SalesRefundsDTO,
         marketplace: MarketplaceDTO
     ) -> [ProductViewInput] {
-        [
+        let noteImageType: DefaultButton.ImageType = (refund.note ?? "").isEmpty ? .notes : .noteAdded
+        
+        return [
             .init(
                 title: "Marketplace",
                 viewType: .titledMarketplace(
@@ -818,12 +834,19 @@ extension SalesViewModel {
                 )
             ),
             .init(
-                title: "Notes",
+                title: "Note",
                 viewType: .button(
                     .init(
                         title: "",
-                        style: .image(.notes),
-                        action: {}
+                        style: .image(noteImageType),
+                        action: { [weak self] in
+                            guard let self else { return }
+                            let alertInput = self.makeNoteAlertInput(
+                                note: refund.note ?? "",
+                                orderId: refund.id
+                            )
+                            self.showAlert.onNext(alertInput)
+                        }
                     )
                 )
             )
@@ -950,6 +973,47 @@ extension SalesViewModel {
     
 }
 
+// MARK: Make alert inputs
+
+extension SalesViewModel {
+    
+    private func makeNoteAlertInput(
+        note: String,
+        orderId: Int
+    ) -> AlertManager.AlertType {
+        let subscriber = BehaviorSubject<String>(value: "")
+        
+        return .note(
+            .init(
+                title: "Note",
+                content: note,
+                subscriber: subscriber,
+                buttonsConfigs: [
+                    .init(
+                        title: "Cancel",
+                        style: .primaryGray,
+                        action: {
+                         }
+                    ),
+                    .init(
+                        title: "Ok",
+                        style: .primary,
+                        action: { [weak self] in
+                            guard let self else { return }
+                            self.updateNote(
+                                note: subscriber,
+                                id: orderId
+                            )
+                        }
+                    )
+                ]
+            )
+        )
+    }
+    
+}
+
+// MARK: - Requests
 
 // MARK: Fetch data
 
@@ -1021,6 +1085,37 @@ extension SalesViewModel {
     
 }
 
+// MARK: - Update note
+
+extension SalesViewModel {
+    
+    private func updateNote(
+        note: BehaviorSubject<String>,
+        id: Int
+    ) {
+        note.asDriverOnErrorJustComplete()
+            .flatMapFirst(weak: self) { owner, note in
+                owner.noteUseCase
+                    .updateNote(
+                        .init(
+                            id: id,
+                            note: note
+                        )
+                    )
+                    .trackActivity(owner.activityIndicator)
+                    .trackError(owner.errorTracker)
+                    .asDriverOnErrorJustComplete()
+            }
+            .withUnretained(self)
+            .do(onNext: { owner, _ in
+                owner.reloadData()
+            })
+            .drive()
+            .disposed(by: disposeBag)
+    }
+    
+}
+
 extension SalesViewModel {
     struct Input {
         // viewDidAppear or swipe
@@ -1052,6 +1147,8 @@ extension SalesViewModel {
         // Refresh control
         let fetching: Driver<Bool>
         let error: Driver<BannerView.Input>
+        // Alert
+        let alert: Driver<AlertManager.AlertType>
     }
     
 }
