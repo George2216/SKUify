@@ -79,7 +79,7 @@ final class Network<T: Decodable> {
             )
             .debug()
             .do(onNext: { data in
-//                print(String(data: data, encoding: .utf8))
+                print(String(data: data, encoding: .utf8))
             })
             .observe(on: scheduler)
     }

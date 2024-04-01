@@ -46,16 +46,16 @@ public struct SalesOrdersDTO: Decodable {
     public let handling: Double?
     public let other: Double?
     public let shipping: Double?
-    //
-    public let extraFee: String?
-    public let extraFeePerc: Double?
+//    //
+//    public let extraFee: String?
+//    public let extraFeePerc: Double?
 
 
     
     private enum CodingKeys: String, CodingKey {
-        case id = "id"
+        case id
         case imageUrl = "full_image_url"
-        case title = "title"
+        case title 
         case sellerSku = "seller_sku"
         case asin = "asin"
         case amazonOrderId = "order__amazon_order_id"
@@ -80,8 +80,8 @@ public struct SalesOrdersDTO: Decodable {
         case handling = "handling"
         case other = "other"
         case shipping = "postage"
-        case extraFee = "extra_fee"
-        case extraFeePerc = "extra_fee_perc"
+//        case extraFee = "extra_fee"
+//        case extraFeePerc = "extra_fee_perc"
     }
     
 }

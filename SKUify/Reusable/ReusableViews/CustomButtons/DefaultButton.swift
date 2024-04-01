@@ -135,6 +135,9 @@ final class DefaultButton: UIButton {
             
         case .vat:
              setupVatButton()
+            
+        case .popover:
+            setupPopoverButton()
         }
         
         clipsToBounds = true
@@ -296,7 +299,6 @@ extension DefaultButton {
     }
     
     private func setupVatButton() {
-        configuration?.title = config.title
         configuration?.baseForegroundColor = .white
         
         backgroundColor = .primaryPink
@@ -308,6 +310,36 @@ extension DefaultButton {
             .manrope(
                 type: .bold,
                 size: 12
+            )
+        )
+    
+    }
+    
+    private func setupPopoverButton() {
+        tintColor = .lightSubtextColor
+        let imageConfig = UIImage.SymbolConfiguration(
+            font: .manrope(
+                type: .semiBold,
+                size: 10
+            )
+        )
+        layer.borderWidth = 2.0
+        layer.cornerRadius = 12.0
+        layer.borderColor = UIColor.border.cgColor
+        backgroundColor = .white
+
+        configuration?.image = UIImage(
+            systemName: "chevron.down",
+            withConfiguration: imageConfig
+        )
+        configuration?.imageColorTransformer = UIConfigurationColorTransformer { _ in .systemBlue }
+        contentHorizontalAlignment = .fill
+        configuration?.imagePlacement = .trailing
+    
+        setupTextFont(
+            .manrope(
+                type: .medium,
+                size: 13
             )
         )
     
@@ -365,6 +397,7 @@ extension DefaultButton {
         )
         case cog
         case none
+        case popover
         
         fileprivate var height: CGFloat? {
             switch self {
@@ -386,7 +419,8 @@ extension DefaultButton {
                     .infoButton,
                     .custom,
                     .cog,
-                    .vat
+                    .vat,
+                    .popover
                 :
                 return nil
             }

@@ -30,6 +30,17 @@ final class COGVC: BaseViewController {
                 .equalToSuperview()
                 .inset(30)
         }
+        
+        let button = DefaultButton()
+        button.config = .init(title: "Filter", style: .popover, action: {
+            
+        })
+        view.addSubview(button)
+        button.snp.makeConstraints { make in
+            make.top.equalTo(textField.snp.bottom).offset(20)
+            make.horizontalEdges.equalToSuperview().inset(20)
+            make.height.equalTo(40)
+        }
     }
     
 }
