@@ -13,7 +13,7 @@ import RxExtensions
 
 final class CompanyInformationViewModel: BaseUserContentViewModel {
     private let disposeBag = DisposeBag()
-
+    
     private let changeCompanyName = PublishSubject<String>()
     private let changeCompanyEmail = PublishSubject<String>()
     private let changeCompanyWebsite = PublishSubject<String>()
@@ -26,7 +26,7 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
     
     private let tapOnUploadImage = PublishSubject<Void>()
     private let tapOnRemoveImage = PublishSubject<Void>()
-
+    
     private let tapOnSave = PublishSubject<Void>()
     
     private let companyDataRequestStorage = BehaviorSubject<CompanyInformationRequestModel?>(value: nil)
@@ -39,7 +39,7 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
     private let userDataUseCase: Domain.UserDataUseCase
     private let userIdUseCase: Domain.UserIdUseCase
     private let keyboardUseCase: Domain.KeyboardUseCase
-
+    
     // Trackers
     private var activityIndicator = ActivityTracker()
     private var errorTracker = ErrorTracker()
@@ -114,7 +114,7 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
             .drive(companyDataRequestStorage)
             .disposed(by: disposeBag)
     }
-
+    
     private func updateCompanyNameForRequestDataStorage() {
         updateCompanyInformation(property: changeCompanyName.asDriverOnErrorJustComplete()) { requestDataStorage, companyName in
             requestDataStorage?.parameters?.companyName = companyName
@@ -162,7 +162,7 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
             requestDataStorage?.parameters?.companyPhone = companyPhone
         }
     }
-
+    
     // MARK: - Image subscribers
     
     private func subscribeToUpdateImage(_ input: Input) {
@@ -220,7 +220,7 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
     }
     
     // MARK: Make content data
-
+    
     private func makeContentData() {
         // Get data and combined
         let combinedData = combinedUserData()
@@ -277,7 +277,7 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
                 let (user, _, _) = arg0
                 return (owner, user)
             })
-        }
+    }
     
     private func makeContentDataInput(
         _ userData: Driver<(CompanyInformationViewModel, UserDTO)>
@@ -295,19 +295,19 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
                             uploadButtonConfig: .init(
                                 title: "Upload Company picture",
                                 style: .primaryPlus,
-                                action: { [weak self] in
+                                action: .simple({ [weak self] in
                                     guard let self else { return }
                                     self.tapOnUploadImage.onNext(())
-                                }
+                                })
                             )
                         ),
                         removeButtonConfig: .init(
                             title: "Remove",
                             style: .simple,
-                            action: { [weak self] in
+                            action: .simple({ [weak self] in
                                 guard let self else { return }
                                 self.tapOnRemoveImage.onNext(())
-                            }
+                            })
                         )
                     ),
                     fieldsConfigs: [
@@ -404,10 +404,10 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
                         .init(
                             title: "Save",
                             style: .primary,
-                            action: { [weak self] in
+                            action: .simple({ [weak self] in
                                 guard let self else { return }
-                                 self.tapOnSave.onNext(())
-                            }
+                                self.tapOnSave.onNext(())
+                            })
                         )
                     )
                 )

@@ -223,10 +223,10 @@ extension InventoryViewModel {
                 DefaultButton.Config(
                     title: "Orders",
                     style: type == .orders ? .primary : .simplePrimaryText,
-                    action: { [weak self] in
+                    action: .simple({ [weak self] in
                         guard let self else { return }
                         self.tableType.onNext(.orders)
-                    }
+                    })
                 )
             }
     }
@@ -238,10 +238,10 @@ extension InventoryViewModel {
                 DefaultButton.Config(
                     title: "Buy Bot Imports",
                     style: type == .buyBotImports ? .primary : .simplePrimaryText,
-                    action: { [weak self] in
+                    action: .simple({ [weak self] in
                         guard let self else { return }
                         self.tableType.onNext(.buyBotImports)
-                    }
+                    })
                 )
             }
     }
@@ -558,14 +558,14 @@ extension InventoryViewModel {
                     .init(
                         title: "",
                         style: .image(noteImageType),
-                        action: { [weak self] in
+                        action: .simple({ [weak self] in
                             guard let self else { return }
                             let alertInput = self.makeNoteAlertInput(
                                 note: order.note ?? "",
                                 orderId: order.id
                             )
                             self.showAlert.onNext(alertInput)
-                        }
+                        })
                     )
                 )
             )
@@ -591,10 +591,10 @@ extension InventoryViewModel {
                         title: currencySymbol + String(order.cog)
                             .doubleDecimalString(2),
                         style: .cog,
-                        action: { [weak self] in
+                        action: .simple({ [weak self] in
                             guard let self else { return }
 
-                        }
+                        })
                     )
                 )
             ),
@@ -612,23 +612,23 @@ extension InventoryViewModel {
                         vatButtonConfig: .init(
                             title: "\(order.vatRate)% VAT",
                             style: .vat,
-                            action: {
+                            action: .simple({
                                 
-                            }
+                            })
                         ),
                         sellerCentralButtonConfig: .init(
                             title: "",
                             style: .image(.sellerCentral),
-                            action: {
+                            action: .simple({
                                 
-                            }
+                            })
                         ),
                         amazonButtonConfig: .init(
                             title: "",
                             style: .image(.amazon),
-                            action: {
+                            action: .simple({
                                 
-                            }
+                            })
                         )
                     )
                 )
@@ -795,14 +795,14 @@ extension InventoryViewModel {
                     .init(
                         title: "",
                         style: .image(noteImageType),
-                        action: { [weak self] in
+                        action: .simple({ [weak self] in
                             guard let self else { return }
                             let alertInput = self.makeNoteAlertInput(
                                 note: bbImport.note ?? "",
                                 orderId: bbImport.id
                             )
                             self.showAlert.onNext(alertInput)
-                        }
+                        })
                     )
                 )
             )
@@ -841,9 +841,9 @@ extension InventoryViewModel {
                     .init(
                         title: "",
                         style: .image(.tax),
-                        action: {
+                        action: .simple({
                             
-                        }
+                        })
                     )
                 )
             )
@@ -879,9 +879,9 @@ extension InventoryViewModel {
                     .init(
                         title: "",
                         style: .image(.delete),
-                        action: {
+                        action: .simple({
                             
-                        }
+                        })
                     )
                 )
             )
@@ -909,20 +909,20 @@ extension InventoryViewModel {
                     .init(
                         title: "Cancel",
                         style: .primaryGray,
-                        action: {
+                        action: .simple({
                             print("Action")
-                        }
+                        })
                     ),
                     .init(
                         title: "Ok",
                         style: .primary,
-                        action: { [weak self] in
+                        action: .simple({ [weak self] in
                             guard let self else { return }
                             self.updateNote(
                                 note: subscriber,
                                 id: orderId
                             )
-                        }
+                        })
                     )
                 ]
             )

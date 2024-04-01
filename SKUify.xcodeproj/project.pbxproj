@@ -234,7 +234,6 @@
 		5ED911262B175DC300FC0A66 /* PopoverManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED911252B175DC300FC0A66 /* PopoverManager.swift */; };
 		5ED911282B175DF800FC0A66 /* PopoverManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED911272B175DF800FC0A66 /* PopoverManagerProtocol.swift */; };
 		5ED911312B17979E00FC0A66 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED911302B17979E00FC0A66 /* UIButton.swift */; };
-		5ED911372B18FDC500FC0A66 /* PopoverButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED911362B18FDC500FC0A66 /* PopoverButton.swift */; };
 		5ED9113A2B1A0E6E00FC0A66 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED911392B1A0E6E00FC0A66 /* SettingsVC.swift */; };
 		5ED9113C2B1A0E7600FC0A66 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED9113B2B1A0E7600FC0A66 /* SettingsViewModel.swift */; };
 		5ED9113E2B1A0E8100FC0A66 /* SettingsNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED9113D2B1A0E8100FC0A66 /* SettingsNavigator.swift */; };
@@ -780,7 +779,6 @@
 		5ED911252B175DC300FC0A66 /* PopoverManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverManager.swift; sourceTree = "<group>"; };
 		5ED911272B175DF800FC0A66 /* PopoverManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverManagerProtocol.swift; sourceTree = "<group>"; };
 		5ED911302B17979E00FC0A66 /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
-		5ED911362B18FDC500FC0A66 /* PopoverButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverButton.swift; sourceTree = "<group>"; };
 		5ED911392B1A0E6E00FC0A66 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		5ED9113B2B1A0E7600FC0A66 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		5ED9113D2B1A0E8100FC0A66 /* SettingsNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsNavigator.swift; sourceTree = "<group>"; };
@@ -2043,7 +2041,6 @@
 			children = (
 				5ED911202B16868500FC0A66 /* DefaultBarButtonItem.swift */,
 				5E418A892B0BAA460070EDA4 /* DefaultButton.swift */,
-				5ED911362B18FDC500FC0A66 /* PopoverButton.swift */,
 			);
 			path = CustomButtons;
 			sourceTree = "<group>";
@@ -3545,7 +3542,6 @@
 				5E418A8A2B0BAA460070EDA4 /* DefaultButton.swift in Sources */,
 				5ED911402B1A0E9600FC0A66 /* SettingsUseCases.swift in Sources */,
 				5ED911312B17979E00FC0A66 /* UIButton.swift in Sources */,
-				5ED911372B18FDC500FC0A66 /* PopoverButton.swift in Sources */,
 				5EAF2D692B597F9300EFDA5A /* UserContentVC.swift in Sources */,
 				5ED910422B120AD300FC0A66 /* ClickableLabel.swift in Sources */,
 				5ED911162B16149400FC0A66 /* InventoryVC.swift in Sources */,

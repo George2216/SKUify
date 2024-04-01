@@ -32,9 +32,9 @@ final class COGVC: BaseViewController {
         }
         
         let button = DefaultButton()
-        button.config = .init(title: "Filter", style: .popover, action: {
-            
-        })
+//        button.config = .init(title: "Filter", style: .popover, action: {
+//            
+//        })
         view.addSubview(button)
         button.snp.makeConstraints { make in
             make.top.equalTo(textField.snp.bottom).offset(20)

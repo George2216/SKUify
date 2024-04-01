@@ -66,13 +66,18 @@ final class NoteAlertView: UIView {
     
     private func makeButtons(_ configs: [DefaultButton.Config]) -> [DefaultButton] {
         configs.map { config in
-            let action = config.action
             var config = config
-            config.action = { [weak self] in
-                guard let self else { return }
-                action?()
-                self.delegate?.hideAlert()
+            switch config.action {
+            case .simple(let action):
+                config.action = .simple({ [weak self] in
+                    guard let self else { return }
+                    self.delegate?.hideAlert()
+                    action?()
+                })
+            default: 
+                break
             }
+            
             return config.toButton()
         }
     }

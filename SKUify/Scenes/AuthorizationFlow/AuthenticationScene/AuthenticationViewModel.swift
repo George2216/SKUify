@@ -206,9 +206,11 @@ extension AuthenticationViewModel {
                 return DefaultButton.Config(
                     title: "Log In",
                     style: .fullyRoundedPrimary,
-                    action: owner.makeLogInButtonConfigAction(
-                        email: email,
-                        password: password
+                    action: .simple(
+                        owner.makeLogInButtonConfigAction(
+                            email: email,
+                            password: password
+                        )
                     )
                 )
             }
@@ -244,10 +246,10 @@ extension AuthenticationViewModel {
                     isSelected: isSelected,
                     substile: .light
                 ),
-                action: { [weak self] in
+                action: .simple({ [weak self] in
                     guard let self else { return }
                     self.loginIsRememberMeStorage.onNext(!isSelected)
-                }
+                })
             )
     }
     
@@ -258,10 +260,10 @@ extension AuthenticationViewModel {
                 .init(
                     title: "Forgot password?",
                     style: .light,
-                    action: { [weak self] in
+                    action: .simple({ [weak self] in
                         guard let self else { return }
                         self.screenState.onNext(.recoveryPassword)
-                    }
+                    })
                 )
             )
     }
@@ -275,10 +277,10 @@ extension AuthenticationViewModel {
             .init(
                 title: "Create an Account",
                 style: .light,
-                action: { [weak self] in
+                action: .simple({ [weak self] in
                     guard let self else { return }
                     self.screenState.onNext(.signUp)
-                }
+                })
             )
         )
     }
@@ -366,7 +368,7 @@ extension AuthenticationViewModel {
                 return .init(
                     title: "Recover Password",
                     style: .fullyRoundedPrimary,
-                    action: owner.makeRecoveryButtonConfigAction(email: email)
+                    action: .simple(owner.makeRecoveryButtonConfigAction(email: email))
                 )
             })
             .startWith(makeBaseFullyRoundedPrimaryButtonConfig("Recover Password"))
@@ -409,10 +411,10 @@ extension AuthenticationViewModel {
             .init(
                 title: "Return to Sign in",
                 style: .fullyRoundedPrimary,
-                action: { [weak self] in
+                action: .simple({ [weak self] in
                     guard let self else { return }
                     self.screenState.onNext(.login)
-                }
+                })
             )
         )
     }
@@ -509,10 +511,10 @@ extension AuthenticationViewModel {
                     isSelected: isSelected,
                     substile: .light
                 ),
-                action: { [weak self] in
+                action: .simple({ [weak self] in
                     guard let self else { return }
                     self.signUpIsAgreeStorage.onNext(!isSelected)
-                }
+                })
             )
     }
     
@@ -521,9 +523,9 @@ extension AuthenticationViewModel {
             .init(
                 title: "terms & conditions",
                 style: .light,
-                action: {
+                action: .simple({
                     
-                }
+                })
             )
         )
     }
@@ -541,13 +543,15 @@ extension AuthenticationViewModel {
                     .init(
                         title: "Sign Up",
                         style: .fullyRoundedPrimary,
-                        action: owner.makeSignUpButtonConfigAction(
-                            firstName: txtTextFields.0,
-                            lastName: txtTextFields.1,
-                            email: txtTextFields.2,
-                            password: txtTextFields.3,
-                            confirmedPassword: txtTextFields.4,
-                            isAgree: isAgree
+                        action: .simple(
+                            owner.makeSignUpButtonConfigAction(
+                                firstName: txtTextFields.0,
+                                lastName: txtTextFields.1,
+                                email: txtTextFields.2,
+                                password: txtTextFields.3,
+                                confirmedPassword: txtTextFields.4,
+                                isAgree: isAgree
+                            )
                         )
                     )
             }

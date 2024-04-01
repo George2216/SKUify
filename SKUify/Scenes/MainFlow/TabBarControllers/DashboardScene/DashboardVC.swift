@@ -24,7 +24,7 @@ final class DashboardVC: BaseViewController {
     private lazy var notificationBarButtonItem = DefaultBarButtonItem()
     private lazy var titleImageBarButtonItem = DefaultBarButtonItem()
 
-    private lazy var filterByDateButton = PopoverButton()
+    private lazy var filterByDateButton = DefaultButton()
     
     private lazy var collectionView = DashboardCollectionView(
         frame: .zero,

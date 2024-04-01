@@ -19,8 +19,8 @@ final class SalesSetupView: UIView {
     private lazy var refundsButton = DefaultButton()
     private lazy var searchTextField = DefaultTextField()
     
-    private lazy var filterByDatePopoverButton = PopoverButton()
-    private lazy var filterByMarketplacePopoverButton = PopoverButton()
+    private lazy var filterByDatePopoverButton = DefaultButton()
+    private lazy var filterByMarketplacePopoverButton = DefaultButton()
 
     private lazy var titledSwitchView = TitledSwitchView()
     private lazy var titledSwitchContetnView = UIView()
@@ -157,8 +157,8 @@ extension SalesSetupView {
     struct Input {
         var orderButtonConfig: Driver<DefaultButton.Config>
         var refundsButtonConfig: Driver<DefaultButton.Config>
-        let filterByDatePopoverButtonConfig: PopoverButton.Config
-        let filterByMarketplacePopoverButtonConfig: PopoverButton.Config
+        let filterByDatePopoverButtonConfig: DefaultButton.Config
+        let filterByMarketplacePopoverButtonConfig: DefaultButton.Config
         let searchTextFieldConfig: DefaultTextField.Config
         let COGsInput: TitledSwitchView.Input
     }

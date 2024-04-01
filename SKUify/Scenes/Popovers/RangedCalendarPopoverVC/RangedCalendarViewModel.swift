@@ -92,17 +92,17 @@ final class RangedCalendarViewModel: ViewModelProtocol {
                                     backgroung: .primary,
                                     tint: .white
                                     ),
-                                action: action
+                                action: .simple(action)
                             )
                         ),
                         cancelButtonConfig: .just(
                             .init(
                                 title: "Cancel",
                                 style: .custom(tint: .primary),
-                                action: { [weak self] in
+                                action: .simple({ [weak self] in
                                     guard let self else { return }
                                     self.cancelAction(selectedDates: dates)
-                                }
+                                })
                             )
                         )
                     )
@@ -159,7 +159,7 @@ final class RangedCalendarViewModel: ViewModelProtocol {
                                 borderWidth: 1,
                                 borderColor: .lightGray
                             ),
-                            action: { [weak self] in
+                            action: .simple({ [weak self] in
                                 guard let self else { return }
                                 let previousMonth = Calendar.current
                                     .date(
@@ -168,7 +168,7 @@ final class RangedCalendarViewModel: ViewModelProtocol {
                                         to: date
                                     ) ?? Date()
                                 self.toMonth.onNext(previousMonth)
-                            }
+                            })
                         )
                     ),
                     forwardButtonConfig: .just(
@@ -181,7 +181,7 @@ final class RangedCalendarViewModel: ViewModelProtocol {
                                 borderWidth: 1,
                                 borderColor: .lightGray
                             ),
-                            action: isCanForward ? forvardAction : nil
+                            action: .simple(isCanForward ? forvardAction : nil)
                         )
                     )
                 )

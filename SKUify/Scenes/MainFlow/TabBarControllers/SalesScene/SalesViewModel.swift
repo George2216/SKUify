@@ -230,17 +230,20 @@ final class SalesViewModel: ViewModelProtocol {
                 refundsButtonConfig: makeRefundsButtonConfig(),
                 filterByDatePopoverButtonConfig: .init(
                     title: "Filter by date",
-                    action: { [weak self] point in
+                    style: .popover,
+                    action: .point({ [weak self] point in
                         guard let self else { return }
                         self.tapOnCalendar.onNext(point)
                     })
-                ,
+                ),
                 filterByMarketplacePopoverButtonConfig: .init(
                     title: "Filter by marketplace",
-                    action: { [weak self] point in
+                    style: .popover,
+                    action: .point({ [weak self] point in
                         guard let self else { return }
                         self.tapOnMarketplaces.onNext(point)
-                    }),
+                    })
+                ),
                 searchTextFieldConfig: .init(
                     style: .search,
                     plaseholder: "Search product",
@@ -271,10 +274,10 @@ final class SalesViewModel: ViewModelProtocol {
                 DefaultButton.Config(
                     title: "Orders",
                     style: type == .orders ? .primary : .simplePrimaryText,
-                    action: { [weak self] in
+                    action: .simple({ [weak self] in
                         guard let self else { return }
                         self.tableType.onNext(.orders)
-                    }
+                    })
                 )
             }
     }
@@ -286,10 +289,10 @@ final class SalesViewModel: ViewModelProtocol {
                 DefaultButton.Config(
                     title: "Refunds",
                     style: type == .refunds ? .primary : .simplePrimaryText,
-                    action: { [weak self] in
+                    action: .simple({ [weak self] in
                         guard let self else { return }
                         self.tableType.onNext(.refunds)
-                    }
+                    })
                 )
             }
     }
@@ -615,14 +618,14 @@ extension SalesViewModel {
                     .init(
                         title: "",
                         style: .image(noteImageType),
-                        action: { [weak self] in
+                        action: .simple({ [weak self] in
                             guard let self else { return }
                             let alertInput = self.makeNoteAlertInput(
                                 note: order.note ?? "",
                                 orderId: order.id
                             )
                             self.showAlert.onNext(alertInput)
-                        }
+                        })
                     )
                 )
             )
@@ -659,23 +662,23 @@ extension SalesViewModel {
                         vatButtonConfig: .init(
                             title: "\(order.vatRate)% VAT",
                             style: .vat,
-                            action: {
+                            action: .simple({
                                 
-                            }
+                            })
                         ),
                         sellerCentralButtonConfig: .init(
                             title: "",
                             style: .image(.sellerCentral),
-                            action: {
+                            action: .simple({
                                 
-                            }
+                            })
                         ),
                         amazonButtonConfig: .init(
                             title: "",
                             style: .image(.amazon),
-                            action: {
+                            action: .simple({
                                 
-                            }
+                            })
                         )
                     )
                 )
@@ -699,11 +702,11 @@ extension SalesViewModel {
                         title: order.currencySymbol + String(order.totalCog)
                             .doubleDecimalString(2),
                         style: .cog,
-                        action: { [weak self] in
+                        action: .simple({ [weak self] in
                             guard let self else { return }
                             let alerInput = self.makeEditCOGsAlertInput()
                             self.showAlert.onNext(alerInput)
-                        }
+                        })
                     )
                 )
             ),
@@ -841,14 +844,14 @@ extension SalesViewModel {
                     .init(
                         title: "",
                         style: .image(noteImageType),
-                        action: { [weak self] in
+                        action: .simple({ [weak self] in
                             guard let self else { return }
                             let alertInput = self.makeNoteAlertInput(
                                 note: refund.note ?? "",
                                 orderId: refund.id
                             )
                             self.showAlert.onNext(alertInput)
-                        }
+                        })
                     )
                 )
             )
@@ -879,23 +882,23 @@ extension SalesViewModel {
                         vatButtonConfig: .init(
                             title: "\(refund.vatRate)% VAT",
                             style: .vat,
-                            action: {
+                            action: .simple({
                                 
-                            }
+                            })
                         ),
                         sellerCentralButtonConfig: .init(
                             title: "",
                             style: .image(.sellerCentral),
-                            action: {
+                            action: .simple({
                                 
-                            }
+                            })
                         ),
                         amazonButtonConfig: .init(
                             title: "",
                             style: .image(.amazon),
-                            action: {
+                            action: .simple({
                                 
-                            }
+                            })
                         )
                     )
                 )
@@ -918,11 +921,11 @@ extension SalesViewModel {
                         title: refund.currencySymbol + String(refund.totalCog)
                             .doubleDecimalString(2),
                         style: .cog,
-                        action: { [weak self] in
+                        action: .simple({ [weak self] in
                             guard let self else { return }
                             let alerInput = self.makeEditCOGsAlertInput()
                             self.showAlert.onNext(alerInput)
-                        }
+                        })
                     )
                 )
             ),
@@ -996,19 +999,20 @@ extension SalesViewModel {
                     .init(
                         title: "Cancel",
                         style: .primaryGray,
-                        action: {
-                         }
+                        action: .simple({
+                            
+                        })
                     ),
                     .init(
                         title: "Ok",
                         style: .primary,
-                        action: { [weak self] in
+                        action: .simple({ [weak self] in
                             guard let self else { return }
                             self.updateNote(
                                 note: subscriber,
                                 id: orderId
                             )
-                        }
+                        })
                     )
                 ]
             )
@@ -1024,18 +1028,18 @@ extension SalesViewModel {
                     .init(
                         title: "Cancel",
                         style: .primaryGray,
-                        action: {
-                            
-                        }
+                        action: .simple({
+                             
+                        })
                     ),
                     .init(
                         title: "Ok",
                         style: .primary,
-                        action: { [weak self] in
+                        action: .simple({ [weak self] in
                             guard let self else { return }
                             let alertInput = self.makeEditCOGForAsinOrSalesAlertInput()
                             self.showAlert.onNext(alertInput)
-                        }
+                        })
                     )
                 ]
             )
@@ -1051,18 +1055,18 @@ extension SalesViewModel {
                     .init(
                         title: "All sales",
                         style: .primaryRed,
-                        action: { [weak self] in
+                        action: .simple({ [weak self] in
                             guard let self else { return }
                             self.navigator.toCOG()
-                        }
+                        })
                     ),
                     .init(
                         title: "This only",
                         style: .primary,
-                        action: { [weak self] in
+                        action: .simple({ [weak self] in
                             guard let self else { return }
                             self.navigator.toCOG()
-                        }
+                        })
                     )
                 ]
             )

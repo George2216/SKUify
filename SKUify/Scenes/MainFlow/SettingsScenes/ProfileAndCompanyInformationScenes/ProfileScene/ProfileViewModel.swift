@@ -261,19 +261,19 @@ final class ProfileViewModel: BaseUserContentViewModel {
                             uploadButtonConfig: .init(
                                 title: "Upload new picture",
                                 style: .primaryPlus,
-                                action: { [weak self] in
+                                action: .simple({ [weak self] in
                                     guard let self else { return }
                                     self.tapOnUploadImage.onNext(())
-                                }
+                                })
                             )
                         ),
                         removeButtonConfig: .init(
                             title: "Remove",
                             style: .simple,
-                            action: { [weak self] in
+                            action: .simple({ [weak self] in
                                 guard let self else { return }
                                 self.tapOnRemoveImage.onNext(())
-                            }
+                            })
                         )
                     ),
                     fieldsConfigs: [
@@ -326,10 +326,10 @@ final class ProfileViewModel: BaseUserContentViewModel {
                         .init(
                             title: "Save",
                             style: .primary,
-                            action: { [weak self] in
+                            action: .simple({ [weak self] in
                                 guard let self else { return }
                                 self.tapOnSave.onNext(())
-                            }
+                            })
                         )
                     )
                 )

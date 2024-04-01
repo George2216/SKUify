@@ -49,11 +49,17 @@ final class DefaultButton: UIButton {
     }
     
     private func setupAction(_ config: Config) {
-        if let action = config.action {
+        if let actionType = config.action {
             alpha = 1
             rx.tap
-                .subscribe(onNext: {
-                    action()
+                .withUnretained(self)
+                .subscribe(onNext: { owner, _ in
+                    switch actionType {
+                    case .simple(let action):
+                        action?()
+                    case .point(let action):
+                        action?(owner.centerOfView())
+                    }
                 })
                 .disposed(by: disposeBag)
         } else {
@@ -354,7 +360,7 @@ extension DefaultButton {
     struct Config {
         var title: String
         var style: Style
-        var action: (() -> Void)?
+        var action: ActionType?
         
         static func empty() -> Config {
             return Config(
@@ -369,6 +375,12 @@ extension DefaultButton {
             return button
         }
         
+    }
+    
+    enum ActionType {
+        case simple(_ action: (()->())?)
+        // center button
+        case point(_ action: ((CGPoint)->())?)
     }
     
     enum Style {

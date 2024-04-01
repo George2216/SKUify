@@ -208,14 +208,15 @@ final class DashboardViewModel: ViewModelProtocol {
         )
     }
     
-    private func makeFilterByDatePopoverButtonConfig() -> Driver<PopoverButton.Config> {
+    private func makeFilterByDatePopoverButtonConfig() -> Driver<DefaultButton.Config> {
         .just(
             .init(
                 title: "Filter by date",
-                action: { [weak self] center in
+                style: .popover,
+                action: .point({ [weak self] center in
                     guard let self else { return }
                     self.showTimeSlotsPopover.onNext(center)
-                }
+                })
             )
         )
     }
@@ -534,9 +535,9 @@ final class DashboardViewModel: ViewModelProtocol {
                         infoConfig: .init(
                             title: "Sales",
                             style: .infoButton,
-                            action: {
-
-                            }
+                            action: .simple({
+                                
+                            })
                         ),
                         switchChangedOn: { [weak self] isOn in
                             guard let self else { return }
@@ -559,9 +560,9 @@ final class DashboardViewModel: ViewModelProtocol {
                         infoConfig: .init(
                             title: "Units Sold",
                             style: .infoButton,
-                            action: {
-
-                            }
+                            action: .simple({
+                                
+                            })
                         ),
                         switchChangedOn: { [weak self] isOn in
                             guard let self else { return }
@@ -584,9 +585,9 @@ final class DashboardViewModel: ViewModelProtocol {
                         infoConfig: .init(
                             title: "Profit",
                             style: .infoButton,
-                            action: {
-
-                            }
+                            action: .simple({
+                                
+                            })
                         ),
                         switchChangedOn: { [weak self] isOn in
                             guard let self else { return }
@@ -609,9 +610,9 @@ final class DashboardViewModel: ViewModelProtocol {
                         infoConfig: .init(
                             title: "Refunds",
                             style: .infoButton,
-                            action: {
-
-                            }
+                            action: .simple({
+                                
+                            })
                         ),
                         switchChangedOn: { [weak self] isOn in
                             guard let self else { return }
@@ -634,9 +635,9 @@ final class DashboardViewModel: ViewModelProtocol {
                         infoConfig: .init(
                             title: "Margin",
                             style: .infoButton,
-                            action: {
-
-                            }
+                            action: .simple({
+                                
+                            })
                         ),
                         switchChangedOn: { [weak self] isOn in
                             guard let self else { return }
@@ -659,9 +660,9 @@ final class DashboardViewModel: ViewModelProtocol {
                         infoConfig: .init(
                             title: "ROI",
                             style: .infoButton,
-                            action: {
-
-                            }
+                            action: .simple({
+                                
+                            })
                         ),
                         switchChangedOn: { [weak self] isOn in
                             guard let self else { return }
@@ -1001,7 +1002,7 @@ extension DashboardViewModel {
         let notificationBarButtonConfig: Driver<DefaultBarButtonItem.Config>
         let titleImageBarButtonConfig: Driver<DefaultBarButtonItem.Config>
         // Buttons config
-        let filterByDatePopoverButtonConfig: Driver<PopoverButton.Config>
+        let filterByDatePopoverButtonConfig: Driver<DefaultButton.Config>
         // Collection data
         let collectionData: Driver<[DashboardSectionModel]>
         // Popovers points
