@@ -53,11 +53,12 @@ final class CommonAlertView: UIView {
     
     private func makeButtons(_ configs: [DefaultButton.Config]) -> [DefaultButton] {
         configs.map { config in
+            let action = config.action
             var config = config
             config.action = { [weak self] in
                 guard let self else { return }
-                config.action?()
                 self.delegate?.hideAlert()
+                action?()
             }
             return config.toButton()
         }
@@ -93,7 +94,7 @@ final class CommonAlertView: UIView {
     }
     
     private func setupButtonsStack() {
-        buttonsStack.distribution = .fillEqually
+        buttonsStack.distribution = .fill
         buttonsStack.spacing = 10
     }
     

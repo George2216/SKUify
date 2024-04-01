@@ -15,6 +15,8 @@ final class DefaultTextField: UITextField {
         
     // MARK: - Input data for DefaultTextField, automatically updating components
 
+    private var doubleDelegate = DoubleTextFieldDelegate()
+    
     private var configStorage = Config.empty()
     
     var config: Config {
@@ -28,6 +30,7 @@ final class DefaultTextField: UITextField {
     //MARK: - Private methods
 
     private func setupConfig(config: Config) {
+        delegate = nil
         disposeBag = DisposeBag()
        
         rx.controlEvent(config.controlEvent)
@@ -76,6 +79,19 @@ final class DefaultTextField: UITextField {
             layer.cornerRadius = 12.0
             addLeftImage(.search, padding: 5)
             
+        case .doubleBordered(let leftText):
+            layer.borderWidth = 1.0
+            layer.cornerRadius = 10.0
+            delegate = doubleDelegate
+            keyboardType = .asciiCapableNumberPad
+            self.delegate = doubleDelegate
+
+            textAlignment = .right
+
+            addLeftText(leftText)
+            addRightImage(padding: 16.0)
+
+
         }
     }
     
@@ -116,18 +132,20 @@ extension DefaultTextField {
     
     enum Style {
         case bordered
+        case doubleBordered(_ leftText: String)
         case search
         
         fileprivate var height: CGFloat {
             switch self {
-            case .bordered:
+            case .bordered,
+                    .doubleBordered:
                 return 40.0
             case .search:
                 return 34.0
             }
         }
     }
-    
+
 }
 
 extension Reactive where Base: DefaultTextField {

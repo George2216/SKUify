@@ -85,6 +85,9 @@ final class DefaultButton: UIButton {
         case .primaryGray:
             setupPrimaryGrey()
             
+        case .primaryRed:
+            setupPrimaryRed()
+            
         case .light:
             setupLightStyle()
             
@@ -163,6 +166,11 @@ extension DefaultButton {
     private func setupPrimaryGrey() {
         setupPrimaryStyle()
         backgroundColor = .lightSubtextColor
+    }
+    
+    private func setupPrimaryRed() {
+        setupPrimaryStyle()
+        backgroundColor = .systemRed
     }
     
     private func setupLightStyle() {
@@ -336,6 +344,7 @@ extension DefaultButton {
         case light
         case primary
         case primaryGray
+        case primaryRed
         case fullyRoundedPrimary
         case primaryPlus
         case simplePrimaryText
@@ -366,6 +375,7 @@ extension DefaultButton {
                     .simplePrimaryText,
                     .primary,
                     .primaryGray,
+                    .primaryRed,
                     .primaryPlus:
                 return 40.0
 

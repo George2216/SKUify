@@ -17,5 +17,6 @@ protocol DIProtocol:
     SettingsUseCases,
     ProfileUseCases,
     CompanyInformationUseCases,
-    NoteAlertUseCases
+    NoteAlertUseCases,
+    COGUseCases
 {}

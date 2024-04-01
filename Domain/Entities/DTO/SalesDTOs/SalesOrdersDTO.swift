@@ -28,7 +28,7 @@ public struct SalesOrdersDTO: Decodable {
     public let quantityOrdered: Int
     public let originalPrice: OriginalPriceDTO
     public let amzFees: Double?
-    public let totalCog: Double
+    public let totalCog: Double // Unit cost for COG
     public let currencySymbol: String
     public let profit: Double
     public let roi: Double?
@@ -38,6 +38,19 @@ public struct SalesOrdersDTO: Decodable {
     public let fulfillment: String
     public let note: String?
     public let vatRate: Int
+    // MARK: - Only GOG
+    
+    public let bundling: Double?
+    public let prepFee: Double?
+    public let packaging: Double?
+    public let handling: Double?
+    public let other: Double?
+    public let shipping: Double?
+    //
+    public let extraFee: String?
+    public let extraFeePerc: Double?
+
+
     
     private enum CodingKeys: String, CodingKey {
         case id = "id"
@@ -61,6 +74,14 @@ public struct SalesOrdersDTO: Decodable {
         case fulfillment = "order__fulfillment_channel"
         case note = "note"
         case vatRate = "product__vat_rate"
+        case bundling = "bundling"
+        case prepFee = "prep_centre"
+        case packaging = "packaging"
+        case handling = "handling"
+        case other = "other"
+        case shipping = "postage"
+        case extraFee = "extra_fee"
+        case extraFeePerc = "extra_fee_perc"
     }
     
 }

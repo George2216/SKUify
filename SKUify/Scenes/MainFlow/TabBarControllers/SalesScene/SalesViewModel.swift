@@ -699,8 +699,10 @@ extension SalesViewModel {
                         title: order.currencySymbol + String(order.totalCog)
                             .doubleDecimalString(2),
                         style: .cog,
-                        action: {
-                            
+                        action: { [weak self] in
+                            guard let self else { return }
+                            let alerInput = self.makeEditCOGsAlertInput()
+                            self.showAlert.onNext(alerInput)
                         }
                     )
                 )
@@ -916,8 +918,10 @@ extension SalesViewModel {
                         title: refund.currencySymbol + String(refund.totalCog)
                             .doubleDecimalString(2),
                         style: .cog,
-                        action: {
-                            
+                        action: { [weak self] in
+                            guard let self else { return }
+                            let alerInput = self.makeEditCOGsAlertInput()
+                            self.showAlert.onNext(alerInput)
                         }
                     )
                 )
@@ -1004,6 +1008,60 @@ extension SalesViewModel {
                                 note: subscriber,
                                 id: orderId
                             )
+                        }
+                    )
+                ]
+            )
+        )
+    }
+    
+    private func makeEditCOGsAlertInput() -> AlertManager.AlertType {
+        return .common(
+            .init(
+                title: "Confirm COG Editing",
+                message: "Are you sure you want to edit the COG as this order has already been placed?",
+                buttonsConfigs: [
+                    .init(
+                        title: "Cancel",
+                        style: .primaryGray,
+                        action: {
+                            
+                        }
+                    ),
+                    .init(
+                        title: "Ok",
+                        style: .primary,
+                        action: { [weak self] in
+                            guard let self else { return }
+                            let alertInput = self.makeEditCOGForAsinOrSalesAlertInput()
+                            self.showAlert.onNext(alertInput)
+                        }
+                    )
+                ]
+            )
+        )
+    }
+    
+    private func makeEditCOGForAsinOrSalesAlertInput() -> AlertManager.AlertType {
+        return .common(
+            .init(
+                title: "COG Editing Scope",
+                message: "Do you wish to edit the COG for just this sale or for this ASIN?",
+                buttonsConfigs: [
+                    .init(
+                        title: "All sales",
+                        style: .primaryRed,
+                        action: { [weak self] in
+                            guard let self else { return }
+                            self.navigator.toCOG()
+                        }
+                    ),
+                    .init(
+                        title: "This only",
+                        style: .primary,
+                        action: { [weak self] in
+                            guard let self else { return }
+                            self.navigator.toCOG()
                         }
                     )
                 ]

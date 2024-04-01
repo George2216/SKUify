@@ -35,6 +35,15 @@
 		5E2B8FC82B9F320500CDD345 /* ProductAddInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2B8FC72B9F320500CDD345 /* ProductAddInfoView.swift */; };
 		5E2B8FCA2B9F49B600CDD345 /* ProductViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2B8FC92B9F49B600CDD345 /* ProductViewType.swift */; };
 		5E2B8FCE2B9F4CFE00CDD345 /* ProductContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2B8FCD2B9F4CFE00CDD345 /* ProductContentCell.swift */; };
+		5E2C0BD32BB6CC2E00B2682E /* COGVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C0BD22BB6CC2E00B2682E /* COGVC.swift */; };
+		5E2C0BD52BB6CC4500B2682E /* COGViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C0BD42BB6CC4500B2682E /* COGViewModel.swift */; };
+		5E2C0BD72BB6CC5B00B2682E /* COGNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C0BD62BB6CC5B00B2682E /* COGNavigator.swift */; };
+		5E2C0BD92BB6CC9000B2682E /* COGUseCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C0BD82BB6CC9000B2682E /* COGUseCases.swift */; };
+		5E2C0BDC2BB6FE9A00B2682E /* DoubleTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C0BDB2BB6FE9A00B2682E /* DoubleTextFieldDelegate.swift */; };
+		5E2C0BDF2BB8339500B2682E /* COGCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C0BDE2BB8339500B2682E /* COGCollectionView.swift */; };
+		5E2C0BE32BB84A5200B2682E /* COGCollectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C0BE22BB84A5200B2682E /* COGCollectionItem.swift */; };
+		5E2C0BE52BB84A6200B2682E /* COGSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C0BE42BB84A6200B2682E /* COGSectionModel.swift */; };
+		5E2C0BE72BB84A7900B2682E /* COGSectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C0BE62BB84A7900B2682E /* COGSectionType.swift */; };
 		5E333D0A2B87881B00B7F591 /* SalesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E333D092B87881B00B7F591 /* SalesViewModel.swift */; };
 		5E3E163E2B838E0200E195F8 /* TitledSwitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3E163D2B838E0200E195F8 /* TitledSwitchView.swift */; };
 		5E40ED612B8DE9A400EF33E8 /* CurrencyPopoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E40ED602B8DE9A400EF33E8 /* CurrencyPopoverVC.swift */; };
@@ -574,6 +583,15 @@
 		5E2B8FC72B9F320500CDD345 /* ProductAddInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductAddInfoView.swift; sourceTree = "<group>"; };
 		5E2B8FC92B9F49B600CDD345 /* ProductViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewType.swift; sourceTree = "<group>"; };
 		5E2B8FCD2B9F4CFE00CDD345 /* ProductContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductContentCell.swift; sourceTree = "<group>"; };
+		5E2C0BD22BB6CC2E00B2682E /* COGVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COGVC.swift; sourceTree = "<group>"; };
+		5E2C0BD42BB6CC4500B2682E /* COGViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COGViewModel.swift; sourceTree = "<group>"; };
+		5E2C0BD62BB6CC5B00B2682E /* COGNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COGNavigator.swift; sourceTree = "<group>"; };
+		5E2C0BD82BB6CC9000B2682E /* COGUseCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COGUseCases.swift; sourceTree = "<group>"; };
+		5E2C0BDB2BB6FE9A00B2682E /* DoubleTextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleTextFieldDelegate.swift; sourceTree = "<group>"; };
+		5E2C0BDE2BB8339500B2682E /* COGCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COGCollectionView.swift; sourceTree = "<group>"; };
+		5E2C0BE22BB84A5200B2682E /* COGCollectionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COGCollectionItem.swift; sourceTree = "<group>"; };
+		5E2C0BE42BB84A6200B2682E /* COGSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COGSectionModel.swift; sourceTree = "<group>"; };
+		5E2C0BE62BB84A7900B2682E /* COGSectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COGSectionType.swift; sourceTree = "<group>"; };
 		5E333D092B87881B00B7F591 /* SalesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalesViewModel.swift; sourceTree = "<group>"; };
 		5E3E163D2B838E0200E195F8 /* TitledSwitchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitledSwitchView.swift; sourceTree = "<group>"; };
 		5E40ED602B8DE9A400EF33E8 /* CurrencyPopoverVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyPopoverVC.swift; sourceTree = "<group>"; };
@@ -1104,6 +1122,63 @@
 			path = RangedCalendarPopoverVC;
 			sourceTree = "<group>";
 		};
+		5E2C0BD02BB6CBF400B2682E /* AdditionalScenes */ = {
+			isa = PBXGroup;
+			children = (
+				5E2C0BD12BB6CC0E00B2682E /* COGScene */,
+			);
+			path = AdditionalScenes;
+			sourceTree = "<group>";
+		};
+		5E2C0BD12BB6CC0E00B2682E /* COGScene */ = {
+			isa = PBXGroup;
+			children = (
+				5E2C0BD22BB6CC2E00B2682E /* COGVC.swift */,
+				5E2C0BD42BB6CC4500B2682E /* COGViewModel.swift */,
+				5E2C0BD62BB6CC5B00B2682E /* COGNavigator.swift */,
+				5E2C0BD82BB6CC9000B2682E /* COGUseCases.swift */,
+				5E2C0BDD2BB8338000B2682E /* Views */,
+			);
+			path = COGScene;
+			sourceTree = "<group>";
+		};
+		5E2C0BDA2BB6F3DB00B2682E /* CustomTextFields */ = {
+			isa = PBXGroup;
+			children = (
+				5E418A722B0B76A10070EDA4 /* DefaultTextField.swift */,
+				5E418AB82B0EB0F40070EDA4 /* TitledTextField.swift */,
+				5E2C0BDB2BB6FE9A00B2682E /* DoubleTextFieldDelegate.swift */,
+			);
+			path = CustomTextFields;
+			sourceTree = "<group>";
+		};
+		5E2C0BDD2BB8338000B2682E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5E2C0BE02BB83BE700B2682E /* COGCollectioView */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		5E2C0BE02BB83BE700B2682E /* COGCollectioView */ = {
+			isa = PBXGroup;
+			children = (
+				5E2C0BE12BB83BFA00B2682E /* Model */,
+				5E2C0BDE2BB8339500B2682E /* COGCollectionView.swift */,
+			);
+			path = COGCollectioView;
+			sourceTree = "<group>";
+		};
+		5E2C0BE12BB83BFA00B2682E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5E2C0BE22BB84A5200B2682E /* COGCollectionItem.swift */,
+				5E2C0BE42BB84A6200B2682E /* COGSectionModel.swift */,
+				5E2C0BE62BB84A7900B2682E /* COGSectionType.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		5E40ED5F2B8DE98700EF33E8 /* CurrencyPopoverVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -1447,6 +1522,7 @@
 		5E418A3B2B07B52C0070EDA4 /* MainFlow */ = {
 			isa = PBXGroup;
 			children = (
+				5E2C0BD02BB6CBF400B2682E /* AdditionalScenes */,
 				5EAF2D642B597CC600EFDA5A /* SettingsScenes */,
 				5ED9111D2B162C4300FC0A66 /* TabBarControllers */,
 			);
@@ -1569,17 +1645,16 @@
 			children = (
 				5ED910412B120AD300FC0A66 /* ClickableLabel.swift */,
 				5E418ABC2B0F964B0070EDA4 /* ContainerBorderVerticalStack.swift */,
-				5E418A722B0B76A10070EDA4 /* DefaultTextField.swift */,
 				5E418ABF2B10E8450070EDA4 /* HorizontalStack.swift */,
 				5EAF2D712B5A757C00EFDA5A /* ImageUploadView.swift */,
 				5ED911682B1DD51B00FC0A66 /* SmallSwitch.swift */,
 				5ED9120A2B29EC1400FC0A66 /* TitledMarketplace.swift */,
 				5E3E163D2B838E0200E195F8 /* TitledSwitchView.swift */,
-				5E418AB82B0EB0F40070EDA4 /* TitledTextField.swift */,
 				5E418ABA2B0F8A490070EDA4 /* VerticaStack.swift */,
 				5ED72EBF2BA1C9750031D882 /* VisibleRefreshControl.swift */,
 				5E5C9DC62B32F75A003180FF /* ContentResizable */,
 				5ED911292B1783F400FC0A66 /* CustomButtons */,
+				5E2C0BDA2BB6F3DB00B2682E /* CustomTextFields */,
 				5EAF2D732B5A7BEE00EFDA5A /* Decorators */,
 			);
 			path = ReusableViews;
@@ -3395,6 +3470,7 @@
 				5E418A6D2B07C3470070EDA4 /* BannerViewManagerProtocol.swift in Sources */,
 				5E418A4B2B07B7080070EDA4 /* DIContainer.swift in Sources */,
 				5EFB39822B67E9CE0024FD14 /* CompanyInformationNavigator.swift in Sources */,
+				5E2C0BDC2BB6FE9A00B2682E /* DoubleTextFieldDelegate.swift in Sources */,
 				5E84F4022B7D2B88000937AC /* ProductMainView.swift in Sources */,
 				5ED72EC02BA1C9750031D882 /* VisibleRefreshControl.swift in Sources */,
 				5E8443E62B95DBE7006E1F95 /* MarketplacesPopoverTVCell.swift in Sources */,
@@ -3422,6 +3498,7 @@
 				5ED9111C2B1614F900FC0A66 /* InventoryNavigator.swift in Sources */,
 				5EFAAA072BB19C6300C96797 /* AlertManager.swift in Sources */,
 				5E418A662B07C2F40070EDA4 /* BaseViewController.swift in Sources */,
+				5E2C0BE72BB84A7900B2682E /* COGSectionType.swift in Sources */,
 				5ED9110E2B16111D00FC0A66 /* ExpensesUseCases.swift in Sources */,
 				5E418A232B067CE10070EDA4 /* AuthenticationViewModel.swift in Sources */,
 				5EFB39A42B715D2D0024FD14 /* ProductsCollectionView.swift in Sources */,
@@ -3433,7 +3510,10 @@
 				5EFB39802B67E9B30024FD14 /* CompanyInformationViewModel.swift in Sources */,
 				5E2B8FCA2B9F49B600CDD345 /* ProductViewType.swift in Sources */,
 				5E418A862B0B9D700070EDA4 /* DashboardVC.swift in Sources */,
+				5E2C0BD72BB6CC5B00B2682E /* COGNavigator.swift in Sources */,
+				5E2C0BE52BB84A6200B2682E /* COGSectionModel.swift in Sources */,
 				5E418A542B07B8590070EDA4 /* AppManager.swift in Sources */,
+				5E2C0BD32BB6CC2E00B2682E /* COGVC.swift in Sources */,
 				5EFAAA1C2BB323F500C96797 /* NoteAlertUseCases.swift in Sources */,
 				5ED911632B1CC0EF00FC0A66 /* MarketplaceDashboardCell.swift in Sources */,
 				5ED911FC2B27513D00FC0A66 /* MarketplaceDashboardCellContetntView.swift in Sources */,
@@ -3460,6 +3540,7 @@
 				5ED9115A2B1CB8EC00FC0A66 /* DashboardCollectionItem.swift in Sources */,
 				5E0E66A92B46ED1D0005E576 /* OverviewChartMarkerItem.swift in Sources */,
 				5EF23CF82B98CAF000CB1EA9 /* ProductShowDetailCell.swift in Sources */,
+				5E2C0BDF2BB8339500B2682E /* COGCollectionView.swift in Sources */,
 				5ED911ED2B23588800FC0A66 /* LoaderManagerProtocol.swift in Sources */,
 				5E418A8A2B0BAA460070EDA4 /* DefaultButton.swift in Sources */,
 				5ED911402B1A0E9600FC0A66 /* SettingsUseCases.swift in Sources */,
@@ -3473,6 +3554,7 @@
 				5E84F3EA2B7687D4000937AC /* ProductsSectionModel.swift in Sources */,
 				5E41892F2B0669DB0070EDA4 /* AppDelegate.swift in Sources */,
 				5EAF2D722B5A757C00EFDA5A /* ImageUploadView.swift in Sources */,
+				5E2C0BD92BB6CC9000B2682E /* COGUseCases.swift in Sources */,
 				5ED911082B160D2100FC0A66 /* SalesVC.swift in Sources */,
 				5E5C9DD22B32F9EA003180FF /* TimeSlotCell.swift in Sources */,
 				5ED911EB2B23552900FC0A66 /* LoaderManager.swift in Sources */,
@@ -3480,6 +3562,7 @@
 				5ED9111A2B1614E300FC0A66 /* InventoryUseCases.swift in Sources */,
 				5EAF2D772B5A835500EFDA5A /* UserContentContentView.swift in Sources */,
 				5ED910B72B13FECA00FC0A66 /* UIView.swift in Sources */,
+				5E2C0BD52BB6CC4500B2682E /* COGViewModel.swift in Sources */,
 				5ED9120B2B29EC1400FC0A66 /* TitledMarketplace.swift in Sources */,
 				5E620FDF2B975C0200680A49 /* ProductCellImageType.swift in Sources */,
 				5ED72EC52BA1D4F10031D882 /* InventorySwitchesView.swift in Sources */,
@@ -3500,6 +3583,7 @@
 				5E7A0A962B62EA00000DCEFA /* UIImage.swift in Sources */,
 				5ED910402B12045D00FC0A66 /* LoginView.swift in Sources */,
 				5E3E163E2B838E0200E195F8 /* TitledSwitchView.swift in Sources */,
+				5E2C0BE32BB84A5200B2682E /* COGCollectionItem.swift in Sources */,
 				5E418AB52B0D09160070EDA4 /* Fonts.swift in Sources */,
 				5ED9115C2B1CB90300FC0A66 /* DashboardSectionModel.swift in Sources */,
 				5E84F3E82B7687C8000937AC /* ProductsCollectionItem.swift in Sources */,

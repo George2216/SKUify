@@ -9,6 +9,7 @@ import UIKit
 
 protocol SalesNavigatorProtocol {
     func toSales()
+    func toCOG()
 }
 
 final class SalesNavigator: SalesNavigatorProtocol {
@@ -29,8 +30,18 @@ final class SalesNavigator: SalesNavigatorProtocol {
             useCases: di,
             navigator: self
         )
-        
-        navigationController.pushViewController(vc, animated: true)
+        navigationController.pushViewController(
+            vc,
+            animated: true
+        )
+    }
+    
+    func toCOG() {
+        let navigator = COGNavigator(
+            navigationController: navigationController,
+            di: di
+        )
+        navigator.toCOG()
     }
     
     deinit {

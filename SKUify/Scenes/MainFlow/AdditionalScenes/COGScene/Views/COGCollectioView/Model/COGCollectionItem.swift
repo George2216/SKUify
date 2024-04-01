@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+enum COGCollectionItem {
+    case main(_ input: ProductMainCell.Input)
+}
+

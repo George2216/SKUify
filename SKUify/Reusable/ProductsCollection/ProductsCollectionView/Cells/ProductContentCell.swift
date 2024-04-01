@@ -148,7 +148,7 @@ extension ProductContentCell {
         return label
     }
     
-    private func makeProductButton(config: DefaultButton.Config) -> UIView{
+    private func makeProductButton(config: DefaultButton.Config) -> UIView {
         let defaultButton = DefaultButton()
         defaultButton.config = config
         defaultButton.contentHorizontalAlignment = .left
