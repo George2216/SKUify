@@ -15,6 +15,7 @@ final class SettingsViewModel: ViewModelProtocol {
     private let disposeBag = DisposeBag()
 
     private let logoutTrigger = PublishSubject<Void>()
+    private let showAlert = PublishSubject<AlertManager.AlertType>()
     
     // Dependencies
     private let navigator: SettingsNavigatorProtocol
@@ -41,7 +42,8 @@ final class SettingsViewModel: ViewModelProtocol {
         return Output(
             defaultSettingsButtonConfigs: makeDefaultSettingsButtonConfigs(),
             logoutButtonConfig: makeLogoutButtonConfig(),
-            appVersionLabelText: makeAppVersionLabelText()
+            appVersionLabelText: makeAppVersionLabelText(),
+            alert: showAlert.asDriverOnErrorJustComplete()
         )
     }
     
@@ -85,9 +87,31 @@ final class SettingsViewModel: ViewModelProtocol {
                 title: "Logout",
                 action: { [weak self] in
                     guard let self else { return }
-                    self.logoutTrigger.onNext(())
+                    self.showAlert.onNext(.common(makeLogoutAlertInput()))
                 }
             )
+        )
+    }
+    
+    private func makeLogoutAlertInput() -> CommonAlertView.Input {
+        .init(
+            title: "Log out",
+            message: "Are you sure you want to sign out of your account?",
+            buttonsConfigs: [
+                .init(
+                    title: "Cancel",
+                    style: .primary,
+                    action: .simple({ })
+                ),
+                .init(
+                    title: "Ok",
+                    style: .primaryRed,
+                    action: .simple({ [weak self] in
+                        guard let self else { return }
+                        self.logoutTrigger.onNext(())
+                    })
+                )
+            ]
         )
     }
     
@@ -113,14 +137,14 @@ final class SettingsViewModel: ViewModelProtocol {
 // MARK: - Input Output
 
 extension SettingsViewModel {
-    struct Input {
-        
-    }
+    struct Input { }
     
     struct Output {
         let defaultSettingsButtonConfigs: Driver<[DefaultSettingsButton.Config]>
         let logoutButtonConfig: Driver<LogoutSettingsButton.Config>
         let appVersionLabelText: Driver<String?>
+        // Alert
+        let alert: Driver<AlertManager.AlertType>
     }
     
 }

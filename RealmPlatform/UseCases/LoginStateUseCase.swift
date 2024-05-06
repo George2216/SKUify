@@ -26,9 +26,7 @@ final class LoginStateUseCase<Repository>: Domain.LoginStateUseCase where Reposi
     
     public func logout() -> Observable<Void> {
         return repository
-            .saveEntity(
-                entity: LoginState(isLogged: false)
-            )
+            .deleteAllEntities()
     }
     
     public func isLogged() -> Observable<Bool> {

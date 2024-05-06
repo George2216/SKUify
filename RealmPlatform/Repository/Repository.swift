@@ -19,6 +19,7 @@ public protocol AbstractRepository {
     func saveEntities(entities: [T]) -> Observable<Void>
     func deleteEntity(entity: T) -> Observable<Void>
     func deleteAllObjects(type: T.Type) -> Observable<Void>
+    func deleteAllEntities() -> Observable<Void>
 }
 
 final class Repository<T: RealmRepresentable>: AbstractRepository where T == T.RealmType.DomainType, T.RealmType: Object {

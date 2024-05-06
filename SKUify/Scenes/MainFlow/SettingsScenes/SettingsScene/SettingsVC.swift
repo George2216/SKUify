@@ -33,6 +33,7 @@ final class SettingsVC: BaseViewController {
         bindToDefaultButtonsStack(output)
         bindToLogoutButton(output)
         bindToVersionLabel(output)
+        bindToAlert(output)
     }
     
     
@@ -56,6 +57,11 @@ final class SettingsVC: BaseViewController {
             .disposed(by: disposeBag)
     }
     
+    private func bindToAlert(_ output: SettingsViewModel.Output) {
+        output.alert
+            .drive(rx.alert)
+            .disposed(by: disposeBag)
+    }
     
     private func setupLabelVersion() {
         versionLabel.textColor = .textColor
