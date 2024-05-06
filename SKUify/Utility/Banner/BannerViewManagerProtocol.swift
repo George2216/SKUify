@@ -9,6 +9,6 @@ import Foundation
 import UIKit
 
 protocol BannerViewManagerProtocol {
-    func setup(with windowScene: UIWindowScene)
+    func setup(with window: UIWindow)
     func showBanner(input: BannerView.Input)
 }

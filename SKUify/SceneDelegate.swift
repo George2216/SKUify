@@ -37,8 +37,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.rootViewController = navigation
         window.makeKeyAndVisible()
         
-        BannerViewManager.shared.setup(with: windowScene)
-        LoaderManager.shared.setup(with: windowScene)
+        BannerViewManager.shared.setup(with: window)
+        LoaderManager.shared.setup(with: window)
         AlertManager.share.setup(
             window: window,
             di: diContainer

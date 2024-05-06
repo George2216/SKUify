@@ -6,8 +6,6 @@
 //
 
 import Foundation
-
-import Foundation
 import Domain
 import RxSwift
 import RxCocoa

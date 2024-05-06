@@ -540,17 +540,11 @@ extension InventoryViewModel {
             ),
             .init(
                 title: "Amazon fees",
-                viewType: .text(
-                    currencySymbol + String(order.amzFees ?? 0.0)
-                        .doubleDecimalString(2)
-                )
+                viewType: .text(currencySymbol + order.amzFees.toUnwrappedString())
             ),
             .init(
                 title: "ROI",
-                viewType: .text(
-                    String(order.roi ?? 0.0)
-                        .doubleDecimalString(2) + "%"
-                )
+                viewType: .text(order.roi.toUnwrappedString() + "%")
             ),
             .init(
                 title: "Note",
@@ -580,20 +574,19 @@ extension InventoryViewModel {
                 title: "Price",
                 viewType: .text(
                     currencySymbol +
-                    String(order.originalPrice.price)
-                    .doubleDecimalString(2)
+                    order.originalPrice.price.toString()
                 )
             ),
             .init(
                 title: "COG",
                 viewType: .button(
                     .init(
-                        title: currencySymbol + String(order.cog)
-                            .doubleDecimalString(2),
+                        title: currencySymbol + order.cog.toString(),
                         style: .cog,
                         action: .simple({ [weak self] in
                             guard let self else { return }
-
+                            let cogInput = order.toCOGInputModel(.inventory)
+                            self.navigator.toCOG(cogInput)
                         })
                     )
                 )
@@ -601,8 +594,7 @@ extension InventoryViewModel {
             .init(
                 title: "Margin",
                 viewType: .text(
-                    String(order.margin ?? 0.0)
-                        .doubleDecimalString(2) + "%"
+                    order.margin.toUnwrappedString() + "%"
                 )
             ),
             .init(
@@ -650,9 +642,7 @@ extension InventoryViewModel {
             .init(
                 title: "Gross Profit",
                 viewType: .text(
-                    currencySymbol +
-                    String(order.profit ?? 0.0)
-                        .doubleDecimalString(2)
+                    currencySymbol + order.profit.toUnwrappedString()
                 )
             ),
             .init(
@@ -661,9 +651,19 @@ extension InventoryViewModel {
             ),
             .init(
                 title: "Replenish",
-                viewType: .button(.init(title: "", style: .image(.add)))
+                viewType: .button(
+                    .init(
+                        title: "",
+                        style: .image(.add),
+                        action: .simple({ [weak self] in
+                            guard let self else { return }
+                            let cogInput = order.toCOGInputModel(.newReplenish)
+                            self.navigator.toCOG(cogInput)
+                        })
+                    )
+                )
             )
-        ]
+       ]
     }
     
 }
@@ -778,16 +778,12 @@ extension InventoryViewModel {
             .init(
                 title: "Amazon fees",
                 viewType: .text(
-                    currencySymbol + String(bbImport.amzFees ?? 0.0)
-                        .doubleDecimalString(2)
-                )
+                    currencySymbol + bbImport.amzFees.toUnwrappedString())
+                
             ),
             .init(
                 title: "ROI",
-                viewType: .text(
-                    String(bbImport.roi ?? 0.0)
-                        .doubleDecimalString(2) + "%"
-                )
+                viewType: .text(bbImport.roi.toUnwrappedString() + "%")
             ),
             .init(
                 title: "Note",
@@ -815,25 +811,15 @@ extension InventoryViewModel {
         return [
             .init(
                 title: "Price",
-                viewType: .text(
-                    currencySymbol +
-                    String(bbImport.originalPrice.price)
-                    .doubleDecimalString(2)
-                )
+                viewType: .text(currencySymbol + bbImport.originalPrice.price.toString())
             ),
             .init(
                 title: "COG",
-                viewType: .text(
-                    currencySymbol + String(bbImport.cog)
-                    .doubleDecimalString(2)
-                )
+                viewType: .text(currencySymbol + bbImport.cog.toUnwrappedString())
             ),
             .init(
                 title: "Margin",
-                viewType: .text(
-                    String(bbImport.margin ?? 0.0)
-                        .doubleDecimalString(2) + "%"
-                )
+                viewType: .text(bbImport.margin.toUnwrappedString() + "%")
             ),
             .init(
                 title: "Settings",
@@ -841,8 +827,9 @@ extension InventoryViewModel {
                     .init(
                         title: "",
                         style: .image(.tax),
-                        action: .simple({
-                            
+                        action: .simple({ [weak self] in
+                            guard let self else { return }
+                            self.navigator.toSettingsCOG(bbImport.toCOGSettingsInputModel())
                         })
                     )
                 )
@@ -863,11 +850,7 @@ extension InventoryViewModel {
             ),
             .init(
                 title: "Profit",
-                viewType: .text(
-                    currencySymbol +
-                    String(bbImport.profit ?? 0.0)
-                        .doubleDecimalString(2)
-                )
+                viewType: .text(currencySymbol + bbImport.profit.toUnwrappedString())
             ),
             .init(
                 title: "Fulfillment",
@@ -909,9 +892,7 @@ extension InventoryViewModel {
                     .init(
                         title: "Cancel",
                         style: .primaryGray,
-                        action: .simple({
-                            print("Action")
-                        })
+                        action: .simple({ })
                     ),
                     .init(
                         title: "Ok",

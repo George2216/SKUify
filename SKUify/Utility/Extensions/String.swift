@@ -19,20 +19,43 @@ extension String {
             let formattedDate = dateFormatter.string(from: date)
            return formattedDate
         } else {
-           return ""
+            return ""
         }
     }
+    func dateTimeToShort() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyy-MM-dd HH:mm:ss.SSSSSS"
+        if let date = dateFormatter.date(from: self) {
+            dateFormatter.dateFormat = "dd/MM/yy h:mma"
+            let formattedDate = dateFormatter.string(from: date)
+            return formattedDate
+        } else {
+            return ""
+        }
+    }
+
     
 }
 
 // MARK: - Nums convertor
 
 extension String {
-    func doubleDecimalString(_ decimal: Int) -> String {
-        guard let toDouble = Double(self) else {
-            return ""
+//    func doubleDecimalString(_ decimal: Int) -> String {
+//        guard let toDouble = Double(self) else {
+//            return ""
+//        }
+//        return toDouble.toDecimalString(decimal: decimal)
+//    }
+    
+}
+
+extension String {
+    func toDate() -> Date {
+        guard let date = DateConvertor.shared.convertToDate(self) else {
+            fatalError()
         }
-        return toDouble.toDecimalString(decimal: decimal)
+        return date
     }
+    
     
 }

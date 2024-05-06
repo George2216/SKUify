@@ -17,7 +17,8 @@ final class COGCollectionView: UICollectionView {
 
     // MARK: Data source
     
-    private lazy var customSource = RxCollectionViewSectionedReloadDataSource<COGSectionModel>(configureCell: { [unowned self] dataSource, collectionView, indexPath, item in
+    private lazy var customSource = RxCollectionViewSectionedReloadDataSource<COGSectionModel>(
+        configureCell: { [unowned self] dataSource, collectionView, indexPath, item in
         let width = self.frame.width - 20
 
         switch item {
@@ -56,8 +57,38 @@ final class COGCollectionView: UICollectionView {
             cell.setupWigth(width)
             cell.setupInput(input)
             return cell
+            
+        case .importStrategy(let input):
+            let cell = collectionView.dequeueReusableCell(
+                ofType: COGImportStrategyCell.self,
+                at: indexPath
+            )
+            cell.setupWigth(width)
+            cell.setupInput(input)
+            return cell
+        case .applyToInventory(let input):
+            let cell = collectionView.dequeueReusableCell(
+                ofType: COGApplyToInventoryCell.self,
+                at: indexPath
+            )
+            cell.setupWigth(width)
+            cell.setupInput(input)
+            return cell
         }
-    })
+        }) { [unowned self] dataSource, collectionView, kind, indexPath in
+            if kind == UICollectionView.elementKindSectionHeader {
+                let headerView = collectionView.dequeueReusableSupplementaryView(
+                    ofType: COGHeaderReusableView.self,
+                    at: indexPath,
+                    kind: kind
+                )
+                let header = dataSource.sectionModels[indexPath.section].model.headerFooter.header
+                
+                headerView.setupInput(.init(title: header))
+                return headerView
+            }
+            return UICollectionReusableView()
+        }
     
     // MARK: Initializers
     
@@ -96,32 +127,41 @@ final class COGCollectionView: UICollectionView {
         register(COGPurchaseDetailCell.self)
         register(COGCostOfGoodsCell.self)
         register(COGCostSummaryCell.self)
+        register(COGImportStrategyCell.self)
+        register(COGApplyToInventoryCell.self)
+        registerHeader(COGHeaderReusableView.self)
     }
     
     // MARK: - Bind to collection
-
+    
     func bind(_ sections: Driver<[COGSectionModel]>) -> Disposable {
-        return sections
-            .do(onNext: { data in
-                print(data)
-                print("")
-        }).drive(rx.items(dataSource: customSource))
+        sections.drive(rx.items(dataSource: customSource))
     }
-     
+    
 }
 
 // MARK: - DelegateFlowLayout
 
 extension COGCollectionView: UICollectionViewDelegateFlowLayout {
+ 
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
-        referenceSizeForFooterInSection section: Int
+        referenceSizeForHeaderInSection section: Int
     ) -> CGSize {
-        guard customSource.sectionModels.count - 1 == section else { return .zero }
+        
+        let header = customSource
+            .sectionModels[section].model.headerFooter.header
+        guard !header.isEmpty else { return .zero }
+        
+        let headerView = COGHeaderReusableView()
+        headerView.setupInput(.init(title: header))
+        let height = headerView
+            .systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+            .height
         return CGSize(
-            width: collectionView.bounds.width,
-            height: 50
+            width: (collectionView.frame.width - 10) / 2,
+         height: height
         )
     }
     

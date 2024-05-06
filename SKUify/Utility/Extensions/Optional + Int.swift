@@ -6,3 +6,13 @@
 //
 
 import Foundation
+
+extension Optional where Wrapped == Int {
+    func stringOrEmpty() -> String {
+        guard let value = self else {
+            return ""
+        }
+        return String(value)
+    }
+    
+}

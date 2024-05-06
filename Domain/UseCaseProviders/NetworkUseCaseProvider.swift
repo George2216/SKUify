@@ -20,4 +20,10 @@ public protocol NetworkUseCaseProvider {
     func makeInventoryUseCase() -> InventoryUseCase
     func makeNoteInventoryUseCase() -> NoteUseCase
     func makeNoteSalesUseCase() -> NoteUseCase
+    func makeBreakEvenPointUseCase() -> BreakEvenPointUseCase
+    func makeCOGUseCase() -> COGUseCase
+    func makeReplenishCOGUseCase() -> ReplenishCOGUseCase
+    func makeCOGSInformationUseCase() -> COGSInformationUseCase
+    func makeCOGBbpImoprtStategyUseCase() -> Domain.COGBbpImoprtStategyUseCase
+    func makeCOGSettingsUseCase() -> Domain.COGSettingsUseCase
 }

@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+public struct BreakEvenPointDTO: Decodable {
+    public let breakPointEven: Double?
+    
+    private enum CodingKeys: String, CodingKey {
+        case breakPointEven = "break_point_even"
+    }
+    
+}

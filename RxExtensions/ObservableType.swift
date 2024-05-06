@@ -64,10 +64,25 @@ public extension ObservableType {
                 }
             }
         }
+    
 }
 
 public extension ObservableType where Element: Equatable {
     func filterEqual(_ value: Element) -> Observable<Element> {
         return self.filter { $0 == value }
     }
+    
+}
+
+
+public extension ObservableType {
+    func currentAndPrevious() -> Observable<(current: Element, previous: Element?)> {
+        return self.multicast({ () -> PublishSubject<Element> in PublishSubject<Element>() }) { (values: Observable<Element>) -> Observable<(current: Element, previous: Element?)> in
+            let pastValues = values.asObservable().map { previous -> Element? in previous }.startWith(nil)
+            return Observable.zip(values.asObservable(), pastValues) { (current, previous) in
+                return (current: current, previous: previous)
+            }
+        }
+    }
+    
 }

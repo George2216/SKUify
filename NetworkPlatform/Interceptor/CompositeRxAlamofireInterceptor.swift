@@ -41,7 +41,6 @@ final class CompositeRxAlamofireInterceptor: RequestInterceptor {
                     
                     switch result {
                     case .success(let modifiedRequest):
-                        print(modifiedRequest.headers)
                         self.addHeadersFromInterceptor(
                             request: &request,
                             modifiedRequest: modifiedRequest
@@ -68,29 +67,25 @@ final class CompositeRxAlamofireInterceptor: RequestInterceptor {
                 semaphore.wait()
             }
             
-            dispatchGroup.notify(queue: .main) {
+            dispatchGroup.notify(queue: .main) { [weak self] in
+                guard let self else { return }
                 
-                print(self.interceptors.count)
+                print("Interceptors count: \(self.interceptors.count) \n")
                 
                 if let method = request.httpMethod,
                    let url = request.url {
                     
-                    print("Request: \(method) \(url)")
+                    print("Request: \(method) \(url) \n")
                     
                     if let headers = request.allHTTPHeaderFields {
-                        
-                        print("Headers: \(headers)")
+                        print("Headers: \(headers) \n")
                     }
                     if let body = request.httpBody {
-                        let bodyString = String(
-                            data: body,
-                            encoding: .utf8
-                        )
-                        print("Body: \(String(describing: bodyString))")
+                        print("Body: \(body.prettyPrintedJSONString as Any) \n")
                     }
                 }
                 
-                print("/n/n/n/n")
+                print("\n\n\n")
                 if hasModified {
                     completion(.success(request))
                 } else {

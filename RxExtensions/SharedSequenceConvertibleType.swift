@@ -11,6 +11,12 @@ import RxSwift
 import RxCocoa
 
 public extension SharedSequenceConvertibleType {
+    func mapToVoid() -> SharedSequence<SharingStrategy, Void> {
+        return map { _ in }
+    }
+}
+
+public extension SharedSequenceConvertibleType {
     func withUnretained<T: AnyObject>(_ obj: T) -> Driver<(T, Element)> {
         return self.asObservable()
             .withUnretained(obj)

@@ -50,24 +50,6 @@ enum ProductCellImageType {
         }
     }
     
-    enum FulfilmentType: String {
-        case fba
-        case fbm
-        case fbmPrime
-        init(rawValue: String) {
-            switch rawValue.lowercased() {
-            case "fba":
-                self = .fba
-            case "fbm":
-                self = .fbm
-            case "fbm prime":
-                self = .fbmPrime
-            default:
-                self = .fba
-            }
-        }
-    }
-    
     var image: UIImage {
         switch self {
         case .status(let type):
@@ -95,7 +77,7 @@ enum ProductCellImageType {
                 return .fulfillmentFBA
             case .fbm:
                 return .fulfillmentFBM
-            case .fbmPrime:
+            case .sfp:
                 return .fulfillmentFBMPrime
             }
         }
@@ -109,8 +91,6 @@ enum ProductCellImageType {
             return flag
         }
     }
-    
-    
     
 }
 

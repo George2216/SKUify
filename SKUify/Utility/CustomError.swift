@@ -6,3 +6,16 @@
 //
 
 import Foundation
+
+struct CustomError: Error, LocalizedError {
+    let message: String
+
+    var errorDescription: String? {
+        return NSLocalizedString(
+            message,
+            comment: ""
+        )
+    }
+    
+}
+

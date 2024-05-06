@@ -6,3 +6,36 @@
 //
 
 import Foundation
+import Domain
+import RxSwift
+import Alamofire
+import RxAlamofire
+
+final class COGSettingsNetwork: Domain.COGSettingsNetwork {
+    
+    private let network: Network<OnlyIdDTO>
+    private let interceptorFactory: Domain.InterceptorFactory
+
+    init(
+        network: Network<OnlyIdDTO>,
+        interceptorFactory: Domain.InterceptorFactory
+    ) {
+        self.network = network
+        self.interceptorFactory = interceptorFactory
+    }
+
+    func updateProductSettings(_ data: COGSettingsRequestModel) -> Observable<OnlyIdDTO> {
+        network.request(
+            "product/\(data.id)/",
+            method: .patch,
+            parameters: data.toDictionary(),
+            interceptor: CompositeRxAlamofireInterceptor(
+                interceptors: [
+                    interceptorFactory.makeTokenToHeaderInterceptor(),
+                    interceptorFactory.makeContentTypeJsonInterceptor()
+                ]
+            )
+        )
+    }
+    
+}

@@ -106,6 +106,30 @@ class DIContainer: DIProtocol {
         networkUseCaseProvider.makeInventoryUseCase()
     }
     
+    func makeBreakEvenPointUseCase() -> Domain.BreakEvenPointUseCase {
+        networkUseCaseProvider.makeBreakEvenPointUseCase()
+    }
+    
+    func makeCOGUseCase() -> Domain.COGUseCase {
+        networkUseCaseProvider.makeCOGUseCase()
+    }
+    
+    func makeReplenishCOGUseCase() -> Domain.ReplenishCOGUseCase {
+        networkUseCaseProvider.makeReplenishCOGUseCase()
+    }
+    
+    func makeCOGSInformationUseCase() -> Domain.COGSInformationUseCase {
+        networkUseCaseProvider.makeCOGSInformationUseCase()
+    }
+    
+    func makeCOGBbpImoprtStategyUseCase() -> Domain.COGBbpImoprtStategyUseCase {
+        networkUseCaseProvider.makeCOGBbpImoprtStategyUseCase()
+    }
+    
+    func makeCOGSettingsUseCase() -> Domain.COGSettingsUseCase {
+        networkUseCaseProvider.makeCOGSettingsUseCase()
+    }
+    
     // MARK: Note use case
     
     func makeNoteInventoryUseCase() -> Domain.NoteUseCase {

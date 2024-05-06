@@ -8,14 +8,17 @@
 import Foundation
 
 extension Encodable {
-    func toDictionary() -> [String: Any]? {
+    func toDictionary() -> [String: Any] {
         do {
             let encoder = JSONEncoder()
             let data = try encoder.encode(self)
-            return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            return try JSONSerialization.jsonObject(
+                with: data,
+                options: []
+            ) as? [String: Any] ?? [:]
         } catch {
             print("\(error)")
-            return nil
+            return [:]
         }
     }
 }

@@ -6,3 +6,8 @@
 //
 
 import Foundation
+import RxSwift
+
+public protocol BreakEvenPointNetwork {
+    func getBreakEvenPoint(_ data: COGBreakEvenRequestModel) -> Observable<BreakEvenPointDTO>
+}

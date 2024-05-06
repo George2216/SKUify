@@ -27,6 +27,7 @@ final class TitleDecorator: UIView {
         return label
     }()
     
+    private let axis: NSLayoutConstraint.Axis
     // MARK: - Initializers
     
     init(
@@ -37,9 +38,11 @@ final class TitleDecorator: UIView {
         ),
         textColor: UIColor = .subtextColor,
         spacing: CGFloat = 0.0,
-        numberOfLines: Int = 1
+        numberOfLines: Int = 1,
+        axis: NSLayoutConstraint.Axis = .vertical
     ) {
         self.decoratedView = decoratedView
+        self.axis = axis
         super.init(frame: .zero)
         setupStack(
             decoratedView,
@@ -79,7 +82,7 @@ final class TitleDecorator: UIView {
                 decoratedView
             ]
         )
-        stackView.axis = .vertical
+        stackView.axis = axis
         stackView.distribution = .fill
         stackView.alignment = .fill
         stackView.spacing = spacing
@@ -95,22 +98,22 @@ final class TitleDecorator: UIView {
     private func setupTitleLabel() {
         titleLabel.setContentHuggingPriority(
             .defaultHigh,
-            for: .vertical
+            for: axis
         )
         titleLabel.setContentCompressionResistancePriority(
             .defaultHigh,
-            for: .vertical
+            for: axis
         )
     }
     
     private func setupDecoratedView(_ decoratedView: UIView) {
         decoratedView.setContentHuggingPriority(
             .defaultLow,
-            for: .vertical
+            for: axis
         )
         decoratedView.setContentCompressionResistancePriority(
             .defaultHigh,
-            for: .vertical
+            for: axis
         )
     }
     

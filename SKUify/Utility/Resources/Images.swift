@@ -47,13 +47,19 @@ extension UIImage {
     static let statusComplete = UIImage(named: "statusComplete") ?? .init()
     static let statusCanceled = UIImage(named: "statusCanceled") ?? .init()
     static let statusRefund = UIImage(named: "statusRefund") ?? .init()
-    static let shippingToCheckLater = UIImage(named: "shippingToCheckLater") ?? .init()
+    static let statusPending = UIImage(named: "statusPending") ?? .init()
+
     static let fulfillmentFBA = UIImage(named: "fulfillmentFBA") ?? .init()
+    static let fulfillmentFBM = UIImage(named: "fulfillmentFBM") ?? .init()
+    static let fulfillmentFBMPrime = UIImage(named: "fulfillmentFBMPrime") ?? .init()
+
     static let notes = UIImage(named: "notes") ?? .init()
     static let pensill = UIImage(named: "pensill") ?? .init()
     static let arrow = UIImage(named: "arrow") ?? .init()
     static let taxSettings = UIImage(named: "taxSettings") ?? .init()
     static let delete = UIImage(named: "delete") ?? .init()
     static let noteAdded = UIImage(named: "noteAdded") ?? .init()
+    static let shippingToCheckLater = UIImage(named: "shippingToCheckLater") ?? .init()
+
     
 }

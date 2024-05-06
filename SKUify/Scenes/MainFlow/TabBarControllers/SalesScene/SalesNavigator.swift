@@ -9,7 +9,7 @@ import UIKit
 
 protocol SalesNavigatorProtocol {
     func toSales()
-    func toCOG()
+    func toCOG(_ input: COGInputModel)
 }
 
 final class SalesNavigator: SalesNavigatorProtocol {
@@ -36,12 +36,12 @@ final class SalesNavigator: SalesNavigatorProtocol {
         )
     }
     
-    func toCOG() {
+    func toCOG(_ input: COGInputModel) {
         let navigator = COGNavigator(
             navigationController: navigationController,
             di: di
         )
-        navigator.toCOG()
+        navigator.toCOG(input)
     }
     
     deinit {

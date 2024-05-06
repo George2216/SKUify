@@ -103,11 +103,8 @@ final class ProductsCollectionView: UICollectionView {
         register(ProductShowDetailCell.self)
         register(ProductContentCell.self)
 
-        register(
-            LoaderCollectionReusableView.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
-            withReuseIdentifier: LoaderCollectionReusableView.reuseID
-        )
+        registerFooter(LoaderCollectionReusableView.self)
+        
     }
     
     // MARK: - Bind to collection

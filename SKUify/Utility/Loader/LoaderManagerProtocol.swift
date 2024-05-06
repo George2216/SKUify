@@ -9,6 +9,6 @@ import Foundation
 import UIKit
 
 protocol LoaderManagerProtocol {
-    func setup(with windowScene: UIWindowScene)
+    func setup(with window: UIWindow)
     func showLoader(_ isLoading: Bool)
 }

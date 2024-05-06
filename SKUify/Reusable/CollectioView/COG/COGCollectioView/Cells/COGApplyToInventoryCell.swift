@@ -14,7 +14,6 @@ final class COGApplyToInventoryCell: UICollectionViewCell {
     // MARK: UI elements
     
     private lazy var titledSwitch = TitledSwitchView()
-    private lazy var saveButton = DefaultButton()
     
     private lazy var contentStack = VerticalStack()
     
@@ -36,7 +35,11 @@ final class COGApplyToInventoryCell: UICollectionViewCell {
     
     func setupInput(_ input: Input) {
         titledSwitch.setupInput(input.titledSwitchInput)
-        saveButton.config = input.saveButtonConfig
+        
+        contentStack.views = [
+            titledSwitch,
+            makeButtonsStack(input.buttonConfigs)
+        ]
     }
     
     func setupWigth(_ width: CGFloat) {
@@ -48,17 +51,16 @@ final class COGApplyToInventoryCell: UICollectionViewCell {
     
     // MARK: Private methods
 
-    private func setupContentStack() {
+    private func makeButtonsStack(_ configs: [DefaultButton.Config]) -> UIView {
         let hStack = HorizontalStack()
-        hStack.views = [
-            UIView.spacer(),
-            saveButton
-        ]
-        contentStack.views = [
-            titledSwitch,
-            hStack
-        ]
+        hStack.views = configs.map { $0.toButton() }
+        hStack.spacing = 10.0
+        return hStack
+    }
+    
+    private func setupContentStack() {
         contentStack.spacing = spacing
+        
         contentView.addSubview(contentStack)
         contentStack.snp.makeConstraints { make in
             make.edges
@@ -80,7 +82,7 @@ final class COGApplyToInventoryCell: UICollectionViewCell {
 extension COGApplyToInventoryCell {
     struct Input {
         let titledSwitchInput: TitledSwitchView.Input
-        let saveButtonConfig: DefaultButton.Config
+        let buttonConfigs: [DefaultButton.Config]
     }
     
 }

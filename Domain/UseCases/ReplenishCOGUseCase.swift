@@ -6,3 +6,8 @@
 //
 
 import Foundation
+import RxSwift
+
+public protocol ReplenishCOGUseCase {
+    func saveReplenish(_ data: ReplenishCOGRequestModel) -> Observable<Void>
+}

@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import SnapKit
 
-final class COGBaseVC: BaseViewController {
+final class COGVC: BaseViewController {
     
     var viewModel: COGBaseViewModel!
     
@@ -23,12 +23,13 @@ final class COGBaseVC: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "COG"
+       
         
         let output = viewModel.transform(.init(selectedCalendarDate: calendarPopover.didSelectDate.asDriverOnErrorJustComplete()))
         
         setupCollection()
         
+        bindToTitle(output)
         bindHeightForScrollingToTxtField(output)
         bindToCollectionView(output)
         bingCalendarPopover(output)
@@ -56,6 +57,12 @@ final class COGBaseVC: BaseViewController {
 // MARK: Make binding
 
 extension COGVC {
+    
+    private func bindToTitle(_ output: COGBaseViewModel.Output) {
+        output.title
+            .drive(rx.title)
+            .disposed(by: disposeBag)
+    }
     
     private func bindHeightForScrollingToTxtField(_ output: COGBaseViewModel.Output) {
         output.keyboardHeight

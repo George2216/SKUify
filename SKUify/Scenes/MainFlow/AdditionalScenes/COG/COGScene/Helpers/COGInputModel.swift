@@ -59,17 +59,6 @@ struct COGInputModel {
          
          extraFeeValue += extraFee.valueOrZero()
          extraFeeValue += extraFeePerc.valueOrZero() * unitCost.valueOrZero() / 100
-//         if let extraFee, extraFee != 0.00 {
-//             extraFeeValue = extraFee
-//         } else if let extraFeePerc {
-//             extraFeeValue = extraFeePerc * unitCost.valueOrZero() / 100
-//         }
-//         
-//         if let extraFee, extraFee != 0.00 {
-//             extraFeeValue = extraFee
-//         } else if let extraFeePerc {
-//             extraFeeValue = extraFeePerc * unitCost.valueOrZero() / 100
-//         }
          
          return unitCost.valueOrZero() +
          bundling.valueOrZero() +

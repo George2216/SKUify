@@ -7,9 +7,11 @@
 
 import Foundation
 
-public struct CostOfGoodsSettingsMainDTO: Codable {
+public struct CostOfGoodsSettingsMainDTO: Decodable {
+    // Need only for decoding
     private let items: [CostOfGoodsSettingsHelperDTO]
-    public let data: CostOfGoodsSettingsGroupedModel
+    // Decoded items
+    public let data: CostOfGoodsSettingsModel
     public let settingsType: String
     
     public init(from decoder: Decoder) throws {
@@ -17,18 +19,20 @@ public struct CostOfGoodsSettingsMainDTO: Codable {
         self.settingsType = try container.decode(String.self, forKey: .settingsType)
         self.items = try container.decode([CostOfGoodsSettingsHelperDTO].self, forKey: .items)
         
+        // Convert items to dictionary
         var itemsDistionary: [String: Double?] = [:]
         
         items.forEach { item in
             itemsDistionary[item.name] = item.value
         }
+        // Convert itemsDistionary to itemsJsonData
+
+        let itemsJsonData = try JSONSerialization.data(withJSONObject: itemsDistionary, options: .prettyPrinted)
+        // Convert itemsJsonData to CostOfGoodsSettingsModel
+
+        let data = try JSONDecoder().decode(CostOfGoodsSettingsModel.self, from: itemsJsonData)
         
-        do {
-            let jsonData = try JSONSerialization.data(withJSONObject: itemsDistionary, options: .prettyPrinted)
-            let data = try JSONDecoder().decode(CostOfGoodsSettingsGroupedModel.self, from: jsonData)
-            self.data = data
-        }
-        
+        self.data = data
     }
     
     private enum CodingKeys: String, CodingKey {
@@ -38,12 +42,8 @@ public struct CostOfGoodsSettingsMainDTO: Codable {
     
 }
 
- struct CostOfGoodsSettingsHelperDTO: Codable {
-    let name: String
-    let value: Double?
-}
 
-public struct CostOfGoodsSettingsGroupedModel: Codable {
+public struct CostOfGoodsSettingsModel: Decodable {
     public let bundling: Double?
     public let extraFee: Double?
     public let extraFeePerc: Double?
@@ -71,31 +71,12 @@ public struct CostOfGoodsSettingsGroupedModel: Codable {
         case inboundShippingUnits = "inbound_shipping_units"
     }
     
-    init(
-        prepCentre: Double? = nil,
-        bundling: Double? = nil,
-        packaging: Double? = nil,
-        extraFee: Double? = nil,
-        extraFeePerc: Double? = nil,
-        inboundShipping: Double? = nil,
-        inboundShippingUnits: Double? = nil,
-        vatFreePostage: Double? = nil,
-        handling: Double? = nil,
-        other: Double? = nil,
-        postage: Double? = nil
-    ) {
-        self.prepCentre = prepCentre
-        self.bundling = bundling
-        self.packaging = packaging
-        self.extraFee = extraFee
-        self.extraFeePerc = extraFeePerc
-        self.inboundShipping = inboundShipping
-        self.inboundShippingUnits = inboundShippingUnits
-        self.vatFreePostage = vatFreePostage
-        self.handling = handling
-        self.other = other
-        self.postage = postage
-    }
-    
 }
 
+// MARK: - Helper model
+
+struct CostOfGoodsSettingsHelperDTO: Codable {
+   let name: String
+   let value: Double?
+    
+}

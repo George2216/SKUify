@@ -63,7 +63,7 @@ final class LoginUseCase: Domain.LoginUseCase {
                             .saveUserId(userId: data.user.id)
                     }
                     .flatMapLatest(weak: self) { owner, _ in
-                        let marketplaces = data.user.amazon_settings.first?.marketplaces ?? []
+                        let marketplaces = data.user.amazonSettings.first?.marketplaces ?? []
                         return owner.marketplacesUseCase
                             .saveMarketplaces(marketplaces: marketplaces)
                     }

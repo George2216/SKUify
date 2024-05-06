@@ -24,10 +24,11 @@ final class InventoryBreakEvenPointNetwork: Domain.BreakEvenPointNetwork {
         self.interceptorFactory = interceptorFactory
     }
     
-    func getBreakEvenPoint(_ id: Int) -> Observable<BreakEvenPointDTO> {
+    func getBreakEvenPoint(_ data: COGBreakEvenRequestModel) -> Observable<BreakEvenPointDTO> {
         return network.request(
-            "break-point-even/\(id)/product/",
-            method: .get,
+            "break-point-even/\(data.id)/product/",
+            method: .post,
+            parameters: data.toDictionary(),
             interceptor: CompositeRxAlamofireInterceptor(
                 interceptors: [
                     interceptorFactory.makeTokenToHeaderInterceptor(),

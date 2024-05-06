@@ -6,3 +6,46 @@
 //
 
 import Foundation
+import Domain
+import RxSwift
+import RxCocoa
+import RxExtensions
+
+class COGBaseViewModel: ViewModelProtocol {
+    
+    func transform(_ input: Input) -> Output {
+        .init(
+            title: .empty(),
+            collectionData: .empty(),
+            showCalendarPopover: .empty(),
+            keyboardHeight: .empty(),
+            fetching: .empty(),
+            error: .empty()
+        )
+    }
+    
+}
+
+// MARK: - Input Output
+
+extension COGBaseViewModel {
+    
+    struct Input {
+        let selectedCalendarDate: Driver<Date>
+    }
+    
+    struct Output {
+        let title: Driver<String>
+        let collectionData: Driver<[COGSectionModel]>
+        let showCalendarPopover: Driver<CGPoint>
+        // Use for scroll to textfield
+        let keyboardHeight: Driver<CGFloat>
+        // Trackers
+        let fetching: Driver<Bool>
+        let error: Driver<BannerView.Input>
+    }
+    
+}
+
+
+

@@ -31,9 +31,9 @@ extension Date {
 }
 
 extension Date {
-    func yyyyMMddString() -> String {
+    func yyyyMMddString(_ separator: String = "-") -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.dateFormat = "yyyy\(separator)MM\(separator)dd"
         let formattedDate = dateFormatter.string(from: self)
         return formattedDate
     }
@@ -41,6 +41,34 @@ extension Date {
     func mmddyyyyString(_ separator: String = "-") -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM\(separator)dd\(separator)yyyy"
+        let formattedDate = dateFormatter.string(from: self)
+        return formattedDate
+    }
+    
+    func ddMMyyyyString(_ separator: String = "-") -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd\(separator)MM\(separator)yyyy"
+        let formattedDate = dateFormatter.string(from: self)
+        return formattedDate
+    }
+
+    func yyyyMMddTHHmmssString(_ separator: String = "-") -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy\(separator)MM\(separator)dd'T'HH:mm:ss"
+        let formattedDate = dateFormatter.string(from: self)
+        return formattedDate
+    }
+    
+    func yyyyMMddTHHmmString(_ separator: String = "-") -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy\(separator)MM\(separator)dd'T'HH:mm"
+        let formattedDate = dateFormatter.string(from: self)
+        return formattedDate
+    }
+    
+    func ddMMyyhmma(_ separator: String = "-") -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd\(separator)MM\(separator)yy h:mma"
         let formattedDate = dateFormatter.string(from: self)
         return formattedDate
     }

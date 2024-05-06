@@ -6,3 +6,36 @@
 //
 
 import Foundation
+import Domain
+import RxSwift
+import Alamofire
+import RxAlamofire
+
+final class COGBbpImoprtStategyNetwork: Domain.COGBbpImoprtStategyNetwork {
+    
+    private let network: Network<InventoryBuyBotImportsDTO>
+    private let interceptorFactory: Domain.InterceptorFactory
+
+    init(
+        network: Network<InventoryBuyBotImportsDTO>,
+        interceptorFactory: Domain.InterceptorFactory
+    ) {
+        self.network = network
+        self.interceptorFactory = interceptorFactory
+    }
+    
+    func updateBBPImportStrategy(_ data: BbpImoprtStategyRequestModel) -> Observable<InventoryBuyBotImportsDTO> {
+        network.request(
+            "product/\(data.id)/update_bbp_import_strategy/",
+            method: .post,
+            parameters: data.toDictionary(),
+            interceptor: CompositeRxAlamofireInterceptor(
+                interceptors: [
+                    interceptorFactory.makeTokenToHeaderInterceptor(),
+                    interceptorFactory.makeContentTypeJsonInterceptor()
+                ]
+            )
+        )
+    }
+    
+}

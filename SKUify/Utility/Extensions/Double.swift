@@ -8,10 +8,13 @@
 import Foundation
 
 extension Double {
-    func toDecimalString(decimal: Int) -> String {
-        String(
-            format: "%.\(decimal)f",
+
+    func toString() -> String {
+        return String(
+            format: "%.2f",
             self
         )
     }
+    
 }
+

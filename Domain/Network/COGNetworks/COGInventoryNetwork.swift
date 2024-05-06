@@ -6,3 +6,8 @@
 //
 
 import Foundation
+import RxSwift
+
+public protocol COGInventoryNetwork {
+    func updateCOG(_ data: COGInventoryRequestModel) -> Observable<OnlyIdDTO>
+}

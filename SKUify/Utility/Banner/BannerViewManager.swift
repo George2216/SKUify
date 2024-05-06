@@ -19,20 +19,16 @@ final class BannerViewManager: BannerViewManagerProtocol {
     
     private init() {}
     
-    func setup(with windowScene: UIWindowScene) {
+    func setup(with window: UIWindow) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             
             let banner = self.setupBanner()
-            
-            if let keyWindow = windowScene.windows
-                .first(where: { $0.isKeyWindow }) {
                 self.addBannerOnSuperview(
-                    superview: keyWindow,
+                    superview: window,
                     bannerView: banner
                 )
             }
-        }
     }
     
     func showBanner(input: BannerView.Input) {

@@ -6,3 +6,8 @@
 //
 
 import Foundation
+import RxSwift
+
+public protocol COGBbpImoprtStategyNetwork {
+    func updateBBPImportStrategy(_ data: BbpImoprtStategyRequestModel) -> Observable<InventoryBuyBotImportsDTO>
+}

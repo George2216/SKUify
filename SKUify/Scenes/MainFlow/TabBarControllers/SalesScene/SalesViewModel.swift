@@ -17,7 +17,7 @@ final class SalesViewModel: ViewModelProtocol {
     private let paginatedData = BehaviorSubject<SalesPaginatedModel>(value: .base())
     
     private let collectionDataStorage = BehaviorSubject<[ProductsSectionModel]>(value: [])
-        
+    
     private let isShowPaginatedLoader = PublishSubject<Bool>()
     
     private let tableType = BehaviorSubject<SalesTableType>(value: .orders)
@@ -33,9 +33,9 @@ final class SalesViewModel: ViewModelProtocol {
     // MARK: - Start loading events for a specific table type
     
     private let loadingStarted = PublishSubject<Void>()
-
+    
     private let showAlert = PublishSubject<AlertManager.AlertType>()
-
+    
     // MARK: - Setup view actions
     
     private let searchTextChanged = PublishSubject<String>()
@@ -155,7 +155,7 @@ final class SalesViewModel: ViewModelProtocol {
     
     
     // MARK: - Skip the first events so as not to start loading ahead of time
-
+    
     
     private func subscribeOnTableTypeChanged() {
         tableType
@@ -597,15 +597,13 @@ extension SalesViewModel {
             .init(
                 title: "Unit Price",
                 viewType: .text(
-                    order.currencySymbol + String(order.originalPrice.price)
-                        .doubleDecimalString(2)
+                    order.currencySymbol + order.originalPrice.price.toString()
                 )
             ),
             .init(
                 title: "Gross Profit",
                 viewType: .text(
-                    order.currencySymbol + String(order.profit)
-                        .doubleDecimalString(2)
+                    order.currencySymbol + order.profit.toString()
                 )
             ),
             .init(
@@ -636,20 +634,17 @@ extension SalesViewModel {
         [
             .init(
                 title: "Time & Date",
-                viewType: .text(order.purchaseDate.dateTTimeToShort())
+                viewType: .text(order.orderPurchaseDate.dateTTimeToShort())
             ),
             .init(
                 title: "Amazon Fees",
                 viewType: .text(
-                    order.currencySymbol + String(order.amzFees ?? 0)
-                        .doubleDecimalString(2)
+                    order.currencySymbol + order.amzFees.toUnwrappedString()
                 )
             ),
             .init(
                 title: "ROI",
-                viewType: .text(
-                    String(order.roi ?? 0.0)
-                        .doubleDecimalString(2) + "%")
+                viewType: .text(order.roi.toUnwrappedString() + "%")
             ),
             .init(
                 title: "Shipped To",
@@ -699,12 +694,11 @@ extension SalesViewModel {
                 title: "COG",
                 viewType: .button(
                     .init(
-                        title: order.currencySymbol + String(order.totalCog)
-                            .doubleDecimalString(2),
+                        title: order.currencySymbol + order.totalCog.toString(),
                         style: .cog,
                         action: .simple({ [weak self] in
                             guard let self else { return }
-                            let alerInput = self.makeEditCOGsAlertInput()
+                            let alerInput = self.makeEditCOGsAlertInput(order.toCOGInputModel())
                             self.showAlert.onNext(alerInput)
                         })
                     )
@@ -712,10 +706,7 @@ extension SalesViewModel {
             ),
             .init(
                 title: "Margin",
-                viewType: .text(
-                    String(order.margin ?? 0.0)
-                        .doubleDecimalString(2) + "%"
-                )
+                viewType: .text(order.margin.toUnwrappedString() + "%")
             ),
             .init(
                 title: "Fulfillment",
@@ -827,15 +818,13 @@ extension SalesViewModel {
             .init(
                 title: "Unit Price",
                 viewType: .text(
-                    refund.currencySymbol + String(refund.originalPrice.price)
-                        .doubleDecimalString(2)
+                    refund.currencySymbol + refund.originalPrice.price.toString()
                 )
             ),
             .init(
                 title: "Refund Cost",
                 viewType: .text(
-                    refund.currencySymbol + String(refund.refundСost)
-                        .doubleDecimalString(2)
+                    refund.currencySymbol + refund.refundСost.toString()
                 )
             ),
             .init(
@@ -867,8 +856,7 @@ extension SalesViewModel {
             .init(
                 title: "Amazon Fees",
                 viewType: .text(
-                    refund.currencySymbol + String(refund.amzFees ?? 0)
-                        .doubleDecimalString(2)
+                    refund.currencySymbol + refund.amzFees.toUnwrappedString()
                 )
             ),
             .init(
@@ -918,13 +906,12 @@ extension SalesViewModel {
                 title: "COG",
                 viewType: .button(
                     .init(
-                        title: refund.currencySymbol + String(refund.totalCog)
-                            .doubleDecimalString(2),
+                        title: refund.currencySymbol + refund.totalCog.toString(),
                         style: .cog,
                         action: .simple({ [weak self] in
                             guard let self else { return }
-                            let alerInput = self.makeEditCOGsAlertInput()
-                            self.showAlert.onNext(alerInput)
+                            let alertInput = self.makeEditCOGsAlertInput(refund.toCOGInputModel())
+                            self.showAlert.onNext(alertInput)
                         })
                     )
                 )
@@ -999,9 +986,7 @@ extension SalesViewModel {
                     .init(
                         title: "Cancel",
                         style: .primaryGray,
-                        action: .simple({
-                            
-                        })
+                        action: .simple({ })
                     ),
                     .init(
                         title: "Ok",
@@ -1019,7 +1004,7 @@ extension SalesViewModel {
         )
     }
     
-    private func makeEditCOGsAlertInput() -> AlertManager.AlertType {
+    private func makeEditCOGsAlertInput(_ cogInput: COGInputModel) -> AlertManager.AlertType {
         return .common(
             .init(
                 title: "Confirm COG Editing",
@@ -1029,7 +1014,7 @@ extension SalesViewModel {
                         title: "Cancel",
                         style: .primaryGray,
                         action: .simple({
-                             
+                            
                         })
                     ),
                     .init(
@@ -1037,7 +1022,7 @@ extension SalesViewModel {
                         style: .primary,
                         action: .simple({ [weak self] in
                             guard let self else { return }
-                            let alertInput = self.makeEditCOGForAsinOrSalesAlertInput()
+                            let alertInput = self.makeEditCOGForAsinOrSalesAlertInput(cogInput)
                             self.showAlert.onNext(alertInput)
                         })
                     )
@@ -1046,7 +1031,7 @@ extension SalesViewModel {
         )
     }
     
-    private func makeEditCOGForAsinOrSalesAlertInput() -> AlertManager.AlertType {
+    private func makeEditCOGForAsinOrSalesAlertInput(_ cogInput: COGInputModel) -> AlertManager.AlertType {
         return .common(
             .init(
                 title: "COG Editing Scope",
@@ -1057,7 +1042,9 @@ extension SalesViewModel {
                         style: .primaryRed,
                         action: .simple({ [weak self] in
                             guard let self else { return }
-                            self.navigator.toCOG()
+                            var cogInput = cogInput
+                            cogInput.isAsinUpdate = true
+                            self.navigator.toCOG(cogInput)
                         })
                     ),
                     .init(
@@ -1065,7 +1052,7 @@ extension SalesViewModel {
                         style: .primary,
                         action: .simple({ [weak self] in
                             guard let self else { return }
-                            self.navigator.toCOG()
+                            self.navigator.toCOG(cogInput)
                         })
                     )
                 ]

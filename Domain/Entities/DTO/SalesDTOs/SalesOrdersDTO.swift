@@ -24,11 +24,11 @@ public struct SalesOrdersDTO: Decodable {
     public let asin: String
     public let amazonOrderId: String
     public let marketplace: String
-    public let purchaseDate: String
+    public let orderPurchaseDate: String
     public let quantityOrdered: Int
     public let originalPrice: OriginalPriceDTO
     public let amzFees: Double?
-    public let totalCog: Double // Unit cost for COG
+    public let totalCog: Double 
     public let currencySymbol: String
     public let profit: Double
     public let roi: Double?
@@ -38,20 +38,27 @@ public struct SalesOrdersDTO: Decodable {
     public let fulfillment: String
     public let note: String?
     public let vatRate: Int
+    
     // MARK: - Only GOG
     
+    public let dateAdded: String
+    public let unitCost: Double?
+    public let purchasedFrom: String?
+    public let purchasedDate: String?
+    public let bundled: Bool
     public let bundling: Double?
     public let prepFee: Double?
     public let packaging: Double?
     public let handling: Double?
     public let other: Double?
     public let shipping: Double?
-//    //
-//    public let extraFee: String?
-//    public let extraFeePerc: Double?
+    public let vatFreeShipping: Double?
+    public let inboundShippingCost: Double?
+    public let extraFee: Double?
+    public let extraFeePerc: Double?
+    public let inboundShippingUnits: Double?
+    public let breakEvenPoint: Double?
 
-
-    
     private enum CodingKeys: String, CodingKey {
         case id
         case imageUrl = "full_image_url"
@@ -60,7 +67,7 @@ public struct SalesOrdersDTO: Decodable {
         case asin = "asin"
         case amazonOrderId = "order__amazon_order_id"
         case marketplace = "marketplace"
-        case purchaseDate = "order__purchase_date"
+        case orderPurchaseDate = "order__purchase_date"
         case quantityOrdered = "quantity_ordered"
         case originalPrice = "original_price"
         case amzFees = "amz_fees"
@@ -74,14 +81,24 @@ public struct SalesOrdersDTO: Decodable {
         case fulfillment = "order__fulfillment_channel"
         case note = "note"
         case vatRate = "product__vat_rate"
-        case bundling = "bundling"
+        
+        case dateAdded = "product__date_added"
+        case unitCost = "inventory_cost"
+        case purchasedFrom = "product__purchased_from"
+        case purchasedDate = "product__purchased_date"
+        case bundled
+        case bundling
         case prepFee = "prep_centre"
         case packaging = "packaging"
         case handling = "handling"
         case other = "other"
         case shipping = "postage"
-//        case extraFee = "extra_fee"
-//        case extraFeePerc = "extra_fee_perc"
+        case vatFreeShipping = "vat_free_postage"
+        case inboundShippingCost = "inbound_shipping"
+        case extraFee = "extra_fee"
+        case extraFeePerc = "extra_fee_perc"
+        case inboundShippingUnits = "inbound_shipping_units"
+        case breakEvenPoint = "break_even_point"
     }
     
 }

@@ -46,6 +46,17 @@ public final class NetworkUseCaseProvider: Domain.NetworkUseCaseProvider {
         return UserDataUseCase(network: networkProvider.makeUserDataNetwork())
     }
     
+    public func makeBreakEvenPointUseCase() -> Domain.BreakEvenPointUseCase {
+        return BreakEvenPointUseCase(
+            salesBreakEvenPoinNetwork: networkProvider.makeSalesBreakEvenPointNetwork(),
+            inventoryBreakEvenPoinNetwork: networkProvider.makeInventoryBreakEvenPointNetwork()
+        )
+    }
+    
+    public func makeCOGSInformationUseCase() -> Domain.COGSInformationUseCase {
+        return COGSInformationUseCase(informationCOGSNetwork: networkProvider.makeCOGSInformationNetwork())
+    }
+    
     // MARK: - I'm not sure that passing two Networks to UseCase is a very clean approach, but it seems to me that it will be more readable
 
     public func makeSalesUseCase() -> Domain.SalesUseCase {
@@ -60,6 +71,25 @@ public final class NetworkUseCaseProvider: Domain.NetworkUseCaseProvider {
             buyBotImportsNetwork: networkProvider.makeInventoryBuyBotImportsNetwork(),
             ordersNetwork: networkProvider.makeInventoryOrdersNetwork()
         )
+    }
+    
+    public func makeCOGUseCase() -> Domain.COGUseCase {
+        return COGUseCase(
+            salesCOGNetwork: networkProvider.makeCOGSalesNetwork(),
+            inventoryCOGNetwork: networkProvider.makeCOGInventoryNetwork()
+        )
+    }
+    
+    public func makeReplenishCOGUseCase() -> Domain.ReplenishCOGUseCase {
+        return ReplenishCOGUseCase(replenishCOGNetwork: networkProvider.makeReplenishCOGNetwork())
+    }
+    
+    public func makeCOGBbpImoprtStategyUseCase() -> Domain.COGBbpImoprtStategyUseCase {
+        return COGBbpImoprtStategyUseCase(imoprtStategyNetwork: networkProvider.makeCOGBbpImoprtStategyNetwork())
+    }
+    
+    public func makeCOGSettingsUseCase() -> Domain.COGSettingsUseCase {
+        return COGSettingsUseCase(settingsNetwork: networkProvider.makeCOGSettingsNetwork())
     }
     
     // MARK: - Note

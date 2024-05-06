@@ -9,9 +9,12 @@ import UIKit
 
 protocol InventoryNavigatorProtocol {
     func toInventory()
+    func toSettingsCOG(_ input: COGSettingsInputModel)
+    func toCOG(_ input: COGInputModel)
 }
 
 final class InventoryNavigator: InventoryNavigatorProtocol {
+ 
     private let navigationController: UINavigationController
     private let di: DIProtocol
     
@@ -31,6 +34,22 @@ final class InventoryNavigator: InventoryNavigatorProtocol {
         )
         
         navigationController.pushViewController(vc, animated: true)
+    }
+    
+    func toCOG(_ input: COGInputModel) {
+        let navigator = COGNavigator(
+            navigationController: navigationController,
+            di: di
+        )
+        navigator.toCOG(input)
+    }
+    
+    func toSettingsCOG(_ input: COGSettingsInputModel) {
+        let navigator = COGSettingsNavigator(
+            navigationController: navigationController,
+            di: di
+        )
+        navigator.toCOGSettings(input)
     }
     
     deinit {

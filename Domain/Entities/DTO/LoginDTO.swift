@@ -12,20 +12,19 @@ public struct LoginDTO: Decodable, ErrorHandledResponseModel {
     public let access: String
     public let refresh: String
     public let user: LoginUserDataDTO
-    
-    private enum CodingKeys: String, CodingKey {
-        case access = "access"
-        case refresh = "refresh"
-        case detail = "detail"
-        case user = "user"
 
-    }
 }
 
 public struct LoginUserDataDTO: Decodable {
     public let id: Int
-    public let amazon_settings: [AmazonSettingsDTO]
+    public let amazonSettings: [AmazonSettingsDTO]
     public let marketplaces: [MarketplaceDTO]
+    
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case amazonSettings = "amazon_settings"
+        case marketplaces
+    }
 }
 
 

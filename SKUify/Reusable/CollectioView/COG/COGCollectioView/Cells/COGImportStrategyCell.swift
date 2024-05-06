@@ -73,7 +73,7 @@ final class COGImportStrategyCell: UICollectionViewCell {
         }
     }
     
-    private func makeTitledSwith(_ input: COGToApplyToAsinCellTitledSwithInput) -> UIView {
+    private func makeTitledSwith(_ input: COGImportStrategyCellTitledSwithInput) -> UIView {
         let titleLabel = UILabel()
         titleLabel.text = input.title
         titleLabel.font = .manrope(
@@ -93,7 +93,7 @@ final class COGImportStrategyCell: UICollectionViewCell {
         return stack
     }
     
-    private func makeTitledViews(_ inputs: [COGToApplyToAsinCellTitledViewInput]) -> UIView {
+    private func makeTitledViews(_ inputs: [COGImportStrategyCellTitledViewInput]) -> UIView {
         let stack = VerticalStack()
         stack.views = inputs.map { input  in
             let decorator = TitleDecorator(
@@ -112,7 +112,7 @@ final class COGImportStrategyCell: UICollectionViewCell {
         return stack
     }
     
-    private func makeTitledSubviews(_ input: COGToApplyToAsinCellTitledSubviewType) -> UIView {
+    private func makeTitledSubviews(_ input: COGImportStrategyCellTitledSubviewType) -> UIView {
         switch input {
         case .titledLabels(let inputs):
             return makeTitledLabelsView(
@@ -129,7 +129,7 @@ final class COGImportStrategyCell: UICollectionViewCell {
     }
     
     private func makeTitledLabelsView(
-        _ inputs: [COGToApplyToAsinCellTitledTextInput],
+        _ inputs: [COGImportStrategyCellTitledTextInput],
         isBold: Bool
     ) -> UIView {
                 
@@ -156,7 +156,7 @@ final class COGImportStrategyCell: UICollectionViewCell {
     }
     
     private func makeTitledLabel(
-        _ input: COGToApplyToAsinCellTitledTextInput,
+        _ input: COGImportStrategyCellTitledTextInput,
         isBold: Bool
     ) -> UIView {
         

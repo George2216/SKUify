@@ -84,9 +84,9 @@ final class DashboardViewModel: ViewModelProtocol {
             showCurrencyPopover: showCurrencyPopover.asDriverOnErrorJustComplete(),
             showTimeSlotsPopover: showTimeSlotsPopover.asDriverOnErrorJustComplete(),
             showCalendarPopover: showCalendarPopover.asDriverOnErrorJustComplete(),
+            timeSlots: makeTimeSlotsInput(), 
             fetching: activityIndicator.asDriver(),
-            error: errorTracker.asBannerInput(.error),
-            timeSlots: makeTimeSlotsInput()
+            error: errorTracker.asBannerInput(.error)
         )
     }
     
@@ -527,7 +527,7 @@ final class DashboardViewModel: ViewModelProtocol {
                             percentStatus: salesPercentageStatus,
                             percentage: "\(salesPercentage)%",
                             rangeTitle: state.title,
-                            rangeVaue: "\(currency)\(data.salesCompared ?? 0.0)"
+                            rangeVaue: "\(currency)\(data.salesCompared.toUnwrappedString())"
                         ),
                         switchState: true,
                         sum: "\(currency)\(data.sales)",
@@ -552,7 +552,7 @@ final class DashboardViewModel: ViewModelProtocol {
                             percentStatus: unitsSoldPercentageStatus,
                             percentage: "\(unitsSoldPercentage)%",
                             rangeTitle: state.title,
-                            rangeVaue: "\(data.unitsSoldCompared ?? 0.00)"
+                            rangeVaue: "\(data.unitsSoldCompared.toUnwrappedString())"
                         ),
                         switchState: true,
                         sum: "\(data.unitsSold)",
@@ -577,7 +577,7 @@ final class DashboardViewModel: ViewModelProtocol {
                             percentStatus: profitPercentageStatus,
                             percentage: "\(profitPercentage)%",
                             rangeTitle: state.title,
-                            rangeVaue: "\(currency)\(data.profitCompared ?? 0.00)"
+                            rangeVaue: "\(currency)\(data.profitCompared.toUnwrappedString())"
                         ),
                         switchState: true,
                         sum: "\(currency)\(data.profit)",
@@ -602,7 +602,7 @@ final class DashboardViewModel: ViewModelProtocol {
                             percentStatus: refundsPercentageStatus,
                             percentage: "\(refundsPercentage)%",
                             rangeTitle: state.title,
-                            rangeVaue: "\(currency)\(data.refundsCompared ?? 0.00)"
+                            rangeVaue: "\(currency)\(data.refundsCompared.toUnwrappedString())"
                         ),
                         switchState: true,
                         sum: "\(currency)\(data.refunds)",
@@ -627,7 +627,7 @@ final class DashboardViewModel: ViewModelProtocol {
                             percentStatus: marginPercentageStatus,
                             percentage: "\(marginPercentage)%",
                             rangeTitle: state.title,
-                            rangeVaue: "\(data.marginCompared ?? 0.00)%"
+                            rangeVaue: "\(data.marginCompared.toUnwrappedString())%"
                         ),
                         switchState: true,
                         sum: "\(data.margin)%",
@@ -652,7 +652,7 @@ final class DashboardViewModel: ViewModelProtocol {
                             percentStatus: roiPercentageStatus,
                             percentage: "\(roiPercentage)%",
                             rangeTitle: state.title,
-                            rangeVaue: "\(data.roiCompared ?? 0.00)%"
+                            rangeVaue: "\(data.roiCompared.toUnwrappedString())%"
                         ),
                         switchState: true,
                         sum: "\(data.roi)%",
@@ -1009,11 +1009,11 @@ extension DashboardViewModel {
         let showCurrencyPopover: Driver<CGPoint>
         let showTimeSlotsPopover: Driver<CGPoint>
         let showCalendarPopover: Driver<Void>
+        // TimeSlots
+        let timeSlots: Driver<[TimeSlotCell.Input]>
         // Trackers
         let fetching: Driver<Bool>
         let error: Driver<BannerView.Input>
-        // TimeSlots
-        let timeSlots: Driver<[TimeSlotCell.Input]>
     }
     
 }

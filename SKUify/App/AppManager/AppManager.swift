@@ -65,9 +65,11 @@ final class AppManager {
         
         checkUserLoggedIn()
             .filterEqual(true)
-            .flatMapFirst(weak: self, selector: { owner, _ in
-                owner.toMainFlow()
-            })
+            .flatMapFirst(
+                weak: self,
+                selector: { owner, _ in
+                    owner.toMainFlow()
+                })
             .drive()
             .disposed(by: disposeBag)
         

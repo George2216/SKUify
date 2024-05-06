@@ -6,3 +6,9 @@
 //
 
 import Foundation
+import RxSwift
+
+public protocol COGSInformationUseCase {
+    func getCOGSInformation(_ settingsType: String) -> Observable<CostOfGoodsSettingsModel>
+}
+

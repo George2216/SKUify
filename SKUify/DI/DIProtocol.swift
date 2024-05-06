@@ -18,5 +18,6 @@ protocol DIProtocol:
     ProfileUseCases,
     CompanyInformationUseCases,
     NoteAlertUseCases,
-    COGUseCases
+    COGUseCases,
+    COGSettingsUseCases
 {}

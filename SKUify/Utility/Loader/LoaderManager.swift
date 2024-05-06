@@ -19,17 +19,11 @@ final class LoaderManager: LoaderManagerProtocol {
     
     private init() {}
     
-    func setup(with windowScene: UIWindowScene) {
+    func setup(with window: UIWindow) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            
-            if let keyWindow = windowScene.windows
-                .first(where: { $0.isKeyWindow }) {
-                self.window = keyWindow
-                self.addLoaderOnSuperview(
-                    superview: keyWindow
-                )
-            }
+            self.window = window
+            self.addLoaderOnSuperview(superview: window)
         }
     }
     
@@ -38,7 +32,6 @@ final class LoaderManager: LoaderManagerProtocol {
             loadingIndicator.startAnimating()
         } else {
             loadingIndicator.stopAnimating()
-            loadingIndicator.removeFromSuperview()
         }
         window?.isUserInteractionEnabled = !isLoading
     }

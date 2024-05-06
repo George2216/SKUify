@@ -36,6 +36,26 @@ public struct SalesRefundsDTO: Decodable {
     public let note: String?
     public let vatRate: Int
     
+    // MARK: - Only GOG
+    
+    public let dateAdded: String
+    public let unitCost: Double?
+    public let purchasedFrom: String?
+    public let purchasedDate: String?
+    public let bundled: Bool
+    public let bundling: Double?
+    public let prepFee: Double?
+    public let packaging: Double?
+    public let handling: Double?
+    public let other: Double?
+    public let shipping: Double?
+    public let vatFreeShipping: Double?
+    public let inboundShippingCost: Double?
+    public let extraFee: Double?
+    public let extraFeePerc: Double?
+    public let inboundShippingUnits: Double?
+    public let breakEvenPoint: Double?
+    
     private enum CodingKeys: String, CodingKey {
         case id = "id"
         case imageUrl = "full_image_url"
@@ -55,6 +75,24 @@ public struct SalesRefundsDTO: Decodable {
         case fulfillment = "order__fulfillment_channel"
         case note = "note"
         case vatRate = "product__vat_rate"
+        
+        case dateAdded = "product__date_added"
+        case unitCost = "inventory_cost"
+        case purchasedFrom = "product__purchased_from"
+        case purchasedDate = "product__purchased_date"
+        case bundled
+        case bundling
+        case prepFee = "prep_centre"
+        case packaging = "packaging"
+        case handling = "handling"
+        case other = "other"
+        case shipping = "postage"
+        case vatFreeShipping = "vat_free_postage"
+        case inboundShippingCost = "inbound_shipping"
+        case extraFee = "extra_fee"
+        case extraFeePerc = "extra_fee_perc"
+        case inboundShippingUnits = "inbound_shipping_units"
+        case breakEvenPoint = "break_even_point"
     }
     
 }

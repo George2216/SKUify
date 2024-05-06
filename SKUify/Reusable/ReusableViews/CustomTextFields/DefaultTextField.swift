@@ -33,6 +33,8 @@ final class DefaultTextField: UITextField {
         delegate = nil
         disposeBag = DisposeBag()
        
+        text = config.text
+
         rx.controlEvent(config.controlEvent)
             .debounce(
                 .milliseconds(config.debounce),
@@ -40,12 +42,13 @@ final class DefaultTextField: UITextField {
             )
             .withLatestFrom(rx.text.orEmpty)
             .asDriverOnErrorJustComplete()
-            .drive(onNext: { text in
+            .withUnretained(self)
+            .drive(onNext: { owner, text in
                 config.textObserver(text)
+                owner.config.text = text
             })
             .disposed(by: disposeBag)
         
-        text = config.text
         
         setupStyle(style: config.style)
         setupPlaceholder(config: config)
@@ -53,8 +56,15 @@ final class DefaultTextField: UITextField {
         if !config.text.isEmpty {
             config.textObserver(config.text)
         }
+        
+        isEnabled = !config.lockInput
+        
+        if config.lockInput {
+            backgroundColor = .background
+        }
+       
     }
-    
+ 
     private func setupStyle(style: Style) {
         backgroundColor = .white
         font = .manrope(type: .bold, size: 14)
@@ -70,8 +80,7 @@ final class DefaultTextField: UITextField {
         
         switch style {
         case .bordered:
-            layer.borderWidth = 1.0
-            layer.cornerRadius = 10.0
+            setupBorderedStyle()
             addLeftImage()
             
         case .search:
@@ -80,9 +89,7 @@ final class DefaultTextField: UITextField {
             addLeftImage(.search, padding: 5)
             
         case .doubleBordered(let leftText):
-            layer.borderWidth = 1.0
-            layer.cornerRadius = 10.0
-            delegate = doubleDelegate
+            setupBorderedStyle()
             keyboardType = .asciiCapableNumberPad
             self.delegate = doubleDelegate
 
@@ -91,8 +98,22 @@ final class DefaultTextField: UITextField {
             addLeftText(leftText)
             addRightImage(padding: 16.0)
 
+        case .intBordered:
+            setupBorderedStyle()
+            keyboardType = .numberPad
+
+            textAlignment = .right
+
+            addLeftImage(padding: 16.0)
+            addRightImage(padding: 16.0)
 
         }
+        
+    }
+    
+    private func setupBorderedStyle() {
+        layer.borderWidth = 1.0
+        layer.cornerRadius = 10.0
     }
     
     private func setupPlaceholder(config: Config) {
@@ -114,31 +135,50 @@ final class DefaultTextField: UITextField {
 // MARK: - Config
 
 extension DefaultTextField {
-    struct Config {
-        var style: Style
+    // For configuration, we use a class so that when the text changes, we can modify the configuration of DefaultTextField, and this changes the initial configuration instance. This is necessary when using a textField on a table.
+    class Config {
+        var style: Style = .bordered
         var text: String = ""
         var plaseholder: String = ""
         var debounce: Int = 0 // milliseconds
-        var textObserver: ((String)->())
+        var textObserver: ((String)->()) = { _ in }
         var controlEvent: UIControl.Event = .editingChanged
-        
+        var lockInput: Bool = false
         static func empty() -> Config {
-            return Config(
-                style: .bordered,
-                textObserver: { _ in }
-            )
+            return Config.init()
         }
+        
+        init(
+            style: Style = .bordered,
+            text: String = "",
+            plaseholder: String = "",
+            debounce: Int = 0,
+            textObserver: @escaping (String) -> Void = {_ in },
+            controlEvent: UIControl.Event = .editingChanged,
+            lockInput: Bool = false
+        ) {
+            self.style = style
+            self.text = text
+            self.plaseholder = plaseholder
+            self.debounce = debounce
+            self.textObserver = textObserver
+            self.controlEvent = controlEvent
+            self.lockInput = lockInput
+        }
+        
     }
     
     enum Style {
         case bordered
+        case intBordered
         case doubleBordered(_ leftText: String)
         case search
         
         fileprivate var height: CGFloat {
             switch self {
             case .bordered,
-                    .doubleBordered:
+                    .doubleBordered,
+                    .intBordered:
                 return 40.0
             case .search:
                 return 34.0

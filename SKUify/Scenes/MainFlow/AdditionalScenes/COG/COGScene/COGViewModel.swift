@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import RxExtensions
 
-final class COGViewModel: ViewModelProtocol {
+final class COGViewModel: COGBaseViewModel {
     private let disposeBag = DisposeBag()
     
     // Subscribers
@@ -39,10 +39,7 @@ final class COGViewModel: ViewModelProtocol {
     private let tapOnSaveOrUpdate = PublishSubject<Void>()
     
     private let showCalendarPopover = PublishSubject<CGPoint>()
-    
-    // Collection data
-    private let collectionDataStorage = BehaviorSubject<[COGSectionModel]>(value: [])
-    
+        
     // Can be change only for ui update
     private let visibleDataStorage: BehaviorSubject<COGInputModel>
     // Changed data
@@ -78,25 +75,32 @@ final class COGViewModel: ViewModelProtocol {
         self.changedDataStorage = .init(value: input)
         
         self.navigator = navigator
-        
+        super.init()
+
         subscribtions()
     }
     
-    func transform(_ input: Input) -> Output {
+    override func transform(_ input: Input) -> Output {
+        _ = super.transform(input)
         subscribeOnSelectedCalendarDate(input)
         
         return Output(
-            collectionData: makeCollectionData(input),
+            title: makeTitle(),
+            collectionData: makeCollectionData(),
             showCalendarPopover: showCalendarPopover.asDriverOnErrorJustComplete(),
-            keyboardHeight: getKeyboardHeight(), 
+            keyboardHeight: getKeyboardHeight(),
             fetching: activityIndicator.asDriver(),
             error: errorTracker.asBannerInput(.error)
         )
     }
     
+    private func makeTitle() -> Driver<String> {
+        .just("COG")
+    }
+    
     // MARK: Make collection data
     
-    private func makeCollectionData(_ input: Input) -> Driver<[COGSectionModel]> {
+    private func makeCollectionData() -> Driver<[COGSectionModel]> {
         visibleDataStorage
             .asDriverOnErrorJustComplete()
         .withUnretained(self)
@@ -880,23 +884,3 @@ extension COGViewModel {
     }
     
 }
-
-// MARK: - Input Output
-
-extension COGViewModel {
-    struct Input {
-        let selectedCalendarDate: Driver<Date>
-    }
-    
-    struct Output {
-        let collectionData: Driver<[COGSectionModel]>
-        let showCalendarPopover: Driver<CGPoint>
-        // Use for scroll to textfield
-        let keyboardHeight: Driver<CGFloat>
-        // Trackers
-        let fetching: Driver<Bool>
-        let error: Driver<BannerView.Input>
-    }
-    
-}
-

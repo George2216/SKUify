@@ -42,7 +42,7 @@ final class AlertManager: AlertManagerProtocol {
 // MARK: - Alert types
 
 extension AlertManager {
-    
+
     enum AlertType {
         case common(_ input: CommonAlertView.Input)
         case note(_ input: NoteAlertView.Input)

@@ -6,3 +6,8 @@
 //
 
 import Foundation
+import RxSwift
+
+public protocol ReplenishCOGNetwork {
+    func saveReplenish(_ data: ReplenishCOGRequestModel) -> Observable<[OnlyIdDTO]>
+}

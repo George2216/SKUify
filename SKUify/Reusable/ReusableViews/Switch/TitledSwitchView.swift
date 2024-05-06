@@ -58,7 +58,7 @@ class TitledSwitchView: UIView {
     private func setupTitleLabel() {
         titleLabel.font = .manrope(
             type: .bold,
-            size: 15
+            size: 14
         )
         titleLabel.textAlignment = .left
         titleLabel.textColor = .black

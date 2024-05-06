@@ -6,3 +6,8 @@
 //
 
 import Foundation
+import RxSwift
+
+public protocol COGSettingsUseCase {
+    func updateProductSettings(_ data: COGSettingsRequestModel) -> Observable<Void>
+}

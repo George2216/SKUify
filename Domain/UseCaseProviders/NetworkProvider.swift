@@ -17,6 +17,13 @@ public protocol NetworkProvider {
     func makeInventoryBuyBotImportsNetwork() -> InventoryBuyBotImportsNetwork
     func makeNoteInventoryNetwork() -> NoteNetwork
     func makeNoteSalesNetwork() -> NoteNetwork
-
+    func makeSalesBreakEvenPointNetwork() -> BreakEvenPointNetwork
+    func makeInventoryBreakEvenPointNetwork() -> BreakEvenPointNetwork
+    func makeCOGSalesNetwork() -> COGSalesNetwork
+    func makeCOGInventoryNetwork() -> COGInventoryNetwork
+    func makeReplenishCOGNetwork() -> ReplenishCOGNetwork
+    func makeCOGSInformationNetwork() -> COGSInformationNetwork
+    func makeCOGBbpImoprtStategyNetwork() -> COGBbpImoprtStategyNetwork
+    func makeCOGSettingsNetwork() -> COGSettingsNetwork
 }
 

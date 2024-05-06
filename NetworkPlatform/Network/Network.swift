@@ -44,8 +44,8 @@ final class Network<T: Decodable> {
     func requestArray(
         _ path: String,
         method: HTTPMethod,
-        headers: [String: String],
-        parameters: [String: Any],
+        headers: [String: String] = [:],
+        parameters: [String: Any] = [:],
         interceptor: RequestInterceptor? = nil
     ) -> Observable<[T]> {
         return setupRequest(
@@ -79,9 +79,10 @@ final class Network<T: Decodable> {
             )
             .debug()
             .do(onNext: { data in
-                print(String(data: data, encoding: .utf8))
+                print(data.prettyPrintedJSONString as Any)
             })
             .observe(on: scheduler)
     }
+    
 }
 

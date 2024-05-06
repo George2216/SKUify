@@ -28,7 +28,7 @@ final class NoteInventoryNetwork: Domain.NoteNetwork {
         return network.request(
             "product/\(data.id)/update_note/",
             method: .post,
-            parameters: NoteDTO(note: data.note).toDictionary() ?? [:],
+            parameters: NoteDTO(note: data.note).toDictionary(),
             interceptor: CompositeRxAlamofireInterceptor(
                 interceptors: [
                     interceptorFactory.makeContentTypeJsonInterceptor(),

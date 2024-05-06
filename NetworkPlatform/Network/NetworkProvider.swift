@@ -50,6 +50,20 @@ final public class NetworkProvider: Domain.NetworkProvider {
         )
     }
     
+    public func makeSalesBreakEvenPointNetwork() -> Domain.BreakEvenPointNetwork {
+        return SalesBreakEvenPointNetwork(
+            network: makeNetwork(BreakEvenPointDTO.self),
+            interceptorFactory: interceptorFactory
+        )
+    }
+    
+    public func makeInventoryBreakEvenPointNetwork() -> Domain.BreakEvenPointNetwork {
+        return InventoryBreakEvenPointNetwork(
+            network: makeNetwork(BreakEvenPointDTO.self),
+            interceptorFactory: interceptorFactory
+        )
+    }
+    
     // MARK: - Sales
     
     public func makeSalesRefundsNetwork() -> Domain.SalesRefundsNetwork {
@@ -66,6 +80,20 @@ final public class NetworkProvider: Domain.NetworkProvider {
         )
     }
 
+    public func makeCOGSalesNetwork() -> Domain.COGSalesNetwork {
+        return COGSalesNetwork(
+            network: makeNetwork(OnlyIdDTO.self),
+            interceptorFactory: interceptorFactory
+        )
+    }
+    
+    public func makeCOGSInformationNetwork() -> Domain.COGSInformationNetwork {
+        return COGSInformationNetwork(
+            network:makeNetwork(CostOfGoodsSettingsMainDTO.self), 
+            interceptorFactory: interceptorFactory
+        )
+    }
+    
     // MARK: - Inventory
     
     public func makeInventoryOrdersNetwork() -> Domain.InventoryOrdersNetwork {
@@ -78,6 +106,34 @@ final public class NetworkProvider: Domain.NetworkProvider {
     public func makeInventoryBuyBotImportsNetwork() -> Domain.InventoryBuyBotImportsNetwork {
         return InventoryBuyBotImportsNetwork(
             network: makeNetwork(InventoryBuyBotImportsResultsDTO.self),
+            interceptorFactory: interceptorFactory
+        )
+    }
+    
+    public func makeCOGInventoryNetwork() -> Domain.COGInventoryNetwork {
+        return COGInventoryNetwork(
+            network: makeNetwork(OnlyIdDTO.self),
+            interceptorFactory: interceptorFactory
+        )
+    }
+    
+    public func makeReplenishCOGNetwork() -> Domain.ReplenishCOGNetwork {
+        return ReplenishCOGNetwork(
+            network: makeNetwork(OnlyIdDTO.self),
+            interceptorFactory: interceptorFactory
+        )
+    }
+    
+    public func makeCOGBbpImoprtStategyNetwork() -> Domain.COGBbpImoprtStategyNetwork {
+        return COGBbpImoprtStategyNetwork(
+            network: makeNetwork(InventoryBuyBotImportsDTO.self),
+            interceptorFactory: interceptorFactory
+        )
+    }
+    
+    public func makeCOGSettingsNetwork() -> Domain.COGSettingsNetwork {
+        return COGSettingsNetwork(
+            network: makeNetwork(OnlyIdDTO.self),
             interceptorFactory: interceptorFactory
         )
     }

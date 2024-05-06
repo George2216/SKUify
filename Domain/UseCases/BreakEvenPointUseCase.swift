@@ -6,3 +6,9 @@
 //
 
 import Foundation
+import RxSwift
+
+public protocol BreakEvenPointUseCase {
+    func getSalesBreakEvenPoint(_ data: COGBreakEvenRequestModel) -> Observable<BreakEvenPointDTO>
+    func getInventoryBreakEvenPoint(_ data: COGBreakEvenRequestModel) -> Observable<BreakEvenPointDTO>
+}

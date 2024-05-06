@@ -89,6 +89,15 @@ extension UICollectionView {
             withReuseIdentifier: cellClass.reuseID
         )
     }
+    
+    func registerHeader<T: Reusable>(_ cellClass: T.Type) {
+        register(
+            cellClass,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: cellClass.reuseID
+        )
+    }
+    
 }
 
 extension FSCalendar {

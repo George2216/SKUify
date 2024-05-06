@@ -33,7 +33,7 @@ class BaseUserContentViewModel: ViewModelProtocol {
 
     struct Output {
         let navigationTitle: Driver<String>
-        // Scroll to
+        // Use for scroll to textfield
         let keyboardHeight: Driver<CGFloat>
         // Scroll content
         let contentData: Driver<UserContentContentView.Input>

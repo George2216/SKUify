@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-final class SmallSwitch: UISwitch {
+class SmallSwitch: UISwitch {
     override init(frame: CGRect) {
         super.init(frame: frame)
         

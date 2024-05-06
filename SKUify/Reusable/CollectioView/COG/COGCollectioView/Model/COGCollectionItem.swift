@@ -12,5 +12,7 @@ enum COGCollectionItem {
     case purchaseDetail(_ input: COGPurchaseDetailCell.Input)
     case costOfGoods(_ input: COGCostOfGoodsCell.Input)
     case costSummary(_ input: COGCostSummaryCell.Input)
+    case importStrategy(_ input: COGImportStrategyCell.Input)
+    case applyToInventory(_ input: COGApplyToInventoryCell.Input)
 }
 

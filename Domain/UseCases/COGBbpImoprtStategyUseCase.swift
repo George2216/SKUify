@@ -6,3 +6,9 @@
 //
 
 import Foundation
+import RxSwift
+
+public protocol COGBbpImoprtStategyUseCase {
+    func updateBBPImportStrategy(_ data: BbpImoprtStategyRequestModel) -> Observable<Void>
+
+}

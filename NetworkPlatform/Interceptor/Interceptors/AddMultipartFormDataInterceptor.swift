@@ -26,7 +26,7 @@ final class AddMultipartFormDataInterceptor: Domain.Interceptor {
         completion: @escaping (Result<URLRequest, Error>) -> Void
     ) {
         let multipartData = MultipartFormDataBuilder()
-            .setParameters(parameters.toDictionary() ?? [:])
+            .setParameters(parameters.toDictionary())
             .setMedia(media)
             .build()
         

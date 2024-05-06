@@ -23,49 +23,81 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "0ABF3314-A94F-4555-B290-EACD0B7193F3"
+            uuid = "67993F67-99B7-4973-9D61-821951458505"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SKUify/Reusable/CollectioView/COGCollectioView/COGCollectionView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "107"
+            endingLineNumber = "107"
+            landmarkName = "bind(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B8E5571D-EDBB-4762-AFE0-7EE6896F1A65"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SKUify/Utility/Popover/PopoverManager.swift"
+            filePath = "SKUify/Utility/Reusable.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "75"
-            endingLineNumber = "75"
-            landmarkName = "viewAtPoint(_:)"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "dequeueReusableSupplementaryView(ofType:at:kind:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "0ABF3314-A94F-4555-B290-EACD0B7193F3 - 6259ec937edd8a2"
+                  uuid = "B8E5571D-EDBB-4762-AFE0-7EE6896F1A65 - c4e6438ae898ad8b"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "SKUify.PopoverManager.viewAtPoint(__C.CGPoint) -&gt; Swift.Optional&lt;__C.UIView&gt;"
+                  symbolName = "__C.UICollectionView.dequeueReusableSupplementaryView&lt;&#x3c4;_0_0 where &#x3c4;_0_0: __C.UICollectionReusableView&gt;(ofType: &#x3c4;_0_0.Type, at: Foundation.IndexPath, kind: Swift.String) -&gt; &#x3c4;_0_0"
                   moduleName = "SKUify"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/george/Desktop/SKUify/SKUify/Utility/Popover/PopoverManager.swift"
+                  urlString = "file:///Users/george/Desktop/SKUify/SKUify/Utility/Reusable.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "76"
-                  endingLineNumber = "76"
-                  offsetFromSymbolStart = "196">
+                  startingLineNumber = "73"
+                  endingLineNumber = "73"
+                  offsetFromSymbolStart = "580">
                </Location>
                <Location
-                  uuid = "0ABF3314-A94F-4555-B290-EACD0B7193F3 - 6259ec937eddb41"
+                  uuid = "B8E5571D-EDBB-4762-AFE0-7EE6896F1A65 - c4e6438ae898ad8b"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "SKUify.PopoverManager.viewAtPoint(__C.CGPoint) -&gt; Swift.Optional&lt;__C.UIView&gt;"
+                  symbolName = "__C.UICollectionView.dequeueReusableSupplementaryView&lt;&#x3c4;_0_0 where &#x3c4;_0_0: __C.UICollectionReusableView&gt;(ofType: &#x3c4;_0_0.Type, at: Foundation.IndexPath, kind: Swift.String) -&gt; &#x3c4;_0_0"
                   moduleName = "SKUify"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/george/Desktop/SKUify/SKUify/Utility/Popover/PopoverManager.swift"
+                  urlString = "file:///Users/george/Desktop/SKUify/SKUify/Utility/Reusable.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "75"
-                  endingLineNumber = "75"
-                  offsetFromSymbolStart = "196">
+                  startingLineNumber = "73"
+                  endingLineNumber = "73"
+                  offsetFromSymbolStart = "560">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CB8A05E8-A66C-434E-BBD9-511302549C5C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SKUify/Reusable/CollectioView/ProductsCollection/ProductsCollectionView/ProductsCollectionView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "customSource"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

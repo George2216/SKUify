@@ -28,20 +28,23 @@ final class DefaultButton: UIButton {
     // MARK: - Private methods
     
     private func setupConfig(config: Config) {
+        disposeBag = DisposeBag()
+        
         layer.reset()
         
         var configuration = Configuration.plain()
         configuration.title = config.title
+        self.configuration = configuration
 
         setupTextFont(
             .manrope(
                 type: .bold,
-                size: 15)
+                size: 15
+            )
         )
         
         setupAction(config)
         
-        self.configuration = configuration
         
         
         setupStyle(style: config.style)
@@ -49,6 +52,7 @@ final class DefaultButton: UIButton {
     }
     
     private func setupAction(_ config: Config) {
+        let inactiveAlpha = 0.7
         if let actionType = config.action {
             alpha = 1
             rx.tap
@@ -62,8 +66,19 @@ final class DefaultButton: UIButton {
                     }
                 })
                 .disposed(by: disposeBag)
+            
+            switch actionType {
+            case .simple(let action):
+                guard action == nil else { return }
+                alpha = inactiveAlpha
+
+            case .point(let action):
+                guard action == nil else { return }
+                alpha = inactiveAlpha
+            }
+            
         } else {
-            alpha = 0.7
+            alpha = inactiveAlpha
         }
     }
     

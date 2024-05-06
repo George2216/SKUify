@@ -14,7 +14,7 @@ public struct COGSalesRequestModel: Encodable {
     public let prepCentre: Double?
     public let packaging: Double?
     public let price: Double?
-    public let quantity: Int
+    public let quantity: Int?
     public let inventoryCost: Double?
     public let handling: Double?
     public let other: Double?
@@ -52,7 +52,7 @@ public struct COGSalesRequestModel: Encodable {
         prepCentre: Double?,
         packaging: Double?,
         price: Double?,
-        quantity: Int,
+        quantity: Int?,
         inventoryCost: Double?,
         handling: Double?,
         other: Double?,
