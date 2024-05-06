@@ -1,0 +1,108 @@
+//
+//  COGBaseVC.swift
+//  SKUify
+//
+//  Created by George Churikov on 03.05.2024.
+//
+
+import UIKit
+import RxSwift
+import RxCocoa
+import SnapKit
+
+final class COGBaseVC: BaseViewController {
+    
+    var viewModel: COGBaseViewModel!
+    
+    private lazy var collectionView = COGCollectionView(
+        frame: .zero,
+        collectionViewLayout: createCollectionViewLayout()
+    )
+    
+    private lazy var calendarPopover = SingleCalendarPopoverVC()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        title = "COG"
+        
+        let output = viewModel.transform(.init(selectedCalendarDate: calendarPopover.didSelectDate.asDriverOnErrorJustComplete()))
+        
+        setupCollection()
+        
+        bindHeightForScrollingToTxtField(output)
+        bindToCollectionView(output)
+        bingCalendarPopover(output)
+        bindToLoader(output)
+        bindToBanner(output)
+    }
+    
+    private func createCollectionViewLayout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        layout.scrollDirection = .vertical
+        return layout
+    }
+    
+    private func setupCollection() {
+        view.addSubview(collectionView)
+        collectionView.snp.makeConstraints { make in
+            make.edges
+                .equalToSuperview()
+        }
+    }
+
+}
+
+// MARK: Make binding
+
+extension COGVC {
+    
+    private func bindHeightForScrollingToTxtField(_ output: COGBaseViewModel.Output) {
+        output.keyboardHeight
+            .withUnretained(self)
+            .map { owner, height in
+                UIScrollView.ScrollToVisibleContext(
+                    height: height,
+                    view: owner.view
+                )
+            }
+            .drive(collectionView.rx.scrollToVisibleTextField)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindToLoader(_ output: COGBaseViewModel.Output) {
+        output.fetching
+            .drive(rx.loading)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindToBanner(_ output: COGBaseViewModel.Output) {
+        output.error
+            .drive(rx.banner)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindToCollectionView(_ output: COGBaseViewModel.Output) {
+        collectionView.bind(output.collectionData)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bingCalendarPopover(_ output: COGBaseViewModel.Output) {
+        output.showCalendarPopover
+            .withUnretained(self)
+            .map { owner, center in
+                PopoverManager.Input(
+                    bindingType: .point(center),
+                    preferredSize: .init(
+                        width: owner.view.frame.width - 20,
+                        height: owner.view.frame.width - 110
+                    ),
+                    popoverVC: owner.calendarPopover
+                )
+            }
+            .drive(rx.popover)
+            .disposed(by: disposeBag)
+    }
+    
+}
+
