@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 
 extension Dictionary {
     func toURLParameters() -> String {
@@ -22,7 +23,6 @@ extension Dictionary {
 }
 
 extension Dictionary {
-    
     func toData() -> Data? {
         do {
             let data = try JSONSerialization.data(withJSONObject: self, options: .prettyPrinted)
@@ -31,6 +31,17 @@ extension Dictionary {
             print(error.localizedDescription)
             return nil
         }
+    }
+    
+}
+
+extension Dictionary where Key == String, Value == String {
+    func toHeaders() -> HTTPHeaders {
+        var headers: HTTPHeaders = [:]
+        for (key, value) in self  {
+            headers.add(name: key, value: value)
+        }
+        return headers
     }
     
 }

@@ -6,3 +6,8 @@
 //
 
 import Foundation
+import RxSwift
+
+public protocol UpdateExpensesNetwork {
+    func updateExpenses(_ expenses: [ExpenseDTO]) -> Observable<[ExpenseDTO]>
+}

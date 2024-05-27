@@ -28,7 +28,7 @@ final class COGSalesNetwork: Domain.COGSalesNetwork {
         return network.request(
             "order-item/\(data.id)/",
             method: .patch,
-            parameters: data.toDictionary(),
+            data: data.toData(),
             interceptor: CompositeRxAlamofireInterceptor(
                 interceptors: [
                     interceptorFactory.makeTokenToHeaderInterceptor(),

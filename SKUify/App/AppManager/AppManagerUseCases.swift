@@ -10,4 +10,6 @@ import Domain
 
 protocol AppManagerUseCases {
     func makeLoginStateUseCase() -> Domain.LoginStateUseCase
+    // Mantadory data
+    func makeExpensesCategoriesUseCase() -> Domain.ExpensesCategoriesUseCase
 }

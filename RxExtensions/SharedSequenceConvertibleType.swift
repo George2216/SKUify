@@ -75,3 +75,13 @@ public extension SharedSequenceConvertibleType where Element: Equatable {
             .asSharedSequence(onErrorDriveWith: .empty())
     }
 }
+
+
+public extension SharedSequenceConvertibleType {
+    func shareElement<O: ObserverType>(_ observer: O) -> SharedSequence<SharingStrategy, Element> where O.Element == Element {
+        self.do { element in
+            observer.onNext(element)
+        }
+    }
+    
+}

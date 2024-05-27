@@ -28,7 +28,7 @@ final class COGInventoryNetwork: Domain.COGInventoryNetwork {
         return network.request(
             "product/\(data.id)/",
             method: .patch,
-            parameters: data.toDictionary(),
+            data: data.toData(),
             interceptor: CompositeRxAlamofireInterceptor(
                 interceptors: [
                     interceptorFactory.makeTokenToHeaderInterceptor(),

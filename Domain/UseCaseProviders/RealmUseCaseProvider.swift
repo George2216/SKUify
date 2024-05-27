@@ -13,4 +13,5 @@ public protocol RealmUseCaseProvider {
     func makeTokensUseCase() -> TokensUseCase
     func makeUserIdUseCase() -> UserIdUseCase
     func makeMarketplacesUseCase() -> MarketplacesUseCase
+    func makeExpensesCategoriesDataUseCase() -> ExpensesCategoriesDataUseCase
 }

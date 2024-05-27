@@ -118,6 +118,9 @@ final class DefaultButton: UIButton {
         case .primaryPlus:
             setupPrimaryPlusStyle()
 
+        case .lightPrimaryPlus:
+            setupLightPrimaryPlusStyle()
+            
         case .simple:
             setupSimpleStyle()
             
@@ -159,6 +162,9 @@ final class DefaultButton: UIButton {
             
         case .popover:
             setupPopoverButton()
+            
+        case .calendarPopover:
+            setupCalendarPopoverStyle()
         }
         
         clipsToBounds = true
@@ -166,10 +172,10 @@ final class DefaultButton: UIButton {
     
     private func setupHeight(style: Style) {
         if let height = style.height {
-            snp.remakeConstraints { make in
+            snp.makeConstraints({ make in
                 heightConstraint = make.height
                     .equalTo(height)
-            }
+            })
         } else {
             heightConstraint?.constraint
                 .deactivate()
@@ -222,6 +228,11 @@ extension DefaultButton {
         
         configuration?.image = image
         configuration?.baseForegroundColor = .white
+    }
+    
+    private func setupLightPrimaryPlusStyle() {
+        setupPrimaryPlusStyle()
+        backgroundColor = .primaryLight
     }
     
     private func setupChekButton(
@@ -344,7 +355,7 @@ extension DefaultButton {
                 size: 10
             )
         )
-        layer.borderWidth = 2.0
+        layer.borderWidth = 1.0
         layer.cornerRadius = 12.0
         layer.borderColor = UIColor.border.cgColor
         backgroundColor = .white
@@ -364,6 +375,33 @@ extension DefaultButton {
             )
         )
     
+    }
+    
+    private func setupCalendarPopoverStyle() {
+        tintColor = .lightSubtextColor
+        let imageConfig = UIImage.SymbolConfiguration(
+            font: .manrope(
+                type: .semiBold,
+                size: 10
+            )
+        )
+        layer.borderWidth = 1.0
+        layer.cornerRadius = 12.0
+        layer.borderColor = UIColor.border.cgColor
+        backgroundColor = .white
+
+        configuration?.image = .calendar
+            .withConfiguration(imageConfig)
+       
+        contentHorizontalAlignment = .fill
+        configuration?.imagePlacement = .trailing
+    
+        setupTextFont(
+            .manrope(
+                type: .medium,
+                size: 13
+            )
+        )
     }
 
 }
@@ -406,6 +444,7 @@ extension DefaultButton {
         case primaryRed
         case fullyRoundedPrimary
         case primaryPlus
+        case lightPrimaryPlus
         case simplePrimaryText
         case vat
         case chekButton(
@@ -425,6 +464,7 @@ extension DefaultButton {
         case cog
         case none
         case popover
+        case calendarPopover
         
         fileprivate var height: CGFloat? {
             switch self {
@@ -436,7 +476,8 @@ extension DefaultButton {
                     .primary,
                     .primaryGray,
                     .primaryRed,
-                    .primaryPlus:
+                    .primaryPlus,
+                    .lightPrimaryPlus:
                 return 40.0
 
             case .light,
@@ -447,7 +488,8 @@ extension DefaultButton {
                     .custom,
                     .cog,
                     .vat,
-                    .popover
+                    .popover,
+                    .calendarPopover
                 :
                 return nil
             }
@@ -470,6 +512,8 @@ extension DefaultButton {
         case add
         case tax
         case delete
+        case deleteLight
+        case more
         
         var image: UIImage? {
             switch self {
@@ -493,6 +537,10 @@ extension DefaultButton {
                 return .taxSettings
             case .delete:
                 return .delete
+            case .deleteLight:
+                return .deleteLight
+            case .more:
+                return .more
             }
         }
     }

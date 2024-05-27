@@ -15,12 +15,12 @@ import SnapKit
 final class ProductsCollectionView: UICollectionView {
     private let disposeBag = DisposeBag()
 
-    private let visibleSections = PublishSubject<Int>()
+    private let visibleSection = PublishSubject<Int>()
     
     // MARK: Data source
 
     private lazy var customSource = RxCollectionViewSectionedReloadDataSource<ProductsSectionModel>(configureCell: { [unowned self] dataSource, collectionView, indexPath, item in
-        self.visibleSections.onNext(indexPath.section)
+        self.visibleSection.onNext(indexPath.section)
         let width = self.frame.width - 20
         switch item {
         case .main(let input):
@@ -118,7 +118,7 @@ final class ProductsCollectionView: UICollectionView {
     }
     
     func subscribeOnVisibleSection() -> Driver<Int> {
-        visibleSections.asDriverOnErrorJustComplete()
+        visibleSection.asDriverOnErrorJustComplete()
     }
      
 }

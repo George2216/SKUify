@@ -21,4 +21,10 @@ extension Encodable {
             return [:]
         }
     }
+    
+    func toData() -> Data? {
+        let encoder = JSONEncoder()
+        return try? encoder.encode(self)
+    }
+    
 }

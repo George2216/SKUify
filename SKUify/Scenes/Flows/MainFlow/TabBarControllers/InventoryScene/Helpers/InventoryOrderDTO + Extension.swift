@@ -17,7 +17,7 @@ extension InventoryOrderDTO {
             asin: asin,
             sku: sellerSku,
             price: originalPrice.price,
-            dataAdded: dateAdded.toDate(),
+            dataAdded: dateAdded.toDate() ?? Date(),
             imageUrl: imageUrl,
             unitCost: unitCost,
             currencySymbol: originalPrice.currency,

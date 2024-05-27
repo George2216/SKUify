@@ -21,11 +21,7 @@ final class TitleDecorator: UIView {
     
     private weak var decoratedView: UIView?
     
-    private lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .left
-        return label
-    }()
+    private lazy var titleLabel = UILabel()
     
     private let axis: NSLayoutConstraint.Axis
     // MARK: - Initializers
@@ -38,6 +34,7 @@ final class TitleDecorator: UIView {
         ),
         textColor: UIColor = .subtextColor,
         spacing: CGFloat = 0.0,
+        titleAligment: NSTextAlignment = .left,
         numberOfLines: Int = 1,
         axis: NSLayoutConstraint.Axis = .vertical
     ) {
@@ -53,9 +50,10 @@ final class TitleDecorator: UIView {
         setupTitleAttributed(
             font: font,
             textColor: textColor,
+            titleAligment: titleAligment,
             numberOfLines: numberOfLines
         )
-                
+        
     }
     
     required init?(coder: NSCoder) {
@@ -65,10 +63,12 @@ final class TitleDecorator: UIView {
     private func setupTitleAttributed(
         font: UIFont,
         textColor: UIColor,
+        titleAligment: NSTextAlignment,
         numberOfLines: Int
     ) {
         titleLabel.font = font
         titleLabel.textColor = textColor
+        titleLabel.textAlignment = titleAligment
         titleLabel.numberOfLines = numberOfLines
     }
     
@@ -108,7 +108,7 @@ final class TitleDecorator: UIView {
     
     private func setupDecoratedView(_ decoratedView: UIView) {
         decoratedView.setContentHuggingPriority(
-            .defaultLow,
+            .defaultHigh,
             for: axis
         )
         decoratedView.setContentCompressionResistancePriority(

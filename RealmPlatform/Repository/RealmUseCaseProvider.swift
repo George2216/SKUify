@@ -48,4 +48,9 @@ public final class RealmUseCaseProvider: Domain.RealmUseCaseProvider {
         return MarketplacesUseCase(repository: repository)
     }
     
+    public func makeExpensesCategoriesDataUseCase() -> Domain.ExpensesCategoriesDataUseCase {
+        let repository = Repository<ExpensesCategoryDTO>(configuration: configuration)
+        return ExpensesCategoriesDataUseCase(repository: repository)
+    }
+    
 }

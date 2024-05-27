@@ -32,8 +32,8 @@ final class UserIdUseCase<Repository>: Domain.UserIdUseCase where Repository: Ab
     }
     
     func removeUserId() -> Observable<Void> {
-        return repository
-            .deleteAllObjects(type: UserId.self)
+        repository
+            .deleteAllObjects()
     }
     
 }

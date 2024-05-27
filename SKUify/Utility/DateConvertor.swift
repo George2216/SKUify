@@ -28,7 +28,6 @@ final class DateConvertor {
             formats.append("yyyy\(separator)MM\(separator)dd HH:mm:ss.SSSSSS")
             formats.append("yyyy\(separator)MM\(separator)dd")
             formats.append("dd\(separator)MM\(separator)yyyy")
-            formats.append("MM\(separator)dd\(separator)yyyy")
         }
         return formats
     }

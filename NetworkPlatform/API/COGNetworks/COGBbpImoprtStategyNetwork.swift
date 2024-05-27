@@ -28,7 +28,7 @@ final class COGBbpImoprtStategyNetwork: Domain.COGBbpImoprtStategyNetwork {
         network.request(
             "product/\(data.id)/update_bbp_import_strategy/",
             method: .post,
-            parameters: data.toDictionary(),
+            data: data.toData(),
             interceptor: CompositeRxAlamofireInterceptor(
                 interceptors: [
                     interceptorFactory.makeTokenToHeaderInterceptor(),

@@ -34,25 +34,12 @@ extension String {
         }
     }
 
-    
-}
-
-// MARK: - Nums convertor
-
-extension String {
-//    func doubleDecimalString(_ decimal: Int) -> String {
-//        guard let toDouble = Double(self) else {
-//            return ""
-//        }
-//        return toDouble.toDecimalString(decimal: decimal)
-//    }
-    
 }
 
 extension String {
-    func toDate() -> Date {
+    func toDate() -> Date? {
         guard let date = DateConvertor.shared.convertToDate(self) else {
-            fatalError()
+            return nil
         }
         return date
     }

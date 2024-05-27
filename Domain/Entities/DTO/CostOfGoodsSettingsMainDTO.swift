@@ -42,7 +42,6 @@ public struct CostOfGoodsSettingsMainDTO: Decodable {
     
 }
 
-
 public struct CostOfGoodsSettingsModel: Decodable {
     public let bundling: Double?
     public let extraFee: Double?
@@ -55,8 +54,7 @@ public struct CostOfGoodsSettingsModel: Decodable {
     public let vatFreePostage: Double?
     public let inboundShipping: Double?
     public let inboundShippingUnits: Double?
-    
-    
+        
     private enum CodingKeys: String, CodingKey {
         case bundling
         case extraFee = "extra_fee"

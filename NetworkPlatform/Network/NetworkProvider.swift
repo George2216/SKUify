@@ -138,6 +138,29 @@ final public class NetworkProvider: Domain.NetworkProvider {
         )
     }
     
+    // MARK: - Expenses
+    
+    public func makeExpensesNetwork() -> Domain.ExpensesNetwork {
+        return ExpensesNetwork(
+            network: makeNetwork(ExpensesResultsDTO.self),
+            interceptorFactory: interceptorFactory
+        )
+    }
+    
+    public func makeUpdateExpensesNetwork() -> Domain.UpdateExpensesNetwork {
+        return UpdateExpensesNetwork(
+            network: makeNetwork(ExpenseDTO.self),
+            interceptorFactory: interceptorFactory
+        )
+    }
+    
+    public func makeExpensesCategoriesNetwork() -> Domain.ExpensesCategoriesNetwork {
+        return ExpensesCategoriesNetwork(
+            network: makeNetwork(ExpensesCategoryDTO.self),
+            interceptorFactory: interceptorFactory
+        )
+    }
+    
     // MARK: - Note
     
     public func makeNoteInventoryNetwork() -> Domain.NoteNetwork {

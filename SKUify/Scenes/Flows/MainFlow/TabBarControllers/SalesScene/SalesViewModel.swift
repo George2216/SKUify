@@ -25,7 +25,6 @@ final class SalesViewModel: ViewModelProtocol {
     private let marketplaceType = BehaviorSubject<SalesMarketplaceType>(value: .all)
     
     private let paginationCounter = BehaviorSubject<Int?>(value: nil)
-    private let productsCount = BehaviorSubject<Int>(value: 0)
     
     private let ordersDataStorage = BehaviorSubject<[SalesOrdersDTO]>(value: [])
     private let refundsDataStorage = BehaviorSubject<[SalesRefundsDTO]>(value: [])
@@ -96,8 +95,6 @@ final class SalesViewModel: ViewModelProtocol {
         // Clear storages
         ordersDataStorage.onNext([])
         refundsDataStorage.onNext([])
-        // Remove products count
-        productsCount.onNext(0)
         // Reload data
         paginationCounter.onNext(0)
     }
@@ -428,11 +425,6 @@ extension SalesViewModel {
     private func subscribeOnOrdersSalesData() {
         fetchOrdersSalesData()
             .withUnretained(self)
-        // Save products count
-            .do(onNext: { owner, dto in
-                let productsCount = dto.count
-                owner.productsCount.onNext(productsCount)
-            })
             .withLatestFrom(ordersDataStorage.asDriverOnErrorJustComplete()) { (arg0, storage) in
                 let (owner, dto) = arg0
                 return (owner, dto, storage)
@@ -450,11 +442,6 @@ extension SalesViewModel {
     private func subscribeOnRefundsSalesData() {
         fetchRefundsSalesData()
             .withUnretained(self)
-        // Save products count
-            .do(onNext: { owner, dto in
-                let productsCount = dto.count
-                owner.productsCount.onNext(productsCount)
-            })
             .withLatestFrom(refundsDataStorage.asDriverOnErrorJustComplete()) { (arg0, storage) in
                 let (owner, dto) = arg0
                 return (owner, dto, storage)

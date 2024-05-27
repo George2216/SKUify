@@ -28,7 +28,7 @@ final class InventoryBreakEvenPointNetwork: Domain.BreakEvenPointNetwork {
         return network.request(
             "break-point-even/\(data.id)/product/",
             method: .post,
-            parameters: data.toDictionary(),
+            data: data.toData(),
             interceptor: CompositeRxAlamofireInterceptor(
                 interceptors: [
                     interceptorFactory.makeTokenToHeaderInterceptor(),

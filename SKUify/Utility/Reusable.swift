@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 import FSCalendar
+import RxSwift
+import RxCocoa
 
 protocol Reusable: AnyObject {
     static var reuseID: String {get}
@@ -40,7 +42,10 @@ extension UITableView {
 
 extension UITableView {
     func register<T: Reusable>(_ cellClass: T.Type) {
-        register(cellClass, forCellReuseIdentifier: cellClass.reuseID)
+        register(
+            cellClass,
+            forCellReuseIdentifier: cellClass.reuseID
+        )
     }
 }
 
@@ -124,5 +129,17 @@ extension FSCalendar {
     }
 }
 
-
-
+extension Reactive where Base: UITableView {
+    public func items<Sequence: Swift.Sequence, Cell: UITableViewCell, Source: ObservableType>
+        (cellType: Cell.Type = Cell.self)
+        -> (_ source: Source)
+        -> (_ configureCell: @escaping (Int, Sequence.Element, Cell) -> Void)
+        -> Disposable
+        where Source.Element == Sequence {
+            return items(
+                cellIdentifier: cellType.reuseID,
+                cellType: cellType.self
+            )
+    }
+    
+}

@@ -15,7 +15,7 @@ final class ExpensesVC: BaseViewController {
     
     private let visibleSection = PublishSubject<Int>()
 
-    var viewModel: BaseExpensesViewModel!
+    var viewModel: ExpensesViewModel!
     
     // MARK: UI elements
     
@@ -56,6 +56,7 @@ final class ExpensesVC: BaseViewController {
         subscribeOnVisibleSection()
         sutupNavBarItems()
         
+        bindToTitle(output)
         bindToLoader(output)
         bindToBanner(output)
         bindToCollectionView(output)
@@ -104,6 +105,12 @@ extension ExpensesVC {
 // MARK: - Make binding
 
 extension ExpensesVC {
+    
+    private func bindToTitle(_ output: ExpensesViewModel.Output) {
+        output.title
+            .drive(rx.title)
+            .disposed(by: disposeBag)
+    }
     
     private func bindToLoader(_ output: ExpensesViewModel.Output) {
         output.fetching

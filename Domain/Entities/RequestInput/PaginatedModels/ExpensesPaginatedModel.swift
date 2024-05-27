@@ -6,3 +6,14 @@
 //
 
 import Foundation
+
+public struct ExpensesPaginatedModel {
+    public let limit = 8
+    public var offset: Int? = nil
+    
+    public static func base() -> Self {
+        .init()
+    }
+    
+}
+    

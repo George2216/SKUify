@@ -6,3 +6,8 @@
 //
 
 import Foundation
+import RxSwift
+
+public protocol ExpensesCategoriesNetwork {
+    func getCategories() -> Observable<[ExpensesCategoryDTO]>
+}

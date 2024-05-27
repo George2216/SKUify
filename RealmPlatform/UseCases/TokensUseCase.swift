@@ -56,7 +56,7 @@ final class TokensUseCase<Repository>: Domain.TokensUseCase where Repository: Ab
     
     func deleteTokens() -> Observable<Void> {
         return repository
-            .deleteAllObjects(type: Tokens.self)
+            .deleteAllObjects()
     }
     
 }

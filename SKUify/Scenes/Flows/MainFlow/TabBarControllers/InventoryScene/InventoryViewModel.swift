@@ -21,7 +21,6 @@ final class InventoryViewModel: ViewModelProtocol {
     private let tableType = BehaviorSubject<InventoryTableType>(value: .orders)
     
     private let paginationCounter = BehaviorSubject<Int?>(value: nil)
-    private let productsCount = BehaviorSubject<Int>(value: 0)
 
     // MARK: - Data storages
     // Collection data storage
@@ -87,8 +86,6 @@ final class InventoryViewModel: ViewModelProtocol {
         // Clear storages
         ordersDataStorage.onNext([])
         buyBotImportsStorage.onNext([])
-        // Remove products count
-        productsCount.onNext(0)
         // Reload data
         paginationCounter.onNext(0)
     }
@@ -298,6 +295,8 @@ extension InventoryViewModel {
     private func subscribeOnVisibleSection(_ input: Input) {
         let visibleSectionDriver = input.visibleSection
             .withLatestFrom(activityIndicator.asDriver()) { visibleSection, isItLoading in
+                print(visibleSection, isItLoading)
+
                 return (visibleSection, isItLoading)
             }
             .filter { _, isItLoading in
@@ -374,11 +373,6 @@ extension InventoryViewModel {
     private func subscribeOnOrdersInventoryData() {
         fetchOrdersInventoryData()
             .withUnretained(self)
-        // Save products count
-            .do(onNext: { owner, dto in
-                let productsCount = dto.count
-                owner.productsCount.onNext(productsCount)
-            })
             .withLatestFrom(ordersDataStorage.asDriverOnErrorJustComplete()) { (arg0, storage) in
                 let (owner, dto) = arg0
                 return (owner, dto, storage)
@@ -396,11 +390,6 @@ extension InventoryViewModel {
     private func subscribeOnBuyBotImportInventoryData() {
         fetchBuyBotImportsInventoryData()
             .withUnretained(self)
-        // Save products count
-            .do(onNext: { owner, dto in
-                let productsCount = dto.count
-                owner.productsCount.onNext(productsCount)
-            })
             .withLatestFrom(buyBotImportsStorage.asDriverOnErrorJustComplete()) { (arg0, storage) in
                 let (owner, dto) = arg0
                 return (owner, dto, storage)

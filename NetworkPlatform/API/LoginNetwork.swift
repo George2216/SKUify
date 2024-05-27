@@ -34,7 +34,7 @@ final class LoginNetwork: Domain.LoginNetwork {
         return network.request(
             "users/token/",
             method: .post,
-            parameters: parameters,
+            data: parameters.toData(),
             interceptor: CompositeRxAlamofireInterceptor(
                 interceptors: [
                     interceptorFactory.makeContentTypeJsonInterceptor()

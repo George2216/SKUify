@@ -28,7 +28,7 @@ final class NoteSalesNetwork: Domain.NoteNetwork {
         return network.request(
             "order-item/\(data.id)/update_note/",
             method: .post,
-            parameters: NoteDTO(note: data.note).toDictionary(),
+            data: NoteDTO(note: data.note).toData(),
             interceptor: CompositeRxAlamofireInterceptor(
                 interceptors: [
                     interceptorFactory.makeContentTypeJsonInterceptor(),

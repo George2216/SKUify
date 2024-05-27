@@ -130,6 +130,20 @@ class DIContainer: DIProtocol {
         networkUseCaseProvider.makeCOGSettingsUseCase()
     }
     
+    func makeExpensesUseCase() -> Domain.ExpensesUseCase {
+        networkUseCaseProvider.makeExpensesUseCase()
+    }
+    
+    func makeExpensesCategoriesUseCase() -> Domain.ExpensesCategoriesUseCase {
+        networkUseCaseProvider.makeExpensesCategoriesUseCase(
+            categoriesDataUseCase: makeExpensesCategoriesDataUseCase()
+        )
+    }
+    
+    func makeExpensesCategoriesDataUseCase() -> Domain.ExpensesCategoriesDataUseCase {
+        realmUseCaseProvider.makeExpensesCategoriesDataUseCase()
+    }
+    
     // MARK: Note use case
     
     func makeNoteInventoryUseCase() -> Domain.NoteUseCase {

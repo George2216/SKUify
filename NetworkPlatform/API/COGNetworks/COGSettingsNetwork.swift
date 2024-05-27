@@ -28,7 +28,7 @@ final class COGSettingsNetwork: Domain.COGSettingsNetwork {
         network.request(
             "product/\(data.id)/",
             method: .patch,
-            parameters: data.toDictionary(),
+            data: data.toData(),
             interceptor: CompositeRxAlamofireInterceptor(
                 interceptors: [
                     interceptorFactory.makeTokenToHeaderInterceptor(),

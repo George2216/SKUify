@@ -92,6 +92,22 @@ public final class NetworkUseCaseProvider: Domain.NetworkUseCaseProvider {
         return COGSettingsUseCase(settingsNetwork: networkProvider.makeCOGSettingsNetwork())
     }
     
+    // MARK: - Expenses
+    
+    public func makeExpensesUseCase() -> Domain.ExpensesUseCase {
+        return ExpensesUseCase(
+            expensesNetwork: networkProvider.makeExpensesNetwork(),
+            updateExpensesNetwork: networkProvider.makeUpdateExpensesNetwork()
+        )
+    }
+    
+    public func makeExpensesCategoriesUseCase(categoriesDataUseCase: Domain.ExpensesCategoriesWriteDataUseCase) -> Domain.ExpensesCategoriesUseCase {
+        return ExpensesCategoriesUseCase(
+            expensesCategoriesNetwork: networkProvider.makeExpensesCategoriesNetwork(),
+            expensesCategoriesDataUseCase: categoriesDataUseCase
+        )
+    }
+    
     // MARK: - Note
     
     public func makeNoteInventoryUseCase() -> Domain.NoteUseCase {

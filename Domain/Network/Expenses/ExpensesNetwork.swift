@@ -6,3 +6,8 @@
 //
 
 import Foundation
+import RxSwift
+
+public protocol ExpensesNetwork {
+    func getExpensesNetwork(_ paginatedModel: ExpensesPaginatedModel) -> Observable<ExpensesResultsDTO>
+}

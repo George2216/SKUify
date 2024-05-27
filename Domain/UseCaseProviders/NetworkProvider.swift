@@ -25,5 +25,8 @@ public protocol NetworkProvider {
     func makeCOGSInformationNetwork() -> COGSInformationNetwork
     func makeCOGBbpImoprtStategyNetwork() -> COGBbpImoprtStategyNetwork
     func makeCOGSettingsNetwork() -> COGSettingsNetwork
+    func makeExpensesNetwork() -> ExpensesNetwork
+    func makeUpdateExpensesNetwork() -> UpdateExpensesNetwork
+    func makeExpensesCategoriesNetwork() -> ExpensesCategoriesNetwork
 }
 

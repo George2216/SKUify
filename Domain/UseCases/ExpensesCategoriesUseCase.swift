@@ -6,3 +6,9 @@
 //
 
 import Foundation
+import RxSwift
+
+public protocol ExpensesCategoriesUseCase {
+    func updateCategories() -> Observable<Void>
+}
+

@@ -61,5 +61,8 @@ extension UIImage {
     static let noteAdded = UIImage(named: "noteAdded") ?? .init()
     static let shippingToCheckLater = UIImage(named: "shippingToCheckLater") ?? .init()
 
+    static let deleteLight = UIImage(named: "deleteLight") ?? .init()
+    static let more = UIImage(named: "more") ?? .init()
+    static let calendar = UIImage(named: "сalendar") ?? .init()
     
 }

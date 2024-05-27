@@ -20,9 +20,11 @@ final class SingleCalendarPopoverVC: UIViewController {
 
     private var initialSelectedDate: Date?
     
-    // MARK: Internal
+    // MARK: Subscribers on date changes
     
     var didSelectDate = PublishSubject<Date>()
+    
+    private var didSelectDateClosure: ((Date) -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,6 +83,24 @@ final class SingleCalendarPopoverVC: UIViewController {
     
 }
 
+// MARK: Internal methods
+
+extension SingleCalendarPopoverVC {
+    func bild(_ input: PopoverInput<Date, Any>) -> Self {
+        // Deselecet selected date
+        calendar.deselect(calendar.selectedDate ?? Date())
+        // Show current mounth
+        calendar.setCurrentPage(calendar.selectedDate ?? Date(), animated: true)
+        // Set observer
+        didSelectDateClosure = input.observer
+        
+        calendar.select(input.startValue)
+        configureVisibleCells()
+        return self
+    }
+    
+}
+
 // MARK: Make binding
 
 extension SingleCalendarPopoverVC {
@@ -98,8 +118,11 @@ extension SingleCalendarPopoverVC {
             .do(onNext: { owner, _ in
                 owner.dismiss(animated: true)
             })
-            .map({ $0.1 })
-            .drive(didSelectDate)
+            .do(onNext: { owner, data in
+                owner.didSelectDateClosure?(data)
+                owner.didSelectDate.onNext(data)
+            })
+            .drive()
             .disposed(by: disposeBag)
     }
     

@@ -32,11 +32,11 @@ final class DefaultBarButtonItem: UIBarButtonItem {
         switch style {
         case .textable(let text):
             button.setTitle(text, for: .normal)
-            button.tintColor = .textColor
+            button.setTitleColor(.systemBlue, for: .normal)
 
         case .image(let image):
             button.setImage(image, for: .normal)
-            button.tintColor = .primary
+            button.tintColor = .systemBlue
         }
         
         button.frame = .init(

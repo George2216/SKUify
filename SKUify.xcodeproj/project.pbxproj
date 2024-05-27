@@ -23,7 +23,6 @@
 		5E0E66A92B46ED1D0005E576 /* OverviewChartMarkerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E66A82B46ED1D0005E576 /* OverviewChartMarkerItem.swift */; };
 		5E0E66AB2B46EDA90005E576 /* OverviewChartMarkerContentItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E66AA2B46EDA90005E576 /* OverviewChartMarkerContentItem.swift */; };
 		5E0E66BC2B4C27030005E576 /* RMMarketplaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E66BB2B4C27030005E576 /* RMMarketplaces.swift */; };
-		5E0E66C02B4C32B20005E576 /* MarketplacesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E66BF2B4C32B20005E576 /* MarketplacesUseCase.swift */; };
 		5E0E66C22B4C32E10005E576 /* MarketplacesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E66C12B4C32E10005E576 /* MarketplacesUseCase.swift */; };
 		5E0E67082B517A830005E576 /* RangedCalendarPopoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E67072B517A830005E576 /* RangedCalendarPopoverVC.swift */; };
 		5E0E670A2B517B490005E576 /* RangedCalendarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E67092B517B490005E576 /* RangedCalendarHeaderView.swift */; };
@@ -56,6 +55,18 @@
 		5E2C0BF72BBC3A7B00B2682E /* COGPurchaseDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C0BF62BBC3A7B00B2682E /* COGPurchaseDetailCell.swift */; };
 		5E2C0BF92BBC3C2A00B2682E /* HorizontalTitledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C0BF82BBC3C2A00B2682E /* HorizontalTitledView.swift */; };
 		5E2C0BFF2BBC47DE00B2682E /* DefaultSmallSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C0BFE2BBC47DE00B2682E /* DefaultSmallSwitch.swift */; };
+		5E3093E52BFB917500CF7F83 /* SimpleTablePopoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3093E42BFB917500CF7F83 /* SimpleTablePopoverVC.swift */; };
+		5E3093E72BFB91C100CF7F83 /* SimpleTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3093E62BFB91C100CF7F83 /* SimpleTableView.swift */; };
+		5E3093EB2BFB921D00CF7F83 /* SimpleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3093EA2BFB921D00CF7F83 /* SimpleTableViewCell.swift */; };
+		5E3093EE2BFD20A800CF7F83 /* UpdateExpensesNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3093ED2BFD20A800CF7F83 /* UpdateExpensesNetwork.swift */; };
+		5E3093F02BFD20C200CF7F83 /* UpdateExpensesNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3093EF2BFD20C200CF7F83 /* UpdateExpensesNetwork.swift */; };
+		5E3093F22BFDED5600CF7F83 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3093F12BFDED5600CF7F83 /* Array.swift */; };
+		5E3094022BFF87DC00CF7F83 /* PopoverGroupedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3094012BFF87DC00CF7F83 /* PopoverGroupedModel.swift */; };
+		5E3094062C008E4E00CF7F83 /* MarketplacesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3094052C008E4E00CF7F83 /* MarketplacesUseCase.swift */; };
+		5E3094082C00914100CF7F83 /* ExpensesCategoriesDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3094072C00914100CF7F83 /* ExpensesCategoriesDataUseCase.swift */; };
+		5E30940A2C00917000CF7F83 /* ExpensesCategoriesDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3094092C00917000CF7F83 /* ExpensesCategoriesDataUseCase.swift */; };
+		5E30940C2C00924200CF7F83 /* RMExpensesCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E30940B2C00924200CF7F83 /* RMExpensesCategory.swift */; };
+		5E3094102C00DB9A00CF7F83 /* ExpenseDTO + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E30940F2C00DB9A00CF7F83 /* ExpenseDTO + Extension.swift */; };
 		5E333D0A2B87881B00B7F591 /* SalesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E333D092B87881B00B7F591 /* SalesViewModel.swift */; };
 		5E3E163E2B838E0200E195F8 /* TitledSwitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3E163D2B838E0200E195F8 /* TitledSwitchView.swift */; };
 		5E40ED612B8DE9A400EF33E8 /* CurrencyPopoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E40ED602B8DE9A400EF33E8 /* CurrencyPopoverVC.swift */; };
@@ -175,6 +186,13 @@
 		5E5CA7DD2BE90109005CD3B2 /* COGSettingsRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5CA7DC2BE90109005CD3B2 /* COGSettingsRequestModel.swift */; };
 		5E5CA7DF2BE903EB005CD3B2 /* COGSettingsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5CA7DE2BE903EB005CD3B2 /* COGSettingsUseCase.swift */; };
 		5E5CA7E12BE90406005CD3B2 /* COGSettingsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5CA7E02BE90406005CD3B2 /* COGSettingsUseCase.swift */; };
+		5E5CA7E42BE94128005CD3B2 /* ExpensesCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5CA7E32BE94128005CD3B2 /* ExpensesCollectionView.swift */; };
+		5E5CA7E72BE9420C005CD3B2 /* ExpensesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5CA7E62BE9420C005CD3B2 /* ExpensesCell.swift */; };
+		5E5CA8292BEA4F2A005CD3B2 /* ExpensesCollectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5CA8282BEA4F2A005CD3B2 /* ExpensesCollectionItem.swift */; };
+		5E5CA82B2BEA4F39005CD3B2 /* ExpensesSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5CA82A2BEA4F39005CD3B2 /* ExpensesSectionModel.swift */; };
+		5E5CA82D2BEA4F4F005CD3B2 /* ExpensesSectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5CA82C2BEA4F4F005CD3B2 /* ExpensesSectionType.swift */; };
+		5E5CA8302BEA506F005CD3B2 /* ExpensesHeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5CA82F2BEA506F005CD3B2 /* ExpensesHeaderReusableView.swift */; };
+		5E5CA8322BEA7428005CD3B2 /* ExpensesButtonsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5CA8312BEA7428005CD3B2 /* ExpensesButtonsCell.swift */; };
 		5E620FDF2B975C0200680A49 /* ProductCellImageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E620FDE2B975C0200680A49 /* ProductCellImageType.swift */; };
 		5E63C3432B5534AC00C30BF7 /* RangedCalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63C3422B5534AC00C30BF7 /* RangedCalendarViewModel.swift */; };
 		5E63C3462B55447E00C30BF7 /* RxFSCalendarDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63C3452B55447E00C30BF7 /* RxFSCalendarDelegateProxy.swift */; };
@@ -317,6 +335,19 @@
 		5ED912162B2CBCB400FC0A66 /* RMTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED912152B2CBCB400FC0A66 /* RMTokens.swift */; };
 		5ED912182B2CBD5E00FC0A66 /* TokensUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED912172B2CBD5E00FC0A66 /* TokensUseCase.swift */; };
 		5ED9121A2B2CBD8D00FC0A66 /* TokensUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED912192B2CBD8D00FC0A66 /* TokensUseCase.swift */; };
+		5EE3749B2BF22BA400F879C1 /* ExpensesPaginatedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE3749A2BF22BA400F879C1 /* ExpensesPaginatedModel.swift */; };
+		5EE3749E2BF22C7100F879C1 /* ExpensesResultsDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE3749D2BF22C7100F879C1 /* ExpensesResultsDTO.swift */; };
+		5EE374A12BF22EF800F879C1 /* ExpensesNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE374A02BF22EF800F879C1 /* ExpensesNetwork.swift */; };
+		5EE374A42BF22F5B00F879C1 /* ExpensesNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE374A32BF22F5B00F879C1 /* ExpensesNetwork.swift */; };
+		5EE374A62BF230F900F879C1 /* ExpensesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE374A52BF230F900F879C1 /* ExpensesUseCase.swift */; };
+		5EE374AA2BF2314400F879C1 /* ExpensesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE374A92BF2314400F879C1 /* ExpensesUseCase.swift */; };
+		5EE374AD2BF23D2200F879C1 /* CalculationMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE374AC2BF23D2200F879C1 /* CalculationMethod.swift */; };
+		5EE374AF2BF23E3500F879C1 /* PeriodType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE374AE2BF23E3500F879C1 /* PeriodType.swift */; };
+		5EE374B12BF24F9E00F879C1 /* ExpensesCategoriesNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE374B02BF24F9E00F879C1 /* ExpensesCategoriesNetwork.swift */; };
+		5EE374B32BF24FCC00F879C1 /* ExpensesCategoryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE374B22BF24FCC00F879C1 /* ExpensesCategoryDTO.swift */; };
+		5EE374B52BF2502000F879C1 /* ExpensesCategoriesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE374B42BF2502000F879C1 /* ExpensesCategoriesUseCase.swift */; };
+		5EE374B72BF2504D00F879C1 /* ExpensesCategoriesNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE374B62BF2504D00F879C1 /* ExpensesCategoriesNetwork.swift */; };
+		5EE374B92BF2510A00F879C1 /* ExpensesCategoriesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE374B82BF2510A00F879C1 /* ExpensesCategoriesUseCase.swift */; };
 		5EF1C4F62BC40D88007E241A /* SingleCalendarPopoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF1C4F52BC40D88007E241A /* SingleCalendarPopoverVC.swift */; };
 		5EF1C4FA2BC44516007E241A /* Optional+Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF1C4F92BC44516007E241A /* Optional+Double.swift */; };
 		5EF1C4FE2BC820D9007E241A /* BreakEvenPointDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF1C4FD2BC820D9007E241A /* BreakEvenPointDTO.swift */; };
@@ -639,7 +670,6 @@
 		5E0E66A82B46ED1D0005E576 /* OverviewChartMarkerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewChartMarkerItem.swift; sourceTree = "<group>"; };
 		5E0E66AA2B46EDA90005E576 /* OverviewChartMarkerContentItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewChartMarkerContentItem.swift; sourceTree = "<group>"; };
 		5E0E66BB2B4C27030005E576 /* RMMarketplaces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMMarketplaces.swift; sourceTree = "<group>"; };
-		5E0E66BF2B4C32B20005E576 /* MarketplacesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplacesUseCase.swift; sourceTree = "<group>"; };
 		5E0E66C12B4C32E10005E576 /* MarketplacesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplacesUseCase.swift; sourceTree = "<group>"; };
 		5E0E67072B517A830005E576 /* RangedCalendarPopoverVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangedCalendarPopoverVC.swift; sourceTree = "<group>"; };
 		5E0E67092B517B490005E576 /* RangedCalendarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangedCalendarHeaderView.swift; sourceTree = "<group>"; };
@@ -672,6 +702,18 @@
 		5E2C0BF62BBC3A7B00B2682E /* COGPurchaseDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COGPurchaseDetailCell.swift; sourceTree = "<group>"; };
 		5E2C0BF82BBC3C2A00B2682E /* HorizontalTitledView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalTitledView.swift; sourceTree = "<group>"; };
 		5E2C0BFE2BBC47DE00B2682E /* DefaultSmallSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSmallSwitch.swift; sourceTree = "<group>"; };
+		5E3093E42BFB917500CF7F83 /* SimpleTablePopoverVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTablePopoverVC.swift; sourceTree = "<group>"; };
+		5E3093E62BFB91C100CF7F83 /* SimpleTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTableView.swift; sourceTree = "<group>"; };
+		5E3093EA2BFB921D00CF7F83 /* SimpleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTableViewCell.swift; sourceTree = "<group>"; };
+		5E3093ED2BFD20A800CF7F83 /* UpdateExpensesNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateExpensesNetwork.swift; sourceTree = "<group>"; };
+		5E3093EF2BFD20C200CF7F83 /* UpdateExpensesNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateExpensesNetwork.swift; sourceTree = "<group>"; };
+		5E3093F12BFDED5600CF7F83 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
+		5E3094012BFF87DC00CF7F83 /* PopoverGroupedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverGroupedModel.swift; sourceTree = "<group>"; };
+		5E3094052C008E4E00CF7F83 /* MarketplacesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplacesUseCase.swift; sourceTree = "<group>"; };
+		5E3094072C00914100CF7F83 /* ExpensesCategoriesDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesCategoriesDataUseCase.swift; sourceTree = "<group>"; };
+		5E3094092C00917000CF7F83 /* ExpensesCategoriesDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesCategoriesDataUseCase.swift; sourceTree = "<group>"; };
+		5E30940B2C00924200CF7F83 /* RMExpensesCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMExpensesCategory.swift; sourceTree = "<group>"; };
+		5E30940F2C00DB9A00CF7F83 /* ExpenseDTO + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExpenseDTO + Extension.swift"; sourceTree = "<group>"; };
 		5E333D092B87881B00B7F591 /* SalesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalesViewModel.swift; sourceTree = "<group>"; };
 		5E3E163D2B838E0200E195F8 /* TitledSwitchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitledSwitchView.swift; sourceTree = "<group>"; };
 		5E40ED602B8DE9A400EF33E8 /* CurrencyPopoverVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyPopoverVC.swift; sourceTree = "<group>"; };
@@ -790,6 +832,13 @@
 		5E5CA7DC2BE90109005CD3B2 /* COGSettingsRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COGSettingsRequestModel.swift; sourceTree = "<group>"; };
 		5E5CA7DE2BE903EB005CD3B2 /* COGSettingsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COGSettingsUseCase.swift; sourceTree = "<group>"; };
 		5E5CA7E02BE90406005CD3B2 /* COGSettingsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COGSettingsUseCase.swift; sourceTree = "<group>"; };
+		5E5CA7E32BE94128005CD3B2 /* ExpensesCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesCollectionView.swift; sourceTree = "<group>"; };
+		5E5CA7E62BE9420C005CD3B2 /* ExpensesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesCell.swift; sourceTree = "<group>"; };
+		5E5CA8282BEA4F2A005CD3B2 /* ExpensesCollectionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesCollectionItem.swift; sourceTree = "<group>"; };
+		5E5CA82A2BEA4F39005CD3B2 /* ExpensesSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesSectionModel.swift; sourceTree = "<group>"; };
+		5E5CA82C2BEA4F4F005CD3B2 /* ExpensesSectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesSectionType.swift; sourceTree = "<group>"; };
+		5E5CA82F2BEA506F005CD3B2 /* ExpensesHeaderReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesHeaderReusableView.swift; sourceTree = "<group>"; };
+		5E5CA8312BEA7428005CD3B2 /* ExpensesButtonsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesButtonsCell.swift; sourceTree = "<group>"; };
 		5E620FDE2B975C0200680A49 /* ProductCellImageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCellImageType.swift; sourceTree = "<group>"; };
 		5E63C3422B5534AC00C30BF7 /* RangedCalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangedCalendarViewModel.swift; sourceTree = "<group>"; };
 		5E63C3452B55447E00C30BF7 /* RxFSCalendarDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxFSCalendarDelegateProxy.swift; sourceTree = "<group>"; };
@@ -931,6 +980,19 @@
 		5ED912152B2CBCB400FC0A66 /* RMTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMTokens.swift; sourceTree = "<group>"; };
 		5ED912172B2CBD5E00FC0A66 /* TokensUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensUseCase.swift; sourceTree = "<group>"; };
 		5ED912192B2CBD8D00FC0A66 /* TokensUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensUseCase.swift; sourceTree = "<group>"; };
+		5EE3749A2BF22BA400F879C1 /* ExpensesPaginatedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesPaginatedModel.swift; sourceTree = "<group>"; };
+		5EE3749D2BF22C7100F879C1 /* ExpensesResultsDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesResultsDTO.swift; sourceTree = "<group>"; };
+		5EE374A02BF22EF800F879C1 /* ExpensesNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesNetwork.swift; sourceTree = "<group>"; };
+		5EE374A32BF22F5B00F879C1 /* ExpensesNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesNetwork.swift; sourceTree = "<group>"; };
+		5EE374A52BF230F900F879C1 /* ExpensesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesUseCase.swift; sourceTree = "<group>"; };
+		5EE374A92BF2314400F879C1 /* ExpensesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesUseCase.swift; sourceTree = "<group>"; };
+		5EE374AC2BF23D2200F879C1 /* CalculationMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculationMethod.swift; sourceTree = "<group>"; };
+		5EE374AE2BF23E3500F879C1 /* PeriodType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodType.swift; sourceTree = "<group>"; };
+		5EE374B02BF24F9E00F879C1 /* ExpensesCategoriesNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesCategoriesNetwork.swift; sourceTree = "<group>"; };
+		5EE374B22BF24FCC00F879C1 /* ExpensesCategoryDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesCategoryDTO.swift; sourceTree = "<group>"; };
+		5EE374B42BF2502000F879C1 /* ExpensesCategoriesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesCategoriesUseCase.swift; sourceTree = "<group>"; };
+		5EE374B62BF2504D00F879C1 /* ExpensesCategoriesNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesCategoriesNetwork.swift; sourceTree = "<group>"; };
+		5EE374B82BF2510A00F879C1 /* ExpensesCategoriesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesCategoriesUseCase.swift; sourceTree = "<group>"; };
 		5EF1C4F52BC40D88007E241A /* SingleCalendarPopoverVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleCalendarPopoverVC.swift; sourceTree = "<group>"; };
 		5EF1C4F92BC44516007E241A /* Optional+Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+Double.swift"; sourceTree = "<group>"; };
 		5EF1C4FD2BC820D9007E241A /* BreakEvenPointDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakEvenPointDTO.swift; sourceTree = "<group>"; };
@@ -1300,7 +1362,6 @@
 			children = (
 				5E2C0BDE2BB8339500B2682E /* COGCollectionView.swift */,
 				5E2C0BEF2BBC2A1C00B2682E /* Cells */,
-				5E2C0BFA2BBC3E0A00B2682E /* Helpers */,
 				5E2C0BE12BB83BFA00B2682E /* Model */,
 			);
 			path = COGCollectioView;
@@ -1328,13 +1389,14 @@
 		5E2C0BEF2BBC2A1C00B2682E /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				5E18D05E2BE3C39700588526 /* Headers */,
+				5E18D0692BE5282700588526 /* COGApplyToInventoryCell.swift */,
 				5E418F042BBEEF58003317AD /* COGCostOfGoodsCell.swift */,
 				5E4FB8082BC0153A00594219 /* COGCostSummaryCell.swift */,
+				5E7C6B5A2BE265590089496B /* COGImportStrategyCell.swift */,
 				5E2C0BF02BBC2A2800B2682E /* COGMainCell.swift */,
 				5E2C0BF62BBC3A7B00B2682E /* COGPurchaseDetailCell.swift */,
-				5E7C6B5A2BE265590089496B /* COGImportStrategyCell.swift */,
-				5E18D0692BE5282700588526 /* COGApplyToInventoryCell.swift */,
+				5E18D05E2BE3C39700588526 /* Headers */,
+				5E2C0BFA2BBC3E0A00B2682E /* Helpers */,
 				5E2C0BF32BBC31B300B2682E /* Views */,
 			);
 			path = Cells;
@@ -1377,6 +1439,25 @@
 				5E2C0BFE2BBC47DE00B2682E /* DefaultSmallSwitch.swift */,
 			);
 			path = Switch;
+			sourceTree = "<group>";
+		};
+		5E3093E02BF60D9700CF7F83 /* Flows */ = {
+			isa = PBXGroup;
+			children = (
+				5E418A092B06775B0070EDA4 /* AuthorizationFlow */,
+				5E418A3B2B07B52C0070EDA4 /* MainFlow */,
+			);
+			path = Flows;
+			sourceTree = "<group>";
+		};
+		5E3093E32BFB915B00CF7F83 /* SimpleTablePopoverVC */ = {
+			isa = PBXGroup;
+			children = (
+				5E3093E42BFB917500CF7F83 /* SimpleTablePopoverVC.swift */,
+				5E3093E62BFB91C100CF7F83 /* SimpleTableView.swift */,
+				5E3093EA2BFB921D00CF7F83 /* SimpleTableViewCell.swift */,
+			);
+			path = SimpleTablePopoverVC;
 			sourceTree = "<group>";
 		};
 		5E40ED5F2B8DE98700EF33E8 /* CurrencyPopoverVC */ = {
@@ -1644,9 +1725,8 @@
 			isa = PBXGroup;
 			children = (
 				5E418A652B07C2F40070EDA4 /* BaseViewController.swift */,
-				5E418A092B06775B0070EDA4 /* AuthorizationFlow */,
 				5E418A3C2B07B5320070EDA4 /* FakeLauncher */,
-				5E418A3B2B07B52C0070EDA4 /* MainFlow */,
+				5E3093E02BF60D9700CF7F83 /* Flows */,
 				5ED9114A2B1CB6D200FC0A66 /* Popovers */,
 			);
 			path = Scenes;
@@ -1663,11 +1743,12 @@
 		5E418A2D2B07A51B0070EDA4 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
-				5E418A332B07B17F0070EDA4 /* LoginStateUseCase.swift */,
 				5ED911C22B221A4F00FC0A66 /* AutorizationDataUseCase.swift */,
+				5E3094072C00914100CF7F83 /* ExpensesCategoriesDataUseCase.swift */,
+				5E418A332B07B17F0070EDA4 /* LoginStateUseCase.swift */,
+				5E3094052C008E4E00CF7F83 /* MarketplacesUseCase.swift */,
 				5ED912172B2CBD5E00FC0A66 /* TokensUseCase.swift */,
 				5E0E66A12B45EC020005E576 /* UserIdUseCase.swift */,
-				5E0E66BF2B4C32B20005E576 /* MarketplacesUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -1679,21 +1760,24 @@
 				5ED911C62B221AF600FC0A66 /* AutorizationDataUseCase.swift */,
 				5EF1C5052BC825DA007E241A /* BreakEvenPointUseCase.swift */,
 				5E0E668F2B3769810005E576 /* ChartUseCase.swift */,
+				5E5CA7D62BE8FA69005CD3B2 /* COGBbpImoprtStategyUseCase.swift */,
+				5E5CA7E02BE90406005CD3B2 /* COGSettingsUseCase.swift */,
+				5EF1C5682BDFE2C9007E241A /* COGSInformationUseCase.swift */,
 				5EF1C51C2BCE8E86007E241A /* COGUseCase.swift */,
+				5EE374A92BF2314400F879C1 /* ExpensesUseCase.swift */,
 				5EBB75082BA4BE7000FD100F /* InventoryUseCase.swift */,
 				5ED910642B13F52300FC0A66 /* KeyboardUseCase.swift */,
 				5E418A312B07A7A50070EDA4 /* LoginStateUseCase.swift */,
 				5ED911E72B23417A00FC0A66 /* LoginUseCase.swift */,
 				5E0E66C12B4C32E10005E576 /* MarketplacesUseCase.swift */,
 				5EFAAA2B2BB45AB300C96797 /* NoteUseCases.swift */,
+				5EF1C5462BD2782A007E241A /* ReplenishCOGUseCase.swift */,
 				5EFB39B52B7385D20024FD14 /* SalesUseCase.swift */,
 				5ED912192B2CBD8D00FC0A66 /* TokensUseCase.swift */,
 				5EAF2D802B5A9BF900EFDA5A /* UserDataUseCase.swift */,
 				5E0E66A32B45EC330005E576 /* UserIdUseCase.swift */,
-				5EF1C5462BD2782A007E241A /* ReplenishCOGUseCase.swift */,
-				5EF1C5682BDFE2C9007E241A /* COGSInformationUseCase.swift */,
-				5E5CA7D62BE8FA69005CD3B2 /* COGBbpImoprtStategyUseCase.swift */,
-				5E5CA7E02BE90406005CD3B2 /* COGSettingsUseCase.swift */,
+				5EE374B42BF2502000F879C1 /* ExpensesCategoriesUseCase.swift */,
+				5E3094092C00917000CF7F83 /* ExpensesCategoriesDataUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -1716,11 +1800,12 @@
 		5E418A382B07B2560070EDA4 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				5E418A392B07B26B0070EDA4 /* RMLoginState.swift */,
 				5ED911C82B221BD900FC0A66 /* RMAuthorizationData.swift */,
+				5E30940B2C00924200CF7F83 /* RMExpensesCategory.swift */,
+				5E418A392B07B26B0070EDA4 /* RMLoginState.swift */,
+				5E0E66BB2B4C27030005E576 /* RMMarketplaces.swift */,
 				5ED912152B2CBCB400FC0A66 /* RMTokens.swift */,
 				5E0E669F2B45EB730005E576 /* RMUserId.swift */,
-				5E0E66BB2B4C27030005E576 /* RMMarketplaces.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -1766,6 +1851,7 @@
 				5E4ABCBE2B5FF05C00E878DF /* MultipartFormDataBuilder.swift */,
 				5EBB75102BAA556500FD100F /* BoolExtension.swift */,
 				5EBB751B2BAB6EC900FD100F /* Optional.swift */,
+				5E3093F12BFDED5600CF7F83 /* Array.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -1809,11 +1895,11 @@
 		5E418A5D2B07B9990070EDA4 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				5EE374AB2BF23CF900F879C1 /* Constants */,
 				5E418A5E2B07B9B00070EDA4 /* ActivityTracker.swift */,
 				5EF1C53A2BD1B0B9007E241A /* CustomError.swift */,
 				5EF1C5232BCEC742007E241A /* DateConvertor.swift */,
 				5E418A602B07B9C20070EDA4 /* ErrorTracker.swift */,
-				5E18D05C2BE3A33400588526 /* FulfilmentType.swift */,
 				5ED72EBB2BA0C64D0031D882 /* Matchable.swift */,
 				5E418A622B07B9D30070EDA4 /* Reusable.swift */,
 				5E63C3452B55447E00C30BF7 /* RxFSCalendarDelegateProxy.swift */,
@@ -1985,6 +2071,52 @@
 			children = (
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		5E5CA7E22BE94115005CD3B2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5E5CA8262BEA4EBC005CD3B2 /* ExpensesCollectionView */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		5E5CA7E52BE941A0005CD3B2 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				5E5CA8312BEA7428005CD3B2 /* ExpensesButtonsCell.swift */,
+				5E5CA7E62BE9420C005CD3B2 /* ExpensesCell.swift */,
+				5E5CA82E2BEA5061005CD3B2 /* Headers */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		5E5CA8262BEA4EBC005CD3B2 /* ExpensesCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				5E5CA7E32BE94128005CD3B2 /* ExpensesCollectionView.swift */,
+				5E5CA7E52BE941A0005CD3B2 /* Cells */,
+				5E5CA8272BEA4EDB005CD3B2 /* Model */,
+			);
+			path = ExpensesCollectionView;
+			sourceTree = "<group>";
+		};
+		5E5CA8272BEA4EDB005CD3B2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5E5CA8282BEA4F2A005CD3B2 /* ExpensesCollectionItem.swift */,
+				5E5CA82A2BEA4F39005CD3B2 /* ExpensesSectionModel.swift */,
+				5E5CA82C2BEA4F4F005CD3B2 /* ExpensesSectionType.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5E5CA82E2BEA5061005CD3B2 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				5E5CA82F2BEA506F005CD3B2 /* ExpensesHeaderReusableView.swift */,
+			);
+			path = Headers;
 			sourceTree = "<group>";
 		};
 		5E620FE02B97714700680A49 /* ProductsCollection */ = {
@@ -2209,10 +2341,12 @@
 		5ED911032B160C2D00FC0A66 /* ExpensesScene */ = {
 			isa = PBXGroup;
 			children = (
+				5E30940F2C00DB9A00CF7F83 /* ExpenseDTO + Extension.swift */,
 				5ED911132B1611C400FC0A66 /* ExpensesNavigator.swift */,
 				5ED9110D2B16111D00FC0A66 /* ExpensesUseCases.swift */,
 				5ED9110F2B16112E00FC0A66 /* ExpensesVC.swift */,
 				5ED911112B16119900FC0A66 /* ExpensesViewModel.swift */,
+				5E5CA7E22BE94115005CD3B2 /* Views */,
 			);
 			path = ExpensesScene;
 			sourceTree = "<group>";
@@ -2284,9 +2418,11 @@
 		5ED9114A2B1CB6D200FC0A66 /* Popovers */ = {
 			isa = PBXGroup;
 			children = (
+				5E3094012BFF87DC00CF7F83 /* PopoverGroupedModel.swift */,
 				5EF1C4F32BC40D56007E241A /* Calendar */,
-				5EC8CF202B9210C300CCD4E9 /* MarketplacesPopoverVC */,
 				5E40ED5F2B8DE98700EF33E8 /* CurrencyPopoverVC */,
+				5EC8CF202B9210C300CCD4E9 /* MarketplacesPopoverVC */,
+				5E3093E32BFB915B00CF7F83 /* SimpleTablePopoverVC */,
 				5E5C9DCB2B32F82B003180FF /* TimeSlotPopoverVC */,
 			);
 			path = Popovers;
@@ -2411,6 +2547,7 @@
 				5ED911DF2B233BA600FC0A66 /* LoginNetwork.swift */,
 				5EAF2D7C2B5A9AFE00EFDA5A /* UserDataNetwork.swift */,
 				5EF1C50E2BCD65B1007E241A /* COGNetworks */,
+				5EE374A22BF22F4F00F879C1 /* ExpensesNetworks */,
 				5EBB74FB2BA4B69F00FD100F /* InventoryNetwork */,
 				5E84F3E32B76597B000937AC /* NetworkModelExtensions */,
 				5EFAAA252BB458A600C96797 /* NoteNetworks */,
@@ -2445,6 +2582,7 @@
 				5EF1C5162BCE8214007E241A /* OnlyIdDTO.swift */,
 				5E84F3F22B7A9A09000937AC /* OriginalPriceDTO.swift */,
 				5EAF2D782B5A993700EFDA5A /* UserDTO.swift */,
+				5EE3749C2BF22C3F00F879C1 /* ExpensesDTOs */,
 				5EBB74FE2BA4B77800FD100F /* InventoryDTOs */,
 				5E84F3EF2B7A350E000937AC /* SalesDTOs */,
 			);
@@ -2459,9 +2597,10 @@
 				5ED911E22B233BFE00FC0A66 /* LoginNetwork.swift */,
 				5EFAAA282BB459DE00C96797 /* NoteNetworks.swift */,
 				5EAF2D7A2B5A9A6F00EFDA5A /* UserDataNetwork.swift */,
+				5EF1C5302BD14CE7007E241A /* COGNetworks */,
+				5EE3749F2BF22EE800F879C1 /* Expenses */,
 				5EBB75032BA4BC2B00FD100F /* InventoryNetworks */,
 				5E84F3FB2B7B6C04000937AC /* SalesNetworks */,
-				5EF1C5302BD14CE7007E241A /* COGNetworks */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -2469,6 +2608,7 @@
 		5ED911E42B23400E00FC0A66 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				5EE374A72BF230FD00F879C1 /* ExpensesUseCases */,
 				5EF1C5452BD277A6007E241A /* COGUseCases */,
 				5EF1C5032BC82574007E241A /* BreakEvenPointUseCase.swift */,
 				5EF40E4D2B35D5E70021EEC1 /* ChartsUseCase.swift */,
@@ -2515,6 +2655,54 @@
 				5ED912062B29DB5800FC0A66 /* MarketplaceDashboardCellTopView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		5EE3749C2BF22C3F00F879C1 /* ExpensesDTOs */ = {
+			isa = PBXGroup;
+			children = (
+				5EE374B22BF24FCC00F879C1 /* ExpensesCategoryDTO.swift */,
+				5EE3749D2BF22C7100F879C1 /* ExpensesResultsDTO.swift */,
+			);
+			path = ExpensesDTOs;
+			sourceTree = "<group>";
+		};
+		5EE3749F2BF22EE800F879C1 /* Expenses */ = {
+			isa = PBXGroup;
+			children = (
+				5EE374B02BF24F9E00F879C1 /* ExpensesCategoriesNetwork.swift */,
+				5EE374A02BF22EF800F879C1 /* ExpensesNetwork.swift */,
+				5E3093EF2BFD20C200CF7F83 /* UpdateExpensesNetwork.swift */,
+			);
+			path = Expenses;
+			sourceTree = "<group>";
+		};
+		5EE374A22BF22F4F00F879C1 /* ExpensesNetworks */ = {
+			isa = PBXGroup;
+			children = (
+				5EE374A32BF22F5B00F879C1 /* ExpensesNetwork.swift */,
+				5EE374B62BF2504D00F879C1 /* ExpensesCategoriesNetwork.swift */,
+				5E3093ED2BFD20A800CF7F83 /* UpdateExpensesNetwork.swift */,
+			);
+			path = ExpensesNetworks;
+			sourceTree = "<group>";
+		};
+		5EE374A72BF230FD00F879C1 /* ExpensesUseCases */ = {
+			isa = PBXGroup;
+			children = (
+				5EE374A52BF230F900F879C1 /* ExpensesUseCase.swift */,
+				5EE374B82BF2510A00F879C1 /* ExpensesCategoriesUseCase.swift */,
+			);
+			path = ExpensesUseCases;
+			sourceTree = "<group>";
+		};
+		5EE374AB2BF23CF900F879C1 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				5E18D05C2BE3A33400588526 /* FulfilmentType.swift */,
+				5EE374AC2BF23D2200F879C1 /* CalculationMethod.swift */,
+				5EE374AE2BF23E3500F879C1 /* PeriodType.swift */,
+			);
+			path = Constants;
 			sourceTree = "<group>";
 		};
 		5EF1C4F32BC40D56007E241A /* Calendar */ = {
@@ -2789,8 +2977,9 @@
 		5EFB399F2B711CF40024FD14 /* PaginatedModels */ = {
 			isa = PBXGroup;
 			children = (
-				5EFB39A02B711D0A0024FD14 /* SalesPaginatedModel.swift */,
+				5EE3749A2BF22BA400F879C1 /* ExpensesPaginatedModel.swift */,
 				5ED72F0A2BA20C5C0031D882 /* InventoryPaginatedModel.swift */,
+				5EFB39A02B711D0A0024FD14 /* SalesPaginatedModel.swift */,
 			);
 			path = PaginatedModels;
 			sourceTree = "<group>";
@@ -3841,6 +4030,7 @@
 			files = (
 				5E18D0622BE3C3C200588526 /* COGHeaderReusableView.swift in Sources */,
 				5E2B8FC82B9F320500CDD345 /* ProductAddInfoView.swift in Sources */,
+				5E5CA8322BEA7428005CD3B2 /* ExpensesButtonsCell.swift in Sources */,
 				5E418A2C2B067D300070EDA4 /* ViewModelProtocol.swift in Sources */,
 				5E18D0662BE51E1600588526 /* COGVC.swift in Sources */,
 				5E84F3EE2B7A346F000937AC /* ProductTitlesView.swift in Sources */,
@@ -3851,7 +4041,9 @@
 				5E333D0A2B87881B00B7F591 /* SalesViewModel.swift in Sources */,
 				5E418A6D2B07C3470070EDA4 /* BannerViewManagerProtocol.swift in Sources */,
 				5E418A4B2B07B7080070EDA4 /* DIContainer.swift in Sources */,
+				5E3093E72BFB91C100CF7F83 /* SimpleTableView.swift in Sources */,
 				5EFB39822B67E9CE0024FD14 /* CompanyInformationNavigator.swift in Sources */,
+				5E5CA8292BEA4F2A005CD3B2 /* ExpensesCollectionItem.swift in Sources */,
 				5E2C0BDC2BB6FE9A00B2682E /* DoubleTextFieldDelegate.swift in Sources */,
 				5E84F4022B7D2B88000937AC /* ProductMainView.swift in Sources */,
 				5ED72EC02BA1C9750031D882 /* VisibleRefreshControl.swift in Sources */,
@@ -3877,6 +4069,7 @@
 				5ED9110C2B160DAD00FC0A66 /* SalesUseCases.swift in Sources */,
 				5EF1C56C2BE10796007E241A /* COGSettingsInputModel.swift in Sources */,
 				5ED911232B174FDA00FC0A66 /* UIWindow.swift in Sources */,
+				5E3094022BFF87DC00CF7F83 /* PopoverGroupedModel.swift in Sources */,
 				5ED9113A2B1A0E6E00FC0A66 /* SettingsVC.swift in Sources */,
 				5E0E66982B4583170005E576 /* ChartTypeHelper.swift in Sources */,
 				5EF1C5292BCFFFED007E241A /* SalesRefundsDTO + Extension.swift in Sources */,
@@ -3890,8 +4083,10 @@
 				5E2C0BE72BB84A7900B2682E /* COGSectionType.swift in Sources */,
 				5EF1C5242BCEC742007E241A /* DateConvertor.swift in Sources */,
 				5EF1C54D2BD67F68007E241A /* COGSettingsNavigator.swift in Sources */,
+				5E3093E52BFB917500CF7F83 /* SimpleTablePopoverVC.swift in Sources */,
 				5ED9110E2B16111D00FC0A66 /* ExpensesUseCases.swift in Sources */,
 				5E418A232B067CE10070EDA4 /* AuthenticationViewModel.swift in Sources */,
+				5E5CA82D2BEA4F4F005CD3B2 /* ExpensesSectionType.swift in Sources */,
 				5EFB39A42B715D2D0024FD14 /* ProductsCollectionView.swift in Sources */,
 				5EFAAA0B2BB2DE9800C96797 /* CATransition.swift in Sources */,
 				5E418A272B067D050070EDA4 /* AuthenticationUseCases.swift in Sources */,
@@ -3906,9 +4101,11 @@
 				5E418A862B0B9D700070EDA4 /* DashboardVC.swift in Sources */,
 				5E2C0BD72BB6CC5B00B2682E /* COGNavigator.swift in Sources */,
 				5E2C0BE52BB84A6200B2682E /* COGSectionModel.swift in Sources */,
+				5EE374AF2BF23E3500F879C1 /* PeriodType.swift in Sources */,
 				5E418A542B07B8590070EDA4 /* AppManager.swift in Sources */,
 				5EFAAA1C2BB323F500C96797 /* NoteAlertUseCases.swift in Sources */,
 				5ED911632B1CC0EF00FC0A66 /* MarketplaceDashboardCell.swift in Sources */,
+				5EE374AD2BF23D2200F879C1 /* CalculationMethod.swift in Sources */,
 				5ED911FC2B27513D00FC0A66 /* MarketplaceDashboardCellContetntView.swift in Sources */,
 				5EF1C5752BE254C2007E241A /* CostOfGoodsSettingsModel + Extension.swift in Sources */,
 				5ED911792B1F837800FC0A66 /* OverviewCellLineChartDataSet.swift in Sources */,
@@ -3948,6 +4145,7 @@
 				5ED910422B120AD300FC0A66 /* ClickableLabel.swift in Sources */,
 				5ED911162B16149400FC0A66 /* InventoryVC.swift in Sources */,
 				5EFAAA182BB30F2B00C96797 /* NoteAlertVC.swift in Sources */,
+				5E5CA82B2BEA4F39005CD3B2 /* ExpensesSectionModel.swift in Sources */,
 				5EAF2D752B5A7C1F00EFDA5A /* ScrollDecorator.swift in Sources */,
 				5E84F3EA2B7687D4000937AC /* ProductsSectionModel.swift in Sources */,
 				5E418F092BBF0E3D003317AD /* COGCostOfGoodsCellViewTypes.swift in Sources */,
@@ -3971,6 +4169,7 @@
 				5E620FDF2B975C0200680A49 /* ProductCellImageType.swift in Sources */,
 				5E18D05D2BE3A33400588526 /* FulfilmentType.swift in Sources */,
 				5ED72EC52BA1D4F10031D882 /* InventorySwitchesView.swift in Sources */,
+				5E5CA7E72BE9420C005CD3B2 /* ExpensesCell.swift in Sources */,
 				5EFB399C2B6CED330024FD14 /* SalesSetupView.swift in Sources */,
 				5E2B8F612B9B644F00CDD345 /* String.swift in Sources */,
 				5E0E66A62B46D32C0005E576 /* OverviewChartMarkerView.swift in Sources */,
@@ -3983,6 +4182,7 @@
 				5ED9116B2B1DF08200FC0A66 /* FMCellChartsView.swift in Sources */,
 				5E2B8FC62B9F310500CDD345 /* Double.swift in Sources */,
 				5E418A732B0B76A10070EDA4 /* DefaultTextField.swift in Sources */,
+				5E3094102C00DB9A00CF7F83 /* ExpenseDTO + Extension.swift in Sources */,
 				5ED910B92B140C8900FC0A66 /* UIScrollView.swift in Sources */,
 				5EFAAA1A2BB3237F00C96797 /* NoteAlertViewModel.swift in Sources */,
 				5E7A0A962B62EA00000DCEFA /* UIImage.swift in Sources */,
@@ -4010,11 +4210,13 @@
 				5E418A7B2B0B96810070EDA4 /* MainTabBarController.swift in Sources */,
 				5ED912072B29DB5800FC0A66 /* MarketplaceDashboardCellTopView.swift in Sources */,
 				5ED911182B1614CA00FC0A66 /* InventoryViewModel.swift in Sources */,
+				5E5CA7E42BE94128005CD3B2 /* ExpensesCollectionView.swift in Sources */,
 				5E418A572B07B8780070EDA4 /* AppManagerUseCases.swift in Sources */,
 				5EFB39842B67E9E10024FD14 /* CompanyInformationUseCases.swift in Sources */,
 				5EF23CF52B98CA0E00CB1EA9 /* ProductMainCell.swift in Sources */,
 				5ED911102B16112E00FC0A66 /* ExpensesVC.swift in Sources */,
 				5ED911452B1A2E6B00FC0A66 /* LogoutSettingsButton.swift in Sources */,
+				5E3093EB2BFB921D00CF7F83 /* SimpleTableViewCell.swift in Sources */,
 				5E0E670E2B517C220005E576 /* Date.swift in Sources */,
 				5E418ABB2B0F8A490070EDA4 /* VerticaStack.swift in Sources */,
 				5EAF2D6B2B597FA400EFDA5A /* ProfileViewModel.swift in Sources */,
@@ -4028,6 +4230,7 @@
 				5E63C3432B5534AC00C30BF7 /* RangedCalendarViewModel.swift in Sources */,
 				5E4FB80B2BC0170200594219 /* COGCostSummaryCellViewTypes.swift in Sources */,
 				5ED911722B1F693900FC0A66 /* FMDetailView.swift in Sources */,
+				5E5CA8302BEA506F005CD3B2 /* ExpensesHeaderReusableView.swift in Sources */,
 				5EFB39892B694F1D0024FD14 /* ImageControlView.swift in Sources */,
 				5ED72F092BA1FF670031D882 /* UIStackView.swift in Sources */,
 				5E418A632B07B9D40070EDA4 /* Reusable.swift in Sources */,
@@ -4074,18 +4277,22 @@
 				5E84F3F12B7A3535000937AC /* SalesOrdersDTO.swift in Sources */,
 				5EF1C5632BDFD1A6007E241A /* CostOfGoodsSettingsMainDTO.swift in Sources */,
 				5ED911D52B221F0E00FC0A66 /* NetworkUseCaseProvider.swift in Sources */,
+				5E3093F02BFD20C200CF7F83 /* UpdateExpensesNetwork.swift in Sources */,
 				5EFB39B42B7252C10024FD14 /* SalesRefundsDTO.swift in Sources */,
 				5EFB39B22B7252610024FD14 /* SalesRefundsNetwork.swift in Sources */,
 				5E418A372B07B1FD0070EDA4 /* LoginState.swift in Sources */,
 				5EFB39A12B711D0A0024FD14 /* SalesPaginatedModel.swift in Sources */,
 				5EFB39952B6AB5A40024FD14 /* UserRequestModel.swift in Sources */,
 				5ED911D12B221EC400FC0A66 /* APIConfig.swift in Sources */,
+				5EE3749E2BF22C7100F879C1 /* ExpensesResultsDTO.swift in Sources */,
 				5EBB75002BA4B7AD00FD100F /* InventoryOrdersResultsDTO.swift in Sources */,
 				5E0E66A42B45EC330005E576 /* UserIdUseCase.swift in Sources */,
 				5ED911492B1A389900FC0A66 /* AppVersionUseCase.swift in Sources */,
 				5EF1C5062BC825DA007E241A /* BreakEvenPointUseCase.swift in Sources */,
 				5EBB75152BAB298C00FD100F /* InventoryBuyBotImportsResultsDTO.swift in Sources */,
 				5ED9121A2B2CBD8D00FC0A66 /* TokensUseCase.swift in Sources */,
+				5EE374B12BF24F9E00F879C1 /* ExpensesCategoriesNetwork.swift in Sources */,
+				5EE374B52BF2502000F879C1 /* ExpensesCategoriesUseCase.swift in Sources */,
 				5EAF2D7B2B5A9A6F00EFDA5A /* UserDataNetwork.swift in Sources */,
 				5ED911DE2B233B3700FC0A66 /* LoginDTO.swift in Sources */,
 				5EF1C51D2BCE8E86007E241A /* COGUseCase.swift in Sources */,
@@ -4103,11 +4310,14 @@
 				5E5CA7D72BE8FA69005CD3B2 /* COGBbpImoprtStategyUseCase.swift in Sources */,
 				5E0E66C22B4C32E10005E576 /* MarketplacesUseCase.swift in Sources */,
 				5EF1C5472BD2782A007E241A /* ReplenishCOGUseCase.swift in Sources */,
+				5EE374AA2BF2314400F879C1 /* ExpensesUseCase.swift in Sources */,
 				5E0E66902B3769810005E576 /* ChartUseCase.swift in Sources */,
 				5EF40E4A2B35BCB40021EEC1 /* ChartDTOs.swift in Sources */,
 				5E0E669A2B45CD570005E576 /* MarketplaceDTO.swift in Sources */,
 				5E5CA7DB2BE900C6005CD3B2 /* COGSettingsNetwork.swift in Sources */,
+				5EE374B32BF24FCC00F879C1 /* ExpensesCategoryDTO.swift in Sources */,
 				5EAF2D792B5A993700EFDA5A /* UserDTO.swift in Sources */,
+				5EE374A12BF22EF800F879C1 /* ExpensesNetwork.swift in Sources */,
 				5ED910652B13F52300FC0A66 /* KeyboardUseCase.swift in Sources */,
 				5EBB75092BA4BE7000FD100F /* InventoryUseCase.swift in Sources */,
 				5ED72F0B2BA20C5C0031D882 /* InventoryPaginatedModel.swift in Sources */,
@@ -4129,7 +4339,9 @@
 				5EF1C5222BCE9C52007E241A /* CodableIgnore.swift in Sources */,
 				5EFB39B62B7385D20024FD14 /* SalesUseCase.swift in Sources */,
 				5EF1C5152BCD6698007E241A /* COGSalesRequestModel.swift in Sources */,
+				5E30940A2C00917000CF7F83 /* ExpensesCategoriesDataUseCase.swift in Sources */,
 				5EF1C5362BD1800A007E241A /* COGBreakEvenRequestModel.swift in Sources */,
+				5EE3749B2BF22BA400F879C1 /* ExpensesPaginatedModel.swift in Sources */,
 				5EF1C5022BC823F2007E241A /* BreakEvenPointNetwork.swift in Sources */,
 				5ED911C72B221AF600FC0A66 /* AutorizationDataUseCase.swift in Sources */,
 				5EFAAA272BB4592900C96797 /* NoteDTO.swift in Sources */,
@@ -4177,6 +4389,8 @@
 				5E4ABCC62B5FF1B100E878DF /* AddMultipartFormDataInterceptor.swift in Sources */,
 				5EBB75072BA4BE3F00FD100F /* InventoryUseCase.swift in Sources */,
 				5ED911C12B22191700FC0A66 /* InterceptorFactory.swift in Sources */,
+				5EE374A42BF22F5B00F879C1 /* ExpensesNetwork.swift in Sources */,
+				5E3093EE2BFD20A800CF7F83 /* UpdateExpensesNetwork.swift in Sources */,
 				5EBB74FD2BA4B6C400FD100F /* InventoryBaseNetwork.swift in Sources */,
 				5EF1C5112BCD65EA007E241A /* COGSalesNetwork.swift in Sources */,
 				5E5CA7DF2BE903EB005CD3B2 /* COGSettingsUseCase.swift in Sources */,
@@ -4184,6 +4398,7 @@
 				5EFAAA342BB45FD000C96797 /* NoteInventoryUseCase.swift in Sources */,
 				5EF1C51B2BCE8E1C007E241A /* COGUseCase.swift in Sources */,
 				5ED911DB2B22211B00FC0A66 /* UrlEncodedContentTypeInterceptor.swift in Sources */,
+				5E3093F22BFDED5600CF7F83 /* Array.swift in Sources */,
 				5EFAAA392BB48CEE00C96797 /* ContentTypeJsonInterceptor.swift in Sources */,
 				5E418A462B07B6A80070EDA4 /* Encodable + Extesion.swift in Sources */,
 				5EF1C5442BD277A1007E241A /* ReplenishCOGUseCase.swift in Sources */,
@@ -4191,8 +4406,11 @@
 				5EF1C53E2BD26B42007E241A /* ReplenishCOGNetwork.swift in Sources */,
 				5EFB39C12B73F1100024FD14 /* SalesUseCase.swift in Sources */,
 				5ED911D72B221F4C00FC0A66 /* NetworkUseCaseProvider.swift in Sources */,
+				5EE374A62BF230F900F879C1 /* ExpensesUseCase.swift in Sources */,
+				5EE374B72BF2504D00F879C1 /* ExpensesCategoriesNetwork.swift in Sources */,
 				5EF40E482B33335F0021EEC1 /* ChartsNetwork.swift in Sources */,
 				5E5CA7D92BE90087005CD3B2 /* COGSettingsNetwork.swift in Sources */,
+				5EE374B92BF2510A00F879C1 /* ExpensesCategoriesUseCase.swift in Sources */,
 				5EF1C5092BCD5D9F007E241A /* SalesBreakEvenPointNetwork.swift in Sources */,
 				5E0E669C2B45E8650005E576 /* UserIdToParametersInterceptor.swift in Sources */,
 				5EFAAA322BB45DC300C96797 /* NoteSalesNetwork.swift in Sources */,
@@ -4224,7 +4442,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5E0E66C02B4C32B20005E576 /* MarketplacesUseCase.swift in Sources */,
+				5E3094062C008E4E00CF7F83 /* MarketplacesUseCase.swift in Sources */,
 				5ED911C32B221A4F00FC0A66 /* AutorizationDataUseCase.swift in Sources */,
 				5ED912182B2CBD5E00FC0A66 /* TokensUseCase.swift in Sources */,
 				5E0E66A02B45EB730005E576 /* RMUserId.swift in Sources */,
@@ -4238,9 +4456,11 @@
 				5E418A342B07B17F0070EDA4 /* LoginStateUseCase.swift in Sources */,
 				5E418A1A2B067A260070EDA4 /* Repository.swift in Sources */,
 				5E418A1F2B067AA10070EDA4 /* RealmUseCaseProvider.swift in Sources */,
+				5E3094082C00914100CF7F83 /* ExpensesCategoriesDataUseCase.swift in Sources */,
 				5E418A3A2B07B26B0070EDA4 /* RMLoginState.swift in Sources */,
 				5ED911C92B221BD900FC0A66 /* RMAuthorizationData.swift in Sources */,
 				5E0E66A22B45EC020005E576 /* UserIdUseCase.swift in Sources */,
+				5E30940C2C00924200CF7F83 /* RMExpensesCategory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

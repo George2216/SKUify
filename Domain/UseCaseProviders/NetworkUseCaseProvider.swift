@@ -24,6 +24,8 @@ public protocol NetworkUseCaseProvider {
     func makeCOGUseCase() -> COGUseCase
     func makeReplenishCOGUseCase() -> ReplenishCOGUseCase
     func makeCOGSInformationUseCase() -> COGSInformationUseCase
-    func makeCOGBbpImoprtStategyUseCase() -> Domain.COGBbpImoprtStategyUseCase
-    func makeCOGSettingsUseCase() -> Domain.COGSettingsUseCase
+    func makeCOGBbpImoprtStategyUseCase() -> COGBbpImoprtStategyUseCase
+    func makeCOGSettingsUseCase() -> COGSettingsUseCase
+    func makeExpensesUseCase() -> ExpensesUseCase
+    func makeExpensesCategoriesUseCase(categoriesDataUseCase: ExpensesCategoriesWriteDataUseCase) -> ExpensesCategoriesUseCase
 }

@@ -28,7 +28,7 @@ final class ReplenishCOGNetwork: Domain.ReplenishCOGNetwork {
         return network.requestArray(
             "product/",
             method: .post,
-            parameters: data.toDictionary(),
+            data: data.toData(),
             interceptor: CompositeRxAlamofireInterceptor(
                 interceptors: [
                     interceptorFactory.makeTokenToHeaderInterceptor(),
