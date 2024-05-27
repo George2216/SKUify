@@ -14,6 +14,8 @@ final class COGVC: BaseViewController {
     
     var viewModel: COGBaseViewModel!
     
+    // MARK: UI elements
+    
     private lazy var collectionView = COGCollectionView(
         frame: .zero,
         collectionViewLayout: createCollectionViewLayout()

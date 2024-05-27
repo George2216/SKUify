@@ -569,9 +569,6 @@ extension COGSettingsViewModel {
                     owner.updateBBGImportStategy(changedDataStorage.toImportStrategyRequestModel())
                      
                 )
-                .do(onNext: { _, _   in
-                    print("all")
-                })
                 .trackActivity(owner.activityIndicator)
                 .trackError(owner.errorTracker)
                 .asDriverOnErrorJustComplete()
