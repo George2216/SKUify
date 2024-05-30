@@ -14,33 +14,23 @@ import RxDataSources
 
 final class ExpensesCollectionView: UICollectionView {
     private let disposeBag = DisposeBag()
+    private var cashe: [IndexPath: CGFloat] = [:]
     
-    private let visibleSection = PublishSubject<Int>()
-
     // MARK: Data source
     
     private lazy var customSource = RxCollectionViewSectionedReloadDataSource<ExpensesSectionModel>(
         configureCell: { [unowned self] dataSource, collectionView, indexPath, item in
-            self.visibleSection.onNext(indexPath.section)
+            let width = collectionView.frame.width - 20
 
-            let width = self.frame.width - 20
-            
             switch item {
             case .expenses(let input):
                 let cell = collectionView.dequeueReusableCell(
                     ofType: ExpensesCell.self,
                     at: indexPath
                 )
-                cell.setupWigth(width)
                 cell.setupInput(input)
-                return cell   
-            case .buttons(let input):
-                let cell = collectionView.dequeueReusableCell(
-                    ofType: ExpensesButtonsCell.self,
-                    at: indexPath
-                )
                 cell.setupWigth(width)
-                cell.setupInput(input)
+
                 return cell
             }
             
@@ -101,7 +91,6 @@ final class ExpensesCollectionView: UICollectionView {
         backgroundColor = .clear
         alwaysBounceVertical = true
         showsVerticalScrollIndicator = false
-        allowsMultipleSelection = true
         keyboardDismissMode = .interactive
     }
     
@@ -109,7 +98,6 @@ final class ExpensesCollectionView: UICollectionView {
 
     private func registerCells() {
         register(ExpensesCell.self)
-        register(ExpensesButtonsCell.self)
         
         registerHeader(ExpensesHeaderReusableView.self)
         registerFooter(LoaderCollectionReusableView.self) // loader
@@ -125,16 +113,12 @@ final class ExpensesCollectionView: UICollectionView {
         isShowLoader.drive(activityIndicator.rx.isAnimating)
     }
     
-    func subscribeOnVisibleSection() -> Driver<Int> {
-        visibleSection.asDriverOnErrorJustComplete()
-    }
-    
 }
 
 // MARK: - DelegateFlowLayout
 
 extension ExpensesCollectionView: UICollectionViewDelegateFlowLayout {
- 
+    
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,

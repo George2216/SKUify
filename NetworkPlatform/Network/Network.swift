@@ -126,10 +126,12 @@ extension Network {
         error: Error
     ) -> Observable<E> {
         if !data.isEmpty,
-            let errorMessage = String(
-                data: data,
-                encoding: .utf8
-            ) {
+           let errorMessage = String(
+            data: data,
+            encoding: .utf8
+           ) {
+            let errorMessage = errorMessage.count > 1000 ?
+            "Decoding failed" : errorMessage
             return Observable.error(
                 NSError(
                     domain: "",

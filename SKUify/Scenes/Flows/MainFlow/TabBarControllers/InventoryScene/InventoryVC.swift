@@ -12,8 +12,6 @@ import SnapKit
 
 final class InventoryVC: BaseViewController {
 
-    private let visibleSection = PublishSubject<Int>()
-
     // MARK: - UI elements
     
     private lazy var setupView = InventorySetupView()
@@ -44,13 +42,12 @@ final class InventoryVC: BaseViewController {
             .init(
                 reloadData: Driver.merge(refreshingTriger, viewDidAppear),
                 screenDisappear: viewDidDisappear,
-                visibleSection: visibleSection.asDriverOnErrorJustComplete()
+                reachedBottom: collectionView.rx.reachedBottom.asDriver()
             )
         )
         
         setupSetupView()
         setupCollection()
-        subscribeOnVisebleSection()
         
         bindToLoader(output)
         bindToBanner(output)
@@ -87,19 +84,6 @@ final class InventoryVC: BaseViewController {
                 .bottom
                 .equalToSuperview()
         }
-    }
-    
-}
-
-// MARK: Subscribers
-
-extension InventoryVC {
-    
-    private func subscribeOnVisebleSection() {
-        collectionView
-            .subscribeOnVisibleSection()
-            .drive(visibleSection)
-            .disposed(by: disposeBag)
     }
     
 }

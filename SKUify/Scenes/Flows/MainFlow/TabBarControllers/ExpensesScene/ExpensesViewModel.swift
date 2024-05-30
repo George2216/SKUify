@@ -18,20 +18,22 @@ enum ExpensesType {
 
 final class ExpensesViewModel: ViewModelProtocol {
     private let disposeBag = DisposeBag()
-        
+            
     private let updateExpense = PublishSubject<ExpenseUpdateModel>()
     
     // MARK: - Storages
-        
+            
     private let collectionDataStorage = BehaviorSubject<[ExpensesSectionModel]>(value: [])
     
     private let paginatedData = BehaviorSubject<ExpensesPaginatedModel>(value: .base())
+    
     private let paginationCounter = BehaviorSubject<Int?>(value: nil)
+    
     private let isShowPaginatedLoader = PublishSubject<Bool>()
 
     private let visibleExpensesDataStorage = BehaviorSubject<[ExpenseDTO]>(value: [])
     private let changedExpensesDataStorage = BehaviorSubject<[ExpenseDTO]>(value: [])
-    
+        
     private let tapOnSaveExpense = PublishSubject<Void>()
 
     // Popovers
@@ -61,8 +63,6 @@ final class ExpensesViewModel: ViewModelProtocol {
         self.navigator = navigator
         self.expensesUseCase = useCases.makeExpensesUseCase()
         self.expensesCategoriesUseCase = useCases.makeExpensesCategoriesDataUseCase()
-        
-        makeExpensesCollectionData()
     }
     
      func transform(_ input: Input) -> Output {
@@ -70,10 +70,11 @@ final class ExpensesViewModel: ViewModelProtocol {
 
         subscribeOnReloadData(input)
         subscribeOnScreenDisappear(input)
-        subscribeOnVisibleSection(input)
+         subscribeOnReachedBottom(input)
+         
         return Output(
             title: makeTitle(),
-            collectionData: collectionDataStorage.asDriverOnErrorJustComplete(),
+            collectionData: makeExpensesCollectionData(),
             showCalendarPopover: showCalendarPopover.asDriverOnErrorJustComplete(),
             showSimpleTablePopover: showSimpleTablePopover.asDriverOnErrorJustComplete(), 
             isShowPaginatedLoader: isShowPaginatedLoader.asDriverOnErrorJustComplete(),
@@ -117,8 +118,7 @@ extension ExpensesViewModel {
             .flatMapLatest(weak: self) { owner, expenses in
                 owner.expensesCategoriesUseCase
                     .getCategories()
-                    .asDriverOnErrorJustComplete()
-                    .map { categories in
+                    .asDriverOnErrorJustComplete().map { categories in
                         return (expenses, categories)
                     }
             }
@@ -126,13 +126,14 @@ extension ExpensesViewModel {
                 let (expenses, categories) = arg0
                 return (expenses, categories, expensesType)
             }
+        
             .do(onNext: { [weak self] _ in
                 guard let self else { return }
                 self.isShowPaginatedLoader.onNext(false)
             })
     }
     
-    private func makeExpensesCollectionData() {
+    private func makeExpensesCollectionData() -> Driver<[ExpensesSectionModel]> {
         prepareDataForCollection()
             .withUnretained(self)
             .map { (owner, arg1) in
@@ -159,8 +160,6 @@ extension ExpensesViewModel {
                         )
                     }
             }
-            .drive(collectionDataStorage)
-            .disposed(by: disposeBag)
     }
     
     private func makeCollectionHeader(
@@ -428,7 +427,6 @@ extension ExpensesViewModel {
                         action: .simple({ [weak self] in
                             guard let self else { return }
                             self.navigator.toTransactions()
-                            
                         })
                     ),
                     .init(
@@ -556,14 +554,15 @@ extension ExpensesViewModel {
     }
     
     private func subscribeOnUpdateExpense() {
-        let updatedExpensesDriver = updateExpense.asDriverOnErrorJustComplete()
+        let updatedExpensesDriver = updateExpense
+            .asDriverOnErrorJustComplete()
             .withLatestFrom(changedExpensesDataStorage.asDriverOnErrorJustComplete()) { changer, changedExpensesDataStorage in
                 return (changer, changedExpensesDataStorage)
             }
             .map  { changer, changedExpensesDataStorage in
                 let updatedExpenses = changedExpensesDataStorage.map { expense in
                     if expense.id == changer.id {
-                       return changer.item(expense)
+                        return changer.item(expense)
                     } else {
                         return expense
                     }
@@ -595,61 +594,29 @@ extension ExpensesViewModel {
 // MARK: Subscribers from Input
 
 extension ExpensesViewModel {
+   
     
-    // Set paginated counter
-    private func subscribeOnVisibleSection(_ input: Input) {
-        let visibleSectionDriver = input.visibleSection
-            .withLatestFrom(Driver.combineLatest(expensesType.asDriverOnErrorJustComplete(), activityIndicator.asDriver())) { (visibleSection, arg1) in
-                let (expensesType, isItLoading) = arg1
-                return (visibleSection, isItLoading, expensesType)
+    private func subscribeOnReachedBottom(_ input: Input) {
+        input.reachedBottom
+        // Filter when product loading
+            .withLatestFrom(activityIndicator.asDriver())
+            .filter { !$0 }
+        // Pagination work only for all expenses
+            .withLatestFrom(expensesType.asDriverOnErrorJustComplete())
+            .filter { $0 == .allExpenses }
+            .withLatestFrom(paginationCounter.asDriverOnErrorJustComplete())
+            .withLatestFrom(visibleExpensesDataStorage.asDriverOnErrorJustComplete()) { paginationCounter, collectionData in
+                return (paginationCounter, collectionData.count)
             }
-            .filter { _, _, expensesType in
-                switch expensesType {
-                case .allExpenses:
-                    return true
-                default:
-                    return false
-                }
+            .filter { paginationCounter, collectionCount in
+                (paginationCounter ?? 0) <= collectionCount
             }
-            .filter { _, isItLoading, _ in
-                return !isItLoading
-            }
-            .map { visibleSection, _, _ in visibleSection }
-        
-        let filterNotLastIndecesDriver = visibleSectionDriver
-            .withLatestFrom(collectionDataStorage.asDriverOnErrorJustComplete()) { visibleSection, collectionDataStorage in
-                return (visibleSection, collectionDataStorage.count)
-            }
-        // I filter out the cell index if it does not match the last one
-            .filter { visibleSection, collectionDataStorageCount in
-                return collectionDataStorageCount - 1 == visibleSection
-            }
-        
-        let filterWhenLastProductDriver = filterNotLastIndecesDriver
-            .withLatestFrom(paginationCounter.asDriverOnErrorJustComplete()) { (arg0, paginationCounter) in
-                let (_, productsCount) = arg0
-                return (paginationCounter, productsCount)
-            }
-        // If the paginationCountert is greater than the number of valid products, then you no longer need to download products
-            .filter { paginationCounter, productsCount in
-                return (paginationCounter ?? 0) < productsCount
-            }
-        
-        let newPaginatedCounterDriver = filterWhenLastProductDriver
-            .map { paginationCounter, _ in
-                guard let paginationCounter else { return 8 }
-                return paginationCounter + 8
-            }
-        
-        // Show paginated loader
-        newPaginatedCounterDriver
-            .map { _ in true }
+            .map({ $0.0 })
+            .map({ (( $0 ?? 0) + 10) })
+            .distinctUntilChanged()
+            .shareElement(paginationCounter)
+            .map({ _  in true })
             .drive(isShowPaginatedLoader)
-            .disposed(by: disposeBag)
-        
-        // Start load data
-        newPaginatedCounterDriver
-            .drive(paginationCounter)
             .disposed(by: disposeBag)
     }
     
@@ -801,8 +768,8 @@ extension ExpensesViewModel {
         let reloadData: Driver<Void>
         // viewDidDisappear
         let screenDisappear: Driver<Void>
-        // currently visible collection section
-        let visibleSection: Driver<Int>
+        // When I scrolled to the bottom of the collection
+        let reachedBottom: Driver<Void>
     }
     
     struct Output {

@@ -14,9 +14,19 @@ final class BannerViewManager: BannerViewManagerProtocol {
     static let shared: BannerViewManagerProtocol = BannerViewManager()
     
     private var bannerView: BannerView?
+    private var hideTimer: Timer?
     
     private let animationDuration: TimeInterval = 0.3
+    private let bannerDuration: TimeInterval = 2
     
+    private var showConstaint: Constraint!
+    private var hideConstaint: Constraint!
+
+    private var isShow: Bool = false {
+        didSet {
+            updateConstaints()
+        }
+    }
     private init() {}
     
     func setup(with window: UIWindow) {
@@ -24,11 +34,11 @@ final class BannerViewManager: BannerViewManagerProtocol {
             guard let self = self else { return }
             
             let banner = self.setupBanner()
-                self.addBannerOnSuperview(
-                    superview: window,
-                    bannerView: banner
-                )
-            }
+            self.addBannerOnSuperview(
+                superview: window,
+                bannerView: banner
+            )
+        }
     }
     
     func showBanner(input: BannerView.Input) {
@@ -37,18 +47,40 @@ final class BannerViewManager: BannerViewManagerProtocol {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             bannerView.setup(input: input)
-            self.animateBannerViewShow(bannerView)
+            self.showBanner()
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
-                self.animateBannerViewHide(bannerView)
-            }
+            self.hideTimer?.invalidate()
+            self.hideTimer = Timer.scheduledTimer(
+                timeInterval: self.bannerDuration,
+                target: self,
+                selector: #selector(self.hideBanner),
+                userInfo: nil,
+                repeats: false
+            )
+        }
+    }
+    
+    
+    private func updateConstaints() {
+        guard let bannerView else { return }
+        guard let superview = bannerView.superview else { return }
+        showConstaint.isActive = isShow
+        hideConstaint.isActive = !isShow
+        
+        UIView.animate(withDuration: animationDuration) {
+            superview.layoutIfNeeded()
         }
     }
     
     private func setupBanner() -> UIView {
         let banner = BannerView()
-        banner.isHidden = true
-        banner.alpha = 0
+        
+        let swipeGesture = UISwipeGestureRecognizer(
+            target: self,
+            action: #selector(handleSwipe(_:))
+        )
+        swipeGesture.direction = .up
+        banner.addGestureRecognizer(swipeGesture)
         
         guard bannerView != nil else {
             bannerView = banner
@@ -64,37 +96,33 @@ final class BannerViewManager: BannerViewManagerProtocol {
         bannerView: UIView
     ) {
         superview.addSubview(bannerView)
+        
         bannerView.snp.makeConstraints { make in
-            make.top
-                .equalTo(superview.safeAreaLayoutGuide)
-            make.leading
-                .equalToSuperview()
-                .inset(14)
-            make.trailing
+            make.horizontalEdges
                 .equalToSuperview()
                 .inset(14)
         }
+        
+        bannerView.snp.prepareConstraints { make in
+            showConstaint = make.top
+                .equalTo(superview.safeAreaLayoutGuide)
+                .constraint
+            hideConstaint = make.bottom
+                .equalTo(superview.snp.top)
+                .constraint
+        }
     }
     
-    private func animateBannerViewShow(_ bannerView: UIView) {
-        UIView.animate(
-            withDuration: animationDuration,
-            animations: {
-                bannerView.isHidden = false
-                bannerView.alpha = 1
-            }
-        )
+    private func showBanner() {
+        isShow = true
+    }
+
+    @objc private func hideBanner() {
+        isShow = false
     }
     
-    private func animateBannerViewHide(_ bannerView: UIView) {
-        UIView.animate(
-            withDuration: animationDuration * 2,
-            animations: {
-                bannerView.alpha = 0
-            }, completion: { _ in
-                bannerView.isHidden = true
-            }
-        )
+    @objc private func handleSwipe(_ gesture: UISwipeGestureRecognizer) {
+        hideBanner()
     }
     
 }

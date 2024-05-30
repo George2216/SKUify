@@ -9,6 +9,5 @@ import Foundation
 
 enum ExpensesCollectionItem {
     case expenses(_ input: ExpensesCell.Input)
-    case buttons(_ input: ExpensesButtonsCell.Input)
 }
 

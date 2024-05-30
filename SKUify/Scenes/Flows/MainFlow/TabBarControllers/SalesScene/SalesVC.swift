@@ -13,7 +13,6 @@ import RxCocoa
 
 final class SalesVC: BaseViewController {
 
-    private let visibleSection = PublishSubject<Int>()
     private let selectedCalendarDates = PublishSubject<(Date,Date?)>()
     private let selectedCancelCalendar = PublishSubject<Void>()
     
@@ -51,7 +50,7 @@ final class SalesVC: BaseViewController {
             .init(
                 reloadData: Driver.merge(refreshingTriger, viewDidAppear), 
                 screenDisappear: viewDidDisappear,
-                visibleSection: visibleSection.asDriverOnErrorJustComplete(),
+                reachedBottom: collectionView.rx.reachedBottom.asDriver(),
                 marketplaceSelected: marketplacesPopover.itemSelected(),
                 selectedCalendarDates: selectedCalendarDates.asDriverOnErrorJustComplete(), 
                 selectedCancelCalendar: selectedCancelCalendar.asDriverOnErrorJustComplete()
@@ -61,7 +60,6 @@ final class SalesVC: BaseViewController {
         
         setupSetupView()
         setupCollection()
-        subscribeOnVisebleSection()
         
         bindToBanner(output)
         bindToAlert(output)
@@ -101,19 +99,6 @@ final class SalesVC: BaseViewController {
                 .bottom
                 .equalToSuperview()
         }
-    }
-    
-}
-
-// MARK: Subscribers
-
-extension SalesVC {
-    
-    private func subscribeOnVisebleSection() {
-        collectionView
-            .subscribeOnVisibleSection()
-            .drive(visibleSection)
-            .disposed(by: disposeBag)
     }
     
 }

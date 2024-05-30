@@ -14,14 +14,13 @@ import SnapKit
 
 final class ProductsCollectionView: UICollectionView {
     private let disposeBag = DisposeBag()
-
-    private let visibleSection = PublishSubject<Int>()
     
     // MARK: Data source
 
     private lazy var customSource = RxCollectionViewSectionedReloadDataSource<ProductsSectionModel>(configureCell: { [unowned self] dataSource, collectionView, indexPath, item in
-        self.visibleSection.onNext(indexPath.section)
+        
         let width = self.frame.width - 20
+        
         switch item {
         case .main(let input):
             let cell = collectionView.dequeueReusableCell(
@@ -115,10 +114,6 @@ final class ProductsCollectionView: UICollectionView {
     
     func bindToPaginatedLoader(_ isShowLoader: Driver<Bool>) -> Disposable {
         isShowLoader.drive(activityIndicator.rx.isAnimating)
-    }
-    
-    func subscribeOnVisibleSection() -> Driver<Int> {
-        visibleSection.asDriverOnErrorJustComplete()
     }
      
 }

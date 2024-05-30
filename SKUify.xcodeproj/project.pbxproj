@@ -35,6 +35,7 @@
 		5E18D0662BE51E1600588526 /* COGVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E18D0652BE51E1600588526 /* COGVC.swift */; };
 		5E18D0682BE51E3000588526 /* COGBaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E18D0672BE51E3000588526 /* COGBaseViewModel.swift */; };
 		5E18D06A2BE5282700588526 /* COGApplyToInventoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E18D0692BE5282700588526 /* COGApplyToInventoryCell.swift */; };
+		5E1F73F32C071D3300AA27C8 /* UIScrollView + Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1F73F22C071D3300AA27C8 /* UIScrollView + Rx.swift */; };
 		5E2B8F612B9B644F00CDD345 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2B8F602B9B644F00CDD345 /* String.swift */; };
 		5E2B8FC62B9F310500CDD345 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2B8FC52B9F310500CDD345 /* Double.swift */; };
 		5E2B8FC82B9F320500CDD345 /* ProductAddInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2B8FC72B9F320500CDD345 /* ProductAddInfoView.swift */; };
@@ -192,7 +193,6 @@
 		5E5CA82B2BEA4F39005CD3B2 /* ExpensesSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5CA82A2BEA4F39005CD3B2 /* ExpensesSectionModel.swift */; };
 		5E5CA82D2BEA4F4F005CD3B2 /* ExpensesSectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5CA82C2BEA4F4F005CD3B2 /* ExpensesSectionType.swift */; };
 		5E5CA8302BEA506F005CD3B2 /* ExpensesHeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5CA82F2BEA506F005CD3B2 /* ExpensesHeaderReusableView.swift */; };
-		5E5CA8322BEA7428005CD3B2 /* ExpensesButtonsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5CA8312BEA7428005CD3B2 /* ExpensesButtonsCell.swift */; };
 		5E620FDF2B975C0200680A49 /* ProductCellImageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E620FDE2B975C0200680A49 /* ProductCellImageType.swift */; };
 		5E63C3432B5534AC00C30BF7 /* RangedCalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63C3422B5534AC00C30BF7 /* RangedCalendarViewModel.swift */; };
 		5E63C3462B55447E00C30BF7 /* RxFSCalendarDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63C3452B55447E00C30BF7 /* RxFSCalendarDelegateProxy.swift */; };
@@ -682,6 +682,7 @@
 		5E18D0652BE51E1600588526 /* COGVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COGVC.swift; sourceTree = "<group>"; };
 		5E18D0672BE51E3000588526 /* COGBaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COGBaseViewModel.swift; sourceTree = "<group>"; };
 		5E18D0692BE5282700588526 /* COGApplyToInventoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COGApplyToInventoryCell.swift; sourceTree = "<group>"; };
+		5E1F73F22C071D3300AA27C8 /* UIScrollView + Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView + Rx.swift"; sourceTree = "<group>"; };
 		5E2B8F602B9B644F00CDD345 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		5E2B8FC52B9F310500CDD345 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
 		5E2B8FC72B9F320500CDD345 /* ProductAddInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductAddInfoView.swift; sourceTree = "<group>"; };
@@ -838,7 +839,6 @@
 		5E5CA82A2BEA4F39005CD3B2 /* ExpensesSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesSectionModel.swift; sourceTree = "<group>"; };
 		5E5CA82C2BEA4F4F005CD3B2 /* ExpensesSectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesSectionType.swift; sourceTree = "<group>"; };
 		5E5CA82F2BEA506F005CD3B2 /* ExpensesHeaderReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesHeaderReusableView.swift; sourceTree = "<group>"; };
-		5E5CA8312BEA7428005CD3B2 /* ExpensesButtonsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesButtonsCell.swift; sourceTree = "<group>"; };
 		5E620FDE2B975C0200680A49 /* ProductCellImageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCellImageType.swift; sourceTree = "<group>"; };
 		5E63C3422B5534AC00C30BF7 /* RangedCalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangedCalendarViewModel.swift; sourceTree = "<group>"; };
 		5E63C3452B55447E00C30BF7 /* RxFSCalendarDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxFSCalendarDelegateProxy.swift; sourceTree = "<group>"; };
@@ -1961,17 +1961,18 @@
 				5EFAAA0A2BB2DE9800C96797 /* CATransition.swift */,
 				5E0E670D2B517C210005E576 /* Date.swift */,
 				5E2B8FC52B9F310500CDD345 /* Double.swift */,
+				5EF1C5382BD1A581007E241A /* Optional + Int.swift */,
 				5EF1C4F92BC44516007E241A /* Optional+Double.swift */,
 				5E2B8F602B9B644F00CDD345 /* String.swift */,
 				5EC8CF1E2B90C49D00CCD4E9 /* UIActivityIndicatorView.swift */,
 				5ED911302B17979E00FC0A66 /* UIButton.swift */,
 				5E7A0A952B62EA00000DCEFA /* UIImage.swift */,
+				5E1F73F22C071D3300AA27C8 /* UIScrollView + Rx.swift */,
 				5ED910B82B140C8900FC0A66 /* UIScrollView.swift */,
 				5ED72F082BA1FF670031D882 /* UIStackView.swift */,
 				5E418A772B0B84F00070EDA4 /* UITextField.swift */,
 				5ED910B62B13FECA00FC0A66 /* UIView.swift */,
 				5ED911222B174FDA00FC0A66 /* UIWindow.swift */,
-				5EF1C5382BD1A581007E241A /* Optional + Int.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2084,7 +2085,6 @@
 		5E5CA7E52BE941A0005CD3B2 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				5E5CA8312BEA7428005CD3B2 /* ExpensesButtonsCell.swift */,
 				5E5CA7E62BE9420C005CD3B2 /* ExpensesCell.swift */,
 				5E5CA82E2BEA5061005CD3B2 /* Headers */,
 			);
@@ -4030,7 +4030,6 @@
 			files = (
 				5E18D0622BE3C3C200588526 /* COGHeaderReusableView.swift in Sources */,
 				5E2B8FC82B9F320500CDD345 /* ProductAddInfoView.swift in Sources */,
-				5E5CA8322BEA7428005CD3B2 /* ExpensesButtonsCell.swift in Sources */,
 				5E418A2C2B067D300070EDA4 /* ViewModelProtocol.swift in Sources */,
 				5E18D0662BE51E1600588526 /* COGVC.swift in Sources */,
 				5E84F3EE2B7A346F000937AC /* ProductTitlesView.swift in Sources */,
@@ -4209,6 +4208,7 @@
 				5EF23CFC2B98D8BF00CB1EA9 /* ProductShowDetailsView.swift in Sources */,
 				5E418A7B2B0B96810070EDA4 /* MainTabBarController.swift in Sources */,
 				5ED912072B29DB5800FC0A66 /* MarketplaceDashboardCellTopView.swift in Sources */,
+				5E1F73F32C071D3300AA27C8 /* UIScrollView + Rx.swift in Sources */,
 				5ED911182B1614CA00FC0A66 /* InventoryViewModel.swift in Sources */,
 				5E5CA7E42BE94128005CD3B2 /* ExpensesCollectionView.swift in Sources */,
 				5E418A572B07B8780070EDA4 /* AppManagerUseCases.swift in Sources */,

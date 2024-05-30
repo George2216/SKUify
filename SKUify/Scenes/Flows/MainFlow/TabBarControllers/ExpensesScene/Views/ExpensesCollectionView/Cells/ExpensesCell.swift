@@ -11,12 +11,18 @@ import SnapKit
 
 final class ExpensesCell: UICollectionViewCell {
     
+    
+    private let spacing: CGFloat = 10.0
+
+    private let viewHeight: CGFloat = 40.0
+    
+    private let titleSize: CGFloat = 14.0
+    
+    private var inputStorage: Input?
     // MARK: UI elements
     
     private lazy var contentStack = VerticalStack()
     
-    private let spacing: CGFloat = 10.0
-
     // MARK: Initializers
     
     override init(frame: CGRect) {
@@ -31,7 +37,8 @@ final class ExpensesCell: UICollectionViewCell {
     
     // MARK: Setup views
     
-    func setupInput(_ input: Input) {
+    func setupInput(_  input: Input) {
+        inputStorage = input
         contentStack.views = input.content.map(makeMainView)
     }
     
@@ -39,6 +46,8 @@ final class ExpensesCell: UICollectionViewCell {
         contentView.snp.makeConstraints { make in
             make.width
                 .equalTo(width)
+            make.edges
+                .equalToSuperview()
         }
     }
     
@@ -54,7 +63,11 @@ final class ExpensesCell: UICollectionViewCell {
                 .inset(spacing)
         }
     }
-    
+//    10 + 10
+//    (count - 1) * 10
+//    40 * count
+//    + titles
+  
     private func setupCell() {
         backgroundColor = .white
         layer.cornerRadius = 15
@@ -98,6 +111,7 @@ final class ExpensesCell: UICollectionViewCell {
             titleAligment: titleAligment
         )
         titleDecorator.decorate(title: input.title)
+        
         return titleDecorator
     }
     
@@ -184,7 +198,6 @@ extension ExpensesCell {
     }
     
 }
-
 
 // MARK: Input
 

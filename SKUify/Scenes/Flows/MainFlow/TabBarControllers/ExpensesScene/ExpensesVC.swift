@@ -13,8 +13,6 @@ import RxCocoa
 
 final class ExpensesVC: BaseViewController {
     
-    private let visibleSection = PublishSubject<Int>()
-
     var viewModel: ExpensesViewModel!
     
     // MARK: UI elements
@@ -48,12 +46,11 @@ final class ExpensesVC: BaseViewController {
             .init(
                 reloadData: Driver.merge(refreshingTriger, viewDidAppear),
                 screenDisappear: viewDidDisappear,
-                visibleSection: visibleSection.asDriverOnErrorJustComplete()
+                reachedBottom: collectionView.rx.reachedBottom.asDriver()
             )
         )
         
         setupCollection()
-        subscribeOnVisibleSection()
         sutupNavBarItems()
         
         bindToTitle(output)
@@ -69,7 +66,12 @@ final class ExpensesVC: BaseViewController {
     
     private func createCollectionViewLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
-        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        layout.itemSize = UICollectionViewFlowLayout.automaticSize
+        layout.estimatedItemSize = .init(
+            width: view.frame.width - 20,
+            height: 466
+        )
+        layout.sectionInsetReference = .fromLayoutMargins
         layout.scrollDirection = .vertical
         return layout
     }
@@ -89,18 +91,6 @@ final class ExpensesVC: BaseViewController {
 
 }
 
-// MARK: Subscribers
-
-extension ExpensesVC {
-    
-    private func subscribeOnVisibleSection() {
-        collectionView
-            .subscribeOnVisibleSection()
-            .drive(visibleSection)
-            .disposed(by: disposeBag)
-    }
-    
-}
 
 // MARK: - Make binding
 
@@ -123,7 +113,6 @@ extension ExpensesVC {
             .drive(rx.banner)
             .disposed(by: disposeBag)
     }
-    
     
     private func bindToCollectionView(_ output: ExpensesViewModel.Output) {
         collectionView.bind(output.collectionData)

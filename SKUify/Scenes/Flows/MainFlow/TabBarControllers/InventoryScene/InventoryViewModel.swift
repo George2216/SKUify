@@ -71,7 +71,7 @@ final class InventoryViewModel: ViewModelProtocol {
     func transform(_ input: Input) -> Output {
         subscribeOnReloadData(input)
         subscribeOnScreenDisappear(input)
-        subscribeOnVisibleSection(input)
+        subscribeOnReachedBottom(input)
         return Output(
             setupViewInput: makeSetupViewInput(),
             collectionData: collectionDataStorage.asDriverOnErrorJustComplete(), 
@@ -292,52 +292,24 @@ extension InventoryViewModel {
 extension InventoryViewModel {
     
     // Set paginated counter
-    private func subscribeOnVisibleSection(_ input: Input) {
-        let visibleSectionDriver = input.visibleSection
-            .withLatestFrom(activityIndicator.asDriver()) { visibleSection, isItLoading in
-                print(visibleSection, isItLoading)
-
-                return (visibleSection, isItLoading)
+    private func subscribeOnReachedBottom(_ input: Input) {
+        input.reachedBottom
+        // Filter when product loading
+            .withLatestFrom(activityIndicator.asDriver())
+            .filter { !$0 }
+            .withLatestFrom(paginationCounter.asDriverOnErrorJustComplete())
+            .withLatestFrom(collectionDataStorage.asDriverOnErrorJustComplete()) { paginationCounter, collectionData in
+                return (paginationCounter, collectionData.count)
             }
-            .filter { _, isItLoading in
-                return !isItLoading
+            .filter { paginationCounter, collectionCount in
+                (paginationCounter ?? 0) <= collectionCount
             }
-            .map { visibleSection, _ in visibleSection }
-        
-        let filterNotLastIndecesDriver = visibleSectionDriver
-            .withLatestFrom(collectionDataStorage.asDriverOnErrorJustComplete()) { visibleSection, collectionDataStorage in
-                return (visibleSection, collectionDataStorage.count)
-            }
-        // I filter out the cell index if it does not match the last one
-            .filter { visibleSection, collectionDataStorageCount in
-                return collectionDataStorageCount - 1 == visibleSection
-            }
-        
-        let filterWhenLastProductDriver = filterNotLastIndecesDriver
-            .withLatestFrom(paginationCounter.asDriverOnErrorJustComplete()) { (arg0, paginationCounter) in
-                let (_, productsCount) = arg0
-                return (paginationCounter, productsCount)
-            }
-        // If the paginationCountert is greater than the number of valid products, then you no longer need to download products
-            .filter { paginationCounter, productsCount in
-                return (paginationCounter ?? 0) < productsCount
-            }
-        
-        let newPaginatedCounterDriver = filterWhenLastProductDriver
-            .map { paginationCounter, _ in
-                guard let paginationCounter else { return 15 }
-                return paginationCounter + 15
-            }
-        
-        // Show paginated loader
-        newPaginatedCounterDriver
-            .map { _ in true }
+            .map({ $0.0 })
+            .map({ (( $0 ?? 0) + 15) })
+            .distinctUntilChanged()
+            .shareElement(paginationCounter)
+            .map({ _  in true })
             .drive(isShowPaginatedLoader)
-            .disposed(by: disposeBag)
-        
-        // Start load data
-        newPaginatedCounterDriver
-            .drive(paginationCounter)
             .disposed(by: disposeBag)
     }
     
@@ -1015,7 +987,7 @@ extension InventoryViewModel {
         // viewDidDisappear
         let screenDisappear: Driver<Void>
         // currently visible collection section
-        let visibleSection: Driver<Int>
+        let reachedBottom: Driver<Void>
     }
     
     struct Output {
