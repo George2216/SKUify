@@ -121,6 +121,7 @@ final class ExpensesCell: UICollectionViewCell {
             make.height
                 .equalTo(40)
         }
+        
         return view
     }
     
