@@ -117,6 +117,9 @@ final class DefaultButton: UIButton {
 
         case .primaryPlus:
             setupPrimaryPlusStyle()
+            
+        case .primaryMore:
+            setupPrimaryMoreStyle()
 
         case .lightPrimaryPlus:
             setupLightPrimaryPlusStyle()
@@ -133,7 +136,6 @@ final class DefaultButton: UIButton {
         case .image(let image):
             configuration?.image = image.image
             configuration?.contentInsets = .zero
-            configuration?.imagePlacement = .all
       
         case .infoButton:
             setupInfoButton()
@@ -228,6 +230,24 @@ extension DefaultButton {
         
         configuration?.image = image
         configuration?.baseForegroundColor = .white
+    }
+    
+    private func setupPrimaryMoreStyle() {
+        backgroundColor = .primaryLight
+        layer.cornerRadius = 12.0
+
+        let imageConfig = UIImage.SymbolConfiguration(
+            font: .manrope(
+                type: .bold,
+                size: 13
+            )
+        )
+        let image = UIImage(systemName: "chevron.right")?
+            .withConfiguration(imageConfig)
+        
+        configuration?.image = image
+        configuration?.baseForegroundColor = .white
+        configuration?.imagePlacement = .trailing
     }
     
     private func setupLightPrimaryPlusStyle() {
@@ -444,6 +464,7 @@ extension DefaultButton {
         case primaryRed
         case fullyRoundedPrimary
         case primaryPlus
+        case primaryMore
         case lightPrimaryPlus
         case simplePrimaryText
         case vat
@@ -489,7 +510,8 @@ extension DefaultButton {
                     .cog,
                     .vat,
                     .popover,
-                    .calendarPopover
+                    .calendarPopover,
+                    .primaryMore
                 :
                 return nil
             }

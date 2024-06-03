@@ -18,6 +18,8 @@ final class ProductContentCell: UICollectionViewCell {
     
     private lazy var containerView = UIView()
     
+    private let titleLabel = UILabel()
+    
     // MARK: Contraints
     
     // Constraint for extended condition
@@ -49,6 +51,7 @@ final class ProductContentCell: UICollectionViewCell {
 
         setupRowStacks()
         setupContainerView()
+        makeTitleLabel()
         setupContentStack()
     }
     
@@ -67,6 +70,7 @@ final class ProductContentCell: UICollectionViewCell {
     }
     
     func setupInput(_ input: Input) {
+        titleLabel.text = input.title
         firstRowStack.views = inputToViews(items: input.firstRow)
         secondRowStack.views = inputToViews(items: input.secondRow)
         thirdRowStack.views = inputToViews(items: input.thirdRow)
@@ -100,6 +104,22 @@ final class ProductContentCell: UICollectionViewCell {
         }
     }
     
+    private func makeTitleLabel() {
+        titleLabel.font = .manrope(
+            type: .bold,
+            size: 15.0
+        )
+        titleLabel.textColor = .textColor
+        
+        containerView.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints { make in
+            make.top
+                .horizontalEdges
+                .equalToSuperview()
+                .inset(10)
+        }
+    }
+    
     private func setupContentStack() {
         contentStack.views = [
             firstRowStack,
@@ -119,7 +139,8 @@ final class ProductContentCell: UICollectionViewCell {
         
         containerView.addSubview(contentStack)
         contentStack.snp.makeConstraints { make in
-            make.top.equalToSuperview()
+            make.top
+                .equalTo(titleLabel.snp.bottom)
             make.horizontalEdges
                 .equalToSuperview()
         }
@@ -205,7 +226,12 @@ extension ProductContentCell {
             view,
             UIView()
         ]
-
+        
+        viewWithSpacing.snp.makeConstraints { make in
+            make.height
+                .equalTo(22)
+        }
+        
         let decorator = TitleDecorator(decoratedView: viewWithSpacing)
         decorator.decorate(title: input.title)
         return decorator
@@ -226,6 +252,7 @@ extension ProductContentCell {
 
 extension ProductContentCell {
     struct Input {
+        var title: String = ""
         let firstRow: [ProductViewInput]
         let secondRow: [ProductViewInput]
         let thirdRow: [ProductViewInput]

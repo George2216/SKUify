@@ -159,6 +159,11 @@ extension ProductsCollectionView: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         minimumLineSpacingForSectionAt section: Int
     ) -> CGFloat {
+        let count = customSource.sectionModels[section].items.count
+        
+        if let isSelected = collectionView.cellForItem(at: .init(row: count - 1, section: section))?.isSelected {
+            return isSelected ? 1 : 0
+        }
         return 0
     }
     
@@ -167,60 +172,86 @@ extension ProductsCollectionView: UICollectionViewDelegateFlowLayout {
 // MARK: Delegate
 
 extension ProductsCollectionView: UICollectionViewDelegate {
-    
+
     // Override the method for animated cell compression
     func collectionView(
         _ collectionView: UICollectionView,
         shouldDeselectItemAt indexPath: IndexPath
     ) -> Bool {
-        guard indexPath.row == 2 else { return false }
-        let previousCellIndexPath = IndexPath(
-            row: indexPath.row - 1,
-            section: indexPath.section
-        )
-        
-        collectionView.deselectItem(
-            at: previousCellIndexPath,
-            animated: true
-        )
+        let itemsCount = customSource
+            .sectionModels[indexPath.section]
+            .items
+            .count
+
+        guard indexPath.row == itemsCount - 1 else { return false }
+
+        for row in 0..<itemsCount {
+            collectionView.deselectItem(
+                at: .init(row: row, section: indexPath.section),
+                animated: true
+            )
+        }
+//        let previousCellIndexPath = IndexPath(
+//            row: indexPath.row - 1,
+//            section: indexPath.section
+//        )
+//
+//        collectionView.deselectItem(
+//            at: previousCellIndexPath,
+//            animated: true
+//        )
         collectionView.performBatchUpdates(nil)
         return true
     }
-    
+
     // Override the method for animated cell expansion
     func collectionView(
         _ collectionView: UICollectionView,
         shouldSelectItemAt indexPath: IndexPath
     ) -> Bool {
+        let itemsCount = customSource
+            .sectionModels[indexPath.section]
+            .items
+            .count
+
+
         let item = customSource
             .sectionModels[indexPath.section]
             .items[indexPath.item]
-        
+
         guard item ~= .showDetail else { return false }
 
         let previousCellIndexPath = IndexPath(
             row: indexPath.row - 1,
             section: indexPath.section
         )
-        
+
         let mainCellIndexPatch = IndexPath(
             row: 0,
             section: indexPath.section
         )
-        
-        collectionView.selectItem(
-            at: previousCellIndexPath,
-            animated: true,
-            scrollPosition: []
-        )
+
+        for row in 0..<itemsCount {
+            collectionView.selectItem(
+                at: .init(row: row, section: indexPath.section),
+                animated: true,
+                scrollPosition: []
+            )
+        }
+
+//        collectionView.selectItem(
+//            at: previousCellIndexPath,
+//            animated: true,
+//            scrollPosition: []
+//        )
         collectionView.performBatchUpdates(nil)
-        collectionView.scrollToItem(
-            at: mainCellIndexPatch,
-            at: .top,
-            animated: true
-        )
+//        collectionView.scrollToItem(
+//            at: mainCellIndexPatch,
+//            at: .top,
+//            animated: true
+//        )
         return true
     }
-    
+
 }
 

@@ -19,5 +19,6 @@ protocol DIProtocol:
     CompanyInformationUseCases,
     NoteAlertUseCases,
     COGUseCases,
-    COGSettingsUseCases
+    COGSettingsUseCases,
+    ExpenseTransactionsUseCases
 {}

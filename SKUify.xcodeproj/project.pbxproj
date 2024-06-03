@@ -213,6 +213,10 @@
 		5E84F3F72B7A9C3E000937AC /* SalesOrdersNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E84F3F62B7A9C3E000937AC /* SalesOrdersNetwork.swift */; };
 		5E84F3F92B7A9CB3000937AC /* SalesBaseNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E84F3F82B7A9CB3000937AC /* SalesBaseNetwork.swift */; };
 		5E84F4022B7D2B88000937AC /* ProductMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E84F4012B7D2B88000937AC /* ProductMainView.swift */; };
+		5E8CA8942C09E5A900208E84 /* ExpenseTransactionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8CA8932C09E5A900208E84 /* ExpenseTransactionsVC.swift */; };
+		5E8CA8962C09E5C200208E84 /* ExpenseTransactionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8CA8952C09E5C200208E84 /* ExpenseTransactionsViewModel.swift */; };
+		5E8CA8982C09E5D600208E84 /* ExpenseTransactionsUseCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8CA8972C09E5D600208E84 /* ExpenseTransactionsUseCases.swift */; };
+		5E8CA89A2C09E5F300208E84 /* ExpenseTransactionsNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8CA8992C09E5F300208E84 /* ExpenseTransactionsNavigator.swift */; };
 		5EAF2D672B597F4A00EFDA5A /* ProfileNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAF2D662B597F4A00EFDA5A /* ProfileNavigator.swift */; };
 		5EAF2D692B597F9300EFDA5A /* UserContentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAF2D682B597F9300EFDA5A /* UserContentVC.swift */; };
 		5EAF2D6B2B597FA400EFDA5A /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAF2D6A2B597FA400EFDA5A /* ProfileViewModel.swift */; };
@@ -859,6 +863,10 @@
 		5E84F3F62B7A9C3E000937AC /* SalesOrdersNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalesOrdersNetwork.swift; sourceTree = "<group>"; };
 		5E84F3F82B7A9CB3000937AC /* SalesBaseNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalesBaseNetwork.swift; sourceTree = "<group>"; };
 		5E84F4012B7D2B88000937AC /* ProductMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductMainView.swift; sourceTree = "<group>"; };
+		5E8CA8932C09E5A900208E84 /* ExpenseTransactionsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseTransactionsVC.swift; sourceTree = "<group>"; };
+		5E8CA8952C09E5C200208E84 /* ExpenseTransactionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseTransactionsViewModel.swift; sourceTree = "<group>"; };
+		5E8CA8972C09E5D600208E84 /* ExpenseTransactionsUseCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseTransactionsUseCases.swift; sourceTree = "<group>"; };
+		5E8CA8992C09E5F300208E84 /* ExpenseTransactionsNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseTransactionsNavigator.swift; sourceTree = "<group>"; };
 		5EAF2D662B597F4A00EFDA5A /* ProfileNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNavigator.swift; sourceTree = "<group>"; };
 		5EAF2D682B597F9300EFDA5A /* UserContentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserContentVC.swift; sourceTree = "<group>"; };
 		5EAF2D6A2B597FA400EFDA5A /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
@@ -2196,6 +2204,26 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		5E8CA8912C09E51E00208E84 /* ExpensesScenes */ = {
+			isa = PBXGroup;
+			children = (
+				5E8CA8922C09E55100208E84 /* ExpenseTransactionsScene */,
+				5ED911032B160C2D00FC0A66 /* ExpensesScene */,
+			);
+			path = ExpensesScenes;
+			sourceTree = "<group>";
+		};
+		5E8CA8922C09E55100208E84 /* ExpenseTransactionsScene */ = {
+			isa = PBXGroup;
+			children = (
+				5E8CA8992C09E5F300208E84 /* ExpenseTransactionsNavigator.swift */,
+				5E8CA8972C09E5D600208E84 /* ExpenseTransactionsUseCases.swift */,
+				5E8CA8932C09E5A900208E84 /* ExpenseTransactionsVC.swift */,
+				5E8CA8952C09E5C200208E84 /* ExpenseTransactionsViewModel.swift */,
+			);
+			path = ExpenseTransactionsScene;
+			sourceTree = "<group>";
+		};
 		5EAF2D642B597CC600EFDA5A /* SettingsScenes */ = {
 			isa = PBXGroup;
 			children = (
@@ -2367,8 +2395,8 @@
 		5ED9111D2B162C4300FC0A66 /* TabBarControllers */ = {
 			isa = PBXGroup;
 			children = (
+				5E8CA8912C09E51E00208E84 /* ExpensesScenes */,
 				5E418A7E2B0B9D260070EDA4 /* DashboardScene */,
-				5ED911032B160C2D00FC0A66 /* ExpensesScene */,
 				5ED911042B160C3B00FC0A66 /* InventoryScene */,
 				5E418A792B0B96520070EDA4 /* MainTabBarContoller */,
 				5ED911022B160C1800FC0A66 /* SalesScene */,
@@ -3285,6 +3313,7 @@
 				5E4189CF2B066C5F0070EDA4 /* Sources */,
 				5E4189D02B066C5F0070EDA4 /* Frameworks */,
 				5E4189D12B066C5F0070EDA4 /* Resources */,
+				6AD9C020EAB1188AA8590892 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3750,6 +3779,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		6AD9C020EAB1188AA8590892 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-InAppPurchasesPlatform-InAppPurchasesPlatformTests/Pods-InAppPurchasesPlatform-InAppPurchasesPlatformTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-InAppPurchasesPlatform-InAppPurchasesPlatformTests/Pods-InAppPurchasesPlatform-InAppPurchasesPlatformTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-InAppPurchasesPlatform-InAppPurchasesPlatformTests/Pods-InAppPurchasesPlatform-InAppPurchasesPlatformTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		7037BCE7AFC5812E903E4AD5 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -4090,12 +4136,14 @@
 				5EFAAA0B2BB2DE9800C96797 /* CATransition.swift in Sources */,
 				5E418A272B067D050070EDA4 /* AuthenticationUseCases.swift in Sources */,
 				5EAF2D672B597F4A00EFDA5A /* ProfileNavigator.swift in Sources */,
+				5E8CA8962C09E5C200208E84 /* ExpenseTransactionsViewModel.swift in Sources */,
 				5E418A6B2B07C3340070EDA4 /* BannerView.swift in Sources */,
 				5E2C0BFF2BBC47DE00B2682E /* DefaultSmallSwitch.swift in Sources */,
 				5E418A822B0B9D4A0070EDA4 /* DashboardNavigator.swift in Sources */,
 				5EFB39802B67E9B30024FD14 /* CompanyInformationViewModel.swift in Sources */,
 				5E2C0BF52BBC31DD00B2682E /* COGTitlesView.swift in Sources */,
 				5E2B8FCA2B9F49B600CDD345 /* ProductViewType.swift in Sources */,
+				5E8CA89A2C09E5F300208E84 /* ExpenseTransactionsNavigator.swift in Sources */,
 				5E418F072BBF0E1A003317AD /* COGPurchaseDetailCellViewTypes.swift in Sources */,
 				5E418A862B0B9D700070EDA4 /* DashboardVC.swift in Sources */,
 				5E2C0BD72BB6CC5B00B2682E /* COGNavigator.swift in Sources */,
@@ -4176,6 +4224,7 @@
 				5E5C9DC82B32F779003180FF /* TableView.swift in Sources */,
 				5E0E670C2B517B850005E576 /* RangedCalendarCell.swift in Sources */,
 				5EF23CF12B98B80F00CB1EA9 /* UIImageViewAlignmentMask.swift in Sources */,
+				5E8CA8942C09E5A900208E84 /* ExpenseTransactionsVC.swift in Sources */,
 				5E418A612B07B9C20070EDA4 /* ErrorTracker.swift in Sources */,
 				5E4189312B0669DB0070EDA4 /* SceneDelegate.swift in Sources */,
 				5ED9116B2B1DF08200FC0A66 /* FMCellChartsView.swift in Sources */,
@@ -4197,6 +4246,7 @@
 				5E418AB92B0EB0F40070EDA4 /* TitledTextField.swift in Sources */,
 				5E63C3482B55A4E100C30BF7 /* RangedCalendarFooterView.swift in Sources */,
 				5ED911062B160CDC00FC0A66 /* SalesNavigator.swift in Sources */,
+				5E8CA8982C09E5D600208E84 /* ExpenseTransactionsUseCases.swift in Sources */,
 				5EC8CF1F2B90C49D00CCD4E9 /* UIActivityIndicatorView.swift in Sources */,
 				5ED911582B1CB8A800FC0A66 /* DashboardSectionType.swift in Sources */,
 				5ED911212B16868500FC0A66 /* DefaultBarButtonItem.swift in Sources */,
@@ -4775,10 +4825,11 @@
 				DEVELOPMENT_TEAM = NPJRN7RAJY;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SKUify/Info.plist;
+				INFOPLIST_KEY_NSAppleMusicUsageDescription = "To library";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4804,10 +4855,11 @@
 				DEVELOPMENT_TEAM = NPJRN7RAJY;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SKUify/Info.plist;
+				INFOPLIST_KEY_NSAppleMusicUsageDescription = "To library";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

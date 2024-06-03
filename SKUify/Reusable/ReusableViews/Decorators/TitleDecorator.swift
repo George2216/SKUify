@@ -21,9 +21,15 @@ final class TitleDecorator: UIView {
     
     private weak var decoratedView: UIView?
     
-    private lazy var titleLabel = UILabel()
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.setContentHuggingPriority(.defaultHigh, for: axis)
+        label.setContentCompressionResistancePriority(.defaultHigh, for: axis)
+        return label
+    }()
     
     private let axis: NSLayoutConstraint.Axis
+    
     // MARK: - Initializers
     
     init(
@@ -41,47 +47,24 @@ final class TitleDecorator: UIView {
         self.decoratedView = decoratedView
         self.axis = axis
         super.init(frame: .zero)
-        setupStack(
-            decoratedView,
-            spacing: spacing
-        )
-        setupTitleLabel()
+        setupStack(decoratedView, spacing: spacing)
         setupDecoratedView(decoratedView)
-        setupTitleAttributed(
-            font: font,
-            textColor: textColor,
-            titleAligment: titleAligment,
-            numberOfLines: numberOfLines
-        )
-        
+        setupTitleAttributed(font: font, textColor: textColor, titleAligment: titleAligment, numberOfLines: numberOfLines)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupTitleAttributed(
-        font: UIFont,
-        textColor: UIColor,
-        titleAligment: NSTextAlignment,
-        numberOfLines: Int
-    ) {
+    private func setupTitleAttributed(font: UIFont, textColor: UIColor, titleAligment: NSTextAlignment, numberOfLines: Int) {
         titleLabel.font = font
         titleLabel.textColor = textColor
         titleLabel.textAlignment = titleAligment
         titleLabel.numberOfLines = numberOfLines
     }
     
-    private func setupStack(
-        _ decoratedView: UIView,
-        spacing: CGFloat
-    ) {
-        let stackView = UIStackView(
-            arrangedSubviews: [
-                titleLabel,
-                decoratedView
-            ]
-        )
+    private func setupStack(_ decoratedView: UIView, spacing: CGFloat) {
+        let stackView = UIStackView(arrangedSubviews: [titleLabel, decoratedView])
         stackView.axis = axis
         stackView.distribution = .fill
         stackView.alignment = .fill
@@ -89,32 +72,13 @@ final class TitleDecorator: UIView {
         
         addSubview(stackView)
         stackView.snp.makeConstraints { make in
-            make.edges
-                .equalToSuperview()
+            make.edges.equalToSuperview()
         }
-
     }
-    
-    private func setupTitleLabel() {
-        titleLabel.setContentHuggingPriority(
-            .defaultHigh,
-            for: axis
-        )
-        titleLabel.setContentCompressionResistancePriority(
-            .defaultHigh,
-            for: axis
-        )
-    }
-    
+        
     private func setupDecoratedView(_ decoratedView: UIView) {
-        decoratedView.setContentHuggingPriority(
-            .defaultHigh,
-            for: axis
-        )
-        decoratedView.setContentCompressionResistancePriority(
-            .defaultHigh,
-            for: axis
-        )
+        decoratedView.setContentHuggingPriority(.defaultHigh, for: axis)
+        decoratedView.setContentCompressionResistancePriority(.defaultHigh, for: axis)
     }
     
 }
@@ -123,9 +87,7 @@ final class TitleDecorator: UIView {
 
 extension TitleDecorator: TitleDecoratorProtocol {
     func decorate(title: String?) {
+        guard titleLabel.text != title else { return }
         titleLabel.text = title
     }
-    
 }
-
-

@@ -51,6 +51,13 @@ extension Date {
         let formattedDate = dateFormatter.string(from: self)
         return formattedDate
     }
+    
+    func ddMMMMyyyyString(_ separator: String = "-") -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd\(separator)MMMM\(separator)yyyy"
+        let formattedDate = dateFormatter.string(from: self)
+        return formattedDate
+    }
 
     func yyyyMMddTHHmmssString(_ separator: String = "-") -> String {
         let dateFormatter = DateFormatter()

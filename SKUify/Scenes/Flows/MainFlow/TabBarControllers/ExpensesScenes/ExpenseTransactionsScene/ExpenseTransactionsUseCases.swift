@@ -6,3 +6,8 @@
 //
 
 import Foundation
+import Domain
+
+protocol ExpenseTransactionsUseCases {
+    
+}

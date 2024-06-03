@@ -437,9 +437,11 @@ extension InventoryViewModel {
                                     order,
                                     marketplace: markeplace
                                 )
-                            ),
-                            .showDetail
+                            )
                         ]
+                        + owner.makeReplenishCellsInput(order.restocks)
+                            .map { .contentCell($0) }
+                        + [.showDetail]
                     )
                     
                 }
@@ -529,7 +531,7 @@ extension InventoryViewModel {
     
     private func makeOrderContentSecondRowInput( _ order: InventoryOrderDTO) -> [ProductViewInput] {
         let currencySymbol = order.originalPrice.currency
-
+        
         return [
             .init(
                 title: "Price",
@@ -592,8 +594,8 @@ extension InventoryViewModel {
     
     private func makeOrderContentThirdRowInput( _ order: InventoryOrderDTO) -> [ProductViewInput] {
         let currencySymbol = order.originalPrice.currency
-
-       return [
+        
+        return [
             .init(
                 title: "Stock",
                 viewType: .text(
@@ -828,6 +830,126 @@ extension InventoryViewModel {
                         })
                     )
                 )
+            )
+        ]
+    }
+    
+    private func makeReplenishCellsInput(_ orders: [[InventoryOrderDTO]]) -> [ProductContentCell.Input] {
+        orders.compactMap { orders in
+            orders.first
+        }
+        .map { order in
+            return .init(
+                title: "Replenished: \(order.dateAdded.toDate()?.ddMMMMyyyyString(" ") ?? "")",
+                firstRow: makeReplenishFirstRowInput(order),
+                secondRow: makeReplenishSecondRowInput(order),
+                thirdRow: makeReplenishThirdRowInput(order)
+            )
+        }
+    }
+    
+    private func makeReplenishFirstRowInput(_ order: InventoryOrderDTO) -> [ProductViewInput] {
+        [
+            .init(
+                title: "Stock",
+                viewType: .text(
+                    String(order.currentStock)
+                )
+            ),
+            .init(
+                title: "COG",
+                viewType: .button(
+                    .init(
+                        title: order.originalPrice.currency + order.cog.toString(),
+                        style: .cog,
+                        action: .simple({ [weak self] in
+                            guard let self else { return }
+                            let cogInput = order.toCOGInputModel(.inventory)
+                            self.navigator.toCOG(cogInput)
+                        })
+                    )
+                )
+            ),
+            .init(
+                title: "Add Info",
+                viewType: .addInfo(
+                    .init(
+                        vatButtonConfig: .init(
+                            title: "\(order.vatRate)% VAT",
+                            style: .vat,
+                            action: .simple({
+                                
+                            })
+                        ),
+                        sellerCentralButtonConfig: .init(
+                            title: "",
+                            style: .image(.sellerCentral),
+                            action: .simple({
+                                
+                            })
+                        ),
+                        amazonButtonConfig: .init(
+                            title: "",
+                            style: .image(.amazon),
+                            action: .simple({
+                                
+                            })
+                        )
+                    )
+                )
+            )
+        ]
+    }
+    
+    private func makeReplenishSecondRowInput(_ order: InventoryOrderDTO) -> [ProductViewInput] {
+        [
+            .init(
+                title: "ROI",
+                viewType: .text(order.roi.toUnwrappedString() + "%")
+            ),
+            .init(
+                title: "Margin",
+                viewType: .text(
+                    order.margin.toUnwrappedString() + "%"
+                )
+            ),
+            .init(
+                title: "", 
+                viewType: .spacer
+            )
+        ]
+    }
+    
+    private func makeReplenishThirdRowInput(_ order: InventoryOrderDTO) -> [ProductViewInput] {
+        let currencySymbol = order.originalPrice.currency
+        let noteImageType: DefaultButton.ImageType = (order.note ?? "").isEmpty ? .notes : .noteAdded
+        return [
+            .init(
+                title: "Gross Profit",
+                viewType: .text(
+                    currencySymbol + order.profit.toUnwrappedString()
+                )
+            ),
+            .init(
+                title: "Note",
+                viewType: .button(
+                    .init(
+                        title: "",
+                        style: .image(noteImageType),
+                        action: .simple({ [weak self] in
+                            guard let self else { return }
+                            let alertInput = self.makeNoteAlertInput(
+                                note: order.note ?? "",
+                                orderId: order.id
+                            )
+                            self.showAlert.onNext(alertInput)
+                        })
+                    )
+                )
+            ),
+            .init(
+                title: "",
+                viewType: .spacer
             )
         ]
     }
