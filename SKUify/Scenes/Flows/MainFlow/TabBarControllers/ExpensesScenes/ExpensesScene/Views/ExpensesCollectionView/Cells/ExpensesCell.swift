@@ -154,13 +154,14 @@ final class ExpensesCell: UICollectionViewCell {
     }
     
     private func makeSmallButtons(_ input: [DefaultButton.Config]) -> UIView {
-        var buttons: [UIView] = input
+        let buttons: [UIView] = input
             .map { $0.toButton() }
-       
-        buttons.append(UIView.spacer())
+            .flatMap({ [$0, UIView.spacer(for: .horizontal)] })
+            .dropLast()
         
         let hStack = HorizontalStack()
-        hStack.spacing = 10.0
+        hStack.alignment = .fill
+        hStack.distribution = .fill
         hStack.views = buttons
         return hStack
     }

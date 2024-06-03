@@ -98,7 +98,7 @@ final class ExpensesCollectionView: UICollectionView {
 
     private func registerCells() {
         register(ExpensesCell.self)
-        
+
         registerHeader(ExpensesHeaderReusableView.self)
         registerFooter(LoaderCollectionReusableView.self) // loader
     }

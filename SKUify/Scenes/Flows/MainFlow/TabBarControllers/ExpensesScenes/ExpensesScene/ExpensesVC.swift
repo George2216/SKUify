@@ -54,6 +54,7 @@ final class ExpensesVC: BaseViewController {
         sutupNavBarItems()
         
         bindToTitle(output)
+        bindHeightForScrollingToTxtField(output)
         bindToLoader(output)
         bindToBanner(output)
         bindToCollectionView(output)
@@ -71,7 +72,6 @@ final class ExpensesVC: BaseViewController {
             width: view.frame.width - 20,
             height: 466
         )
-        layout.sectionInsetReference = .fromLayoutMargins
         layout.scrollDirection = .vertical
         return layout
     }
@@ -99,6 +99,19 @@ extension ExpensesVC {
     private func bindToTitle(_ output: ExpensesViewModel.Output) {
         output.title
             .drive(rx.title)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindHeightForScrollingToTxtField(_ output: ExpensesViewModel.Output) {
+        output.keyboardHeight
+            .withUnretained(self)
+            .map { owner, height in
+                UIScrollView.ScrollToVisibleContext(
+                    height: height,
+                    view: owner.view
+                )
+            }
+            .drive(collectionView.rx.scrollToVisibleTextField)
             .disposed(by: disposeBag)
     }
     

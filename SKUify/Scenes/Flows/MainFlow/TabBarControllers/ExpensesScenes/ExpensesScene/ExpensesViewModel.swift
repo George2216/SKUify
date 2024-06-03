@@ -48,6 +48,7 @@ final class ExpensesViewModel: ViewModelProtocol {
     // Use case storage
     private let expensesUseCase: Domain.ExpensesUseCase
     private let expensesCategoriesUseCase: Domain.ExpensesCategoriesReadDataUseCase
+    private let keyboardUseCase: Domain.KeyboardUseCase
 
     // Trackers
     private var activityIndicator = ActivityTracker()
@@ -63,6 +64,7 @@ final class ExpensesViewModel: ViewModelProtocol {
         self.navigator = navigator
         self.expensesUseCase = useCases.makeExpensesUseCase()
         self.expensesCategoriesUseCase = useCases.makeExpensesCategoriesDataUseCase()
+        self.keyboardUseCase = useCases.makeKeyboardUseCase()
     }
     
      func transform(_ input: Input) -> Output {
@@ -79,7 +81,8 @@ final class ExpensesViewModel: ViewModelProtocol {
             showSimpleTablePopover: showSimpleTablePopover.asDriverOnErrorJustComplete(), 
             isShowPaginatedLoader: isShowPaginatedLoader.asDriverOnErrorJustComplete(),
             rightBarButtonConfig: makeRightBarButtonConfig(),
-            leftBarButtonConfig: makeLeftBarButtonConfig(),
+            leftBarButtonConfig: makeLeftBarButtonConfig(), 
+            keyboardHeight: getKeyboardHeight(),
             fetching: activityIndicator.asDriver(),
             error: errorTracker.asBannerInput(.error)
         )
@@ -423,17 +426,17 @@ extension ExpensesViewModel {
                 [
                     .init(
                         title: "",
-                        style: .image(.more),
-                        action: .simple({ [weak self] in
-                            guard let self else { return }
-                            self.navigator.toTransactions()
+                        style: .image(.deleteLight),
+                        action: .simple({
+                            
                         })
                     ),
                     .init(
                         title: "",
-                        style: .image(.deleteLight),
-                        action: .simple({
-                            
+                        style: .image(.more),
+                        action: .simple({ [weak self] in
+                            guard let self else { return }
+                            self.navigator.toTransactions(expense)
                         })
                     )
                 ]
@@ -687,6 +690,18 @@ extension ExpensesViewModel {
     
 }
 
+// MARK: Get keyboard height
+
+extension ExpensesViewModel {
+
+    private func getKeyboardHeight() -> Driver<CGFloat> {
+        keyboardUseCase
+            .getKeyboardHeight()
+            .asDriverOnErrorJustComplete()
+    }
+    
+}
+
 // MARK: Requests
 
 extension ExpensesViewModel {
@@ -784,6 +799,8 @@ extension ExpensesViewModel {
         // Buttons configs
         let rightBarButtonConfig: Driver<DefaultBarButtonItem.Config>
         let leftBarButtonConfig: Driver<DefaultBarButtonItem.Config>
+        // Use for scroll to textfield
+        let keyboardHeight: Driver<CGFloat>
         // Trackers
         let fetching: Driver<Bool>
         let error: Driver<BannerView.Input>

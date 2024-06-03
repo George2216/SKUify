@@ -7,11 +7,12 @@
 
 import UIKit
 import SnapKit
+import Domain
 
 protocol ExpensesNavigatorProtocol {
     func toExpenses()
     func toNewExpense()
-    func toTransactions()
+    func toTransactions(_ expense: ExpenseDTO)
     func backToExpenses()
 }
 
@@ -61,8 +62,9 @@ final class ExpensesNavigator: ExpensesNavigatorProtocol {
         navigationController.dismiss(animated: true)
     }
     
-    func toTransactions() {
+    func toTransactions(_ expense: ExpenseDTO) {
         let vc = TransactionsVC()
+        vc.title = "\(expense.name) Transactions"
         navigationController.pushViewController(vc, animated: true)
     }
     
@@ -80,7 +82,6 @@ final class TransactionsVC: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Transactions"
   
         label.text = "Here will be the transaction logic"
         label.numberOfLines = 0

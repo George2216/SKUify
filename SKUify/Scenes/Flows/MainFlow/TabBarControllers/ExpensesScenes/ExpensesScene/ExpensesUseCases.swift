@@ -11,4 +11,5 @@ import Domain
 protocol ExpensesUseCases {
     func makeExpensesUseCase() -> Domain.ExpensesUseCase
     func makeExpensesCategoriesDataUseCase() -> Domain.ExpensesCategoriesDataUseCase
+    func makeKeyboardUseCase() -> Domain.KeyboardUseCase
 }
