@@ -4825,6 +4825,7 @@
 				DEVELOPMENT_TEAM = NPJRN7RAJY;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SKUify/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = " ";
 				INFOPLIST_KEY_NSAppleMusicUsageDescription = "To library";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -4837,9 +4838,11 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = app.skuify.SKUify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -4855,6 +4858,7 @@
 				DEVELOPMENT_TEAM = NPJRN7RAJY;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SKUify/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = " ";
 				INFOPLIST_KEY_NSAppleMusicUsageDescription = "To library";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -4867,9 +4871,11 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = app.skuify.SKUify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
