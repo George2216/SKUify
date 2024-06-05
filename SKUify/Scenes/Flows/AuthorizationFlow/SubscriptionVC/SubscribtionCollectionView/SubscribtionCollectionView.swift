@@ -9,10 +9,27 @@ import Foundation
 import RxSwift
 import RxCocoa
 import UIKit
+import RxDataSources
 
 final class SubscribtionCollectionView: ContentResizableCollectionView {
+    
     private let disposeBag = DisposeBag()
-
+    
+    private lazy var customSource = RxCollectionViewSectionedReloadDataSource<SubscriptionSectionModel>(
+        configureCell: { [unowned self] dataSource, collectionView, indexPath, item in
+            switch item {
+            case .subscribtion(let input):
+                let cell = collectionView.dequeueReusableCell(
+                    ofType: SubscribtionCell.self,
+                    at: indexPath
+                )
+                cell.setupInput(input)
+                cell.setupWidth(collectionView.bounds.width - 20)
+                return cell
+            }
+            
+        })
+    
     override init(
         frame: CGRect,
         collectionViewLayout layout: UICollectionViewLayout
@@ -21,12 +38,9 @@ final class SubscribtionCollectionView: ContentResizableCollectionView {
             frame: frame,
             collectionViewLayout: layout
         )
-        backgroundColor = .red
+        setupCollection()
         registerCells()
-        alwaysBounceHorizontal = true
-      
-        rx.setDelegate(self)
-            .disposed(by: disposeBag)
+       
     }
     
     required init?(coder: NSCoder) {
@@ -37,10 +51,17 @@ final class SubscribtionCollectionView: ContentResizableCollectionView {
         register(SubscribtionCell.self)
     }
     
-    func bind(_ data: Driver<[SubscribtionCell.Input]>) -> Disposable {
-        data.drive(rx.items(cellType: SubscribtionCell.self)) { row, data , cell in
-            cell.setupInput(data)
-        }
+    private func setupCollection() {
+        alwaysBounceHorizontal = true
+        backgroundColor = .clear
+        isPagingEnabled = true
+
+        rx.setDelegate(self)
+            .disposed(by: disposeBag)
+    }
+    
+    func bind(_ sections: Driver<[SubscriptionSectionModel]>) -> Disposable {
+        sections.drive(rx.items(dataSource: customSource))
     }
     
 }
@@ -48,22 +69,38 @@ final class SubscribtionCollectionView: ContentResizableCollectionView {
 // MARK: - DelegateFlowLayout
 
 extension SubscribtionCollectionView: UICollectionViewDelegateFlowLayout {
-  
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        print(collectionView.bounds.size)
-        return collectionView.bounds.size
-    }
-    
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        minimumInteritemSpacingForSectionAt section: Int
-    ) -> CGFloat {
-        return 10.0
+        let width: CGFloat = collectionView.bounds.width - 20
+        
+        let item = customSource
+            .sectionModels[indexPath.section]
+            .items[indexPath.item]
+        
+        switch item {
+        case .subscribtion(let input):
+            let cell = SubscribtionCell()
+            cell.setupInput(input)
+            cell.layoutIfNeeded()
+            
+            let height = cell.layoutSizeFitting
+                .height
+            
+            if height > collectionView.frame.height - 100 {
+                return .init(
+                    width: width,
+                    height: collectionView.frame.height - 100
+                )
+            }
+
+            return .init(
+                width: width,
+                height: height
+            )
+        }
     }
     
     func collectionView(
@@ -72,20 +109,11 @@ extension SubscribtionCollectionView: UICollectionViewDelegateFlowLayout {
         insetForSectionAt section: Int
     ) -> UIEdgeInsets {
         UIEdgeInsets(
-            top: 10,
-            left: 0,
+            top: 0,
+            left: 10,
             bottom: 10,
             right: 0
         )
     }
     
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        minimumLineSpacingForSectionAt section: Int
-    ) -> CGFloat {
-        return 0
-    }
-    
 }
-

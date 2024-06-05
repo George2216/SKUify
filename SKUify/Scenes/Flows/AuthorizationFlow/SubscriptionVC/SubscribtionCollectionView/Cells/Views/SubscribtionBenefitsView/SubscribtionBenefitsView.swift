@@ -39,8 +39,8 @@ final class SubscribtionBenefitsView: UIView {
     // MARK: - Private methods
 
     private func setupContentStack() {
-        contentStack.alignment = .leading
-        contentStack.distribution = .fillEqually
+        contentStack.distribution = .equalSpacing
+        contentStack.spacing = 10
         
         addSubview(contentStack)
         contentStack.snp.makeConstraints { make in

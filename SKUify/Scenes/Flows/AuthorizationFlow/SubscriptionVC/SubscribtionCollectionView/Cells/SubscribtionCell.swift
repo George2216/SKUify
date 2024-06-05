@@ -11,7 +11,16 @@ import SnapKit
 
 final class SubscribtionCell: UICollectionViewCell {
     
+    // MARK: Internal properties
+    
+    var layoutSizeFitting: CGSize {
+        contentStack.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+    }
+    
     // MARK: - UI elements
+    
+    private lazy var scrollDecorator = ScrollDecorator(contentView)
+    private lazy var containerView = scrollDecorator.containerView
     
     private lazy var titleView = SubscribtionTitleView()
     private lazy var benefitsView = SubscribtionBenefitsView()
@@ -23,6 +32,7 @@ final class SubscribtionCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setupCell()
         setupContentStack()
     }
     
@@ -38,23 +48,58 @@ final class SubscribtionCell: UICollectionViewCell {
         subscribeButton.config = input.subscribeButtonConfig
     }
     
+    func setupWidth(_ width: CGFloat) {
+        contentView.snp.makeConstraints { make in
+            make.width
+                .equalTo(width)
+            make.edges
+                .equalToSuperview()
+        }
+    }
+    
     // MARK: - Private methods
+    
+    private func makeSeparatorLine() -> UIView {
+        let separator = UIView()
+        separator.backgroundColor = .background
+        separator.snp.makeConstraints { make in
+            make.height
+                .equalTo(1)
+        }
+        return separator
+    }
 
     private func setupContentStack() {
         contentStack.views = [
             titleView,
+            makeSeparatorLine(),
             benefitsView,
             subscribeButton
         ]
         
-        contentStack.alignment = .leading
+        contentStack.spacing = 10
         contentStack.distribution = .equalSpacing
+        contentStack.layoutMargins = UIEdgeInsets(
+            top: 10,
+            left: 10, 
+            bottom: 10,
+            right: 10
+        )
+        contentStack.isLayoutMarginsRelativeArrangement = true
         
-        contentView.addSubview(contentStack)
+        containerView.addSubview(contentStack)
         contentStack.snp.makeConstraints { make in
             make.edges
                 .equalToSuperview()
         }
+    }
+    
+    private func setupCell() {
+        backgroundColor = .white
+        layer.borderWidth = 1.0
+        layer.borderColor = UIColor.border.cgColor
+        layer.cornerRadius = 16
+        clipsToBounds = true
     }
     
 }

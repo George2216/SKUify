@@ -76,8 +76,6 @@ final class ExpensesCollectionView: UICollectionView {
         )
         setupCollection()
         registerCells()
-        rx.setDelegate(self)
-            .disposed(by: disposeBag)
     }
     
     required init?(coder: NSCoder) {
@@ -92,6 +90,8 @@ final class ExpensesCollectionView: UICollectionView {
         alwaysBounceVertical = true
         showsVerticalScrollIndicator = false
         keyboardDismissMode = .interactive
+        rx.setDelegate(self)
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Register cells

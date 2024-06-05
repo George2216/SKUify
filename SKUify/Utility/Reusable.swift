@@ -143,3 +143,18 @@ extension Reactive where Base: UITableView {
     }
     
 }
+
+extension Reactive where Base: UICollectionView {
+    public func items<Sequence: Swift.Sequence, Cell: UICollectionViewCell, Source: ObservableType>
+        (cellType: Cell.Type = Cell.self)
+        -> (_ source: Source)
+        -> (_ configureCell: @escaping (Int, Sequence.Element, Cell) -> Void)
+        -> Disposable
+        where Source.Element == Sequence {
+            return items(
+                cellIdentifier: cellType.reuseID,
+                cellType: cellType.self
+            )
+    }
+    
+}

@@ -10,6 +10,7 @@ import Domain
 
 protocol AuthenticationNavigatorProtocol: AnyObject {
     func toLogin()
+    func toSubscription()
 }
 
 final class AuthenticationNavigator: AuthenticationNavigatorProtocol {
@@ -33,6 +34,14 @@ final class AuthenticationNavigator: AuthenticationNavigatorProtocol {
         )
         
         navigationController.pushViewController(vc, animated: true)
+    }
+    
+    func toSubscription() {
+        let navigator = SubscriptionNavigator(
+            navigationController: navigationController,
+            di: di
+        )
+        navigator.toSubscritions()
     }
 
     deinit {

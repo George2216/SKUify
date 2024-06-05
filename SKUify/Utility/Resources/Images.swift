@@ -65,4 +65,6 @@ extension UIImage {
     static let more = UIImage(named: "more") ?? .init()
     static let calendar = UIImage(named: "сalendar") ?? .init()
     
+    static let check = UIImage(named: "check") ?? .init()
+
 }

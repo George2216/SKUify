@@ -36,6 +36,13 @@ final public class NetworkProvider: Domain.NetworkProvider {
         )
     }
     
+    public func makeSubscriptionsNetwork() -> Domain.SubscriptionsNetwork {
+        return SubscriptionsNetwork(
+            network: makeNetwork(SubscriptionDTO.self),
+            interceptorFactory: interceptorFactory
+        )
+    }
+    
     public func makeChartsNetwork() -> Domain.ChartsNetwork {
         return ChartsNetwork(
             network: makeNetwork(ChartMainDTO.self),

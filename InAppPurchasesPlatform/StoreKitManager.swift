@@ -6,3 +6,12 @@
 //
 
 import Foundation
+import StoreKit
+
+final class StoreKitManager {
+    
+    private func getProducts() async throws -> [Product] {
+        try await Product.products(for: [""])
+    }
+    
+}

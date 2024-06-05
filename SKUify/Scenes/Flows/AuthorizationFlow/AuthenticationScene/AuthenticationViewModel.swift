@@ -58,7 +58,7 @@ final class AuthenticationViewModel: ViewModelProtocol {
     private let signUpIsAgreeStorage = BehaviorSubject<Bool>(value: false)
     
     // Dependencies
-    private var navigator: AuthenticationNavigatorProtocol?
+    private var navigator: AuthenticationNavigatorProtocol
     
     // Use case storage
     
@@ -590,7 +590,7 @@ extension AuthenticationViewModel {
         else { return nil }
         return { [weak self] in
             guard let self else { return }
-            
+            self.navigator.toSubscription()
         }
     }
     

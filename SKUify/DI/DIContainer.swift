@@ -62,6 +62,10 @@ class DIContainer: DIProtocol {
         )
     }
     
+    func makeSubscriptionsUseCase() -> Domain.SubscriptionsUseCase {
+        networkUseCaseProvider.makeSubscriptionsUseCase()
+    }
+    
     func makeLoginStateUseCase() -> Domain.LoginStateUseCase {
         realmUseCaseProvider.makeLoginStateUseCase()
     }

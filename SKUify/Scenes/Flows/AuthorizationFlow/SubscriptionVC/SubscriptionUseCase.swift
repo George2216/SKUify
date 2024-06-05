@@ -6,3 +6,8 @@
 //
 
 import Foundation
+import Domain
+
+protocol SubscriptionUseCase {
+    func makeSubscriptionsUseCase() -> Domain.SubscriptionsUseCase
+}

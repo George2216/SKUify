@@ -14,6 +14,7 @@ public struct SubscriptionDTO: Decodable {
     public let price: Double
     public let list: [String]
     public let currency: Currency
+    public let intervalUnit: String
     
     public struct Currency: Decodable {
         public let symbol: String
@@ -26,6 +27,7 @@ public struct SubscriptionDTO: Decodable {
         case price
         case list
         case currency
+        case intervalUnit = "interval_unit"
     }
     
 }

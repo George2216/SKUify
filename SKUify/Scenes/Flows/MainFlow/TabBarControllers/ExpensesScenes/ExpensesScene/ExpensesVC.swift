@@ -91,7 +91,6 @@ final class ExpensesVC: BaseViewController {
 
 }
 
-
 // MARK: - Make binding
 
 extension ExpensesVC {

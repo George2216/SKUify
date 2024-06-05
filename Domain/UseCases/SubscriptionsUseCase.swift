@@ -6,3 +6,8 @@
 //
 
 import Foundation
+import RxSwift
+
+public protocol SubscriptionsUseCase {
+    func getSubscriptions() -> Observable<[SubscriptionDTO]>
+}

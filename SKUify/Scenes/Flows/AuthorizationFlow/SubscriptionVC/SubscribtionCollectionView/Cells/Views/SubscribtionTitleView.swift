@@ -44,14 +44,21 @@ final class SubscribtionTitleView: UIView {
     
     func setupInput(_ input: Input) {
         titleImage.sd_setImage(with: input.imageURL)
+        titleLabel.text = input.title
+        subtitleLabel.text = input.subtitle
+        priceLabel.text = input.price
+        periodLabel.text = input.period
     }
     
     // MARK: - Private methods
     
     private func setupTitleImage() {
         titleImage.contentMode = .scaleAspectFit
+        titleImage.snp.makeConstraints { make in
+            make.size
+                .equalTo(50)
+        }
     }
-    
     
     private func setupPeriodLabel() {
         periodLabel.font = .manrope(
@@ -70,11 +77,11 @@ final class SubscribtionTitleView: UIView {
     }
     
     private func setupSubtitleLabel() {
-        titleLabel.font = .manrope(
+        subtitleLabel.font = .manrope(
             type: .semiBold,
             size: 15
         )
-        titleLabel.textColor = .primaryPurple
+        subtitleLabel.textColor = .primaryPurple
     }
     
     private func setupTitleLabel() {
@@ -88,8 +95,7 @@ final class SubscribtionTitleView: UIView {
     private func setupPricesStack() {
         pricesStack.views = [
             priceLabel,
-            periodLabel,
-            UIView.spacer(for: .horizontal)
+            periodLabel
         ]
         
         pricesStack.spacing = 5.0

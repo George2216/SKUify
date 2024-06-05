@@ -16,13 +16,10 @@ final class SubscribtionBenefitsItemView: UIView {
     private lazy var checkImageView = UIImageView()
     private lazy var titleLabel = UILabel()
     
-    private lazy var contentStack = HorizontalStack()
-    
     // MARK: - Initializers
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupContentStack()
         setupCheckImageView()
         setupTitleLabel()
     }
@@ -45,26 +42,27 @@ final class SubscribtionBenefitsItemView: UIView {
             size: 12
         )
         titleLabel.textColor = .textColor
+        
+        addSubview(titleLabel)
+        titleLabel.snp.makeConstraints { make in
+            make.leading
+                .equalTo(checkImageView.snp.trailing)
+                .offset(10)
+            make.trailing
+                .equalToSuperview()
+        }
     }
     
     private func setupCheckImageView() {
         checkImageView.image = UIImage.check
         checkImageView.contentMode = .scaleAspectFit
-    }
-    
-    private func setupContentStack() {
-        contentStack.views = [
-            checkImageView,
-            titleLabel
-        ]
         
-        contentStack.alignment = .leading
-        contentStack.distribution = .fillEqually
-        
-        addSubview(contentStack)
-        
-        contentStack.snp.makeConstraints { make in
-            make.edges
+        addSubview(checkImageView)
+        checkImageView.snp.makeConstraints { make in
+            make.size
+                .equalTo(18)
+            make.verticalEdges
+                .leading
                 .equalToSuperview()
         }
     }

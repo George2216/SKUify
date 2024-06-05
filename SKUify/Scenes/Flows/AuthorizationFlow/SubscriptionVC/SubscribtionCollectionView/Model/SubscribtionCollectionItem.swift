@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+enum SubscribtionCollectionItem {
+    case subscribtion(_ input: SubscribtionCell.Input)
+}

@@ -20,5 +20,6 @@ protocol DIProtocol:
     NoteAlertUseCases,
     COGUseCases,
     COGSettingsUseCases,
-    ExpenseTransactionsUseCases
+    ExpenseTransactionsUseCases,
+    SubscriptionUseCase
 {}
