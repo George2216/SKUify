@@ -34,6 +34,7 @@ extension UIImage {
     static let plus = UIImage(systemName: "plus") ?? .init()
     static let mail = UIImage(named: "mail") ?? .init()
     static let loader = UIImage(named: "loader") ?? .init()
+
     static let back = UIImage(named: "back") ?? .init()
     static let next = UIImage(named: "next") ?? .init()
     static let logout = UIImage(named: "logout") ?? .init()

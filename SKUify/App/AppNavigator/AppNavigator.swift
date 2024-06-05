@@ -22,7 +22,12 @@ final class AppNavigator: AppNavigatorProtocol {
     ) {
         let fakeLauncherVC = FakeLauncherViewController()
         fakeLauncherVC.modalPresentationStyle = .overFullScreen
-        
+        fakeLauncherVC.setupInput(
+            .init(
+                title: "Data loading. Please wait.",
+                subtitle: "Please do not close the app."
+            )
+        )
         self.fakeLauncherVC = fakeLauncherVC
         self.diContainer = diContainer
         self.navigation = navigation
