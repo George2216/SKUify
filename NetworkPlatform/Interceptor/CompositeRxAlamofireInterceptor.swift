@@ -112,7 +112,11 @@ final class CompositeRxAlamofireInterceptor: RequestInterceptor {
         if let body = request.httpBody {
             guard !body.contains(data) else { return }
         }
-        request.httpBody?.append(data)
+        if request.httpBody == nil {
+            request.httpBody = data
+        } else {
+            request.httpBody?.append(data)
+        }
     }
     
     private func addQueryItemsFromInterceptor(

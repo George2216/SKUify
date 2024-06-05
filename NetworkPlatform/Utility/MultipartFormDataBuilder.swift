@@ -46,14 +46,20 @@ public class MultipartFormDataBuilder {
         
         var body = Data()
         
-        if let parametersData = createParametersData(withParameters: parameters, boundary: boundary) {
+        if let parametersData = createParametersData(
+            withParameters: parameters,
+            boundary: boundary
+        ) {
             body.append(parametersData)
         }
         
-        if let mediaData = createMediaData(withMedia: media, boundary: boundary) {
+        if let mediaData = createMediaData(
+            withMedia: media,
+            boundary: boundary
+        ) {
             body.append(mediaData)
         }
-
+        
         body.append("--\(boundary)--\(lineBreak)")
         
         headers["Content-Type"] = "multipart/form-data; boundary=\(boundary)"
