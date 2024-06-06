@@ -188,8 +188,7 @@ extension DashboardVC {
     // Bind popover view
     private func bindTimeSlotsPopover(_ output: DashboardViewModel.Output) {
         output.showTimeSlotsPopover
-            .withUnretained(self)
-            .map { owner, center in
+            .map(self) { owner, center in
                 PopoverManager.Input(
                     bindingType: .point(center),
                     preferredSize: .init(
@@ -205,8 +204,7 @@ extension DashboardVC {
     
     private func bindCurrencyPopover(_ output: DashboardViewModel.Output) {
         output.showCurrencyPopover
-            .withUnretained(self)
-            .map { owner, center in
+            .map(self) { owner, center in
                 PopoverManager.Input(
                     bindingType: .point(center),
                     preferredSize: .init(
@@ -222,8 +220,7 @@ extension DashboardVC {
     
     private func bingCalendarPopover(_ output: DashboardViewModel.Output) {
         output.showCalendarPopover
-            .withUnretained(self)
-            .map { owner, _ in
+            .map(self) { owner, _ in
                 PopoverManager.Input(
                     bindingType: .view(owner.filterByDateButton),
                     preferredSize: .init(
@@ -239,8 +236,7 @@ extension DashboardVC {
     
     private func bindToTopScrolling(_ output: DashboardViewModel.Output) {
         output.fetching
-            .withUnretained(self)
-            .drive(onNext: { owner, isFetching in
+            .drive(with: self) { owner, isFetching in
                 guard isFetching else { return }
                 owner.collectionView
                     .setContentOffset(
@@ -252,7 +248,7 @@ extension DashboardVC {
                         ),
                         animated: true
                     )
-            })
+            }
             .disposed(by: disposeBag)
     }
     

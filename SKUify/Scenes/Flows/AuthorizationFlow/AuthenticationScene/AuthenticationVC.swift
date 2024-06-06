@@ -147,8 +147,7 @@ final class AuthenticationVC: BaseViewController {
     
     private func bindHeightForScrollingToTxtField(_ output: AuthenticationViewModel.Output) {
         output.keyboardHeight
-            .withUnretained(self)
-            .map { owner, height in
+            .map(self) { owner, height in
                 UIScrollView.ScrollToVisibleContext(
                     height: height,
                     view: owner.view

@@ -36,11 +36,10 @@ final class MarketplacesPopoverVC: UIViewController {
         tableView.rx.modelSelected(MarketplacesPopoverTVCell.Input.self)
             .map { $0.marketplace.counryCode }
             .asDriverOnErrorJustComplete()
-            .withUnretained(self)
-            .do(onNext: { owner, _ in
+            .do(self) { owner, _ in
                 owner.dismiss(animated: true)
-            })
-            .map { $1 }
+            }
+            .map { $0 }
     }
     
 }

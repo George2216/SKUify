@@ -115,17 +115,16 @@ final class SalesViewModel: ViewModelProtocol {
             .withLatestFrom(paginatedData.asDriverOnErrorJustComplete()) { searchText, paginatedData in
                 return (searchText, paginatedData)
             }
-            .withUnretained(self)
         // Save to paginated data
-            .do(onNext: { (owner, arg1) in
+            .do(self) { (owner, arg1) in
                 var (searchText, paginatedData) = arg1
                 paginatedData.searchText = searchText
                 owner.paginatedData.onNext(paginatedData)
-            })
+            }
         // Clear storages
-            .do(onNext: { owner, _ in
+            .do(self) { owner, _ in
                 owner.reloadData()
-            })
+            }
             .drive()
             .disposed(by: disposeBag)
     }
@@ -136,16 +135,15 @@ final class SalesViewModel: ViewModelProtocol {
             .withLatestFrom(paginatedData.asDriverOnErrorJustComplete()) { isNoCOGs, paginatedData in
                 return (isNoCOGs, paginatedData)
             }
-            .withUnretained(self)
-            .do(onNext: { (owner, arg1) in
+            .do(self) { (owner, arg1) in
                 var (isNoCOGs, paginatedData) = arg1
                 paginatedData.noCOGs = isNoCOGs
                 owner.paginatedData.onNext(paginatedData)
-            })
+            }
         // Clear storages
-            .do(onNext: { owner, _ in
+            .do(self) { owner, _ in
                 owner.reloadData()
-            })
+            }
             .drive()
             .disposed(by: disposeBag)
     }
@@ -161,17 +159,16 @@ final class SalesViewModel: ViewModelProtocol {
             .withLatestFrom(paginatedData.asDriverOnErrorJustComplete()) { tableType, paginatedData in
                 return (tableType, paginatedData)
             }
-            .withUnretained(self)
         // Save to paginated data
-            .do(onNext: { (owner, arg1) in
+            .do(self) { (owner, arg1) in
                 var (tableType, paginatedData) = arg1
                 paginatedData.tableType = tableType
                 owner.paginatedData.onNext(paginatedData)
-            })
+            }
         // Clear storages
-            .do(onNext: { (owner, _) in
+            .do(self) { (owner, _) in
                 owner.reloadData()
-            })
+            }
             .drive()
             .disposed(by: disposeBag)
     }
@@ -183,16 +180,15 @@ final class SalesViewModel: ViewModelProtocol {
             .withLatestFrom(paginatedData.asDriverOnErrorJustComplete()) { marketplaceType, paginatedData in
                 return (marketplaceType, paginatedData)
             }
-            .withUnretained(self)
-            .do(onNext: { (owner, arg1) in
+            .do(self) { (owner, arg1) in
                 var (marketplaceType, paginatedData) = arg1
                 paginatedData.marketplaceType = marketplaceType
                 owner.paginatedData.onNext(paginatedData)
-            })
+            }
         // Clear storages
-            .do(onNext: { owner, _ in
+            .do(self) { owner, _ in
                 owner.reloadData()
-            })
+            }
             .drive()
             .disposed(by: disposeBag)
     }
@@ -204,16 +200,15 @@ final class SalesViewModel: ViewModelProtocol {
             .withLatestFrom(paginatedData.asDriverOnErrorJustComplete()) { period, paginatedData in
                 return (period, paginatedData)
             }
-            .withUnretained(self)
-            .do(onNext: { (owner, arg1) in
+            .do(self) { (owner, arg1) in
                 var (period, paginatedData) = arg1
                 paginatedData.period = period
                 owner.paginatedData.onNext(paginatedData)
-            })
+            }
         // Clear storages
-            .do(onNext: { owner, _ in
+            .do(self) { owner, _ in
                 owner.reloadData()
-            })
+            }
             .drive()
             .disposed(by: disposeBag)
     }
@@ -324,10 +319,9 @@ extension SalesViewModel {
     
     private func subscribeOnReloadData(_ input: Input) {
         input.reloadData
-            .withUnretained(self)
-            .drive(onNext: { owner, _ in
+            .drive(with: self) { owner, _ in
                 owner.reloadData()
-            })
+            }
             .disposed(by: disposeBag)
     }
     
@@ -358,8 +352,7 @@ extension SalesViewModel {
     
     private func subscribeOnSelectedCalendarDates(_ input: Input) {
         input.selectedCalendarDates
-            .withUnretained(self)
-            .do(onNext: { (owner, arg1) in
+            .do(self) { (owner, arg1) in
                 let (startDate, endDate) = arg1
                 guard startDate != Date() && endDate != nil else {
                     return owner.periodType.onNext(.all)
@@ -370,17 +363,16 @@ extension SalesViewModel {
                         endDate?.mmddyyyyString("/") ?? ""
                     )
                 )
-            })
+            }
             .drive()
             .disposed(by: disposeBag)
     }
     
     private func subscribeOnCancelCalendar(_ input: Input) {
         input.selectedCancelCalendar
-            .withUnretained(self)
-            .do(onNext: { owner, _ in
+            .do(self) { owner, _ in
                 owner.periodType.onNext(.all)
-            })
+            }
             .drive()
             .disposed(by: disposeBag)
     }
@@ -398,34 +390,30 @@ extension SalesViewModel {
     
     private func subscribeOnOrdersSalesData() {
         fetchOrdersSalesData()
-            .withUnretained(self)
-            .withLatestFrom(ordersDataStorage.asDriverOnErrorJustComplete()) { (arg0, storage) in
-                let (owner, dto) = arg0
-                return (owner, dto, storage)
+            .withLatestFrom(ordersDataStorage.asDriverOnErrorJustComplete()) { dto, storage in
+                return (dto, storage)
             }
         // Save data to storage
-            .do(onNext: { owner, dto, storage in
-                var storage = storage
+            .do(self) { (owner, arg1) in
+                var (dto, storage) = arg1
                 storage.append(contentsOf: dto.results)
                 owner.ordersDataStorage.onNext(storage)
-            })
+            }
             .drive()
             .disposed(by: disposeBag)
     }
     
     private func subscribeOnRefundsSalesData() {
         fetchRefundsSalesData()
-            .withUnretained(self)
-            .withLatestFrom(refundsDataStorage.asDriverOnErrorJustComplete()) { (arg0, storage) in
-                let (owner, dto) = arg0
-                return (owner, dto, storage)
+            .withLatestFrom(refundsDataStorage.asDriverOnErrorJustComplete()) { dto, storage in
+                return (dto, storage)
             }
         // Save data to storage
-            .do(onNext: { owner, dto, storage in
-                var storage = storage
+            .do(self) { (owner, arg1) in
+                var (dto, storage) = arg1
                 storage.append(contentsOf: dto.results)
                 owner.refundsDataStorage.onNext(storage)
-            })
+            }
             .drive()
             .disposed(by: disposeBag)
     }
@@ -473,8 +461,7 @@ extension SalesViewModel {
                     .asDriverOnErrorJustComplete()
                 }
             )
-            .withUnretained(self)
-            .map { (owner, productMarketplaceArray) in
+            .map(self) { (owner, productMarketplaceArray) in
                 productMarketplaceArray.map { order, markeplace in
                     return .init(
                         model: .defaultSection(
@@ -708,8 +695,7 @@ extension SalesViewModel {
                     .asDriverOnErrorJustComplete()
                 }
             )
-            .withUnretained(self)
-            .map { (owner, productMarketplaceArray) in
+            .map(self) { (owner, productMarketplaceArray) in
                 productMarketplaceArray.map { refund, marketplace in
                     return .init(
                         model: .defaultSection(
@@ -1046,11 +1032,9 @@ extension SalesViewModel {
             .asDriverOnErrorJustComplete()
             .withLatestFrom(paginatedData.asDriverOnErrorJustComplete())
             .filter { $0.tableType == .orders }
-            .withUnretained(self)
-            .do(onNext: { owner, _  in
+            .do(self) { owner, _  in
                 owner.loadingStarted.onNext(())
-            })
-            .map { $1 }
+            }
             .flatMapLatest(weak: self) { owner, paginatedData in
                 owner.salesRefundsUseCase
                     .getOrdersSales(paginatedData)
@@ -1078,11 +1062,9 @@ extension SalesViewModel {
             .asDriverOnErrorJustComplete()
             .withLatestFrom(paginatedData.asDriverOnErrorJustComplete())
             .filter { $0.tableType == .refunds }
-            .withUnretained(self)
-            .do(onNext: { owner, _  in
+            .do(self) { owner, _  in
                 owner.loadingStarted.onNext(())
-            })
-            .map { $1 }
+            }
             .flatMapLatest(weak: self) { owner, paginatedData in
                 owner.salesRefundsUseCase
                     .getRefundsSales(paginatedData)
@@ -1116,10 +1098,9 @@ extension SalesViewModel {
                     .trackError(owner.errorTracker)
                     .asDriverOnErrorJustComplete()
             }
-            .withUnretained(self)
-            .do(onNext: { owner, _ in
+            .do(self) { owner, _ in
                 owner.reloadData()
-            })
+            }
             .drive()
             .disposed(by: disposeBag)
     }

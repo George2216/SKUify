@@ -103,8 +103,7 @@ extension ExpensesVC {
     
     private func bindHeightForScrollingToTxtField(_ output: ExpensesViewModel.Output) {
         output.keyboardHeight
-            .withUnretained(self)
-            .map { owner, height in
+            .map(self) { owner, height in
                 UIScrollView.ScrollToVisibleContext(
                     height: height,
                     view: owner.view
@@ -145,8 +144,7 @@ extension ExpensesVC {
     
     private func bingCalendarPopover(_ output: ExpensesViewModel.Output) {
         output.showCalendarPopover
-            .withUnretained(self)
-            .map { owner, model in
+            .map(self) { owner, model in
                 PopoverManager.Input(
                     bindingType: .point(model.center),
                     preferredSize: .init(
@@ -163,8 +161,7 @@ extension ExpensesVC {
     
     private func bindToSimpleTablePopover(_ output: ExpensesViewModel.Output) {
         output.showSimpleTablePopover
-            .withUnretained(self)
-            .map { owner, model in
+            .map(self) { owner, model in
                 PopoverManager.Input(
                     bindingType: .point(model.center),
                     preferredSize: .init(

@@ -109,19 +109,18 @@ extension SingleCalendarPopoverVC {
         calendar.rx
             .didSelectDate
             .asDriverOnErrorJustComplete()
-            .withUnretained(self)
         // Reload cells
-            .do(onNext: { owner, _ in
+            .do(self) { owner, _ in
                 owner.configureVisibleCells()
-            })
+            }
         // Hide calendar
-            .do(onNext: { owner, _ in
+            .do(self) { owner, _ in
                 owner.dismiss(animated: true)
-            })
-            .do(onNext: { owner, data in
+            }
+            .do(self) { owner, data in
                 owner.didSelectDateClosure?(data)
                 owner.didSelectDate.onNext(data)
-            })
+            }
             .drive()
             .disposed(by: disposeBag)
     }
@@ -130,15 +129,14 @@ extension SingleCalendarPopoverVC {
         calendar.rx
             .willDisplayCell
             .asDriverOnErrorJustComplete()
-            .withUnretained(self)
-            .drive(onNext: { (owner, arg1) in
+            .drive(with: self) { (owner, arg1) in
                 let (cell, date, position) = arg1
                 owner.configureCell(
                     cell,
                     for: date,
                     at: position
                 )
-            })
+            }
             .disposed(by: disposeBag)
     }
     

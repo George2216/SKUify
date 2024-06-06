@@ -30,9 +30,6 @@ final class SecurityViewModel: ViewModelProtocol {
     private var activityIndicator = ActivityTracker()
     private var errorTracker = ErrorTracker()
     
-    deinit {
-        print("")
-    }
     init(
         useCases: SecurityUseCases,
         navigator: SecurityNavigatorProtocol
@@ -48,7 +45,7 @@ final class SecurityViewModel: ViewModelProtocol {
             keyboardHeight: getKeyboardHeight(),
             contentData: makeContentDataInput(),
             fetching: activityIndicator.asDriver(),
-            error: errorTracker.asBannerInput(.error))
+            error: errorTracker.asBannerInput())
     }
         
 }
@@ -201,7 +198,7 @@ extension SecurityViewModel {
         updatePasswordUseCase
             .updatePassword(data)
             .trackActivity(activityIndicator)
-            .trackComplete(errorTracker, message: "Password is updated")
+            .trackComplete(errorTracker, message: "The data has been updated.")
             .trackError(errorTracker)
             .asDriverOnErrorJustComplete()
     }

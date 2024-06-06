@@ -95,17 +95,15 @@ final class DashboardViewModel: ViewModelProtocol {
     private func subscribeOnReloadData(_ input: Input) {
         input.reloadData
             .withLatestFrom(dashboardDataState.asDriverOnErrorJustComplete())
-            .withUnretained(self)
-            .drive(onNext: { owner, state in
+            .drive(with: self) { owner, state in
                 owner.dashboardDataState.onNext(state ?? .today)
-            })
+            }
             .disposed(by: disposeBag)
     }
     
     private func subscribeOnSelectedCalendarDates(_ input: Input) {
         input.selectedCalendarDates
-            .withUnretained(self)
-            .drive(onNext: { (owner, arg1) in
+            .drive(with: self) { (owner, arg1) in
                 let (startDate, endDate) = arg1
                 owner.dashboardDataState.onNext(
                     .custom(
@@ -113,21 +111,20 @@ final class DashboardViewModel: ViewModelProtocol {
                         endDate: endDate
                     )
                 )
-            })
+            }
             .disposed(by: disposeBag)
     }
     
     private func subscribeOnCancelCalendarSelected(_ input: Input) {
         input.selectedCancelCalendar
-            .withUnretained(self)
-            .drive(onNext: { (owner, _) in
+            .drive(with: self) { (owner, _) in
                 owner.dashboardDataState.onNext(
                     .custom(
                         startDate: Date(),
                         endDate: nil
                     )
                 )
-            })
+            }
             .disposed(by: disposeBag)
     }
     
@@ -279,8 +276,7 @@ final class DashboardViewModel: ViewModelProtocol {
             .withLatestFrom(collectionData.asDriverOnErrorJustComplete()) { visibles, collectionData in
                 return (visibles, collectionData)
             }
-            .withUnretained(self)
-            .drive(onNext: { (owner, arg1) in
+            .drive(with: self) { (owner, arg1) in
                 let (salesIsShow, unitSoldIsShow, profitIsShow, refundsIsShow, marginIsShow, roiIsShow) = arg1.0
                 let collectionData = arg1.1
 
@@ -322,7 +318,7 @@ final class DashboardViewModel: ViewModelProtocol {
                 }
                 
                 owner.collectionData.onNext(updatetCollectionData)
-            })
+            }
             .disposed(by: disposeBag)
 
     }
@@ -432,9 +428,7 @@ final class DashboardViewModel: ViewModelProtocol {
                     )
                 }
             )
-            .withUnretained(self)
-            .map(
-                { owner, combinedData in
+            .map(self) { owner, combinedData in
                     let (mainData, state, marketplaces) = combinedData
                     
                     let data = mainData.chart
@@ -475,7 +469,6 @@ final class DashboardViewModel: ViewModelProtocol {
                         )
                     ]
                 }
-            )
     }
     
     // MARK: - Make collection view items
@@ -978,10 +971,9 @@ final class DashboardViewModel: ViewModelProtocol {
     private func navigateToSettings() {
         toSettings
             .asDriverOnErrorJustComplete()
-            .withUnretained(self)
-            .drive(onNext: { owner, _ in
+            .drive(with: self) { owner, _ in
                 owner.navigator.toSettings()
-            })
+            }
             .disposed(by: disposeBag)
     }
     

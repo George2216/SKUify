@@ -52,8 +52,7 @@ extension SubscriptionViewModel {
     
     private func makeCollectionData() -> Driver<[SubscriptionSectionModel]> {
         fetchSubscribtions()
-            .withUnretained(self)
-            .map { owner, subscribtions in
+            .map(self) { owner, subscribtions in
                 return subscribtions.map { supscription in
                     return .init(
                         model: .defaultSection(

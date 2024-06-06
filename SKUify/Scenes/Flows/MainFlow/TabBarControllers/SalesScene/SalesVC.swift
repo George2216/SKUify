@@ -149,8 +149,7 @@ extension SalesVC {
     
     private func bingCalendarPopover(_ output: SalesViewModel.Output) {
         output.showCalendarPopover
-            .withUnretained(self)
-            .map { owner, point in
+            .map(self) { owner, point in
                 PopoverManager.Input(
                     bindingType: .point(point),
                     preferredSize: .init(
@@ -166,8 +165,7 @@ extension SalesVC {
     
     private func bindMarketplacesPopover(_ output: SalesViewModel.Output) {
         output.showMarketplacesPopover
-            .withUnretained(self)
-            .map { owner, point in
+            .map(self) { owner, point in
                 PopoverManager.Input(
                     bindingType: .point(point),
                     preferredSize: .init(

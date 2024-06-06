@@ -64,7 +64,7 @@ final class ProfileViewModel: BaseUserContentViewModel {
             contentData: contentDataStorage.compactMap({ $0 }).asDriverOnErrorJustComplete(),
             tapOnUploadImage: tapOnUploadImage.asDriverOnErrorJustComplete(),
             fetching: activityIndicator.asDriver(),
-            error: errorTracker.asBannerInput(.error)
+            error: errorTracker.asBannerInput()
         )
     }
     
@@ -144,20 +144,18 @@ final class ProfileViewModel: BaseUserContentViewModel {
             ) { imageData, arg0 in
                 return (imageData, arg0.0, arg0.1)
             }
-            .withUnretained(self)
-            .do(onNext: { owner, arg0 in
+            .do(self) { owner, arg0 in
                 // Save image to request data storage
                 var (imageData, requestDataStorage, _) = arg0
                 requestDataStorage?.imageData = imageData
                 owner.userDataRequestStorage.onNext(requestDataStorage)
-            })
-            .do(onNext: { owner, arg0 in
+            }
+            .do(self) { owner, arg0 in
                 // Save image to content data storage
                 var (imageData, _, contentDataStorage) = arg0
                 contentDataStorage?.profileHeaderViewInput.uploadInput.imageType = .fromData(imageData)
                 owner.contentDataStorage.onNext(contentDataStorage)
-                
-            })
+            }
             .drive()
             .disposed(by: disposeBag)
     }
@@ -170,19 +168,18 @@ final class ProfileViewModel: BaseUserContentViewModel {
                     userDataRequestStorage.asDriverOnErrorJustComplete()
                 )
             )
-            .withUnretained(self)
-            .do(onNext: { owner, arg0 in
+            .do(self) { owner, arg0 in
                 // Remove image from content storage
                 var (contentData, _) = arg0
                 contentData?.profileHeaderViewInput.uploadInput.imageType = .fromURL(nil)
                 owner.contentDataStorage.onNext(contentData)
-            })
-            .do(onNext: { owner, arg0 in
+            }
+            .do(self) { owner, arg0 in
                 // Remove image from request data storage
                 var (_, contentRequestData) = arg0
                 contentRequestData?.imageData = nil
                 owner.userDataRequestStorage.onNext(contentRequestData)
-            })
+            }
             .drive()
             .disposed(by: disposeBag)
         
@@ -223,8 +220,7 @@ final class ProfileViewModel: BaseUserContentViewModel {
         _ combinedData: Driver<(UserDTO, Int, UserRequestModel?)>
     ) -> Driver<(ProfileViewModel, UserDTO)> {
         combinedData
-            .withUnretained(self)
-            .do(onNext: { owner, arg0 in
+            .do(self) { owner, arg0 in
                 var (data, userId, dataStorage) = arg0
                 // When we use empty Data() for imageData, if the remaining data is updated, the image will not change
                 dataStorage = UserRequestModel(
@@ -238,11 +234,11 @@ final class ProfileViewModel: BaseUserContentViewModel {
                     imageData: Data()
                 )
                 owner.userDataRequestStorage.onNext(dataStorage)
-            })
-            .map({ owner, arg0 in
+            }
+            .map(self) { owner, arg0 in
                 let (user, _, _) = arg0
                 return (owner, user)
-            })
+            }
         }
     
     private func makeContentDataInput(
@@ -340,11 +336,10 @@ final class ProfileViewModel: BaseUserContentViewModel {
         _ contentDataInput: Driver<UserContentContentView.Input>
     ) -> Driver<Void> {
         contentDataInput
-            .withUnretained(self)
-            .do(onNext: { owner, contentData in
+            .do(self) { owner, contentData in
                 owner.contentDataStorage.onNext(contentData)
-            })
-            .map({ _ in () })
+            }
+            .map { _ in  }
     }
     
     // MARK: - Make title
@@ -377,6 +372,7 @@ final class ProfileViewModel: BaseUserContentViewModel {
     private func saveUserData(_ data: UserRequestModel) -> Driver<Void> {
         userDataUseCase.updateUserData(data: data)
             .trackActivity(activityIndicator)
+            .trackComplete(errorTracker, message: "The data has been updated.")
             .trackError(errorTracker)
             .asDriverOnErrorJustComplete()
         

@@ -89,8 +89,7 @@ final class COGSettingsViewModel: COGBaseViewModel {
     private func makeCollectionData() -> Driver<[COGSectionModel]> {
         visibleDataStorage
             .asDriverOnErrorJustComplete()
-            .withUnretained(self)
-            .map { owner, data in
+            .map(self) { owner, data in
                 owner.makeCollectionData(data)
             }
     }
@@ -425,15 +424,14 @@ extension COGSettingsViewModel {
             FulfilmentType(rawValue: input.fulfilment)
                 .cogsSettingsRawValue
         )
-            .withUnretained(self)
-            .map { owner, cogsSettingsModel in
+            .map(self) { owner, cogsSettingsModel in
                 input.skuifyItemData = cogsSettingsModel.toCOGSettingsItem()
-                return (owner, input)
+                return input
             }
-            .do(onNext: { owner, data in
+            .do(self) { owner, data in
                 owner.visibleDataStorage.onNext(data)
                 owner.changedDataStorage.onNext(data)
-            })
+            }
             .drive()
             .disposed(by: disposeBag)
     }
@@ -526,13 +524,12 @@ extension COGSettingsViewModel {
                 dataStorage.bbpImportStrategy = dataStorage.bbpImportStrategy == strategy ? .none : strategy
                 return dataStorage
             }
-            .withUnretained(self)
-            .do(onNext: { owner, dataStorage in
+            .do(self) { owner, dataStorage in
                 owner.changedDataStorage.onNext(dataStorage)
-            })
-            .do(onNext: { owner, dataStorage in
+            }
+            .do(self) { owner, dataStorage in
                 owner.visibleDataStorage.onNext(dataStorage)
-            })
+            }
             .drive()
             .disposed(by: disposeBag)
     }
@@ -573,8 +570,7 @@ extension COGSettingsViewModel {
                 .trackError(owner.errorTracker)
                 .asDriverOnErrorJustComplete()
             }
-            .withUnretained(self)
-            .do { owner, _  in
+            .do(self) { owner, _  in
                 owner.navigator.toBack()
             }
             .drive()
@@ -597,11 +593,9 @@ extension COGSettingsViewModel {
                 changedDataStorage.purchaseDate = date
                 return changedDataStorage
             })
-            .withUnretained(self)
-            .do(onNext: { owner, changedDataStorage in
+            .do(self) { owner, changedDataStorage in
                 owner.changedDataStorage.onNext(changedDataStorage)
-            })
-            .map { $1 }
+            }
             .drive(visibleDataStorage)
             .disposed(by: disposeBag)
     }

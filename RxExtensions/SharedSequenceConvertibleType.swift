@@ -17,14 +17,6 @@ public extension SharedSequenceConvertibleType {
     
 }
 
-public extension SharedSequenceConvertibleType {
-    func withUnretained<T: AnyObject>(_ obj: T) -> Driver<(T, Element)> {
-        return self.asObservable()
-            .withUnretained(obj)
-            .asDriverOnErrorJustComplete()
-    }
-   
-}
 
 public extension SharedSequence {
     func map<Object: AnyObject, Result>(

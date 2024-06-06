@@ -138,8 +138,7 @@ extension ExpensesViewModel {
     
     private func makeExpensesCollectionData() -> Driver<[ExpensesSectionModel]> {
         prepareDataForCollection()
-            .withUnretained(self)
-            .map { (owner, arg1) in
+            .map(self) { (owner, arg1) in
                 let (expenses, categories, expensesType) = arg1
                 return expenses.enumerated()
                     .map { index, expense in
@@ -480,8 +479,7 @@ extension ExpensesViewModel {
     private func makeLeftBarButtonConfig() -> Driver<DefaultBarButtonItem.Config> {
         expensesType
             .asDriverOnErrorJustComplete()
-            .withUnretained(self)
-            .map { owner, expenseType in
+            .map(self) { owner, expenseType in
                 switch expenseType {
                 case .allExpenses:
                     return owner.makeAddExpenseButtonConfig()
@@ -494,8 +492,7 @@ extension ExpensesViewModel {
     private func makeRightBarButtonConfig() -> Driver<DefaultBarButtonItem.Config>{
         expensesType
             .asDriverOnErrorJustComplete()
-            .withUnretained(self)
-            .map { owner, expenseType in
+            .map(self) { owner, expenseType in
                 switch expenseType {
                 case .allExpenses:
                     return owner.makeSaveButtonConfig()
@@ -625,10 +622,9 @@ extension ExpensesViewModel {
     
     private func subscribeOnReloadData(_ input: Input) {
         input.reloadData
-            .withUnretained(self)
-            .drive(onNext: { owner, _ in
+            .drive(with: self) { owner, _ in
                 owner.reloadData()
-            })
+            }
             .disposed(by: disposeBag)
     }
     
@@ -653,14 +649,12 @@ extension ExpensesViewModel {
     
     private func subscribeOnExpenses() {
         fetchExpenses()
-            .withUnretained(self)
-            .withLatestFrom(changedExpensesDataStorage.asDriverOnErrorJustComplete()) { (arg0, storage) in
-                let (owner, dto) = arg0
-                return (owner, dto, storage)
+            .withLatestFrom(changedExpensesDataStorage.asDriverOnErrorJustComplete()) { (dto, storage) in
+                return (dto, storage)
             }
         // Save data to storages
-            .map { owner, expenses, storage in
-                var storage = storage
+            .map(self) { (owner, arg1) in
+                var (expenses, storage) = arg1
                 storage.append(contentsOf: expenses)
                 return storage
             }
@@ -675,15 +669,14 @@ extension ExpensesViewModel {
             .shareElement(changedExpensesDataStorage)
             .shareElement(visibleExpensesDataStorage)
             .withLatestFrom(expensesType.asDriverOnErrorJustComplete())
-            .withUnretained(self)
-            .do(onNext: { owner, expensesType in
+            .do(self) { owner, expensesType in
                 switch expensesType {
                 case .newExpense:
                     owner.navigator.backToExpenses()
                 default:
                     break
                 }
-            })
+            }
             .drive()
             .disposed(by: disposeBag)
     }

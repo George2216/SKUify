@@ -200,8 +200,7 @@ extension AuthenticationViewModel {
     // Login button config
     private func makeLogInButtonConfig() -> Driver<DefaultButton.Config> {
         return loginFieldsText
-            .withUnretained(self)
-            .map { owner, args in
+            .map(self) { owner, args in
                 let (email, password) = args
                 return DefaultButton.Config(
                     title: "Log In",
@@ -536,8 +535,7 @@ extension AuthenticationViewModel {
                 signUpFieldsText,
                 signUpIsAgreeStorage.asDriverOnErrorJustComplete()
             )
-            .withUnretained(self)
-            .map { (owner, arg1) in
+            .map(self) { (owner, arg1) in
                 let ((txtTextFields), isAgree) = arg1
                 return DefaultButton.Config
                     .init(

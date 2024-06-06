@@ -103,10 +103,9 @@ final class COGViewModel: COGBaseViewModel {
     private func makeCollectionData() -> Driver<[COGSectionModel]> {
         visibleDataStorage
             .asDriverOnErrorJustComplete()
-        .withUnretained(self)
-        .map { owner, data in
-            return owner.makeCollectionData(data)
-        }
+            .map(self) { owner, data in
+                return owner.makeCollectionData(data)
+            }
     }
     
     private func makeCollectionData(_ data: COGInputModel) -> [COGSectionModel] {
@@ -570,12 +569,10 @@ extension COGViewModel {
                 storage.bundled = bundled
                 return storage
             }
-            .withUnretained(self)
         // save to changedDataStorage
-            .do(onNext: { owner, data in
+            .do(self) { owner, data in
                 owner.changedDataStorage.onNext(data)
-            })
-            .map { $1 }
+            }
             .drive(visibleDataStorage)
             .disposed(by: disposeBag)
     }
@@ -731,12 +728,10 @@ extension COGViewModel {
                             return unchangedData
                         }
                 })
-            .withUnretained(self)
         // save to changedDataStorage
-            .do(onNext: { owner, data in
+            .do(self) { owner, data in
                 owner.changedDataStorage.onNext(data)
-            })
-            .map { $1 }
+            }
             .drive(visibleDataStorage)
             .disposed(by: disposeBag)
     }
@@ -756,12 +751,10 @@ extension COGViewModel {
                             return unchangedData
                         }
                 })
-            .withUnretained(self)
         // save to changedDataStorage
-            .do(onNext: { owner, data in
+            .do(self) { owner, data in
                 owner.changedDataStorage.onNext(data)
-            })
-            .map { $1 }
+            }
             .drive(visibleDataStorage)
             .disposed(by: disposeBag)
     }
@@ -780,12 +773,10 @@ extension COGViewModel {
                         return data
                     }
             }
-            .withUnretained(self)
         // save to changedDataStorage
-            .do(onNext: { owner, data in
+            .do(self) { owner, data in
                 owner.changedDataStorage.onNext(data)
-            })
-            .map { $1 }
+            }
             .drive(visibleDataStorage)
             .disposed(by: disposeBag)
     }
@@ -800,10 +791,9 @@ extension COGViewModel {
                     .trackError(owner.errorTracker)
                     .asDriverOnErrorJustComplete()
             }
-            .withUnretained(self)
-            .drive(onNext: { owner, _ in
+            .drive(with: self) { owner, _ in
                 owner.navigator.toBack()
-            })
+            }
             .disposed(by: disposeBag)
     }
     
@@ -823,11 +813,9 @@ extension COGViewModel {
                 changedDataStorage.purchaseDate = date
                 return changedDataStorage
             })
-            .withUnretained(self)
-            .do(onNext: { owner, changedDataStorage in
+            .do(self) { owner, changedDataStorage in
                 owner.changedDataStorage.onNext(changedDataStorage)
-            })
-            .map { $1 }
+            }
             .drive(visibleDataStorage)
             .disposed(by: disposeBag)
     }

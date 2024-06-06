@@ -64,10 +64,9 @@ final class NoteAlertVC: BaseAlertVC {
 extension NoteAlertVC {
     private func bindToAlertBottomPosition(_ output: NoteAlertViewModel.Output) {
         output.keyboardHeight
-            .withUnretained(self)
-            .drive(onNext: { owner, keyboardHeight in
+            .drive(with: self) { owner, keyboardHeight in
                 owner.updateAlertViewBottomPosition(keyboardHeight)
-            })
+            }
             .disposed(by: disposeBag)
     }
     

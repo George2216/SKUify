@@ -106,17 +106,16 @@ final class InventoryViewModel: ViewModelProtocol {
             .withLatestFrom(paginatedData.asDriverOnErrorJustComplete()) { searchText, paginatedData in
                 return (searchText, paginatedData)
             }
-            .withUnretained(self)
         // Save to paginated data
-            .do(onNext: { (owner, arg1) in
+            .do(self) { (owner, arg1) in
                 var (searchText, paginatedData) = arg1
                 paginatedData.searchText = searchText
                 owner.paginatedData.onNext(paginatedData)
-            })
+            }
         // Clear storages
-            .do(onNext: { owner, _ in
+            .do(self) { owner, _ in
                 owner.reloadData()
-            })
+            }
             .drive()
             .disposed(by: disposeBag)
     }
@@ -127,16 +126,15 @@ final class InventoryViewModel: ViewModelProtocol {
             .withLatestFrom(paginatedData.asDriverOnErrorJustComplete()) { isNoCOGs, paginatedData in
                 return (isNoCOGs, paginatedData)
             }
-            .withUnretained(self)
-            .do(onNext: { (owner, arg1) in
+            .do(self) { (owner, arg1) in
                 var (isNoCOGs, paginatedData) = arg1
                 paginatedData.noCOGs = isNoCOGs
                 owner.paginatedData.onNext(paginatedData)
-            })
+            }
         // Clear storages
-            .do(onNext: { owner, _ in
+            .do(self) { owner, _ in
                 owner.reloadData()
-            })
+            }
             .drive()
             .disposed(by: disposeBag)
     }
@@ -147,16 +145,15 @@ final class InventoryViewModel: ViewModelProtocol {
             .withLatestFrom(paginatedData.asDriverOnErrorJustComplete()) { isNoCOGs, paginatedData in
                 return (isNoCOGs, paginatedData)
             }
-            .withUnretained(self)
-            .do(onNext: { (owner, arg1) in
+            .do(self) { (owner, arg1) in
                 var (isStockOrInactive, paginatedData) = arg1
                 paginatedData.stockOrInactive = isStockOrInactive
                 owner.paginatedData.onNext(paginatedData)
-            })
+            }
         // Clear storages
-            .do(onNext: { owner, _ in
+            .do(self) { owner, _ in
                 owner.reloadData()
-            })
+            }
             .drive()
             .disposed(by: disposeBag)
     }
@@ -167,16 +164,15 @@ final class InventoryViewModel: ViewModelProtocol {
             .withLatestFrom(paginatedData.asDriverOnErrorJustComplete()) { isNoCOGs, paginatedData in
                 return (isNoCOGs, paginatedData)
             }
-            .withUnretained(self)
-            .do(onNext: { (owner, arg1) in
+            .do(self) { (owner, arg1) in
                 var (isWarningsOnly, paginatedData) = arg1
                 paginatedData.onlyWarning = isWarningsOnly
                 owner.paginatedData.onNext(paginatedData)
-            })
+            }
         // Clear storages
-            .do(onNext: { owner, _ in
+            .do(self) { owner, _ in
                 owner.reloadData()
-            })
+            }
             .drive()
             .disposed(by: disposeBag)
     }
@@ -190,17 +186,16 @@ final class InventoryViewModel: ViewModelProtocol {
             .withLatestFrom(paginatedData.asDriverOnErrorJustComplete()) { tableType, paginatedData in
                 return (tableType, paginatedData)
             }
-            .withUnretained(self)
         // Save to paginated data
-            .do(onNext: { (owner, arg1) in
+            .do(self) { (owner, arg1) in
                 var (tableType, paginatedData) = arg1
                 paginatedData.tableType = tableType
                 owner.paginatedData.onNext(paginatedData)
-            })
+            }
         // Clear storages
-            .do(onNext: { (owner, _) in
+            .do(self) { (owner, _) in
                 owner.reloadData()
-            })
+            }
             .drive()
             .disposed(by: disposeBag)
     }
@@ -316,10 +311,9 @@ extension InventoryViewModel {
     
     private func subscribeOnReloadData(_ input: Input) {
         input.reloadData
-            .withUnretained(self)
-            .drive(onNext: { owner, _ in
+            .drive(with: self) { owner, _ in
                 owner.reloadData()
-            })
+            }
             .disposed(by: disposeBag)
     }
     
@@ -344,34 +338,30 @@ extension InventoryViewModel {
     
     private func subscribeOnOrdersInventoryData() {
         fetchOrdersInventoryData()
-            .withUnretained(self)
-            .withLatestFrom(ordersDataStorage.asDriverOnErrorJustComplete()) { (arg0, storage) in
-                let (owner, dto) = arg0
-                return (owner, dto, storage)
+            .withLatestFrom(ordersDataStorage.asDriverOnErrorJustComplete()) { dto, storage in
+                return (dto, storage)
             }
         // Save data to storage
-            .do(onNext: { owner, dto, storage in
-                var storage = storage
+            .do(self) { (owner, arg1) in
+                var (dto, storage) = arg1
                 storage.append(contentsOf: dto.results)
                 owner.ordersDataStorage.onNext(storage)
-            })
+            }
             .drive()
             .disposed(by: disposeBag)
     }
     
     private func subscribeOnBuyBotImportInventoryData() {
         fetchBuyBotImportsInventoryData()
-            .withUnretained(self)
-            .withLatestFrom(buyBotImportsStorage.asDriverOnErrorJustComplete()) { (arg0, storage) in
-                let (owner, dto) = arg0
-                return (owner, dto, storage)
+            .withLatestFrom(buyBotImportsStorage.asDriverOnErrorJustComplete()) { dto, storage in
+                return (dto, storage)
             }
         // Save data to storage
-            .do(onNext: { owner, dto, storage in
-                var storage = storage
+            .do(self) { (owner, arg1) in
+                var (dto, storage) = arg1
                 storage.append(contentsOf: dto.results)
                 owner.buyBotImportsStorage.onNext(storage)
-            })
+            }
             .drive()
             .disposed(by: disposeBag)
     }
@@ -384,10 +374,9 @@ extension InventoryViewModel {
     
     private func makeCollectionData() {
         Driver.merge(makeOrdersCollectionData(), makeBuyBotImportsCollectionData())
-            .do(onNext: { [weak self] _ in
-                guard let self else { return }
-                self.isShowPaginatedLoader.onNext(false)
-            })
+            .do(self) { owner, _ in
+                owner.isShowPaginatedLoader.onNext(false)
+            }
             .drive(collectionDataStorage)
             .disposed(by: disposeBag)
     }
@@ -421,8 +410,7 @@ extension InventoryViewModel {
                     .asDriverOnErrorJustComplete()
                 }
             )
-            .withUnretained(self)
-            .map { (owner, productMarketplaceArray) in
+            .map(self) { (owner, productMarketplaceArray) in
                 productMarketplaceArray.map { order, markeplace in
                     return .init(
                         model: .defaultSection(
@@ -658,8 +646,7 @@ extension InventoryViewModel {
                     .asDriverOnErrorJustComplete()
                 }
             )
-            .withUnretained(self)
-            .map { (owner, productMarketplaceArray) in
+            .map(self) { (owner, productMarketplaceArray) in
                 productMarketplaceArray.map { bbImport, markeplace in
                     return .init(
                         model: .defaultSection(
@@ -1018,12 +1005,10 @@ extension InventoryViewModel {
             .asDriverOnErrorJustComplete()
             .withLatestFrom(paginatedData.asDriverOnErrorJustComplete())
             .filter { $0.tableType == .orders }
-            .withUnretained(self)
         // Sending an event indicating the start of loading for orders so that in case the loading for BuyBotImport is not yet finished, it can be ignored.
-            .do(onNext: { owner, _  in
+            .do(self) { owner, _  in
                 owner.loadingStarted.onNext(())
-            })
-            .map { $1 }
+            }
             .flatMapLatest(weak: self) { owner, paginatedData in
                 owner.inventoryUseCase
                     .getOrdersInventory(paginatedData)
@@ -1051,12 +1036,10 @@ extension InventoryViewModel {
             .asDriverOnErrorJustComplete()
             .withLatestFrom(paginatedData.asDriverOnErrorJustComplete())
             .filter { $0.tableType == .buyBotImports }
-            .withUnretained(self)
         // Sending an event indicating the start of loading for BuyBotImport, so that in case the loading for orders is not yet finished, it can be ignored.
-            .do(onNext: { owner, _  in
+            .do(self) { owner, _  in
                 owner.loadingStarted.onNext(())
-            })
-            .map { $1 }
+            }
             .flatMapLatest(weak: self) { owner, paginatedData in
                 owner.inventoryUseCase
                     .getBuyBotImportsInventory(paginatedData)
@@ -1090,10 +1073,9 @@ extension InventoryViewModel {
                     .trackError(owner.errorTracker)
                     .asDriverOnErrorJustComplete()
             }
-            .withUnretained(self)
-            .do(onNext: { owner, _ in
+            .do(self) { owner, _ in
                 owner.reloadData()
-            })
+            }
             .drive()
             .disposed(by: disposeBag)
     }

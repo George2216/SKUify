@@ -44,10 +44,9 @@ final class TimeSlotPopoverVC: UIViewController {
     private func subscribeOnItemSelected() {
         collectionView.selectOrDeselect
             .asDriverOnErrorJustComplete()
-            .withUnretained(self)
-            .drive(onNext: { owner, _ in
+            .drive(with: self) { owner, _ in
                 owner.dismiss(animated: true)
-            })
+            }
             .disposed(by: disposeBag)
     }
     

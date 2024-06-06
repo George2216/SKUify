@@ -42,11 +42,8 @@ final class SecurityContentView: UIView {
     }
 
     private func setupFieldsStack(_ input: Input) {
-        fieldsStack.views = input.fieldsConfig.map { config in
-            var field = DefaultTextField()
-            field.config = config.config
-            return field
-        }
+        fieldsStack.views = input.fieldsConfig
+            .map { $0.createFromInput() }
     }
     
     private func bindToSaveButton(_ input: Input) {

@@ -68,8 +68,7 @@ extension COGVC {
     
     private func bindHeightForScrollingToTxtField(_ output: COGBaseViewModel.Output) {
         output.keyboardHeight
-            .withUnretained(self)
-            .map { owner, height in
+            .map(self) { owner, height in
                 UIScrollView.ScrollToVisibleContext(
                     height: height,
                     view: owner.view
@@ -98,8 +97,7 @@ extension COGVC {
     
     private func bingCalendarPopover(_ output: COGBaseViewModel.Output) {
         output.showCalendarPopover
-            .withUnretained(self)
-            .map { owner, center in
+            .map(self) { owner, center in
                 PopoverManager.Input(
                     bindingType: .point(center),
                     preferredSize: .init(

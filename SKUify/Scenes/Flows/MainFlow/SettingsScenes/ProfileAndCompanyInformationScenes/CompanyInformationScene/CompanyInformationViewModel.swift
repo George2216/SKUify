@@ -176,20 +176,19 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
             ) { imageData, arg0 in
                 return (imageData, arg0.0, arg0.1)
             }
-            .withUnretained(self)
-            .do(onNext: { owner, arg0 in
+            .do(self) { owner, arg0 in
                 // Save image to request data storage
                 var (imageData, requestDataStorage, _) = arg0
                 requestDataStorage?.imageData = imageData
                 owner.companyDataRequestStorage.onNext(requestDataStorage)
-            })
-            .do(onNext: { owner, arg0 in
+            }
+            .do(self) { owner, arg0 in
                 // Save image to content data storage
                 var (imageData, _, contentDataStorage) = arg0
                 contentDataStorage?.profileHeaderViewInput.uploadInput.imageType = .fromData(imageData)
                 owner.contentDataStorage.onNext(contentDataStorage)
                 
-            })
+            }
             .drive()
             .disposed(by: disposeBag)
     }
@@ -202,19 +201,18 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
                     companyDataRequestStorage.asDriverOnErrorJustComplete()
                 )
             )
-            .withUnretained(self)
-            .do(onNext: { owner, arg0 in
+            .do(self) { owner, arg0 in
                 // Remove image from content storage
                 var (contentData, _) = arg0
                 contentData?.profileHeaderViewInput.uploadInput.imageType = .fromURL(nil)
                 owner.contentDataStorage.onNext(contentData)
-            })
-            .do(onNext: { owner, arg0 in
+            }
+            .do(self) { owner, arg0 in
                 // Remove image from request data storage
                 var (_, contentRequestData) = arg0
                 contentRequestData?.imageData = nil
                 owner.companyDataRequestStorage.onNext(contentRequestData)
-            })
+            }
             .drive()
             .disposed(by: disposeBag)
     }
@@ -254,8 +252,7 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
         _ combinedData: Driver<(UserDTO, Int, CompanyInformationRequestModel?)>
     ) -> Driver<(CompanyInformationViewModel, UserDTO)> {
         combinedData
-            .withUnretained(self)
-            .do(onNext: { owner, arg0 in
+            .do(self) { owner, arg0 in
                 var (data, userId, dataStorage) = arg0
                 // When we use empty Data() for companyAvatarImage, if the remaining data is updated, the image will not change
                 dataStorage = CompanyInformationRequestModel(
@@ -272,11 +269,11 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
                     )
                 )
                 owner.companyDataRequestStorage.onNext(dataStorage)
-            })
-            .map({ owner, arg0 in
+            }
+            .map(self) { owner, arg0 in
                 let (user, _, _) = arg0
                 return (owner, user)
-            })
+            }
     }
     
     private func makeContentDataInput(
@@ -418,10 +415,9 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
         _ contentDataInput: Driver<UserContentContentView.Input>
     ) -> Driver<Void> {
         contentDataInput
-            .withUnretained(self)
-            .do(onNext: { owner, contentData in
+            .do(self) { owner, contentData in
                 owner.contentDataStorage.onNext(contentData)
-            })
+            }
             .map({ _ in () })
     }
     

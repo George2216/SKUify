@@ -42,11 +42,10 @@ final class DefaultTextField: UITextField {
             )
             .withLatestFrom(rx.text.orEmpty)
             .asDriverOnErrorJustComplete()
-            .withUnretained(self)
-            .drive(onNext: { owner, text in
+            .drive(with: self) { owner, text in
                 config.textObserver(text)
                 owner.config.text = text
-            })
+            }
             .disposed(by: disposeBag)
         
         

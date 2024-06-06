@@ -194,8 +194,7 @@ final class RangedCalendarViewModel: ViewModelProtocol {
             .withLatestFrom(selectedDates.asDriverOnErrorJustComplete()) { date, selectedDates in
                 return (date, selectedDates)
             }
-            .withUnretained(self)
-            .drive(onNext: { (owner, arg1) in
+            .drive(with: self) { (owner, arg1) in
                 
                 var (date, selectedDates) = arg1
                 
@@ -219,7 +218,7 @@ final class RangedCalendarViewModel: ViewModelProtocol {
                 }
                 owner.selectedDates.onNext(selectedDates)
 
-            })
+            }
             .disposed(by: disposeBag)
     }
     
@@ -229,15 +228,14 @@ final class RangedCalendarViewModel: ViewModelProtocol {
             .withLatestFrom(selectedDates.asDriverOnErrorJustComplete()) { date, selectedDates in
                 return (date, selectedDates)
             }
-            .withUnretained(self)
-            .drive(onNext: { (owner, arg1) in
+            .drive(with: self) { (owner, arg1) in
                 var (date, selectedDates) = arg1
                 owner.deselectDates.onNext(selectedDates)
                
                 selectedDates.removeAll()
                 owner.selectDates.onNext([date])
                 owner.selectedDates.onNext([date])
-            })
+            }
             .disposed(by: disposeBag)
     }
 

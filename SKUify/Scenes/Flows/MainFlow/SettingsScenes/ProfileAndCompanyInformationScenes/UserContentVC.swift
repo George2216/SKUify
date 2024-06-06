@@ -70,8 +70,7 @@ extension UserContentVC {
     
     private func bindHeightForScrollingToTxtField(_ output: ProfileViewModel.Output) {
         output.keyboardHeight
-            .withUnretained(self)
-            .map { owner, height in
+            .map(self) { owner, height in
                 UIScrollView.ScrollToVisibleContext(
                     height: height,
                     view: owner.view

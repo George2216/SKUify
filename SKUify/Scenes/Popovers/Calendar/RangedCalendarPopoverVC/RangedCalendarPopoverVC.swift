@@ -147,44 +147,40 @@ extension RangedCalendarPopoverVC {
     
     private func bindToCancelDelegate(_ output: RangedCalendarViewModel.Output) {
         output.cancelCalendar
-            .withUnretained(self)
-            .drive(onNext: { owner, _ in
+            .drive(with: self) { owner, _ in
                 owner.delegate?.cancelCalendar()
-            })
+            }
             .disposed(by: disposeBag)
     }
     
     private func bindToSelectedDateDeledate(_ output: RangedCalendarViewModel.Output) {
         output.confirmSelectionDate
-            .withUnretained(self)
-            .drive(onNext: { owner, date in
+            .drive(with: self) { owner, date in
                 owner.delegate?.selectedCalendarDates(
                     startDate: date,
                     endDate: nil
                 )
-            })
+            }
             .disposed(by: disposeBag)
     }
     
     private func bindToSelectedDatesRangeDeledate(_ output: RangedCalendarViewModel.Output) {
         output.confirmSelectionDatesRange
-            .withUnretained(self)
-            .drive(onNext: { (owner, arg1) in
+            .drive(with: self) { (owner, arg1) in
                 let (startDate, endDate) = arg1
                 owner.delegate?.selectedCalendarDates(
                     startDate: startDate,
                     endDate: endDate
                 )
-            })
+            }
             .disposed(by: disposeBag)
     }
     
     private func bindToMonth(_ output: RangedCalendarViewModel.Output) {
         output.toMonth
-            .withUnretained(self)
-            .drive(onNext: { owner, date in
+            .drive(with: self) { owner, date in
                 owner.calendar.setCurrentPage(date, animated: true)
-            })
+            }
             .disposed(by: disposeBag)
     }
     
@@ -202,25 +198,23 @@ extension RangedCalendarPopoverVC {
     
     private func bindToSelectCells(_ output: RangedCalendarViewModel.Output) {
         output.selectDates
-            .withUnretained(self)
-            .drive(onNext: { owner, dates in
+            .drive(with: self) { owner, dates in
                 owner.updateDates(
                     dates,
                     select: true
                 )
-            })
+            }
             .disposed(by: disposeBag)
     }
     
     private func bindToDeselectCells(_ output: RangedCalendarViewModel.Output) {
         output.deselectDates
-            .withUnretained(self)
-            .drive(onNext: { owner, dates in
+            .drive(with: self) { owner, dates in
                 owner.updateDates(
                     dates,
                     select: false
                 )
-            })
+            }
             .disposed(by: disposeBag)
     }
     
@@ -228,15 +222,14 @@ extension RangedCalendarPopoverVC {
         calendar.rx
             .willDisplayCell
             .asDriverOnErrorJustComplete()
-            .withUnretained(self)
-            .drive(onNext: { (owner, arg1) in
+            .drive(with: self) { (owner, arg1) in
                 let (cell, date, position) = arg1
                 owner.configureCell(
                     cell,
                     for: date,
                     at: position
                 )
-            })
+            }
             .disposed(by: disposeBag)
     }
     

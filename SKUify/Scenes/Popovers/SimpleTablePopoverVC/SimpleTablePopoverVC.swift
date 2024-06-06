@@ -33,11 +33,10 @@ final class SimpleTablePopoverVC: UIViewController {
         
         tableView
             .subscribeOnRowSelected()
-            .withUnretained(self)
-            .drive(onNext: { owner, row in
+            .drive(with: self) { owner, row in
                 input.observer(row)
                 owner.dismiss(animated: true)
-            })
+            }
             .disposed(by: disposeBag)
         
         return self
