@@ -22,6 +22,33 @@ public extension SharedSequenceConvertibleType {
             .withUnretained(obj)
             .asDriverOnErrorJustComplete()
     }
+    
+   
+}
+
+public extension SharedSequence {
+    func map<Object: AnyObject, Result>(
+        _ obj: Object,
+        _ transform: @escaping (Object, Element) -> Result
+    ) -> SharedSequence<SharingStrategy, Result> {
+        return self.compactMap { [weak obj] element -> Result? in
+            guard let obj = obj else { return nil }
+            return transform(
+                obj,
+                element
+            )
+        }
+    }
+}
+
+public extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingStrategy {
+    func `do`<Object: AnyObject>(_ obj: Object, _ action: @escaping (Object, Element) -> Void) -> SharedSequence<SharingStrategy, Element> {
+        return self.map { [weak obj] element -> Element in
+            guard let obj = obj else { return element }
+            action(obj, element)
+            return element
+        }
+    }
 }
 
 public extension SharedSequenceConvertibleType {
