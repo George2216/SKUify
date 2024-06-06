@@ -34,6 +34,18 @@
 		5E153C172C0F5D5700681F84 /* SubscriptionDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E153C162C0F5D5700681F84 /* SubscriptionDTO.swift */; };
 		5E153C192C0F5EC800681F84 /* SubscriptionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E153C182C0F5EC800681F84 /* SubscriptionsUseCase.swift */; };
 		5E153C1B2C0F5EF200681F84 /* SubscriptionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E153C1A2C0F5EF200681F84 /* SubscriptionsUseCase.swift */; };
+		5E153C212C10C64300681F84 /* SecurityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E153C202C10C64300681F84 /* SecurityVC.swift */; };
+		5E153C232C10C64B00681F84 /* SecurityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E153C222C10C64B00681F84 /* SecurityViewModel.swift */; };
+		5E153C252C10C65200681F84 /* SecurityNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E153C242C10C65200681F84 /* SecurityNavigator.swift */; };
+		5E153C272C10C65900681F84 /* SecurityUseCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E153C262C10C65900681F84 /* SecurityUseCases.swift */; };
+		5E153C2C2C10CB4000681F84 /* SecurityContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E153C2B2C10CB4000681F84 /* SecurityContentView.swift */; };
+		5E153C302C11C37700681F84 /* UpdatePasswordRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E153C2F2C11C37700681F84 /* UpdatePasswordRequestModel.swift */; };
+		5E153C322C11C40E00681F84 /* UpdatePasswordNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E153C312C11C40E00681F84 /* UpdatePasswordNetwork.swift */; };
+		5E153C352C11C68200681F84 /* StatusDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E153C342C11C68200681F84 /* StatusDTO.swift */; };
+		5E153C372C11C7E900681F84 /* UpdatePasswordUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E153C362C11C7E900681F84 /* UpdatePasswordUseCase.swift */; };
+		5E153C392C11C98E00681F84 /* UpdatePasswordNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E153C382C11C98E00681F84 /* UpdatePasswordNetwork.swift */; };
+		5E153C3B2C11CDBE00681F84 /* UpdatePassworUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E153C3A2C11CDBE00681F84 /* UpdatePassworUseCase.swift */; };
+		5E153C3D2C11EC4500681F84 /* UpdatePasswordRequestModel + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E153C3C2C11EC4500681F84 /* UpdatePasswordRequestModel + Extension.swift */; };
 		5E18D05D2BE3A33400588526 /* FulfilmentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E18D05C2BE3A33400588526 /* FulfilmentType.swift */; };
 		5E18D0622BE3C3C200588526 /* COGHeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E18D0612BE3C3C200588526 /* COGHeaderReusableView.swift */; };
 		5E18D0642BE3D78D00588526 /* BBPImportStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E18D0632BE3D78D00588526 /* BBPImportStrategy.swift */; };
@@ -704,6 +716,18 @@
 		5E153C162C0F5D5700681F84 /* SubscriptionDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionDTO.swift; sourceTree = "<group>"; };
 		5E153C182C0F5EC800681F84 /* SubscriptionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionsUseCase.swift; sourceTree = "<group>"; };
 		5E153C1A2C0F5EF200681F84 /* SubscriptionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionsUseCase.swift; sourceTree = "<group>"; };
+		5E153C202C10C64300681F84 /* SecurityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityVC.swift; sourceTree = "<group>"; };
+		5E153C222C10C64B00681F84 /* SecurityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityViewModel.swift; sourceTree = "<group>"; };
+		5E153C242C10C65200681F84 /* SecurityNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityNavigator.swift; sourceTree = "<group>"; };
+		5E153C262C10C65900681F84 /* SecurityUseCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityUseCases.swift; sourceTree = "<group>"; };
+		5E153C2B2C10CB4000681F84 /* SecurityContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityContentView.swift; sourceTree = "<group>"; };
+		5E153C2F2C11C37700681F84 /* UpdatePasswordRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePasswordRequestModel.swift; sourceTree = "<group>"; };
+		5E153C312C11C40E00681F84 /* UpdatePasswordNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePasswordNetwork.swift; sourceTree = "<group>"; };
+		5E153C342C11C68200681F84 /* StatusDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusDTO.swift; sourceTree = "<group>"; };
+		5E153C362C11C7E900681F84 /* UpdatePasswordUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePasswordUseCase.swift; sourceTree = "<group>"; };
+		5E153C382C11C98E00681F84 /* UpdatePasswordNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePasswordNetwork.swift; sourceTree = "<group>"; };
+		5E153C3A2C11CDBE00681F84 /* UpdatePassworUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePassworUseCase.swift; sourceTree = "<group>"; };
+		5E153C3C2C11EC4500681F84 /* UpdatePasswordRequestModel + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UpdatePasswordRequestModel + Extension.swift"; sourceTree = "<group>"; };
 		5E18D05C2BE3A33400588526 /* FulfilmentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FulfilmentType.swift; sourceTree = "<group>"; };
 		5E18D0612BE3C3C200588526 /* COGHeaderReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COGHeaderReusableView.swift; sourceTree = "<group>"; };
 		5E18D0632BE3D78D00588526 /* BBPImportStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBPImportStrategy.swift; sourceTree = "<group>"; };
@@ -1368,6 +1392,36 @@
 			path = RangedCalendarPopoverVC;
 			sourceTree = "<group>";
 		};
+		5E153C1F2C10C62B00681F84 /* SecurityScene */ = {
+			isa = PBXGroup;
+			children = (
+				5E153C242C10C65200681F84 /* SecurityNavigator.swift */,
+				5E153C262C10C65900681F84 /* SecurityUseCases.swift */,
+				5E153C202C10C64300681F84 /* SecurityVC.swift */,
+				5E153C222C10C64B00681F84 /* SecurityViewModel.swift */,
+				5E153C282C10CB0400681F84 /* Views */,
+				5E153C3C2C11EC4500681F84 /* UpdatePasswordRequestModel + Extension.swift */,
+			);
+			path = SecurityScene;
+			sourceTree = "<group>";
+		};
+		5E153C282C10CB0400681F84 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5E153C2B2C10CB4000681F84 /* SecurityContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		5E153C332C11C62F00681F84 /* SimpleResponseDTOs */ = {
+			isa = PBXGroup;
+			children = (
+				5EF1C5162BCE8214007E241A /* OnlyIdDTO.swift */,
+				5E153C342C11C68200681F84 /* StatusDTO.swift */,
+			);
+			path = SimpleResponseDTOs;
+			sourceTree = "<group>";
+		};
 		5E18D05E2BE3C39700588526 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
@@ -1698,8 +1752,8 @@
 		5E418A092B06775B0070EDA4 /* AuthorizationFlow */ = {
 			isa = PBXGroup;
 			children = (
-				5E8CA8B02C0F32A900208E84 /* SubscriptionVC */,
 				5E418A202B067C880070EDA4 /* AuthenticationScene */,
+				5E8CA8B02C0F32A900208E84 /* SubscriptionVC */,
 			);
 			path = AuthorizationFlow;
 			sourceTree = "<group>";
@@ -1815,6 +1869,8 @@
 				5E5CA7E02BE90406005CD3B2 /* COGSettingsUseCase.swift */,
 				5EF1C5682BDFE2C9007E241A /* COGSInformationUseCase.swift */,
 				5EF1C51C2BCE8E86007E241A /* COGUseCase.swift */,
+				5E3094092C00917000CF7F83 /* ExpensesCategoriesDataUseCase.swift */,
+				5EE374B42BF2502000F879C1 /* ExpensesCategoriesUseCase.swift */,
 				5EE374A92BF2314400F879C1 /* ExpensesUseCase.swift */,
 				5EBB75082BA4BE7000FD100F /* InventoryUseCase.swift */,
 				5ED910642B13F52300FC0A66 /* KeyboardUseCase.swift */,
@@ -1824,12 +1880,11 @@
 				5EFAAA2B2BB45AB300C96797 /* NoteUseCases.swift */,
 				5EF1C5462BD2782A007E241A /* ReplenishCOGUseCase.swift */,
 				5EFB39B52B7385D20024FD14 /* SalesUseCase.swift */,
+				5E153C1A2C0F5EF200681F84 /* SubscriptionsUseCase.swift */,
 				5ED912192B2CBD8D00FC0A66 /* TokensUseCase.swift */,
+				5E153C362C11C7E900681F84 /* UpdatePasswordUseCase.swift */,
 				5EAF2D802B5A9BF900EFDA5A /* UserDataUseCase.swift */,
 				5E0E66A32B45EC330005E576 /* UserIdUseCase.swift */,
-				5EE374B42BF2502000F879C1 /* ExpensesCategoriesUseCase.swift */,
-				5E3094092C00917000CF7F83 /* ExpensesCategoriesDataUseCase.swift */,
-				5E153C1A2C0F5EF200681F84 /* SubscriptionsUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -2090,10 +2145,11 @@
 		5E4ABCC22B5FF11500E878DF /* RequestInput */ = {
 			isa = PBXGroup;
 			children = (
-				5EF1C52D2BD1424E007E241A /* COG */,
 				5EFB39962B6AB76D0024FD14 /* CompanyInformationRequestModel.swift */,
 				5EFAAA2F2BB45BAC00C96797 /* NoteRequestModel.swift */,
+				5E153C2F2C11C37700681F84 /* UpdatePasswordRequestModel.swift */,
 				5EFB39942B6AB5A40024FD14 /* UserRequestModel.swift */,
+				5EF1C52D2BD1424E007E241A /* COG */,
 				5EFB399F2B711CF40024FD14 /* PaginatedModels */,
 			);
 			path = RequestInput;
@@ -2330,6 +2386,7 @@
 		5EAF2D642B597CC600EFDA5A /* SettingsScenes */ = {
 			isa = PBXGroup;
 			children = (
+				5E153C1F2C10C62B00681F84 /* SecurityScene */,
 				5EFB398F2B6A567C0024FD14 /* ProfileAndCompanyInformationScenes */,
 				5EFB39872B694F000024FD14 /* ReusableSettingsViews */,
 				5ED911382B1A0E5900FC0A66 /* SettingsScene */,
@@ -2677,6 +2734,7 @@
 				5EF40E472B33335F0021EEC1 /* ChartsNetwork.swift */,
 				5ED911DF2B233BA600FC0A66 /* LoginNetwork.swift */,
 				5E153C122C0F5CFD00681F84 /* SubscriptionsNetwork.swift */,
+				5E153C382C11C98E00681F84 /* UpdatePasswordNetwork.swift */,
 				5EAF2D7C2B5A9AFE00EFDA5A /* UserDataNetwork.swift */,
 				5EF1C50E2BCD65B1007E241A /* COGNetworks */,
 				5EE374A22BF22F4F00F879C1 /* ExpensesNetworks */,
@@ -2705,19 +2763,19 @@
 			isa = PBXGroup;
 			children = (
 				5EC8CF232B921E8900CCD4E9 /* AmazonSettingsDTO.swift */,
-				5E153C162C0F5D5700681F84 /* SubscriptionDTO.swift */,
 				5EF1C4FD2BC820D9007E241A /* BreakEvenPointDTO.swift */,
 				5EF40E492B35BCB40021EEC1 /* ChartDTOs.swift */,
 				5EF1C5622BDFD1A6007E241A /* CostOfGoodsSettingsMainDTO.swift */,
 				5ED911DD2B233B3700FC0A66 /* LoginDTO.swift */,
 				5E0E66992B45CD570005E576 /* MarketplaceDTO.swift */,
 				5EFAAA262BB4592900C96797 /* NoteDTO.swift */,
-				5EF1C5162BCE8214007E241A /* OnlyIdDTO.swift */,
 				5E84F3F22B7A9A09000937AC /* OriginalPriceDTO.swift */,
+				5E153C162C0F5D5700681F84 /* SubscriptionDTO.swift */,
 				5EAF2D782B5A993700EFDA5A /* UserDTO.swift */,
 				5EE3749C2BF22C3F00F879C1 /* ExpensesDTOs */,
 				5EBB74FE2BA4B77800FD100F /* InventoryDTOs */,
 				5E84F3EF2B7A350E000937AC /* SalesDTOs */,
+				5E153C332C11C62F00681F84 /* SimpleResponseDTOs */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -2729,12 +2787,13 @@
 				5EF40E4B2B35C1C20021EEC1 /* ChartNetwork.swift */,
 				5ED911E22B233BFE00FC0A66 /* LoginNetwork.swift */,
 				5EFAAA282BB459DE00C96797 /* NoteNetworks.swift */,
+				5E153C142C0F5D2700681F84 /* SubscriptionsNetwork.swift */,
+				5E153C312C11C40E00681F84 /* UpdatePasswordNetwork.swift */,
 				5EAF2D7A2B5A9A6F00EFDA5A /* UserDataNetwork.swift */,
 				5EF1C5302BD14CE7007E241A /* COGNetworks */,
 				5EE3749F2BF22EE800F879C1 /* Expenses */,
 				5EBB75032BA4BC2B00FD100F /* InventoryNetworks */,
 				5E84F3FB2B7B6C04000937AC /* SalesNetworks */,
-				5E153C142C0F5D2700681F84 /* SubscriptionsNetwork.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -2742,16 +2801,17 @@
 		5ED911E42B23400E00FC0A66 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
-				5EE374A72BF230FD00F879C1 /* ExpensesUseCases */,
-				5EF1C5452BD277A6007E241A /* COGUseCases */,
 				5EF1C5032BC82574007E241A /* BreakEvenPointUseCase.swift */,
 				5EF40E4D2B35D5E70021EEC1 /* ChartsUseCase.swift */,
 				5EBB75062BA4BE3F00FD100F /* InventoryUseCase.swift */,
 				5ED911E52B23402100FC0A66 /* LoginUseCase.swift */,
 				5EFB39C02B73F1100024FD14 /* SalesUseCase.swift */,
-				5EAF2D7E2B5A9BEC00EFDA5A /* UserDataUseCase.swift */,
-				5EFAAA352BB4603300C96797 /* Note */,
 				5E153C182C0F5EC800681F84 /* SubscriptionsUseCase.swift */,
+				5E153C3A2C11CDBE00681F84 /* UpdatePassworUseCase.swift */,
+				5EAF2D7E2B5A9BEC00EFDA5A /* UserDataUseCase.swift */,
+				5EF1C5452BD277A6007E241A /* COGUseCases */,
+				5EE374A72BF230FD00F879C1 /* ExpensesUseCases */,
+				5EFAAA352BB4603300C96797 /* Note */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -4192,12 +4252,14 @@
 				5E0E66962B4582FB0005E576 /* DashboardStateHelper.swift in Sources */,
 				5ED911432B1A24C500FC0A66 /* DefaultSettingsButton.swift in Sources */,
 				5E63C3462B55447E00C30BF7 /* RxFSCalendarDelegateProxy.swift in Sources */,
+				5E153C252C10C65200681F84 /* SecurityNavigator.swift in Sources */,
 				5E333D0A2B87881B00B7F591 /* SalesViewModel.swift in Sources */,
 				5E418A6D2B07C3470070EDA4 /* BannerViewManagerProtocol.swift in Sources */,
 				5E418A4B2B07B7080070EDA4 /* DIContainer.swift in Sources */,
 				5E3093E72BFB91C100CF7F83 /* SimpleTableView.swift in Sources */,
 				5EFB39822B67E9CE0024FD14 /* CompanyInformationNavigator.swift in Sources */,
 				5E5CA8292BEA4F2A005CD3B2 /* ExpensesCollectionItem.swift in Sources */,
+				5E153C232C10C64B00681F84 /* SecurityViewModel.swift in Sources */,
 				5E2C0BDC2BB6FE9A00B2682E /* DoubleTextFieldDelegate.swift in Sources */,
 				5E84F4022B7D2B88000937AC /* ProductMainView.swift in Sources */,
 				5ED72EC02BA1C9750031D882 /* VisibleRefreshControl.swift in Sources */,
@@ -4212,9 +4274,11 @@
 				5EFAAA242BB4278700C96797 /* BaseAlertProtocol.swift in Sources */,
 				5E418A782B0B84F00070EDA4 /* UITextField.swift in Sources */,
 				5ED72EC32BA1CC230031D882 /* InventorySetupView.swift in Sources */,
+				5E153C3D2C11EC4500681F84 /* UpdatePasswordRequestModel + Extension.swift in Sources */,
 				5E18D06A2BE5282700588526 /* COGApplyToInventoryCell.swift in Sources */,
 				5ED9113C2B1A0E7600FC0A66 /* SettingsViewModel.swift in Sources */,
 				5E0E670A2B517B490005E576 /* RangedCalendarHeaderView.swift in Sources */,
+				5E153C2C2C10CB4000681F84 /* SecurityContentView.swift in Sources */,
 				5E7C6B5D2BE2659C0089496B /* COGApplyToUnsoldInventoryCellViewTypes.swift in Sources */,
 				5E0E66AB2B46EDA90005E576 /* OverviewChartMarkerContentItem.swift in Sources */,
 				5ED9115E2B1CBFF500FC0A66 /* FinancialMetricDashboardCell.swift in Sources */,
@@ -4235,6 +4299,7 @@
 				5ED9111C2B1614F900FC0A66 /* InventoryNavigator.swift in Sources */,
 				5EFAAA072BB19C6300C96797 /* AlertManager.swift in Sources */,
 				5E8CA8A42C0F135300208E84 /* SubscribtionCollectionView.swift in Sources */,
+				5E153C212C10C64300681F84 /* SecurityVC.swift in Sources */,
 				5E418A662B07C2F40070EDA4 /* BaseViewController.swift in Sources */,
 				5E2C0BE72BB84A7900B2682E /* COGSectionType.swift in Sources */,
 				5EF1C5242BCEC742007E241A /* DateConvertor.swift in Sources */,
@@ -4283,6 +4348,7 @@
 				5EF1C4FA2BC44516007E241A /* Optional+Double.swift in Sources */,
 				5E8CA8B42C0F32E100208E84 /* SubscriptionViewModel.swift in Sources */,
 				5EFAAA162BB30F1400C96797 /* NoteAlertView.swift in Sources */,
+				5E153C272C10C65900681F84 /* SecurityUseCases.swift in Sources */,
 				5E8CA8BD2C0F508100208E84 /* SubscriptionSectionModel.swift in Sources */,
 				5EFAAA102BB3050000C96797 /* CommonAlertVC.swift in Sources */,
 				5E418A5A2B07B88D0070EDA4 /* AppNavigator.swift in Sources */,
@@ -4447,6 +4513,7 @@
 				5E4ABCC12B5FF0B400E878DF /* MultipartMediaModel.swift in Sources */,
 				5E84F3F12B7A3535000937AC /* SalesOrdersDTO.swift in Sources */,
 				5EF1C5632BDFD1A6007E241A /* CostOfGoodsSettingsMainDTO.swift in Sources */,
+				5E153C352C11C68200681F84 /* StatusDTO.swift in Sources */,
 				5ED911D52B221F0E00FC0A66 /* NetworkUseCaseProvider.swift in Sources */,
 				5E3093F02BFD20C200CF7F83 /* UpdateExpensesNetwork.swift in Sources */,
 				5EFB39B42B7252C10024FD14 /* SalesRefundsDTO.swift in Sources */,
@@ -4481,11 +4548,14 @@
 				5E84F3F52B7A9ABC000937AC /* SalesOrdersNetwork.swift in Sources */,
 				5E5CA7D72BE8FA69005CD3B2 /* COGBbpImoprtStategyUseCase.swift in Sources */,
 				5E0E66C22B4C32E10005E576 /* MarketplacesUseCase.swift in Sources */,
+				5E153C322C11C40E00681F84 /* UpdatePasswordNetwork.swift in Sources */,
+				5E153C372C11C7E900681F84 /* UpdatePasswordUseCase.swift in Sources */,
 				5EF1C5472BD2782A007E241A /* ReplenishCOGUseCase.swift in Sources */,
 				5EE374AA2BF2314400F879C1 /* ExpensesUseCase.swift in Sources */,
 				5E0E66902B3769810005E576 /* ChartUseCase.swift in Sources */,
 				5EF40E4A2B35BCB40021EEC1 /* ChartDTOs.swift in Sources */,
 				5E0E669A2B45CD570005E576 /* MarketplaceDTO.swift in Sources */,
+				5E153C302C11C37700681F84 /* UpdatePasswordRequestModel.swift in Sources */,
 				5E5CA7DB2BE900C6005CD3B2 /* COGSettingsNetwork.swift in Sources */,
 				5EE374B32BF24FCC00F879C1 /* ExpensesCategoryDTO.swift in Sources */,
 				5EAF2D792B5A993700EFDA5A /* UserDTO.swift in Sources */,
@@ -4561,6 +4631,7 @@
 				5ED911EF2B23645B00FC0A66 /* ErrorResponseHandler.swift in Sources */,
 				5E84F3F92B7A9CB3000937AC /* SalesBaseNetwork.swift in Sources */,
 				5E4ABCC62B5FF1B100E878DF /* AddMultipartFormDataInterceptor.swift in Sources */,
+				5E153C3B2C11CDBE00681F84 /* UpdatePassworUseCase.swift in Sources */,
 				5EBB75072BA4BE3F00FD100F /* InventoryUseCase.swift in Sources */,
 				5ED911C12B22191700FC0A66 /* InterceptorFactory.swift in Sources */,
 				5EE374A42BF22F5B00F879C1 /* ExpensesNetwork.swift in Sources */,
@@ -4568,6 +4639,7 @@
 				5E153C132C0F5CFD00681F84 /* SubscriptionsNetwork.swift in Sources */,
 				5EBB74FD2BA4B6C400FD100F /* InventoryBaseNetwork.swift in Sources */,
 				5EF1C5112BCD65EA007E241A /* COGSalesNetwork.swift in Sources */,
+				5E153C392C11C98E00681F84 /* UpdatePasswordNetwork.swift in Sources */,
 				5E5CA7DF2BE903EB005CD3B2 /* COGSettingsUseCase.swift in Sources */,
 				5EF40E4E2B35D5E70021EEC1 /* ChartsUseCase.swift in Sources */,
 				5EFAAA342BB45FD000C96797 /* NoteInventoryUseCase.swift in Sources */,

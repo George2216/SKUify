@@ -6,3 +6,9 @@
 //
 
 import Foundation
+import RxSwift
+
+public protocol UpdatePasswordUseCase {
+    func updatePassword(_ data: UpdatePasswordRequestModel) -> Observable<Void>
+}
+

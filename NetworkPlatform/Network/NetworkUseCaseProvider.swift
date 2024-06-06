@@ -42,6 +42,10 @@ public final class NetworkUseCaseProvider: Domain.NetworkUseCaseProvider {
         return SubscriptionsUseCase(network: networkProvider.makeSubscriptionsNetwork())
     }
     
+    public func makeUpdatePasswordUseCase() -> Domain.UpdatePasswordUseCase {
+        return UpdatePasswordUseCase(network: networkProvider.makeUpdatePasswordNetwork())
+    }
+    
     public func makeChartsUseCase() -> Domain.ChartsUseCase {
         return ChartsUseCase(network: networkProvider.makeChartsNetwork())
     }

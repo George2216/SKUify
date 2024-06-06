@@ -6,3 +6,9 @@
 //
 
 import Foundation
+import Domain
+
+public protocol SecurityUseCases {
+    func makeUpdatePasswordUseCase() -> Domain.UpdatePasswordUseCase
+    func makeKeyboardUseCase() -> Domain.KeyboardUseCase
+}

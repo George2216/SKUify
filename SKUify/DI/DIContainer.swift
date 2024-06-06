@@ -70,6 +70,10 @@ class DIContainer: DIProtocol {
         realmUseCaseProvider.makeLoginStateUseCase()
     }
     
+    func makeUpdatePasswordUseCase() -> Domain.UpdatePasswordUseCase {
+        return networkUseCaseProvider.makeUpdatePasswordUseCase()
+    }
+    
     func makeKeyboardUseCase() -> Domain.KeyboardUseCase {
         appEventsUseCaseProvider.makeKeyboardUseCase()
     }

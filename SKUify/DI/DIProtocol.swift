@@ -21,5 +21,6 @@ protocol DIProtocol:
     COGUseCases,
     COGSettingsUseCases,
     ExpenseTransactionsUseCases,
-    SubscriptionUseCase
+    SubscriptionUseCase,
+    SecurityUseCases
 {}

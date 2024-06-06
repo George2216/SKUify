@@ -15,6 +15,7 @@ public protocol NetworkUseCaseProvider {
         marketplacesUseCase: MarketplacesWriteUseCase
     ) -> LoginUseCase
     func makeSubscriptionsUseCase() -> SubscriptionsUseCase
+    func makeUpdatePasswordUseCase() -> UpdatePasswordUseCase
     func makeChartsUseCase() -> ChartsUseCase
     func makeUserDataUseCase() -> UserDataUseCase
     func makeSalesUseCase() -> SalesUseCase

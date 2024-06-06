@@ -12,6 +12,7 @@ protocol SettingsNavigatorProtocol {
     func toSettings()
     func toProfile()
     func toCompanyInformation()
+    func toSecurity()
 }
 
 final class SettingsNavigator: SettingsNavigatorProtocol {
@@ -49,6 +50,14 @@ final class SettingsNavigator: SettingsNavigatorProtocol {
             di: di
         )
         companyInformationNavigator.toCompanyInformation()
+    }
+    
+    func toSecurity() {
+        let navigator = SecurityNavigator(
+            navigationController: navigationController,
+            di: di
+        )
+        navigator.toSecurity()
     }
     
     

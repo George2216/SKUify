@@ -14,7 +14,7 @@ class BaseViewController: UIViewController {
     
     // MARK: - Properties
 
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
   
     private let popoverManager = PopoverManager()
     private let alertManager = AlertManager.share

@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+public struct StatusDTO: Decodable {
+    public let status: String
+    
+}

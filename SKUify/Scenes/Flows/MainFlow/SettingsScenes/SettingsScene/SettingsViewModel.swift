@@ -66,8 +66,9 @@ final class SettingsViewModel: ViewModelProtocol {
                 ),
                 .init(
                     title: "Security",
-                    action: {
-                        
+                    action: { [weak self] in
+                        guard let self else { return }
+                        self.navigator.toSecurity()
                     }
                 ),
                 .init(

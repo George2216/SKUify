@@ -20,7 +20,7 @@ public extension SharedSequenceConvertibleType {
     func withUnretained<T: AnyObject>(_ obj: T) -> Driver<(T, Element)> {
         return self.asObservable()
             .withUnretained(obj)
-            .asDriver(onErrorDriveWith: .empty())
+            .asDriverOnErrorJustComplete()
     }
 }
 
