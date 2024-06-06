@@ -14,6 +14,7 @@ public extension SharedSequenceConvertibleType {
     func mapToVoid() -> SharedSequence<SharingStrategy, Void> {
         return map { _ in }
     }
+    
 }
 
 public extension SharedSequenceConvertibleType {
@@ -22,7 +23,6 @@ public extension SharedSequenceConvertibleType {
             .withUnretained(obj)
             .asDriverOnErrorJustComplete()
     }
-    
    
 }
 
@@ -39,16 +39,24 @@ public extension SharedSequence {
             )
         }
     }
+    
 }
 
 public extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingStrategy {
-    func `do`<Object: AnyObject>(_ obj: Object, _ action: @escaping (Object, Element) -> Void) -> SharedSequence<SharingStrategy, Element> {
+    func `do`<Object: AnyObject>(
+        _ obj: Object,
+        _ action: @escaping (Object, Element) -> Void
+    ) -> SharedSequence<SharingStrategy, Element> {
         return self.map { [weak obj] element -> Element in
             guard let obj = obj else { return element }
-            action(obj, element)
+            action(
+                obj,
+                element
+            )
             return element
         }
     }
+    
 }
 
 public extension SharedSequenceConvertibleType {
@@ -93,6 +101,7 @@ public extension SharedSequenceConvertibleType {
             }
         }
     }
+    
 }
 
 public extension SharedSequenceConvertibleType where Element: Equatable {
@@ -101,6 +110,7 @@ public extension SharedSequenceConvertibleType where Element: Equatable {
             .filter { $0 == value }
             .asSharedSequence(onErrorDriveWith: .empty())
     }
+    
 }
 
 
