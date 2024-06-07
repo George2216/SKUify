@@ -19,26 +19,26 @@ extension UIScrollView {
 extension Reactive where Base: UIScrollView {
     var scrollToVisibleTextField: Binder<UIScrollView.ScrollToVisibleContext> {
         return Binder(self.base) { scrollView, heightAndView in
-//            let contentInsets = UIEdgeInsets(
-//                top: 0.0,
-//                left: 0.0,
-//                bottom: heightAndView.height,
-//                right: 0.0
-//            )
-//            scrollView.contentInset = contentInsets
-//            scrollView.scrollIndicatorInsets = contentInsets
-//
-//            if let activeField = heightAndView.view
-//                .findFirstResponderTxtField() {
-//                let activeRect = activeField.convert(
-//                    activeField.bounds,
-//                    to: scrollView
-//                )
-//                scrollView.scrollRectToVisible(
-//                    activeRect,
-//                    animated: true
-//                )
-//            }
+            let contentInsets = UIEdgeInsets(
+                top: 0.0,
+                left: 0.0,
+                bottom: heightAndView.height,
+                right: 0.0
+            )
+            scrollView.contentInset = contentInsets
+            scrollView.scrollIndicatorInsets = contentInsets
+
+            if let activeField = heightAndView.view
+                .findFirstResponderTxtField() {
+                let activeRect = activeField.convert(
+                    activeField.bounds,
+                    to: scrollView
+                )
+                scrollView.scrollRectToVisible(
+                    activeRect,
+                    animated: true
+                )
+            }
         }
     }
 }

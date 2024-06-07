@@ -90,7 +90,7 @@ final class COGViewModel: COGBaseViewModel {
             showCalendarPopover: showCalendarPopover.asDriverOnErrorJustComplete(),
             keyboardHeight: getKeyboardHeight(),
             fetching: activityIndicator.asDriver(),
-            error: errorTracker.asBannerInput(.error)
+            error: errorTracker.asBannerInput()
         )
     }
     
@@ -787,9 +787,6 @@ extension COGViewModel {
             .withLatestFrom(changedDataStorage.asDriverOnErrorJustComplete())
             .flatMapLatest(weak: self) { owner, data in
                 owner.updateOrSaveCOG(data)
-                    .trackActivity(owner.activityIndicator)
-                    .trackError(owner.errorTracker)
-                    .asDriverOnErrorJustComplete()
             }
             .drive(with: self) { owner, _ in
                 owner.navigator.toBack()
@@ -853,22 +850,44 @@ extension COGViewModel {
                 .trackError(errorTracker)
         }
     }
-
-    func updateOrSaveCOG(_ data: COGInputModel) -> Observable<Void> {
+    
+    func updateOrSaveCOG(_ data: COGInputModel) -> Driver<Void> {
+        var output: Observable<Void> = .just(())
+        
         switch data.cogType {
         case .sales:
-            return cogUseCase
+            output = cogUseCase
                 .updateSalesCOG(data.toSalesRequestModel())
+                .trackComplete(
+                    errorTracker,
+                    message: "COG has been updated."
+                )
+            
         case .inventory:
-            return cogUseCase
+            output = cogUseCase
                 .updateInventoryCOG(data.toInventoryRequestModel())
+                .trackComplete(
+                    errorTracker,
+                    message: "COG has been updated."
+                )
+
         case .newReplenish:
-            guard data.quantity != nil else {
-                return .error(CustomError(message: "Quintity is required"))
+            if data.quantity == nil  {
+                output = Observable<Void>
+                    .error(CustomError(message: "Quintity is required."))
+            } else {
+                output = replenishCogUseCase
+                    .saveReplenish(data.toReplenishRequestModel())
+                    .trackComplete(
+                        errorTracker,
+                        message: "Replenish has been saved."
+                    )
             }
-            return replenishCogUseCase
-                .saveReplenish(data.toReplenishRequestModel())
         }
+        return output
+            .trackActivity(activityIndicator)
+            .trackError(errorTracker)
+            .asDriverOnErrorJustComplete()
     }
     
 }

@@ -74,9 +74,9 @@ final class COGSettingsViewModel: COGBaseViewModel {
             title: makeTitle(),
             collectionData: makeCollectionData(),
             showCalendarPopover: showCalendarPopover.asDriverOnErrorJustComplete(),
-            keyboardHeight: .empty(),
+            keyboardHeight: .empty(), // There are no text fields on this screen
             fetching: activityIndicator.asDriver(),
-            error: errorTracker.asBannerInput(.error)
+            error: errorTracker.asBannerInput()
         )
     }
     
@@ -558,13 +558,18 @@ extension COGSettingsViewModel {
     }
     
     private func subscrubeOnTapOnSave() {
-        tapOnSave.asDriverOnErrorJustComplete()
+        tapOnSave
+            .asDriverOnErrorJustComplete()
             .withLatestFrom(changedDataStorage.asDriverOnErrorJustComplete())
             .flatMapLatest(weak: self) { owner, changedDataStorage in
                 Observable.combineLatest(
-                    owner.updateGOGSettings(changedDataStorage.toCOGSettingsRequestModel()),
+                    owner.updateGOGSettings(changedDataStorage.toCOGSettingsRequestModel())
+                        ,
                     owner.updateBBGImportStategy(changedDataStorage.toImportStrategyRequestModel())
-                     
+                )
+                .trackComplete(
+                    owner.errorTracker,
+                    message: "COG Settings has been updated."
                 )
                 .trackActivity(owner.activityIndicator)
                 .trackError(owner.errorTracker)

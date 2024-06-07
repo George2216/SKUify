@@ -95,7 +95,10 @@ extension ObservableConvertibleType {
         return errorTracker.trackError(from: self)
     }
 
-    func trackComplete(_ errorTracker: ErrorTracker, message: String) -> Observable<Element> {
+    func trackComplete(
+        _ errorTracker: ErrorTracker,
+        message: String
+    ) -> Observable<Element> {
         return errorTracker.trackComplete(
             from: self,
             message: message
