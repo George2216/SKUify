@@ -61,7 +61,8 @@ final class ProfileViewModel: BaseUserContentViewModel {
         return Output(
             navigationTitle: makeTitle(),
             keyboardHeight: getKeyboardHeight(),
-            contentData: contentDataStorage.compactMap({ $0 }).asDriverOnErrorJustComplete(),
+            contentData: contentDataStorage.compactMap { $0 }
+                .asDriverOnErrorJustComplete(),
             tapOnUploadImage: tapOnUploadImage.asDriverOnErrorJustComplete(),
             fetching: activityIndicator.asDriver(),
             error: errorTracker.asBannerInput()
@@ -372,7 +373,10 @@ final class ProfileViewModel: BaseUserContentViewModel {
     private func saveUserData(_ data: UserRequestModel) -> Driver<Void> {
         userDataUseCase.updateUserData(data: data)
             .trackActivity(activityIndicator)
-            .trackComplete(errorTracker, message: "The data has been updated.")
+            .trackComplete(
+                errorTracker,
+                message: "The data has been updated."
+            )
             .trackError(errorTracker)
             .asDriverOnErrorJustComplete()
         
