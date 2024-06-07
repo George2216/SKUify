@@ -36,7 +36,7 @@ final class NoteAlertView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .white
+        backgroundColor = .cellColor
         setupTextView()
         setupButtonsStack()
         setupContentStack()
@@ -51,6 +51,9 @@ final class NoteAlertView: UIView {
         super.layoutSubviews()
         layer.cornerRadius = 10
         layer.masksToBounds = true
+        textView.layer.borderColor = UIColor.border.cgColor
+        textView.layer.borderWidth = 1.0
+        textView.layer.cornerRadius = 10
     }
     
     func setupInput(_ input: Input) {
@@ -90,9 +93,6 @@ final class NoteAlertView: UIView {
             size: 15
         )
         textView.textColor = .textColor
-        textView.layer.borderColor = UIColor.border.cgColor
-        textView.layer.borderWidth = 1.0
-        textView.layer.cornerRadius = 10
 
         textView.snp.makeConstraints { make in
             make.height

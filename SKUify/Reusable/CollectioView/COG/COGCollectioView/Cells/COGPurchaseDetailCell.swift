@@ -56,7 +56,7 @@ final class COGPurchaseDetailCell: UICollectionViewCell {
     }
     
     private func setupCell() {
-        backgroundColor = .white
+        backgroundColor = .cellColor
         layer.cornerRadius = 15
         layer.masksToBounds = true
     }

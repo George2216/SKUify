@@ -69,7 +69,7 @@ final class ExpensesCell: UICollectionViewCell {
 //    + titles
   
     private func setupCell() {
-        backgroundColor = .white
+        backgroundColor = .cellColor
         layer.cornerRadius = 15
         layer.masksToBounds = true
     }

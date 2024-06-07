@@ -25,12 +25,27 @@ final class DefaultButton: UIButton {
         }
     }
     
+    // MARK: - To update the borderColor after changing the theme, as the color for the layer does not change.
+    // Set border color to borderColorStorage
+
+    var borderColorStorage: UIColor? = nil {
+        didSet {
+            layer.borderColor = borderColorStorage?.cgColor
+        }
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        layer.borderColor = borderColorStorage?.cgColor
+    }
+    
     // MARK: - Private methods
     
     private func setupConfig(config: Config) {
+        // Clear all
         disposeBag = DisposeBag()
-        
         layer.reset()
+        borderColorStorage = nil
         
         var configuration = Configuration.plain()
         configuration.title = config.title
@@ -44,8 +59,6 @@ final class DefaultButton: UIButton {
         )
         
         setupAction(config)
-        
-        
         
         setupStyle(style: config.style)
         setupHeight(style: config.style)
@@ -145,12 +158,12 @@ final class DefaultButton: UIButton {
             tintColor = tint.color
             configuration?.image = image?.image
             layer.borderWidth = borderWidth
-            layer.borderColor = borderColor.color.cgColor
+            borderColorStorage = borderColor.color
             layer.cornerRadius = radius
             layer.masksToBounds = true
             
         case .none:
-            backgroundColor = .white
+            backgroundColor = .cellColor
             configuration?.baseForegroundColor = .textColor
       
         case .simplePrimaryText:
@@ -320,10 +333,11 @@ extension DefaultButton {
     }
     
     private func setupSimpleStyle() {
-        backgroundColor = .white
-        configuration?.baseForegroundColor = .black
+        backgroundColor = .cellColor
+        configuration?.baseForegroundColor = .label
         layer.cornerRadius = 12.0
-        layer.borderColor = UIColor.border.cgColor
+        borderColorStorage = .border
+        
         layer.borderWidth = 2.0
     }
     
@@ -377,8 +391,9 @@ extension DefaultButton {
         )
         layer.borderWidth = 1.0
         layer.cornerRadius = 12.0
-        layer.borderColor = UIColor.border.cgColor
-        backgroundColor = .white
+        borderColorStorage = .border
+        
+        backgroundColor = .field
 
         configuration?.image = UIImage(
             systemName: "chevron.down",
@@ -407,8 +422,9 @@ extension DefaultButton {
         )
         layer.borderWidth = 1.0
         layer.cornerRadius = 12.0
-        layer.borderColor = UIColor.border.cgColor
-        backgroundColor = .white
+        borderColorStorage = .border
+        
+        backgroundColor = .field
 
         configuration?.image = .calendar
             .withConfiguration(imageConfig)
@@ -578,7 +594,7 @@ extension DefaultButton {
         var color: UIColor {
             switch self {
             case .black:
-                return .black
+                return .label
             case .clear:
                 return .clear
             case .lightGray:
@@ -588,7 +604,7 @@ extension DefaultButton {
             case .primary:
                 return .primary
             case .white:
-                return .white
+                return .cellColor
             }
         }
     }

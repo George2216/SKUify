@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let diContainer = DIContainer()
         
         let navigation = UINavigationController()
-        navigation.view.backgroundColor = .white
+        navigation.view.backgroundColor = .background
         
         let appNavigator = AppNavigator(
             navigation: navigation,

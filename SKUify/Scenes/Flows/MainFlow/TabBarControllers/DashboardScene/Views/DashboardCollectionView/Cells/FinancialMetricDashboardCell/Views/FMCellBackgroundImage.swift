@@ -39,7 +39,7 @@ final class FMCellBackgroundImage: UIView {
     }
     
     private func setupView() {
-        backgroundColor = .border
+        backgroundColor = .background
         clipsToBounds = true
         layer.cornerRadius = 16
         snp.makeConstraints { make in

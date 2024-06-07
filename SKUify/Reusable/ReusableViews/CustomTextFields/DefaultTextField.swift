@@ -27,12 +27,29 @@ final class DefaultTextField: UITextField {
         }
     }
     
+    // MARK: - To update the borderColor after changing the theme, as the color for the layer does not change.
+    // Set border color to borderColorStorage
+
+    var borderColorStorage: UIColor? = nil {
+        didSet {
+            layer.borderColor = borderColorStorage?.cgColor
+        }
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        layer.borderColor = borderColorStorage?.cgColor
+    }
+    
     //MARK: - Private methods
 
     private func setupConfig(config: Config) {
+        // Clear all
         delegate = nil
         disposeBag = DisposeBag()
-       
+        layer.reset()
+        borderColorStorage = nil
+        
         text = config.text
 
         rx.controlEvent(config.controlEvent)
@@ -61,16 +78,14 @@ final class DefaultTextField: UITextField {
         if config.lockInput {
             backgroundColor = .background
         }
-       
     }
  
     private func setupStyle(style: Style) {
-        backgroundColor = .white
+        backgroundColor = .field
         font = .manrope(type: .bold, size: 14)
         textColor = .textColor
         
-        layer.reset()
-        layer.borderColor = UIColor.border.cgColor
+        borderColorStorage = .border
         
         snp.makeConstraints { make in
             make.height

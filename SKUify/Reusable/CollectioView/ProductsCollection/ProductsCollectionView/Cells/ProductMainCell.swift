@@ -45,7 +45,7 @@ final class ProductMainCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        backgroundColor = .white
+        backgroundColor = .cellColor
         roundCorners(
             [
                 .topLeft,

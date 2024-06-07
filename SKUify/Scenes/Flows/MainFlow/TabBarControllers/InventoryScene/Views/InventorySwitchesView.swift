@@ -24,13 +24,21 @@ final class InventorySwitchesView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupView()
+        backgroundColor = .cellColor
+
         setupBottonSwitchesContainerStack()
         setupContentStack()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.borderWidth = 2.0
+        layer.cornerRadius = 12.0
+        layer.borderColor = UIColor.border.cgColor
     }
     
     // MARK: - Set data
@@ -53,13 +61,6 @@ final class InventorySwitchesView: UIView {
     }
     
     // MARK: - Setup views
-    
-    private func setupView() {
-        layer.borderWidth = 2.0
-        layer.cornerRadius = 12.0
-        layer.borderColor = UIColor.border.cgColor
-        backgroundColor = .white
-    }
     
     private func setupBottonSwitchesContainerStack() {
         bottonSwitchesContainerStack.views = [

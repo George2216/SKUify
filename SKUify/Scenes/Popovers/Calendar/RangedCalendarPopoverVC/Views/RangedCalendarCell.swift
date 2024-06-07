@@ -171,7 +171,7 @@ final class RangedCalendarCell: FSCalendarCell {
             titleLabel.textColor = .lightGray
         case .none:
             selectionLayer.fillColor = UIColor.clear.cgColor
-            titleLabel.textColor = .black
+            titleLabel.textColor = .label
         }
     }
 
@@ -180,11 +180,10 @@ final class RangedCalendarCell: FSCalendarCell {
         if isPlaceholder {
             titleLabel.textColor = UIColor.lightGray
         } else {
-            titleLabel.textColor = .black
+            titleLabel.textColor = .label
         }
     }
-    
-   
+       
 }
 
 

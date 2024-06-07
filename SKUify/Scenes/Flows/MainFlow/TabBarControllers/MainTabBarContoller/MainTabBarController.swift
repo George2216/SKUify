@@ -18,7 +18,7 @@ class MainTabBarController: UITabBarController {
         tabBar.layer.masksToBounds = true
         tabBar.isTranslucent = true
         tabBar.layer.cornerRadius = 20
-        tabBar.backgroundColor = .white
+        tabBar.backgroundColor = .cellColor
         tabBar.itemPositioning = .centered
         tabBar.layer.maskedCorners = [
             .layerMinXMinYCorner,

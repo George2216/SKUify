@@ -20,7 +20,7 @@ final class OverviewDashboardCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .white
+        backgroundColor = .cellColor
         
         addSubviewOverviewTitleLabel()
         addSubviewChartsView()
@@ -93,7 +93,7 @@ final class OverviewDashboardCell: UICollectionViewCell {
     }
     
     private func setupView() {
-        backgroundColor = .white
+        backgroundColor = .cellColor
         layer.cornerRadius = 8
         layer.masksToBounds = true
     }

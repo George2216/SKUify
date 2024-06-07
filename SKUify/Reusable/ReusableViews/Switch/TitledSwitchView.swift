@@ -61,13 +61,12 @@ class TitledSwitchView: UIView {
             size: 14
         )
         titleLabel.textAlignment = .left
-        titleLabel.textColor = .black
+        titleLabel.textColor = .textColor
     }
     
     private func setupContentStack() {
         contentStack.views = [
             titleLabel,
-//            UIView.spacer(for: .horizontal),
             smallSwitch
         ]
         contentStack.alignment = .fill

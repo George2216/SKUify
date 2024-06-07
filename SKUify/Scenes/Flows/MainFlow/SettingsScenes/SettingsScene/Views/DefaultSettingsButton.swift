@@ -39,12 +39,20 @@ final class DefaultSettingsButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.borderWidth = 2.0
+        layer.cornerRadius = 12.0
+        layer.borderColor = UIColor.border.cgColor
+    }
+    
     private func setupConfig(config: Config) {
         customTitleLabel.text = config.title
         if let action = config.action {
             rx.tap.subscribe(onNext: {
                 action()
-            }).disposed(by: disposeBag)
+            })
+            .disposed(by: disposeBag)
         }
     }
     
@@ -75,11 +83,7 @@ final class DefaultSettingsButton: UIButton {
     // MARK: - Setup views
 
     private func setupView() {
-        layer.borderWidth = 2.0
-        layer.cornerRadius = 12.0
-        layer.borderColor = UIColor.border.cgColor
-        backgroundColor = .white
-        
+        backgroundColor = .field
         snp.makeConstraints { make in
             make.height
                 .equalTo(50)
@@ -95,15 +99,9 @@ final class DefaultSettingsButton: UIButton {
     }
     
     private func setupCustomImageView() {
-        let imageConfig = UIImage.SymbolConfiguration(
-            font: .manrope(
-                type: .bold,
-                size: 16
-            )
-        )
-        customImageView.image = .next.withConfiguration(imageConfig)
-                
+        customImageView.image = .next
     }
+    
 }
 
 // MARK: - Configuration

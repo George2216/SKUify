@@ -59,7 +59,7 @@ final class TimeSlotCell: UICollectionViewCell {
     
     private func colorsByIsSelected() {
         let textColor: UIColor = !isSelected ? .primaryPurple : .white
-        let backgroundColor: UIColor = !isSelected ? .white : .primaryPurple
+        let backgroundColor: UIColor = !isSelected ? .cellColor : .primaryPurple
 
         self.backgroundColor = backgroundColor
         titleLabel.textColor = textColor

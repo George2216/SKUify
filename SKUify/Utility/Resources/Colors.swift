@@ -10,6 +10,8 @@ import UIKit
 
 extension UIColor {
     static let background = UIColor(named: "background") ?? .clear
+    static let cellColor = UIColor(named: "cellColor") ?? .clear
+    static let field = UIColor(named: "field") ?? .clear
     static let border = UIColor(named: "border") ?? .clear
     static let primary = UIColor(named: "primary") ?? .clear
     static let primaryLight = UIColor(named: "primaryLight") ?? .clear

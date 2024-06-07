@@ -155,7 +155,7 @@ final class MarketplaceDashboardCell: UICollectionViewCell {
     }
         
     private func setupView() {
-        backgroundColor = .white
+        backgroundColor = .cellColor
         clipsToBounds = true
     }
     

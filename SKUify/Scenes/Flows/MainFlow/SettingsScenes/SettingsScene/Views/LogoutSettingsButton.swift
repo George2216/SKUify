@@ -79,7 +79,7 @@ final class LogoutSettingsButton: UIButton {
         layer.borderWidth = 1.0
         layer.cornerRadius = 12.0
         layer.borderColor = UIColor.primary.cgColor
-        backgroundColor = .white
+        backgroundColor = .field
         
         snp.makeConstraints { make in
             make.height

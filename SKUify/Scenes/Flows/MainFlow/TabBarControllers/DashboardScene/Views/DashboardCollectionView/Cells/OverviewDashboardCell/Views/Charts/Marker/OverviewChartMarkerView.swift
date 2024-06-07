@@ -22,7 +22,7 @@ final class OverviewChartMarkerView: MarkerView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .white
+        backgroundColor = .cellColor
         setupContentStack()
     }
     

@@ -95,7 +95,7 @@ final class SubscribtionCell: UICollectionViewCell {
     }
     
     private func setupCell() {
-        backgroundColor = .white
+        backgroundColor = .cellColor
         layer.borderWidth = 1.0
         layer.borderColor = UIColor.border.cgColor
         layer.cornerRadius = 16

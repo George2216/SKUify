@@ -62,7 +62,7 @@ final class SingleCalendarPopoverVC: UIViewController {
         )
         
         calendar.appearance.weekdayTextColor = .lightSubtextColor
-        calendar.appearance.headerTitleColor = .black
+        calendar.appearance.headerTitleColor = .label
         
         calendar.clipsToBounds = false // Remove top/bottom line
 

@@ -35,6 +35,10 @@ final class TimeSlotCollectionView: ContentResizableCollectionView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        backgroundColor = .cellColor
+    }
 
     // MARK: - Select first row
     

@@ -90,7 +90,7 @@ final class FMDetailView: UIView {
     }
     
     private func setupView() {
-        backgroundColor = .border
+        backgroundColor = .background
         layer.cornerRadius = 4
         layer.masksToBounds = true
     }

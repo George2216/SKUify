@@ -165,7 +165,7 @@ final class FinancialMetricDashboardCell: UICollectionViewCell {
     }
     
     private func setupCell() {
-        backgroundColor = .white
+        backgroundColor = .cellColor
         clipsToBounds = true
         layer.cornerRadius = 12
     }

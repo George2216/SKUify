@@ -47,6 +47,13 @@ final class SalesSetupView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        titledSwitchContetnView.layer.borderWidth = 2.0
+        titledSwitchContetnView.layer.cornerRadius = 12.0
+        titledSwitchContetnView.layer.borderColor = UIColor.border.cgColor
+    }
+    
     // MARK: - Setup data
     
     func setupInput(_ input: Input) {
@@ -89,10 +96,7 @@ final class SalesSetupView: UIView {
     //MARK: - Setup views
 
     private func setupTitledSwitchViewContentView() {
-        titledSwitchContetnView.layer.borderWidth = 2.0
-        titledSwitchContetnView.layer.cornerRadius = 12.0
-        titledSwitchContetnView.layer.borderColor = UIColor.border.cgColor
-        titledSwitchContetnView.backgroundColor = .white
+        titledSwitchContetnView.backgroundColor = .cellColor
         
         titledSwitchContetnView.addSubview(titledSwitchView)
 

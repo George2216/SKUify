@@ -11,12 +11,7 @@ import UIKit
 class ContainerBorderVerticalStack: VerticalStack {
     
     private func setupView() {
-        backgroundColor = .white
-        layer.borderWidth = 1.0
-        layer.borderColor = UIColor.border.cgColor
-        layer.cornerRadius = 16
-        clipsToBounds = true
-        
+        backgroundColor = .cellColor
         layoutMargins = UIEdgeInsets(
             top: 20,
             left: 20,
@@ -27,6 +22,13 @@ class ContainerBorderVerticalStack: VerticalStack {
         isLayoutMarginsRelativeArrangement = true
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.borderWidth = 1.0
+        layer.borderColor = UIColor.border.cgColor
+        layer.cornerRadius = 16
+        clipsToBounds = true
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
