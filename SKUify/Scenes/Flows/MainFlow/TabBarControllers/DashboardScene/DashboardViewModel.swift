@@ -190,8 +190,9 @@ final class DashboardViewModel: ViewModelProtocol {
         .just(
             .init(
                 style: .image(.notification),
-                actionType: .base({
-                    
+                actionType: .base({ [weak self] in
+                    guard let self else { return }
+                    self.navigator.toNotifications()
                 })
             )
         )

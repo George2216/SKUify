@@ -11,6 +11,7 @@ import Domain
 protocol DashboardNavigatorProtocol: AnyObject {
     func toDashboard()
     func toSettings()
+    func toNotifications()
 }
 
 final class DashboardNavigator: DashboardNavigatorProtocol {
@@ -41,6 +42,14 @@ final class DashboardNavigator: DashboardNavigatorProtocol {
             di: di
         )
         navigator.toSettings()
+    }
+    
+    func toNotifications() {
+        let navigator = NotificationsNavigator(
+            navigationController: navigationController,
+            di: di
+        )
+        navigator.toNotifications()
     }
     
     deinit {
