@@ -569,7 +569,7 @@ extension COGSettingsViewModel {
                 )
                 .trackComplete(
                     owner.errorTracker,
-                    message: "COG Settings has been updated."
+                    message: "COG Settings have been updated."
                 )
                 .trackActivity(owner.activityIndicator)
                 .trackError(owner.errorTracker)

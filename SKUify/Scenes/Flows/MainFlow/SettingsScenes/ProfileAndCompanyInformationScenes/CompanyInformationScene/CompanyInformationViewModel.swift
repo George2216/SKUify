@@ -66,7 +66,7 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
             contentData: contentDataStorage.compactMap({ $0 }).asDriverOnErrorJustComplete(),
             tapOnUploadImage: tapOnUploadImage.asDriverOnErrorJustComplete(),
             fetching: activityIndicator.asDriver(),
-            error: errorTracker.asBannerInput(.error)
+            error: errorTracker.asBannerInput()
         )
     }
     

@@ -86,7 +86,7 @@ final class SalesViewModel: ViewModelProtocol {
             startSelectedMarketplace: startSelectedMarketplace.asDriverOnErrorJustComplete(),
             isShowPaginatedLoader: isShowPaginatedLoader.asDriverOnErrorJustComplete(),
             fetching: activityIndicator.asDriver(),
-            error: errorTracker.asBannerInput(.error),
+            error: errorTracker.asBannerInput(),
             alert: showAlert.asDriverOnErrorJustComplete()
         )
     }
@@ -1095,6 +1095,10 @@ extension SalesViewModel {
                         )
                     )
                     .trackActivity(owner.activityIndicator)
+                    .trackComplete(
+                        owner.errorTracker,
+                        message: "The note has been updated."
+                    )
                     .trackError(owner.errorTracker)
                     .asDriverOnErrorJustComplete()
             }

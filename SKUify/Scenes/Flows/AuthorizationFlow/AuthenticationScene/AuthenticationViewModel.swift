@@ -95,7 +95,7 @@ final class AuthenticationViewModel: ViewModelProtocol {
             passwordRecoveryResultInput: makePasswordRecoveryResultInput(),
             signUpInput: makeSignUpInput(),
             fetching: activityTracker.asDriver(),
-            error: loginErrorTracker.asBannerInput(.error)
+            error: loginErrorTracker.asBannerInput()
         )
     }
     

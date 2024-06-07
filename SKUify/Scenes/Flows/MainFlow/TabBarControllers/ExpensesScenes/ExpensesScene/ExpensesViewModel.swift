@@ -84,7 +84,7 @@ final class ExpensesViewModel: ViewModelProtocol {
             leftBarButtonConfig: makeLeftBarButtonConfig(), 
             keyboardHeight: getKeyboardHeight(),
             fetching: activityIndicator.asDriver(),
-            error: errorTracker.asBannerInput(.error)
+            error: errorTracker.asBannerInput()
         )
     }
     
@@ -748,6 +748,10 @@ extension ExpensesViewModel {
             .flatMapLatest(weak: self) { owner, expenses in
                 owner.expensesUseCase
                     .updateExpenses(expenses)
+                    .trackComplete(
+                        owner.errorTracker,
+                        message: "The expenses have been saved"
+                    )
                     .trackActivity(owner.activityIndicator)
                     .trackError(owner.errorTracker)
                     .asDriverOnErrorJustComplete()

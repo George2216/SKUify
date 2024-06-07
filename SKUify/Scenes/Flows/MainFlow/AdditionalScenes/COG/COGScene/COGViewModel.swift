@@ -860,7 +860,7 @@ extension COGViewModel {
                 .updateSalesCOG(data.toSalesRequestModel())
                 .trackComplete(
                     errorTracker,
-                    message: "COG has been updated."
+                    message: "The COG has been updated."
                 )
             
         case .inventory:
@@ -868,7 +868,7 @@ extension COGViewModel {
                 .updateInventoryCOG(data.toInventoryRequestModel())
                 .trackComplete(
                     errorTracker,
-                    message: "COG has been updated."
+                    message: "The COG has been updated."
                 )
 
         case .newReplenish:
@@ -880,7 +880,7 @@ extension COGViewModel {
                     .saveReplenish(data.toReplenishRequestModel())
                     .trackComplete(
                         errorTracker,
-                        message: "Replenish has been saved."
+                        message: "The replenish has been saved."
                     )
             }
         }

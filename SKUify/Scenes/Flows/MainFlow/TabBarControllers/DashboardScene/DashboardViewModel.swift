@@ -86,7 +86,7 @@ final class DashboardViewModel: ViewModelProtocol {
             showCalendarPopover: showCalendarPopover.asDriverOnErrorJustComplete(),
             timeSlots: makeTimeSlotsInput(), 
             fetching: activityIndicator.asDriver(),
-            error: errorTracker.asBannerInput(.error)
+            error: errorTracker.asBannerInput()
         )
     }
     

@@ -36,7 +36,7 @@ final class SubscriptionViewModel: ViewModelProtocol {
             title: makeTitle(),
             collectionData: makeCollectionData(),
             fetching: activityIndicator.asDriver(),
-            error: errorTracker.asBannerInput(.error)
+            error: errorTracker.asBannerInput()
         )
     }
     
