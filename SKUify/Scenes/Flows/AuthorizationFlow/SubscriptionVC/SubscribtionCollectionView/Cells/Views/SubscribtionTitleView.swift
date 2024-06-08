@@ -65,7 +65,7 @@ final class SubscribtionTitleView: UIView {
             type: .bold,
             size: 15
         )
-        periodLabel.textColor = .lightSubtextColor
+        periodLabel.textColor = .tertiaryTextColor
     }
     
     private func setupPriceLabel() {

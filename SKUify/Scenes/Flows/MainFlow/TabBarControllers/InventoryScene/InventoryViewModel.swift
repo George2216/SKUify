@@ -851,7 +851,7 @@ extension InventoryViewModel {
                         style: .cog,
                         action: .simple({ [weak self] in
                             guard let self else { return }
-                            let cogInput = order.toCOGInputModel(.inventory)
+                            let cogInput = order.toCOGInputModel(.replenish)
                             self.navigator.toCOG(cogInput)
                         })
                     )

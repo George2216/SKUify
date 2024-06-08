@@ -37,6 +37,7 @@ final class COGVC: BaseViewController {
         bingCalendarPopover(output)
         bindToLoader(output)
         bindToBanner(output)
+        bindToAlert(output)
     }
     
     private func createCollectionViewLayout() -> UICollectionViewFlowLayout {
@@ -108,6 +109,12 @@ extension COGVC {
                 )
             }
             .drive(rx.popover)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindToAlert(_ output: COGBaseViewModel.Output) {
+        output.alert
+            .drive(rx.alert)
             .disposed(by: disposeBag)
     }
     

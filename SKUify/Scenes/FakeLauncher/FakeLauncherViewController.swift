@@ -71,7 +71,7 @@ class FakeLauncherViewController: UIViewController {
             type: .semiBold,
             size: 15
         )
-        subtitleLabel.textColor = .lightSubtextColor
+        subtitleLabel.textColor = .tertiaryTextColor
         subtitleLabel.textAlignment = .center
         
         view.addSubview(subtitleLabel)

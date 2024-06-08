@@ -210,7 +210,7 @@ extension DefaultButton {
     
     private func setupPrimaryGrey() {
         setupPrimaryStyle()
-        backgroundColor = .lightSubtextColor
+        backgroundColor = .tertiaryTextColor
     }
     
     private func setupPrimaryRed() {
@@ -382,7 +382,7 @@ extension DefaultButton {
     }
     
     private func setupPopoverButton() {
-        tintColor = .lightSubtextColor
+        tintColor = .tertiaryTextColor
         let imageConfig = UIImage.SymbolConfiguration(
             font: .manrope(
                 type: .semiBold,
@@ -413,7 +413,7 @@ extension DefaultButton {
     }
     
     private func setupCalendarPopoverStyle() {
-        tintColor = .lightSubtextColor
+        tintColor = .tertiaryTextColor
         let imageConfig = UIImage.SymbolConfiguration(
             font: .manrope(
                 type: .semiBold,

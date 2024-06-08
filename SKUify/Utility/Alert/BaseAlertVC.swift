@@ -50,7 +50,7 @@ class BaseAlertVC: UIViewController {
     }
     
     private func setupVisualEffectView() {
-        visualEffectView.effect = UIBlurEffect(style: .dark)
+        visualEffectView.effect = UIBlurEffect(style: .systemUltraThinMaterialDark)
         visualEffectView.alpha = 0.6
         view.addSubview(visualEffectView)
         visualEffectView.snp.makeConstraints { make in

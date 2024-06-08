@@ -95,7 +95,7 @@ final class RangedCalendarPopoverVC: UIViewController {
             type: .medium,
             size: 13
         )
-        calendar.appearance.weekdayTextColor = .lightSubtextColor
+        calendar.appearance.weekdayTextColor = .tertiaryTextColor
         
         calendar.clipsToBounds = false // Remove top/bottom line
 

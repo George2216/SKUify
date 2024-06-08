@@ -132,7 +132,7 @@ final class DefaultTextField: UITextField {
     
     private func setupPlaceholder(config: Config) {
         let attributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.lightSubtextColor,
+            NSAttributedString.Key.foregroundColor: UIColor.tertiaryTextColor,
             .font: UIFont.manrope(
                 type: .medium,
                 size: 14

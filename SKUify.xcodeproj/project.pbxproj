@@ -215,6 +215,7 @@
 		5E5CA82D2BEA4F4F005CD3B2 /* ExpensesSectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5CA82C2BEA4F4F005CD3B2 /* ExpensesSectionType.swift */; };
 		5E5CA8302BEA506F005CD3B2 /* ExpensesHeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5CA82F2BEA506F005CD3B2 /* ExpensesHeaderReusableView.swift */; };
 		5E620FDF2B975C0200680A49 /* ProductCellImageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E620FDE2B975C0200680A49 /* ProductCellImageType.swift */; };
+		5E63BE652C1383D100484C55 /* EmptyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63BE642C1383D100484C55 /* EmptyDTO.swift */; };
 		5E63C3432B5534AC00C30BF7 /* RangedCalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63C3422B5534AC00C30BF7 /* RangedCalendarViewModel.swift */; };
 		5E63C3462B55447E00C30BF7 /* RxFSCalendarDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63C3452B55447E00C30BF7 /* RxFSCalendarDelegateProxy.swift */; };
 		5E63C3482B55A4E100C30BF7 /* RangedCalendarFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63C3472B55A4E100C30BF7 /* RangedCalendarFooterView.swift */; };
@@ -900,6 +901,7 @@
 		5E5CA82C2BEA4F4F005CD3B2 /* ExpensesSectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesSectionType.swift; sourceTree = "<group>"; };
 		5E5CA82F2BEA506F005CD3B2 /* ExpensesHeaderReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesHeaderReusableView.swift; sourceTree = "<group>"; };
 		5E620FDE2B975C0200680A49 /* ProductCellImageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCellImageType.swift; sourceTree = "<group>"; };
+		5E63BE642C1383D100484C55 /* EmptyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDTO.swift; sourceTree = "<group>"; };
 		5E63C3422B5534AC00C30BF7 /* RangedCalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangedCalendarViewModel.swift; sourceTree = "<group>"; };
 		5E63C3452B55447E00C30BF7 /* RxFSCalendarDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxFSCalendarDelegateProxy.swift; sourceTree = "<group>"; };
 		5E63C3472B55A4E100C30BF7 /* RangedCalendarFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangedCalendarFooterView.swift; sourceTree = "<group>"; };
@@ -1426,6 +1428,7 @@
 			children = (
 				5EF1C5162BCE8214007E241A /* OnlyIdDTO.swift */,
 				5E153C342C11C68200681F84 /* StatusDTO.swift */,
+				5E63BE642C1383D100484C55 /* EmptyDTO.swift */,
 			);
 			path = SimpleResponseDTOs;
 			sourceTree = "<group>";
@@ -4539,6 +4542,7 @@
 				5EF1C5632BDFD1A6007E241A /* CostOfGoodsSettingsMainDTO.swift in Sources */,
 				5E153C352C11C68200681F84 /* StatusDTO.swift in Sources */,
 				5ED911D52B221F0E00FC0A66 /* NetworkUseCaseProvider.swift in Sources */,
+				5E63BE652C1383D100484C55 /* EmptyDTO.swift in Sources */,
 				5E3093F02BFD20C200CF7F83 /* UpdateExpensesNetwork.swift in Sources */,
 				5EFB39B42B7252C10024FD14 /* SalesRefundsDTO.swift in Sources */,
 				5EFB39B22B7252610024FD14 /* SalesRefundsNetwork.swift in Sources */,

@@ -13,7 +13,7 @@ extension CATransition {
         let transition = CATransition()
         transition.duration = 0.4
         transition.type = .fade
-        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
         return transition
     }
     

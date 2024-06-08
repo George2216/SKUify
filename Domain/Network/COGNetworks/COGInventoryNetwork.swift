@@ -9,5 +9,6 @@ import Foundation
 import RxSwift
 
 public protocol COGInventoryNetwork {
-    func updateCOG(_ data: COGInventoryRequestModel) -> Observable<OnlyIdDTO>
+    func updateCOG(_ data: COGInventoryRequestModel) -> Observable<EmptyDTO>
+    func deleteProductSettings(id: Int) -> Observable<EmptyDTO>
 }

@@ -17,7 +17,8 @@ class COGBaseViewModel: ViewModelProtocol {
         .init(
             title: .empty(),
             collectionData: .empty(),
-            showCalendarPopover: .empty(),
+            showCalendarPopover: .empty(), 
+            alert: .empty(),
             keyboardHeight: .empty(),
             fetching: .empty(),
             error: .empty()
@@ -38,6 +39,8 @@ extension COGBaseViewModel {
         let title: Driver<String>
         let collectionData: Driver<[COGSectionModel]>
         let showCalendarPopover: Driver<CGPoint>
+        // Show Alert
+        let alert: Driver<AlertManager.AlertType>
         // Use for scroll to textfield
         let keyboardHeight: Driver<CGFloat>
         // Trackers

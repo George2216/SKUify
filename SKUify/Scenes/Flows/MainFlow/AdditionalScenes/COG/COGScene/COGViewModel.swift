@@ -35,11 +35,13 @@ final class COGViewModel: COGBaseViewModel {
     private let tapOnUndo = PublishSubject<Void>()
     private let tapOnRecalculate = PublishSubject<Void>()
     
-    private let tapOnDelete = PublishSubject<Void>()
+    private let deletionСonfirmed = PublishSubject<Void>()
     private let tapOnSaveOrUpdate = PublishSubject<Void>()
     
     private let showCalendarPopover = PublishSubject<CGPoint>()
         
+    private let showAlert = PublishSubject<AlertManager.AlertType>()
+    
     // Can be change only for ui update
     private let visibleDataStorage: BehaviorSubject<COGInputModel>
     // Changed data
@@ -87,7 +89,8 @@ final class COGViewModel: COGBaseViewModel {
         return Output(
             title: makeTitle(),
             collectionData: makeCollectionData(),
-            showCalendarPopover: showCalendarPopover.asDriverOnErrorJustComplete(),
+            showCalendarPopover: showCalendarPopover.asDriverOnErrorJustComplete(), 
+            alert: showAlert.asDriverOnErrorJustComplete(),
             keyboardHeight: getKeyboardHeight(),
             fetching: activityIndicator.asDriver(),
             error: errorTracker.asBannerInput()
@@ -197,7 +200,7 @@ final class COGViewModel: COGBaseViewModel {
                                     guard let self else { return }
                                     self.quantityEditing.onNext(Int(text))
                                 },
-                                lockInput: isCanChangeQuantity(data)
+                                lockInput: !isCanChangeQuantity(data)
                             )
                         )
                     )
@@ -213,7 +216,7 @@ final class COGViewModel: COGBaseViewModel {
                                     guard let self else { return }
                                     self.purchasedFromEditing.onNext(text)
                                 },
-                                lockInput: isCanChangePurchasedFrom(data)
+                                lockInput: !isCanChangePurchasedFrom(data)
                             )
                         )
                     )
@@ -458,7 +461,33 @@ final class COGViewModel: COGBaseViewModel {
         ) : .none
     }
     
-   
+}
+
+extension COGViewModel {
+    
+    private func makeEditCOGsAlertInput() -> AlertManager.AlertType {
+        return .common(
+            .init(
+                title: "Are you sure?",
+                message: "This Action is Permanent!",
+                buttonsConfigs: [
+                    .init(
+                        title: "Cancel",
+                        style: .primaryGray,
+                        action: .simple({ })
+                    ),
+                    .init(
+                        title: "Ok",
+                        style: .primary,
+                        action: .simple({ [weak self] in
+                            guard let self else { return }
+                            self.deletionСonfirmed.onNext(())
+                        })
+                    )
+                ]
+            )
+        )
+    }
     
 }
 
@@ -472,20 +501,22 @@ extension COGViewModel {
     }
     
     private func makeDeleteAction(_ data: COGInputModel) -> (() -> Void)? {
-        data.cogType == .newReplenish ? { [weak self] in
-            
+        data.cogType == .replenish ? { [weak self] in
+            guard let self else { return }
+            let alertInput = self.makeEditCOGsAlertInput()
+            self.showAlert.onNext(alertInput)
         } : nil
     }
     
     private func isCanChangeQuantity(_ data: COGInputModel) -> Bool {
-        !(data.cogType == .newReplenish)
+        data.cogType == .newReplenish
     }
     
     private func isCanChangePurchasedFrom(_ data: COGInputModel) -> Bool {
-        !(data.cogType == .newReplenish ||
-          data.cogType == .inventory)
+        data.cogType == .newReplenish ||
+        data.cogType == .inventory ||
+        data.cogType == .replenish
     }
-    
     
 }
 
@@ -511,6 +542,7 @@ extension COGViewModel {
         subscribeOnTapOnUndo()
         subscribeOnTapOnRecalculate()
         subscribeOnTapOnUpdate()
+        subscribeOnDeletionСonfirmed()
     }
     
     private func subscribeOnUnitCostEditing() {
@@ -794,6 +826,19 @@ extension COGViewModel {
             .disposed(by: disposeBag)
     }
     
+    private func subscribeOnDeletionСonfirmed() {
+        deletionСonfirmed
+            .asDriverOnErrorJustComplete()
+            .withLatestFrom(changedDataStorage.asDriverOnErrorJustComplete())
+            .flatMapLatest(weak: self) { owner, data in
+                owner.deleteCOG(data: data)
+            }
+            .drive(with: self) { owner, _ in
+                owner.navigator.toBack()
+            }
+            .disposed(by: disposeBag)
+    }
+    
 }
 
 // MARK: - Subscribtions on Input
@@ -843,7 +888,8 @@ extension COGViewModel {
                 .trackActivity(activityIndicator)
                 .trackError(errorTracker)
         case .inventory,
-                .newReplenish:
+                .newReplenish,
+                .replenish:
             return breakEvenPointUseCase
                 .getInventoryBreakEvenPoint(data.toBreakEvenRequestModel())
                 .trackActivity(activityIndicator)
@@ -863,7 +909,8 @@ extension COGViewModel {
                     message: "The COG has been updated."
                 )
             
-        case .inventory:
+        case .inventory,
+                .replenish:
             output = cogUseCase
                 .updateInventoryCOG(data.toInventoryRequestModel())
                 .trackComplete(
@@ -886,6 +933,18 @@ extension COGViewModel {
         }
         return output
             .trackActivity(activityIndicator)
+            .trackError(errorTracker)
+            .asDriverOnErrorJustComplete()
+    }
+    
+    private func deleteCOG(data: COGInputModel) -> Driver<Void> {
+        cogUseCase
+            .deleteInventoryProduct(id: data.id)
+            .trackActivity(activityIndicator)
+            .trackComplete(
+                errorTracker,
+                message: "Replenish for \(data.dataAdded.yyyyMMddString()) has been deleted"
+            )
             .trackError(errorTracker)
             .asDriverOnErrorJustComplete()
     }

@@ -11,5 +11,6 @@ import RxSwift
 public protocol COGUseCase {
     func updateSalesCOG(_ data: COGSalesRequestModel) -> Observable<Void>
     func updateInventoryCOG(_ data: COGInventoryRequestModel) -> Observable<Void>
+    func deleteInventoryProduct(id: Int) -> Observable<Void>
 
 }

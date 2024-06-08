@@ -34,4 +34,10 @@ final class COGUseCase: Domain.COGUseCase {
             .mapToVoid()
     }
     
+    func deleteInventoryProduct(id: Int) -> Observable<Void> {
+        inventoryCOGNetwork
+            .deleteProductSettings(id: id)
+            .mapToVoid()
+    }
+    
 }

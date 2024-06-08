@@ -126,7 +126,7 @@ final public class NetworkProvider: Domain.NetworkProvider {
     
     public func makeCOGInventoryNetwork() -> Domain.COGInventoryNetwork {
         return COGInventoryNetwork(
-            network: makeNetwork(OnlyIdDTO.self),
+            network: makeNetwork(EmptyDTO.self),
             interceptorFactory: interceptorFactory
         )
     }

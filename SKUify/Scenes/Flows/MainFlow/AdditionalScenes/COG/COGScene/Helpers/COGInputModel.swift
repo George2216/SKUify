@@ -173,6 +173,7 @@ extension COGInputModel {
 enum COGType {
     case sales
     case inventory
+    case replenish
     case newReplenish
     
 }

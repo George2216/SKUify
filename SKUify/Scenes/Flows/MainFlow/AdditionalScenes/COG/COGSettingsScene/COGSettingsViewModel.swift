@@ -73,7 +73,8 @@ final class COGSettingsViewModel: COGBaseViewModel {
         return Output(
             title: makeTitle(),
             collectionData: makeCollectionData(),
-            showCalendarPopover: showCalendarPopover.asDriverOnErrorJustComplete(),
+            showCalendarPopover: showCalendarPopover.asDriverOnErrorJustComplete(), 
+            alert: .empty(),
             keyboardHeight: .empty(), // There are no text fields on this screen
             fetching: activityIndicator.asDriver(),
             error: errorTracker.asBannerInput()

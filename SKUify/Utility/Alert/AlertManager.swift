@@ -29,7 +29,10 @@ final class AlertManager: AlertManagerProtocol {
     func showAlert(_ type: AlertType) {
         guard let di else { return }
         let vc = AlertFactory.makeAlertVC(type, di: di)
-        baseController?.view.window?.layer.add(CATransition.alertTransition(), forKey: kCATransition)
+        baseController?.view.window?.layer.add(
+            CATransition.alertTransition(),
+            forKey: kCATransition
+        )
         baseController?.present(vc, animated: false)
     }
     
