@@ -210,7 +210,8 @@ extension DefaultButton {
     
     private func setupPrimaryGrey() {
         setupPrimaryStyle()
-        backgroundColor = .tertiaryTextColor
+        backgroundColor = .subtextColor
+        configuration?.baseForegroundColor = .background
     }
     
     private func setupPrimaryRed() {
