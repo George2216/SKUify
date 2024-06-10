@@ -13,7 +13,6 @@ protocol RangedCalendarPopoverDelegate: AnyObject {
         startDate: Date,
         endDate: Date?
     )
-    func cancelCalendar()
 }
 
 final class RangedCalendarBuilder {

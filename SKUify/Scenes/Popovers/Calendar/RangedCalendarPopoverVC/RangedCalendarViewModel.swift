@@ -60,14 +60,10 @@ final class RangedCalendarViewModel: ViewModelProtocol {
                 
                 if dates.isEmpty {
                     startDate = formatter.string(from: Date())
-                    action = {
-                        owner.confirmSelectionDate.onNext(Date())
-                    }
+                    action = nil
                 } else if dates.count == 1 {
                     startDate = formatter.string(from: dates[0])
-                    action = {
-                        owner.confirmSelectionDate.onNext(dates[0])
-                    }
+                    action = nil
                 } else {
                     startDate = formatter.string(from: dates.first!)
                     endDate = formatter.string(from: dates.last!)
@@ -99,19 +95,13 @@ final class RangedCalendarViewModel: ViewModelProtocol {
                                 style: .custom(tint: .primary),
                                 action: .simple({ [weak self] in
                                     guard let self else { return }
-                                    self.cancelAction(selectedDates: dates)
+                                    self.cancelCalendar.onNext(())
                                 })
                             )
                         )
                     )
             }
             .asDriverOnErrorJustComplete()
-    }
-    
-    private func cancelAction(selectedDates: [Date]) {
-        deselectDates.onNext(selectedDates)
-        self.selectedDates.onNext([])
-        confirmSelectionDate.onNext(Date())
     }
     
     // MARK: Header events

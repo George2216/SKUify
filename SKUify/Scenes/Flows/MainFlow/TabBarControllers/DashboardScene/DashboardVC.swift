@@ -14,7 +14,6 @@ final class DashboardVC: BaseViewController {
     var viewModel: DashboardViewModel!
     
     private let selectedCalendarDates = PublishSubject<(Date,Date?)>()
-    private let selectedCancelCalendar = PublishSubject<Void>()
     
     // MARK: UI elements
     
@@ -54,8 +53,7 @@ final class DashboardVC: BaseViewController {
             .init(
                 reloadData: Driver.merge(refreshingTriger, viewDidAppear),
                 screenDisappear: viewDidDisappear,
-                selectedCalendarDates: selectedCalendarDates.asDriverOnErrorJustComplete(),
-                selectedCancelCalendar: selectedCancelCalendar.asDriverOnErrorJustComplete()
+                selectedCalendarDates: selectedCalendarDates.asDriverOnErrorJustComplete()
             )
         )
 
@@ -256,10 +254,6 @@ extension DashboardVC {
 }
 
 extension DashboardVC: RangedCalendarPopoverDelegate {
-    func cancelCalendar() {
-        selectedCancelCalendar.onNext(())
-        calendarPopover.dismiss(animated: true)
-    }
     
     func selectedCalendarDates(
         startDate: Date,

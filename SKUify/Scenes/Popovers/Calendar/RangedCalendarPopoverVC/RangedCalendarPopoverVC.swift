@@ -148,7 +148,7 @@ extension RangedCalendarPopoverVC {
     private func bindToCancelDelegate(_ output: RangedCalendarViewModel.Output) {
         output.cancelCalendar
             .drive(with: self) { owner, _ in
-                owner.delegate?.cancelCalendar()
+                owner.dismiss(animated: true)
             }
             .disposed(by: disposeBag)
     }
