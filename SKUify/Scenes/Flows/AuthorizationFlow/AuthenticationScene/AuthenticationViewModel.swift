@@ -71,7 +71,7 @@ final class AuthenticationViewModel: ViewModelProtocol {
     
     // Trackers
     private var activityTracker = ActivityTracker()
-    private var loginErrorTracker = ErrorTracker()
+    private var errorTracker = ErrorTracker()
     
     init(
         useCases: AuthenticationUseCases,
@@ -101,7 +101,7 @@ final class AuthenticationViewModel: ViewModelProtocol {
             passwordRecoveryResultInput: makePasswordRecoveryResultInput(),
             signUpInput: makeSignUpInput(),
             fetching: activityTracker.asDriver(),
-            error: loginErrorTracker.asBannerInput()
+            error: errorTracker.asBannerInput()
         )
     }
     
@@ -331,7 +331,7 @@ extension AuthenticationViewModel {
                 password: password
             )
             .trackActivity(activityTracker)
-            .trackError(loginErrorTracker)
+            .trackError(errorTracker)
             .asDriverOnErrorJustComplete()
     }
     
@@ -410,10 +410,10 @@ extension AuthenticationViewModel {
                     .resetPassword(.init(email: email))
                     .trackActivity(owner.activityTracker)
                     .trackComplete(
-                        owner.loginErrorTracker,
+                        owner.errorTracker,
                         message: "An email has been sent to you."
                     )
-                    .trackError(owner.loginErrorTracker)
+                    .trackError(owner.errorTracker)
                     .asDriverOnErrorJustComplete()
             }
         // When all ok, go to the next screen
