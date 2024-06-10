@@ -25,6 +25,7 @@ public struct UserDTO: Codable {
     public var addressOne: String?
     public var addressTwo: String?
     public var postCode: String?
+    public var currency: String
     public var city: String?
     
     private enum CodingKeys: String, CodingKey {
@@ -41,6 +42,7 @@ public struct UserDTO: Codable {
         case addressOne = "address_1"
         case addressTwo = "address_2"
         case postCode = "post_code"
+        case currency
         case city = "town_city"
     }
     

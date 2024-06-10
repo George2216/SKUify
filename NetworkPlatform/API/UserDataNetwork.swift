@@ -20,7 +20,6 @@ final class UserDataNetwork: Domain.UserDataNetwork {
     ) {
         self.network = network
         self.interceptorFactory = interceptorFactory
-        
     }
     
     private func makeMedia(
@@ -87,6 +86,21 @@ final class UserDataNetwork: Domain.UserDataNetwork {
                     ),
                     interceptorFactory.makeTokenToHeaderInterceptor(),
                     interceptorFactory.makeUserIdToURLPathInterceptor()
+                ]
+            )
+        )
+    }
+    
+    func updateCurrency(_ data: CurrencyRequestModel) -> Observable<UserMainDTO> {
+        return network.request(
+            "users/\(data.userId)/",
+            method: .patch,
+            data: data.toData(),
+            interceptor: CompositeRxAlamofireInterceptor(
+                interceptors: [
+                    interceptorFactory.makeTokenToHeaderInterceptor(),
+                    interceptorFactory.makeUserIdToURLPathInterceptor(),
+                    interceptorFactory.makeContentTypeJsonInterceptor()
                 ]
             )
         )

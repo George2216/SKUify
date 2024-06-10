@@ -19,9 +19,10 @@ final class AppManager {
     // Use cases
     private let loginStateUseCase: LoginStateUseCase
     private let expensesCategoriesUseCase: Domain.ExpensesCategoriesUseCase
+    private let userDataUseCase: Domain.UserDataCurrencyLoadUseCase
     
-    private let mandatoryDataActivityTraker = ActivityTracker()
-    private let mandatoryDataErrorTraker = ErrorTracker()
+    private let activityTracker = ActivityTracker()
+    private let errorTracker = ErrorTracker()
     
     init(
         appNavigator: AppNavigatorProtocol,
@@ -33,13 +34,14 @@ final class AppManager {
             .makeLoginStateUseCase()
         self.expensesCategoriesUseCase = useCases
             .makeExpensesCategoriesUseCase()
+        self.userDataUseCase = useCases.makeUserDataUseCase()
         
         appEntryPoint()
         subscribeToMandatoryDataActivityTracker()
     }
     
     private func subscribeToMandatoryDataActivityTracker() {
-        mandatoryDataActivityTraker
+        activityTracker
             .drive(with: self) { owner, isShow in
                 owner.appNavigator
                     .showFakeLuncher(isShow: isShow)
@@ -50,9 +52,9 @@ final class AppManager {
     private func appEntryPoint() {
         checkUserLoggedIn()
             .filterEqual(false)
-            .flatMapFirst(weak: self, selector: { owner, _ in
+            .flatMapFirst(weak: self) { owner, _ in
                 owner.toLoginFlow()
-            })
+            }
             .drive()
             .disposed(by: disposeBag)
         
@@ -61,7 +63,7 @@ final class AppManager {
             .flatMap(weak: self) { owner, _ in
                 owner.loadMantadoryData()
             }
-            .flatMapFirst(weak: self){ owner, _ in
+            .flatMapFirst(weak: self) { owner, _ in
                 owner.toMainFlow()
             }
             .drive()
@@ -86,12 +88,15 @@ final class AppManager {
     
     
     private func loadMantadoryData() -> Driver<Void> {
-        expensesCategoriesUseCase
-            .updateCategories()
-            .trackActivity(mandatoryDataActivityTraker)
-            .trackError(mandatoryDataErrorTraker)
-            .asDriverOnErrorJustComplete()
-      // and other mantadory data
+        Observable.combineLatest(
+            expensesCategoriesUseCase.updateCategories(),
+            userDataUseCase.updateCurrency()
+        )
+        .mapToVoid()
+        .trackActivity(activityTracker)
+        .trackError(errorTracker)
+        .asDriverOnErrorJustComplete()
+        // and other mantadory data
     }
     
 }

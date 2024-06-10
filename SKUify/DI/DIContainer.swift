@@ -90,6 +90,10 @@ class DIContainer: DIProtocol {
         realmUseCaseProvider.makeAuthorizationDataUseCase()
     }
     
+    func makeCurrencyUseCase() -> Domain.CurrencyUseCase {
+        realmUseCaseProvider.makeCurrencyUseCase()
+    }
+    
     func makeChartsUseCase() -> Domain.ChartsUseCase {
         networkUseCaseProvider.makeChartsUseCase()
     }
@@ -107,7 +111,7 @@ class DIContainer: DIProtocol {
     }
 
     func makeUserDataUseCase() -> Domain.UserDataUseCase {
-        networkUseCaseProvider.makeUserDataUseCase()
+        networkUseCaseProvider.makeUserDataUseCase(makeCurrencyUseCase())
     }
     
     func makeSalesUseCase() -> Domain.SalesUseCase {

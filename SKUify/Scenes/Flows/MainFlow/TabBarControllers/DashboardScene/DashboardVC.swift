@@ -67,11 +67,12 @@ final class DashboardVC: BaseViewController {
         bindToTitleImageBarButtonItem(output)
         bindToFilterByDateButtonConfig(output)
         bindTimeSlotsPopover(output)
-        bindCurrencyPopover(output)
+        bindToSimpleTablePopover(output)
         bingCalendarPopover(output)
         bindToCollectionView(output)
         bindToTimeSlotsPopover(output)
         bindToLoader(output)
+        bindToCollectionLoader(output)
         bindToBanner(output)
         bindToTopScrolling(output)
     }
@@ -128,8 +129,15 @@ extension DashboardVC {
 // MARK: Make binding
 
 extension DashboardVC {
+    
     private func bindToLoader(_ output: DashboardViewModel.Output) {
         output.fetching
+            .drive(rx.loading)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindToCollectionLoader(_ output: DashboardViewModel.Output) {
+        output.collectionFetching
             .drive(collectionView.refreshControl!.rx.isRefreshing)
             .disposed(by: disposeBag)
     }
@@ -200,22 +208,6 @@ extension DashboardVC {
             .disposed(by: disposeBag)
     }
     
-    private func bindCurrencyPopover(_ output: DashboardViewModel.Output) {
-        output.showCurrencyPopover
-            .map(self) { owner, center in
-                PopoverManager.Input(
-                    bindingType: .point(center),
-                    preferredSize: .init(
-                        width: 150,
-                        height: 250
-                    ),
-                    popoverVC: owner.currencyPopoverController
-                )
-            }
-            .drive(rx.popover)
-            .disposed(by: disposeBag)
-    }
-    
     private func bingCalendarPopover(_ output: DashboardViewModel.Output) {
         output.showCalendarPopover
             .map(self) { owner, _ in
@@ -233,7 +225,7 @@ extension DashboardVC {
     }
     
     private func bindToTopScrolling(_ output: DashboardViewModel.Output) {
-        output.fetching
+        output.collectionFetching
             .drive(with: self) { owner, isFetching in
                 guard isFetching else { return }
                 owner.collectionView
@@ -250,6 +242,22 @@ extension DashboardVC {
             .disposed(by: disposeBag)
     }
     
+    private func bindToSimpleTablePopover(_ output: DashboardViewModel.Output) {
+        output.showSimpleTablePopover
+            .map(self) { owner, model in
+                PopoverManager.Input(
+                    bindingType: .point(model.center),
+                    preferredSize: .init(
+                        width: 130,
+                        height: min(CGFloat(model.input.content.count * 40), 240)
+                    ),
+                    popoverVC: SimpleTablePopoverVC()
+                        .build(model.input)
+                )
+            }
+            .drive(rx.popover)
+            .disposed(by: disposeBag)
+    }
     
 }
 

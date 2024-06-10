@@ -54,8 +54,11 @@ public final class NetworkUseCaseProvider: Domain.NetworkUseCaseProvider {
         return ChartsUseCase(network: networkProvider.makeChartsNetwork())
     }
     
-    public func makeUserDataUseCase() -> Domain.UserDataUseCase {
-        return UserDataUseCase(network: networkProvider.makeUserDataNetwork())
+    public func makeUserDataUseCase(_ currencyUseCase: Domain.CurrencyUseCase) -> Domain.UserDataUseCase {
+        return UserDataUseCase(
+            network: networkProvider.makeUserDataNetwork(),
+            currencyUseCase: currencyUseCase
+        )
     }
     
     public func makeBreakEvenPointUseCase() -> Domain.BreakEvenPointUseCase {

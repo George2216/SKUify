@@ -53,4 +53,9 @@ public final class RealmUseCaseProvider: Domain.RealmUseCaseProvider {
         return ExpensesCategoriesDataUseCase(repository: repository)
     }
     
+    public func makeCurrencyUseCase() -> Domain.CurrencyUseCase {
+        let repository = Repository<Currency>(configuration: configuration)
+        return CurrencyUseCase(repository: repository)
+    }
+    
 }

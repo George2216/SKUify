@@ -15,10 +15,11 @@ final class DashboardViewModel: ViewModelProtocol {
     
     private let disposeBag = DisposeBag()
 
-    private let showCurrencyPopover = PublishSubject<CGPoint>()
+    private let showSimpleTablePopover = PublishSubject<PopoverGroupedModel<Int, String>>()
     private let showTimeSlotsPopover = PublishSubject<CGPoint>()
     private let showCalendarPopover = PublishSubject<Void>()
     
+    private let updateCurrency = PublishSubject<String>()
     private let toSettings = PublishSubject<Void>()
         
     private let dashboardDataState = BehaviorSubject<DashboardDataState?>(value: nil)
@@ -51,9 +52,13 @@ final class DashboardViewModel: ViewModelProtocol {
     
     private let chartUseCase: Domain.ChartsUseCase
     private let marketplacesUseCase: Domain.MarketplacesReadUseCase
+    private let userIdUseCase: Domain.UserIdReadUseCase
+    private let currencyUseCase: Domain.CurrencyReadUseCase
+    private let userDataUseCase: Domain.UserDataCurrencyUpdateUseCase
     
     // Trackers
-    private var activityIndicator = ActivityTracker()
+    private var collectionActivityTracker = ActivityTracker()
+    private var activityTracker = ActivityTracker()
     private var errorTracker = ErrorTracker()
     
     init(
@@ -63,10 +68,14 @@ final class DashboardViewModel: ViewModelProtocol {
         self.navigator = navigator
         self.chartUseCase = useCases.makeChartsUseCase()
         self.marketplacesUseCase = useCases.makeMarketplacesUseCase()
+        self.userIdUseCase = useCases.makeUserIdUseCase()
+        self.currencyUseCase = useCases.makeCurrencyUseCase()
+        self.userDataUseCase = useCases.makeUserDataUseCase()
         
         navigateToSettings()
         bindChartsDataToCollectionDataStorage()
         changeChartsVisible()
+        subscribeOnUpdateCurrency()
     }
     
     func transform(_ input: Input) -> Output {
@@ -80,11 +89,12 @@ final class DashboardViewModel: ViewModelProtocol {
             titleImageBarButtonConfig: makeTitleImageBarButtonConfig(),
             filterByDatePopoverButtonConfig: makeFilterByDatePopoverButtonConfig(),
             collectionData: collectionData.asDriverOnErrorJustComplete(),
-            showCurrencyPopover: showCurrencyPopover.asDriverOnErrorJustComplete(),
+            showSimpleTablePopover: showSimpleTablePopover.asDriverOnErrorJustComplete(),
             showTimeSlotsPopover: showTimeSlotsPopover.asDriverOnErrorJustComplete(),
             showCalendarPopover: showCalendarPopover.asDriverOnErrorJustComplete(),
             timeSlots: makeTimeSlotsInput(), 
-            fetching: activityIndicator.asDriver(),
+            fetching: activityTracker.asDriver(),
+            collectionFetching: collectionActivityTracker.asDriver(),
             error: errorTracker.asBannerInput()
         )
     }
@@ -117,7 +127,7 @@ final class DashboardViewModel: ViewModelProtocol {
     private func subscribeOnScreenDisappear(_ input: Input) {
         input.screenDisappear
             .drive(with: self) { owner, _ in
-                owner.activityIndicator.stopTracker()
+                owner.collectionActivityTracker.stopTracker()
             }
             .disposed(by: disposeBag)
     }
@@ -161,15 +171,31 @@ final class DashboardViewModel: ViewModelProtocol {
     }
     
     private func makeCurrencyBarButtonConfig() -> Driver<DefaultBarButtonItem.Config> {
-        .just(
-            .init(
-                style: .image(.currency),
-                actionType: .popUp({ [weak self] center in
-                    guard let self else { return }
-                    self.showCurrencyPopover.onNext(center)
-                })
-            )
-        )
+        currencyUseCase.getCurrency()
+            .map { currency in
+                    .init(
+                        style: .image(.currency),
+                        actionType: .popUp({ [weak self] center in
+                            guard let self else { return }
+                            self.showSimpleTablePopover.onNext(
+                                .init(
+                                    center: center,
+                                    input: .init(
+                                        content: CurrencyType.allCases.map { $0.title } ,
+                                        startValue: CurrencyType.allCases.map { $0.key }
+                                            .firstIndex(of: currency),
+                                        observer: { [weak self] index in
+                                            guard let self else { return }
+                                            self.updateCurrency.onNext(CurrencyType.allCases[index].key)
+                                        }
+                                    )
+                                )
+                            )
+                        })
+                    )
+            }
+            .asDriverOnErrorJustComplete()
+        
     }
     
     private func makeNotificationBarButtonConfig() -> Driver<DefaultBarButtonItem.Config> {
@@ -251,7 +277,7 @@ final class DashboardViewModel: ViewModelProtocol {
                 )
         }
         return observable?
-            .trackActivity(activityIndicator)
+            .trackActivity(collectionActivityTracker)
             .trackError(errorTracker)
             .asDriverOnErrorJustComplete() ?? .empty()
     }
@@ -966,6 +992,39 @@ final class DashboardViewModel: ViewModelProtocol {
     
 }
 
+//MARK: - Requests
+
+extension DashboardViewModel {
+    
+    private func subscribeOnUpdateCurrency() {
+        updateCurrency
+            .asDriverOnErrorJustComplete()
+            .flatMapLatest(weak: self) { owner, currency in
+                owner.userIdUseCase
+                    .getUserId()
+                    .map { ($0, currency) }
+                    .asDriverOnErrorJustComplete()
+            }
+            .flatMapLatest(weak: self) { (owner, arg1) in
+                let (id, currency) = arg1
+                return owner.userDataUseCase.updateCurrency(
+                    .init(
+                        userId: id,
+                        currency: currency
+                    )
+                )
+                .trackActivity(owner.activityTracker)
+                .trackError(owner.errorTracker)
+                .asDriverOnErrorJustComplete()
+            }
+            .withLatestFrom(dashboardDataState.asDriverOnErrorJustComplete())
+            .drive(dashboardDataState)
+            .disposed(by: disposeBag)
+    }
+    
+}
+
+
 extension DashboardViewModel {
     struct Input {
         let reloadData: Driver<Void>
@@ -984,13 +1043,14 @@ extension DashboardViewModel {
         // Collection data
         let collectionData: Driver<[DashboardSectionModel]>
         // Popovers points
-        let showCurrencyPopover: Driver<CGPoint>
+        let showSimpleTablePopover: Driver<PopoverGroupedModel<Int, String>>
         let showTimeSlotsPopover: Driver<CGPoint>
         let showCalendarPopover: Driver<Void>
         // TimeSlots
         let timeSlots: Driver<[TimeSlotCell.Input]>
         // Trackers
         let fetching: Driver<Bool>
+        let collectionFetching: Driver<Bool>
         let error: Driver<BannerView.Input>
     }
     

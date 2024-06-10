@@ -12,4 +12,5 @@ protocol AppManagerUseCases {
     func makeLoginStateUseCase() -> Domain.LoginStateUseCase
     // Mantadory data
     func makeExpensesCategoriesUseCase() -> Domain.ExpensesCategoriesUseCase
+    func makeUserDataUseCase() -> Domain.UserDataUseCase
 }

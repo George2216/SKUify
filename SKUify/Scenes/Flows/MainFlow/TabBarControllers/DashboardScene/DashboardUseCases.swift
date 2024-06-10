@@ -11,4 +11,7 @@ import Domain
 protocol DashboardUseCases {
     func makeChartsUseCase() -> Domain.ChartsUseCase
     func makeMarketplacesUseCase() -> Domain.MarketplacesUseCase
+    func makeUserIdUseCase() -> Domain.UserIdUseCase
+    func makeCurrencyUseCase() -> Domain.CurrencyUseCase
+    func makeUserDataUseCase() -> Domain.UserDataUseCase
 }
