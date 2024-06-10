@@ -216,6 +216,11 @@
 		5E5CA8302BEA506F005CD3B2 /* ExpensesHeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5CA82F2BEA506F005CD3B2 /* ExpensesHeaderReusableView.swift */; };
 		5E620FDF2B975C0200680A49 /* ProductCellImageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E620FDE2B975C0200680A49 /* ProductCellImageType.swift */; };
 		5E63BE652C1383D100484C55 /* EmptyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63BE642C1383D100484C55 /* EmptyDTO.swift */; };
+		5E63BE672C172C5400484C55 /* ResetPasswordNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63BE662C172C5400484C55 /* ResetPasswordNetwork.swift */; };
+		5E63BE692C172CA600484C55 /* ResetPasswordRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63BE682C172CA600484C55 /* ResetPasswordRequestModel.swift */; };
+		5E63BE6B2C172CE700484C55 /* ResetPasswordNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63BE6A2C172CE700484C55 /* ResetPasswordNetwork.swift */; };
+		5E63BE6D2C172DE300484C55 /* ResetPasswordUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63BE6C2C172DE300484C55 /* ResetPasswordUseCase.swift */; };
+		5E63BE6F2C172E1800484C55 /* ResetPasswordUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63BE6E2C172E1800484C55 /* ResetPasswordUseCase.swift */; };
 		5E63C3432B5534AC00C30BF7 /* RangedCalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63C3422B5534AC00C30BF7 /* RangedCalendarViewModel.swift */; };
 		5E63C3462B55447E00C30BF7 /* RxFSCalendarDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63C3452B55447E00C30BF7 /* RxFSCalendarDelegateProxy.swift */; };
 		5E63C3482B55A4E100C30BF7 /* RangedCalendarFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63C3472B55A4E100C30BF7 /* RangedCalendarFooterView.swift */; };
@@ -902,6 +907,11 @@
 		5E5CA82F2BEA506F005CD3B2 /* ExpensesHeaderReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesHeaderReusableView.swift; sourceTree = "<group>"; };
 		5E620FDE2B975C0200680A49 /* ProductCellImageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCellImageType.swift; sourceTree = "<group>"; };
 		5E63BE642C1383D100484C55 /* EmptyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDTO.swift; sourceTree = "<group>"; };
+		5E63BE662C172C5400484C55 /* ResetPasswordNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordNetwork.swift; sourceTree = "<group>"; };
+		5E63BE682C172CA600484C55 /* ResetPasswordRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordRequestModel.swift; sourceTree = "<group>"; };
+		5E63BE6A2C172CE700484C55 /* ResetPasswordNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordNetwork.swift; sourceTree = "<group>"; };
+		5E63BE6C2C172DE300484C55 /* ResetPasswordUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordUseCase.swift; sourceTree = "<group>"; };
+		5E63BE6E2C172E1800484C55 /* ResetPasswordUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordUseCase.swift; sourceTree = "<group>"; };
 		5E63C3422B5534AC00C30BF7 /* RangedCalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangedCalendarViewModel.swift; sourceTree = "<group>"; };
 		5E63C3452B55447E00C30BF7 /* RxFSCalendarDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxFSCalendarDelegateProxy.swift; sourceTree = "<group>"; };
 		5E63C3472B55A4E100C30BF7 /* RangedCalendarFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangedCalendarFooterView.swift; sourceTree = "<group>"; };
@@ -1902,6 +1912,7 @@
 				5E0E66C12B4C32E10005E576 /* MarketplacesUseCase.swift */,
 				5EFAAA2B2BB45AB300C96797 /* NoteUseCases.swift */,
 				5EF1C5462BD2782A007E241A /* ReplenishCOGUseCase.swift */,
+				5E63BE6E2C172E1800484C55 /* ResetPasswordUseCase.swift */,
 				5EFB39B52B7385D20024FD14 /* SalesUseCase.swift */,
 				5E153C1A2C0F5EF200681F84 /* SubscriptionsUseCase.swift */,
 				5ED912192B2CBD8D00FC0A66 /* TokensUseCase.swift */,
@@ -2174,6 +2185,7 @@
 				5EFB39942B6AB5A40024FD14 /* UserRequestModel.swift */,
 				5EF1C52D2BD1424E007E241A /* COG */,
 				5EFB399F2B711CF40024FD14 /* PaginatedModels */,
+				5E63BE682C172CA600484C55 /* ResetPasswordRequestModel.swift */,
 			);
 			path = RequestInput;
 			sourceTree = "<group>";
@@ -2310,8 +2322,8 @@
 		5E84F3FB2B7B6C04000937AC /* SalesNetworks */ = {
 			isa = PBXGroup;
 			children = (
-				5EFB39B12B7252610024FD14 /* SalesRefundsNetwork.swift */,
 				5E84F3F42B7A9ABC000937AC /* SalesOrdersNetwork.swift */,
+				5EFB39B12B7252610024FD14 /* SalesRefundsNetwork.swift */,
 			);
 			path = SalesNetworks;
 			sourceTree = "<group>";
@@ -2458,8 +2470,8 @@
 		5EBB75032BA4BC2B00FD100F /* InventoryNetworks */ = {
 			isa = PBXGroup;
 			children = (
-				5EBB75042BA4BC4000FD100F /* InventoryOrdersNetwork.swift */,
 				5EBB75122BAB292000FD100F /* InventoryBuyBotImportsNetwork.swift */,
+				5EBB75042BA4BC4000FD100F /* InventoryOrdersNetwork.swift */,
 			);
 			path = InventoryNetworks;
 			sourceTree = "<group>";
@@ -2756,6 +2768,7 @@
 			children = (
 				5EF40E472B33335F0021EEC1 /* ChartsNetwork.swift */,
 				5ED911DF2B233BA600FC0A66 /* LoginNetwork.swift */,
+				5E63BE6A2C172CE700484C55 /* ResetPasswordNetwork.swift */,
 				5E153C122C0F5CFD00681F84 /* SubscriptionsNetwork.swift */,
 				5E153C382C11C98E00681F84 /* UpdatePasswordNetwork.swift */,
 				5EAF2D7C2B5A9AFE00EFDA5A /* UserDataNetwork.swift */,
@@ -2810,6 +2823,7 @@
 				5EF40E4B2B35C1C20021EEC1 /* ChartNetwork.swift */,
 				5ED911E22B233BFE00FC0A66 /* LoginNetwork.swift */,
 				5EFAAA282BB459DE00C96797 /* NoteNetworks.swift */,
+				5E63BE662C172C5400484C55 /* ResetPasswordNetwork.swift */,
 				5E153C142C0F5D2700681F84 /* SubscriptionsNetwork.swift */,
 				5E153C312C11C40E00681F84 /* UpdatePasswordNetwork.swift */,
 				5EAF2D7A2B5A9A6F00EFDA5A /* UserDataNetwork.swift */,
@@ -2828,6 +2842,7 @@
 				5EF40E4D2B35D5E70021EEC1 /* ChartsUseCase.swift */,
 				5EBB75062BA4BE3F00FD100F /* InventoryUseCase.swift */,
 				5ED911E52B23402100FC0A66 /* LoginUseCase.swift */,
+				5E63BE6C2C172DE300484C55 /* ResetPasswordUseCase.swift */,
 				5EFB39C02B73F1100024FD14 /* SalesUseCase.swift */,
 				5E153C182C0F5EC800681F84 /* SubscriptionsUseCase.swift */,
 				5E153C3A2C11CDBE00681F84 /* UpdatePassworUseCase.swift */,
@@ -4593,6 +4608,7 @@
 				5E153C1B2C0F5EF200681F84 /* SubscriptionsUseCase.swift in Sources */,
 				5ED72F0B2BA20C5C0031D882 /* InventoryPaginatedModel.swift in Sources */,
 				5ED911CB2B221C7E00FC0A66 /* InterceptorFactory.swift in Sources */,
+				5E63BE6F2C172E1800484C55 /* ResetPasswordUseCase.swift in Sources */,
 				5E84F3F32B7A9A09000937AC /* OriginalPriceDTO.swift in Sources */,
 				5ED910672B13F58B00FC0A66 /* AppEventsUseCaseProvider.swift in Sources */,
 				5E5CA7D12BE8F6DF005CD3B2 /* COGBbpImoprtStategyNetwork.swift in Sources */,
@@ -4606,12 +4622,14 @@
 				5E153C172C0F5D5700681F84 /* SubscriptionDTO.swift in Sources */,
 				5E5CA7D32BE8F71E005CD3B2 /* BbpImoprtStategyRequestModel.swift in Sources */,
 				5E0E669E2B45EB090005E576 /* UserId.swift in Sources */,
+				5E63BE672C172C5400484C55 /* ResetPasswordNetwork.swift in Sources */,
 				5EAF2D812B5A9BF900EFDA5A /* UserDataUseCase.swift in Sources */,
 				5ED911E32B233BFE00FC0A66 /* LoginNetwork.swift in Sources */,
 				5EF1C5222BCE9C52007E241A /* CodableIgnore.swift in Sources */,
 				5EFB39B62B7385D20024FD14 /* SalesUseCase.swift in Sources */,
 				5EF1C5152BCD6698007E241A /* COGSalesRequestModel.swift in Sources */,
 				5E30940A2C00917000CF7F83 /* ExpensesCategoriesDataUseCase.swift in Sources */,
+				5E63BE692C172CA600484C55 /* ResetPasswordRequestModel.swift in Sources */,
 				5EF1C5362BD1800A007E241A /* COGBreakEvenRequestModel.swift in Sources */,
 				5EE3749B2BF22BA400F879C1 /* ExpensesPaginatedModel.swift in Sources */,
 				5EF1C5022BC823F2007E241A /* BreakEvenPointNetwork.swift in Sources */,
@@ -4648,6 +4666,7 @@
 				5EF1C5132BCD65F9007E241A /* COGInventoryNetwork.swift in Sources */,
 				5E84F3F72B7A9C3E000937AC /* SalesOrdersNetwork.swift in Sources */,
 				5ED911BC2B2217BB00FC0A66 /* CompositeRxAlamofireInterceptor.swift in Sources */,
+				5E63BE6D2C172DE300484C55 /* ResetPasswordUseCase.swift in Sources */,
 				5E5CA7CF2BE8F6A1005CD3B2 /* COGBbpImoprtStategyNetwork.swift in Sources */,
 				5EF1C5672BDFDA1B007E241A /* COGSInformationUseCase.swift in Sources */,
 				5EFB39932B6A5C190024FD14 /* MapFromNever.swift in Sources */,
@@ -4693,6 +4712,7 @@
 				5EBB75112BAA556500FD100F /* BoolExtension.swift in Sources */,
 				5EFAAA2E2BB45B4300C96797 /* NoteInventoryNetwork.swift in Sources */,
 				5E418A482B07B6C10070EDA4 /* Data.swift in Sources */,
+				5E63BE6B2C172CE700484C55 /* ResetPasswordNetwork.swift in Sources */,
 				5ED911E02B233BA600FC0A66 /* LoginNetwork.swift in Sources */,
 				5E84F3E22B76584B000937AC /* SalesPaginatedModelExtension.swift in Sources */,
 				5EFAAA372BB4604500C96797 /* NoteSalesUseCase.swift in Sources */,

@@ -16,6 +16,7 @@ public protocol NetworkUseCaseProvider {
     ) -> LoginUseCase
     func makeSubscriptionsUseCase() -> SubscriptionsUseCase
     func makeUpdatePasswordUseCase() -> UpdatePasswordUseCase
+    func makeResetPasswordUseCase() -> Domain.ResetPasswordUseCase
     func makeChartsUseCase() -> ChartsUseCase
     func makeUserDataUseCase() -> UserDataUseCase
     func makeSalesUseCase() -> SalesUseCase

@@ -11,6 +11,7 @@ public protocol NetworkProvider {
     func makeLoginNetwork() -> LoginNetwork
     func makeSubscriptionsNetwork() -> SubscriptionsNetwork
     func makeUpdatePasswordNetwork() -> UpdatePasswordNetwork
+    func makeResetPasswordNetwork() -> ResetPasswordNetwork
     func makeChartsNetwork() -> ChartsNetwork
     func makeUserDataNetwork() -> UserDataNetwork
     func makeSalesRefundsNetwork() -> SalesRefundsNetwork

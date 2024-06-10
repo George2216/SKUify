@@ -12,4 +12,5 @@ protocol AuthenticationUseCases {
     func makeLoginStateUseCase() -> Domain.LoginStateUseCase
     func makeKeyboardUseCase() -> Domain.KeyboardUseCase
     func makeLoginUseCase() -> Domain.LoginUseCase
+    func makeResetPasswordUseCase() -> Domain.ResetPasswordUseCase
 }

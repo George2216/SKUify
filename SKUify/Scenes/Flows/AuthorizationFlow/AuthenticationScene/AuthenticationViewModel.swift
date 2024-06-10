@@ -33,6 +33,8 @@ final class AuthenticationViewModel: ViewModelProtocol {
     
     private let loginTrigger = PublishSubject<Void>()
     
+    private let resetPasswordTrigger = PublishSubject<Void>()
+    
     // MARK: - Forgot password properties
     
     private let passwordRecoveryEmail = PublishSubject<String>()
@@ -65,6 +67,7 @@ final class AuthenticationViewModel: ViewModelProtocol {
     private let loginUseCase: Domain.LoginUseCase
     private let loginStateUseCase: Domain.LoginStateUseCase
     private let keyboardUseCase: Domain.KeyboardUseCase
+    private let resetPasswordUseCase: Domain.ResetPasswordUseCase
     
     // Trackers
     private var activityTracker = ActivityTracker()
@@ -78,7 +81,10 @@ final class AuthenticationViewModel: ViewModelProtocol {
         self.loginUseCase = useCases.makeLoginUseCase()
         self.loginStateUseCase = useCases.makeLoginStateUseCase()
         self.keyboardUseCase = useCases.makeKeyboardUseCase()
-        login()
+        self.resetPasswordUseCase = useCases.makeResetPasswordUseCase()
+        
+        subscribeOnLogin()
+        subscribeOnResetPassword()
     }
     
     func transform(_ input: Input) -> Output {
@@ -292,7 +298,7 @@ extension AuthenticationViewModel {
     
     // MARK: - Login
     
-    private func login() {
+    private func subscribeOnLogin() {
         loginTrigger
             .asDriverOnErrorJustComplete()
             .withLatestFrom(loginFieldsText)
@@ -391,8 +397,31 @@ extension AuthenticationViewModel {
         guard !email.isEmpty else { return nil }
         return { [weak self] in
             guard let self else { return }
-            self.screenState.onNext(.recoveryPasswordResult)
+            self.resetPasswordTrigger.onNext(())
         }
+    }
+    
+    private func subscribeOnResetPassword() {
+        resetPasswordTrigger
+            .asDriverOnErrorJustComplete()
+            .withLatestFrom(passwordRecoveryEmail.asDriverOnErrorJustComplete())
+            .flatMapLatest(weak: self) { owner, email in
+                owner.resetPasswordUseCase
+                    .resetPassword(.init(email: email))
+                    .trackActivity(owner.activityTracker)
+                    .trackComplete(
+                        owner.loginErrorTracker,
+                        message: "An email has been sent to you."
+                    )
+                    .trackError(owner.loginErrorTracker)
+                    .asDriverOnErrorJustComplete()
+            }
+        // When all ok, go to the next screen
+            .do(self) { owner, _ in
+                owner.screenState.onNext(.recoveryPasswordResult)
+            }
+            .drive()
+            .disposed(by: disposeBag)
     }
     
 }

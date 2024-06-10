@@ -74,6 +74,10 @@ class DIContainer: DIProtocol {
         return networkUseCaseProvider.makeUpdatePasswordUseCase()
     }
     
+    func makeResetPasswordUseCase() -> Domain.ResetPasswordUseCase {
+        return networkUseCaseProvider.makeResetPasswordUseCase()
+    }
+    
     func makeKeyboardUseCase() -> Domain.KeyboardUseCase {
         appEventsUseCaseProvider.makeKeyboardUseCase()
     }
