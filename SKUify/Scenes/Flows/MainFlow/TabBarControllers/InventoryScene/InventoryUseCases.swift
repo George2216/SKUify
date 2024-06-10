@@ -12,4 +12,5 @@ protocol InventoryUseCases {
     func makeInventoryUseCase() -> Domain.InventoryUseCase
     func makeMarketplacesUseCase() -> Domain.MarketplacesUseCase
     func makeNoteInventoryUseCase() -> Domain.NoteUseCase
+    func makeCOGUseCase() -> Domain.COGUseCase
 }

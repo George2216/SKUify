@@ -40,7 +40,9 @@ final class InventoryViewModel: ViewModelProtocol {
     private let changeCOGs = PublishSubject<Bool>()
     private let changeStockOrInactive = PublishSubject<Bool>()
     private let changeWarningsOnly = PublishSubject<Bool>()
-
+    
+    private let deletionСonfirmedById = PublishSubject<Int>()
+    
     private let showAlert = PublishSubject<AlertManager.AlertType>()
 
     // Dependencies
@@ -50,6 +52,8 @@ final class InventoryViewModel: ViewModelProtocol {
     private let inventoryUseCase: Domain.InventoryUseCase
     private let marketplacesUseCase: Domain.MarketplacesReadUseCase
     private let noteUseCase: Domain.NoteUseCase
+    private let cogUseCase: Domain.COGUseCase
+    
     // Trackers
     private var activityIndicator = ActivityTracker()
     private var errorTracker = ErrorTracker()
@@ -62,10 +66,12 @@ final class InventoryViewModel: ViewModelProtocol {
         self.inventoryUseCase = useCases.makeInventoryUseCase()
         self.marketplacesUseCase = useCases.makeMarketplacesUseCase()
         self.noteUseCase = useCases.makeNoteInventoryUseCase()
+        self.cogUseCase = useCases.makeCOGUseCase()
         
         makeCollectionData()
         collectionViewSubscribers()
         paginatedDataScribers()
+        subscribeOnDeleteProductById()
     }
     
     func transform(_ input: Input) -> Output {
@@ -812,8 +818,10 @@ extension InventoryViewModel {
                     .init(
                         title: "",
                         style: .image(.delete),
-                        action: .simple({
-                            
+                        action: .simple({ [weak self] in
+                            guard let self else { return }
+                            let alertInput = self.makeDeleteProductAlertInput(id: bbImport.id)
+                            self.showAlert.onNext(alertInput)
                         })
                     )
                 )
@@ -980,6 +988,30 @@ extension InventoryViewModel {
         )
     }
     
+    private func makeDeleteProductAlertInput(id: Int) -> AlertManager.AlertType{
+        .common(
+            .init(
+                title: "Are you sure?",
+                message: "This Action is Permanent!",
+                buttonsConfigs: [
+                    .init(
+                        title: "Cancel",
+                        style: .primaryGray,
+                        action: .simple({ })
+                    ),
+                    .init(
+                        title: "Ok",
+                        style: .primary,
+                        action: .simple({ [weak self] in
+                            guard let self else { return }
+                            self.deletionСonfirmedById.onNext(id)
+                        })
+                    )
+                ]
+            )
+        )
+    }
+    
 }
 
 // MARK: - Requests
@@ -1052,8 +1084,6 @@ extension InventoryViewModel {
 
 }
 
-// MARK: - Update note
-
 extension InventoryViewModel {
     
     private func updateNote(
@@ -1077,6 +1107,26 @@ extension InventoryViewModel {
                     .trackError(owner.errorTracker)
                     .asDriverOnErrorJustComplete()
             }
+            .do(self) { owner, _ in
+                owner.reloadData()
+            }
+            .drive()
+            .disposed(by: disposeBag)
+    }
+    
+    func subscribeOnDeleteProductById() {
+        deletionСonfirmedById
+            .flatMapLatest(weak: self) { owner, id in
+                owner.cogUseCase
+                    .deleteInventoryProduct(id: id)
+                    .trackActivity(owner.activityIndicator)
+                    .trackComplete(
+                        owner.errorTracker,
+                        message: "The product has been deleted."
+                    )
+                    .trackError(owner.errorTracker)
+            }
+            .asDriverOnErrorJustComplete()
             .do(self) { owner, _ in
                 owner.reloadData()
             }
