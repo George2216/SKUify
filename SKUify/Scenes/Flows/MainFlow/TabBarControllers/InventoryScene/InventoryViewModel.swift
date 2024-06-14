@@ -689,7 +689,7 @@ extension InventoryViewModel {
                     ),
                     .init(
                         title: "SKU:",
-                        value: bbImport.sellerSku
+                        value: bbImport.sellerSku ?? "-"
                     ),
                     .init(
                         title: "ASIN:",

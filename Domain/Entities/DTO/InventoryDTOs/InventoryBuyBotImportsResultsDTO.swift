@@ -17,7 +17,7 @@ public struct InventoryBuyBotImportsDTO: Decodable {
     public let id: Int
     public let imageUrl: String?
     public let title: String
-    public let sellerSku: String
+    public let sellerSku: String?
     public let asin: String
     public let marketplace: String
     public let price: Double?
