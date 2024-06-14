@@ -66,6 +66,8 @@ final class OverviewChartMarkerView: MarkerView {
         bounds.size = size
         setupRadiusAndShadow()
         offset.y = -self.frame.size.height - 4.0
+        
+        layer.backgroundColor = UIColor.cellColor.cgColor
         super.layoutIfNeeded()
     }
   
