@@ -374,7 +374,7 @@ final class ProfileViewModel: BaseUserContentViewModel {
             .trackActivity(activityIndicator)
             .trackComplete(
                 errorTracker,
-                message: "The password has been updated."
+                message: "The data has been updated."
             )
             .trackError(errorTracker)
             .asDriverOnErrorJustComplete()

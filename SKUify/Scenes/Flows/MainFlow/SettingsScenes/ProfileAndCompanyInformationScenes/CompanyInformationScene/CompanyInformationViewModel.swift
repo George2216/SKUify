@@ -450,6 +450,10 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
     private func saveCompanyData(_ data: CompanyInformationRequestModel) -> Driver<Void> {
         userDataUseCase.updateCompanyInformation(data: data)
             .trackActivity(activityIndicator)
+            .trackComplete(
+                errorTracker,
+                message: "The data has been updated"
+            )
             .trackError(errorTracker)
             .asDriverOnErrorJustComplete()
     }
