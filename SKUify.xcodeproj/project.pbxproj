@@ -5110,7 +5110,7 @@
 				DEVELOPMENT_TEAM = NPJRN7RAJY;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SKUify/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = " SKUify";
+				INFOPLIST_KEY_CFBundleDisplayName = SKUify;
 				INFOPLIST_KEY_NSAppleMusicUsageDescription = "To library";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -5143,7 +5143,7 @@
 				DEVELOPMENT_TEAM = NPJRN7RAJY;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SKUify/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = " SKUify";
+				INFOPLIST_KEY_CFBundleDisplayName = SKUify;
 				INFOPLIST_KEY_NSAppleMusicUsageDescription = "To library";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
