@@ -19,6 +19,7 @@ public struct InventoryOrderDTO: Decodable {
     public let sellerSku: String
     public let asin: String
     public let marketplace: String
+    public let price: Double?
     public let originalPrice: OriginalPriceDTO
     public let currentStock: Int
     public let amzFees: Double?
@@ -62,6 +63,7 @@ public struct InventoryOrderDTO: Decodable {
         case sellerSku = "seller_sku"
         case asin = "asin1"
         case marketplace = "marketplace"
+        case price
         case originalPrice = "original_price"
         case currentStock = "current_stock"
         case amzFees = "amazon_fees"

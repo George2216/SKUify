@@ -545,7 +545,7 @@ extension SalesViewModel {
             .init(
                 title: "Unit Price",
                 viewType: .text(
-                    order.currencySymbol + order.originalPrice.price.toString()
+                    order.currencySymbol + order.price.toUnwrappedString()
                 )
             ),
             .init(
@@ -765,7 +765,7 @@ extension SalesViewModel {
             .init(
                 title: "Unit Price",
                 viewType: .text(
-                    refund.currencySymbol + refund.originalPrice.price.toString()
+                    refund.currencySymbol + refund.price.toUnwrappedString()
                 )
             ),
             .init(

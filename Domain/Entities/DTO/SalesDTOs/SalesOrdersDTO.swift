@@ -26,7 +26,7 @@ public struct SalesOrdersDTO: Decodable {
     public let marketplace: String
     public let orderPurchaseDate: String
     public let quantityOrdered: Int
-    public let originalPrice: OriginalPriceDTO
+    public let price: Double?
     public let amzFees: Double?
     public let totalCog: Double 
     public let currencySymbol: String
@@ -69,7 +69,7 @@ public struct SalesOrdersDTO: Decodable {
         case marketplace = "marketplace"
         case orderPurchaseDate = "order__purchase_date"
         case quantityOrdered = "quantity_ordered"
-        case originalPrice = "original_price"
+        case price = "item_price_amount"
         case amzFees = "amz_fees"
         case totalCog = "total_cog"
         case currencySymbol = "currency_symbol"

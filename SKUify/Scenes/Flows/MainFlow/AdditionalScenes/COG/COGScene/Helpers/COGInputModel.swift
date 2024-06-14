@@ -59,7 +59,7 @@ struct COGInputModel {
          
          extraFeeValue += extraFee.valueOrZero()
          extraFeeValue += extraFeePerc.valueOrZero() * unitCost.valueOrZero() / 100
-         
+
          return unitCost.valueOrZero() +
          bundling.valueOrZero() +
          prepFee.valueOrZero() +
@@ -68,8 +68,7 @@ struct COGInputModel {
          other.valueOrZero() +
          shipping.valueOrZero() +
          inboundShipping.valueOrZero() +
-         extraFeeValue +
-         inboundShippingUnits.valueOrZero()
+         extraFeeValue
      }
     
     // Hepler method

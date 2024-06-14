@@ -531,7 +531,7 @@ extension InventoryViewModel {
                 title: "Price",
                 viewType: .text(
                     currencySymbol +
-                    order.originalPrice.price.toString()
+                    order.price.toUnwrappedString()
                 )
             ),
             .init(
@@ -767,7 +767,7 @@ extension InventoryViewModel {
         return [
             .init(
                 title: "Price",
-                viewType: .text(currencySymbol + bbImport.originalPrice.price.toString())
+                viewType: .text(currencySymbol + bbImport.price.toUnwrappedString())
             ),
             .init(
                 title: "COG",

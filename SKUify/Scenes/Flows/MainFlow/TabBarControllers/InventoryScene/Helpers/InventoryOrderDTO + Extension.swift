@@ -16,7 +16,7 @@ extension InventoryOrderDTO {
             title: title,
             asin: asin,
             sku: sellerSku,
-            price: originalPrice.price,
+            price: price ?? 0,
             dataAdded: dateAdded.toDate() ?? Date(),
             imageUrl: imageUrl,
             unitCost: unitCost,

@@ -20,7 +20,7 @@ public struct InventoryBuyBotImportsDTO: Decodable {
     public let sellerSku: String
     public let asin: String
     public let marketplace: String
-    public let price: Double
+    public let price: Double?
     public let originalPrice: OriginalPriceDTO
     public let stock: Int
     public let amzFees: Double?

@@ -26,7 +26,7 @@ public struct SalesRefundsDTO: Decodable {
     public let marketplace: String
     public let refundDate: String
     public let quantityOrdered: Int
-    public let originalPrice: OriginalPriceDTO
+    public let price: Double?
     public let amzFees: Double?
     public let totalCog: Double
     public let currencySymbol: String
@@ -38,7 +38,7 @@ public struct SalesRefundsDTO: Decodable {
     
     // MARK: - Only GOG
     
-    public let dateAdded: String
+    public let dateAdded: String?
     public let unitCost: Double?
     public let purchasedFrom: String?
     public let purchasedDate: String?
@@ -61,12 +61,12 @@ public struct SalesRefundsDTO: Decodable {
         case imageUrl = "full_image_url"
         case title = "title"
         case sellerSku = "seller_sku"
-        case asin = "asin"
+        case asin
         case amazonOrderId = "order__amazon_order_id"
         case marketplace = "marketplace"
         case refundDate = "refund_date"
         case quantityOrdered = "quantity_ordered"
-        case originalPrice = "original_price"
+        case price = "item_price_amount"
         case amzFees = "amz_fees"
         case totalCog = "total_cog"
         case currencySymbol = "currency_symbol"
