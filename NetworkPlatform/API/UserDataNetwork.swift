@@ -11,11 +11,11 @@ import Domain
 
 final class UserDataNetwork: Domain.UserDataNetwork {
     
-    private let network: Network<UserMainDTO>
+    private let network: Network<UserDTO>
     private let interceptorFactory: Domain.InterceptorFactory
     
     init(
-        network: Network<UserMainDTO>,
+        network: Network<UserDTO>,
         interceptorFactory: Domain.InterceptorFactory
     ) {
         self.network = network
@@ -34,7 +34,7 @@ final class UserDataNetwork: Domain.UserDataNetwork {
         )
     }
     
-    func getUserData() -> Observable<UserMainDTO> {
+    func getUserData() -> Observable<UserDTO> {
         return network.request(
             "users/me/",
             method: .get,
@@ -47,7 +47,7 @@ final class UserDataNetwork: Domain.UserDataNetwork {
         )
     }
     
-    func updateUserData(data: Domain.UserRequestModel) -> Observable<UserMainDTO> {
+    func updateUserData(data: Domain.UserRequestModel) -> Observable<UserDTO> {
         return network.request(
             "users/\(data.userId)/",
             method: .patch,
@@ -69,7 +69,7 @@ final class UserDataNetwork: Domain.UserDataNetwork {
         )
     }
     
-    func updateCompanyInformation(data: Domain.CompanyInformationRequestModel) -> Observable<UserMainDTO> {
+    func updateCompanyInformation(data: Domain.CompanyInformationRequestModel) -> Observable<UserDTO> {
         return network.request(
             "users/\(data.userId)/",
             method: .patch,
@@ -91,7 +91,7 @@ final class UserDataNetwork: Domain.UserDataNetwork {
         )
     }
     
-    func updateCurrency(_ data: CurrencyRequestModel) -> Observable<UserMainDTO> {
+    func updateCurrency(_ data: CurrencyRequestModel) -> Observable<UserDTO> {
         return network.request(
             "users/\(data.userId)/",
             method: .patch,

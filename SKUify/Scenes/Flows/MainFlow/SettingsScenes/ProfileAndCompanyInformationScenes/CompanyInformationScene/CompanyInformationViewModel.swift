@@ -443,7 +443,6 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
             .trackActivity(activityIndicator)
             .trackError(errorTracker)
             .asDriverOnErrorJustComplete()
-            .map({ $0.user })
     }
     
     // MARK: Save company data

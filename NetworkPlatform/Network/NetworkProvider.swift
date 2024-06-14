@@ -66,7 +66,7 @@ final public class NetworkProvider: Domain.NetworkProvider {
     
     public func makeUserDataNetwork() -> Domain.UserDataNetwork {
         return UserDataNetwork(
-            network: makeNetwork(UserMainDTO.self),
+            network: makeNetwork(UserDTO.self),
             interceptorFactory: interceptorFactory
         )
     }

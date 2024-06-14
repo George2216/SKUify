@@ -9,8 +9,8 @@ import Foundation
 import RxSwift
 
 public protocol UserDataNetwork {
-    func getUserData() -> Observable<UserMainDTO>
-    func updateUserData(data: Domain.UserRequestModel) -> Observable<UserMainDTO>
-    func updateCompanyInformation(data: Domain.CompanyInformationRequestModel) -> Observable<UserMainDTO>
-    func updateCurrency(_ data: CurrencyRequestModel) -> Observable<UserMainDTO>
+    func getUserData() -> Observable<UserDTO>
+    func updateUserData(data: Domain.UserRequestModel) -> Observable<UserDTO>
+    func updateCompanyInformation(data: Domain.CompanyInformationRequestModel) -> Observable<UserDTO>
+    func updateCurrency(_ data: CurrencyRequestModel) -> Observable<UserDTO>
 }

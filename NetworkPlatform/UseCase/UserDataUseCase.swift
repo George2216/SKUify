@@ -24,7 +24,7 @@ final class UserDataUseCase: Domain.UserDataUseCase {
         self.currencyUseCase = currencyUseCase
     }
     
-    func getUserData() -> Observable<UserMainDTO> {
+    func getUserData() -> Observable<UserDTO> {
         network.getUserData()
     }
     
@@ -43,7 +43,7 @@ final class UserDataUseCase: Domain.UserDataUseCase {
         getUserData()
             .flatMap(weak: self) { owner, data in
                 owner.currencyUseCase
-                    .updateCurrency(data.user.currency)
+                    .updateCurrency(data.currency)
             }
     }
     
@@ -53,7 +53,7 @@ final class UserDataUseCase: Domain.UserDataUseCase {
         // Save to realm
             .flatMap(weak: self) { owner, data in
                 owner.currencyUseCase
-                    .updateCurrency(data.user.currency)
+                    .updateCurrency(data.currency)
             }
             .mapToVoid()
     }

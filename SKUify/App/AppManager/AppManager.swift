@@ -22,7 +22,6 @@ final class AppManager {
     private let userDataUseCase: Domain.UserDataCurrencyLoadUseCase
     
     private let activityTracker = ActivityTracker()
-    private let errorTracker = ErrorTracker()
     
     init(
         appNavigator: AppNavigatorProtocol,
@@ -94,7 +93,6 @@ final class AppManager {
         )
         .mapToVoid()
         .trackActivity(activityTracker)
-        .trackError(errorTracker)
         .asDriverOnErrorJustComplete()
         // and other mantadory data
     }

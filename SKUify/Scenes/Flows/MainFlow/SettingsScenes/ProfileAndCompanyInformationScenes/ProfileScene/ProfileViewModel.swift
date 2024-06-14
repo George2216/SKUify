@@ -365,7 +365,6 @@ final class ProfileViewModel: BaseUserContentViewModel {
             .trackActivity(activityIndicator)
             .trackError(errorTracker)
             .asDriverOnErrorJustComplete()
-            .map({ $0.user })
     }
     
     // MARK: - Save user data
