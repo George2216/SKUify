@@ -16,7 +16,7 @@ extension SalesOrdersDTO {
             asin: asin,
             sku: sellerSku,
             price: price ?? 0,
-            dataAdded: dateAdded.toDate() ?? Date(),
+            dataAdded: dateAdded?.toDate() ?? Date(),
             imageUrl: imageUrl,
             unitCost: unitCost,
             currencySymbol: currencySymbol,

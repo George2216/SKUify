@@ -41,7 +41,7 @@ public struct SalesOrdersDTO: Decodable {
     
     // MARK: - Only GOG
     
-    public let dateAdded: String
+    public let dateAdded: String?
     public let unitCost: Double?
     public let purchasedFrom: String?
     public let purchasedDate: String?
