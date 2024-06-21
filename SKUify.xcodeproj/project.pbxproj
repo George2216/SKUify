@@ -268,7 +268,6 @@
 		5EAF2D692B597F9300EFDA5A /* UserContentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAF2D682B597F9300EFDA5A /* UserContentVC.swift */; };
 		5EAF2D6B2B597FA400EFDA5A /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAF2D6A2B597FA400EFDA5A /* ProfileViewModel.swift */; };
 		5EAF2D6D2B597FBA00EFDA5A /* ProfileUseCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAF2D6C2B597FBA00EFDA5A /* ProfileUseCases.swift */; };
-		5EAF2D722B5A757C00EFDA5A /* ImageUploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAF2D712B5A757C00EFDA5A /* ImageUploadView.swift */; };
 		5EAF2D752B5A7C1F00EFDA5A /* ScrollDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAF2D742B5A7C1F00EFDA5A /* ScrollDecorator.swift */; };
 		5EAF2D772B5A835500EFDA5A /* UserContentContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAF2D762B5A835500EFDA5A /* UserContentContentView.swift */; };
 		5EAF2D792B5A993700EFDA5A /* UserDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAF2D782B5A993700EFDA5A /* UserDTO.swift */; };
@@ -966,7 +965,6 @@
 		5EAF2D682B597F9300EFDA5A /* UserContentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserContentVC.swift; sourceTree = "<group>"; };
 		5EAF2D6A2B597FA400EFDA5A /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		5EAF2D6C2B597FBA00EFDA5A /* ProfileUseCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUseCases.swift; sourceTree = "<group>"; };
-		5EAF2D712B5A757C00EFDA5A /* ImageUploadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUploadView.swift; sourceTree = "<group>"; };
 		5EAF2D742B5A7C1F00EFDA5A /* ScrollDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollDecorator.swift; sourceTree = "<group>"; };
 		5EAF2D762B5A835500EFDA5A /* UserContentContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserContentContentView.swift; sourceTree = "<group>"; };
 		5EAF2D782B5A993700EFDA5A /* UserDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDTO.swift; sourceTree = "<group>"; };
@@ -2098,7 +2096,6 @@
 				5E418ABC2B0F964B0070EDA4 /* ContainerBorderVerticalStack.swift */,
 				5E418ABF2B10E8450070EDA4 /* HorizontalStack.swift */,
 				5E2C0BF82BBC3C2A00B2682E /* HorizontalTitledView.swift */,
-				5EAF2D712B5A757C00EFDA5A /* ImageUploadView.swift */,
 				5E2C0BFD2BBC47B700B2682E /* Switch */,
 				5ED9120A2B29EC1400FC0A66 /* TitledMarketplace.swift */,
 				5E418ABA2B0F8A490070EDA4 /* VerticaStack.swift */,
@@ -4449,7 +4446,6 @@
 				5E84F3EA2B7687D4000937AC /* ProductsSectionModel.swift in Sources */,
 				5E418F092BBF0E3D003317AD /* COGCostOfGoodsCellViewTypes.swift in Sources */,
 				5E41892F2B0669DB0070EDA4 /* AppDelegate.swift in Sources */,
-				5EAF2D722B5A757C00EFDA5A /* ImageUploadView.swift in Sources */,
 				5E2C0BD92BB6CC9000B2682E /* COGUseCases.swift in Sources */,
 				5ED911082B160D2100FC0A66 /* SalesVC.swift in Sources */,
 				5E18D0642BE3D78D00588526 /* BBPImportStrategy.swift in Sources */,

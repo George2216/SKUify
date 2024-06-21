@@ -185,7 +185,7 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
             .do(self) { owner, arg0 in
                 // Save image to content data storage
                 var (imageData, _, contentDataStorage) = arg0
-                contentDataStorage?.profileHeaderViewInput.uploadInput.imageType = .fromData(imageData)
+                contentDataStorage?.profileHeaderViewInput.imageType = .fromData(imageData)
                 owner.contentDataStorage.onNext(contentDataStorage)
                 
             }
@@ -204,7 +204,7 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
             .do(self) { owner, arg0 in
                 // Remove image from content storage
                 var (contentData, _) = arg0
-                contentData?.profileHeaderViewInput.uploadInput.imageType = .fromURL(nil)
+                contentData?.profileHeaderViewInput.imageType = .fromURL(nil)
                 owner.contentDataStorage.onNext(contentData)
             }
             .do(self) { owner, arg0 in
@@ -286,7 +286,6 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
                 
                 return .init(
                     profileHeaderViewInput: .init(
-                        uploadInput: .init(
                             imageType: .fromURL(URL(string: imageUrlText)),
                             placeholderType: .person,
                             uploadButtonConfig: .init(
@@ -296,7 +295,6 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
                                     guard let self else { return }
                                     self.tapOnUploadImage.onNext(())
                                 })
-                            )
                         ),
                         removeButtonConfig: .init(
                             title: "Remove",
