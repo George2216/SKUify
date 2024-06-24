@@ -11,4 +11,5 @@ protocol AppNavigatorProtocol {
     func toLoginFlow()
     func toMainFlow()
     func showFakeLuncher(isShow: Bool)
+    func showBanner(input: BannerView.Input)
 }

@@ -24,7 +24,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let appNavigator = AppNavigator(
             navigation: navigation,
-            diContainer: diContainer
+            diContainer: diContainer,
+            bannerManager: BannerViewManager.shared
         )
         
         appManager = AppManager(

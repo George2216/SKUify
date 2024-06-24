@@ -10,7 +10,7 @@ import UIKit
 import Domain
 
 final class AppNavigator: AppNavigatorProtocol {
-    
+    private var bannerManager: BannerViewManagerProtocol
     private var fakeLauncherVC: FakeLauncherViewControllerProtocol!
     
     private var navigation: UINavigationController
@@ -18,7 +18,8 @@ final class AppNavigator: AppNavigatorProtocol {
     
     init(
         navigation: UINavigationController,
-        diContainer: DIProtocol
+        diContainer: DIProtocol,
+        bannerManager: BannerViewManagerProtocol
     ) {
         let fakeLauncherVC = FakeLauncherViewController()
         fakeLauncherVC.modalPresentationStyle = .overFullScreen
@@ -28,6 +29,7 @@ final class AppNavigator: AppNavigatorProtocol {
                 subtitle: "Please do not close the app."
             )
         )
+        self.bannerManager = bannerManager
         self.fakeLauncherVC = fakeLauncherVC
         self.diContainer = diContainer
         self.navigation = navigation
@@ -58,6 +60,10 @@ final class AppNavigator: AppNavigatorProtocol {
                 from: navigation,
                 isShow: isShow
             )
+    }
+    
+    func showBanner(input: BannerView.Input) {
+        bannerManager.showBanner(input: input)
     }
     
     private func clearViewControllers() {

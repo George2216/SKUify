@@ -22,7 +22,8 @@ final class AppManager {
     private let userDataUseCase: Domain.UserDataCurrencyLoadUseCase
     
     private let activityTracker = ActivityTracker()
-    
+    private let errorTracker = ErrorTracker()
+
     init(
         appNavigator: AppNavigatorProtocol,
         useCases: AppManagerUseCases
@@ -37,6 +38,7 @@ final class AppManager {
         
         appEntryPoint()
         subscribeToMandatoryDataActivityTracker()
+        subscribeOnMantadoryDataErrorTraker()
     }
     
     private func subscribeToMandatoryDataActivityTracker() {
@@ -44,6 +46,16 @@ final class AppManager {
             .drive(with: self) { owner, isShow in
                 owner.appNavigator
                     .showFakeLuncher(isShow: isShow)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    private func subscribeOnMantadoryDataErrorTraker() {
+        errorTracker
+            .asBannerInput()
+            .drive(with: self) { owner, input in
+                owner.appNavigator
+                    .showBanner(input: input)
             }
             .disposed(by: disposeBag)
     }
@@ -93,6 +105,7 @@ final class AppManager {
         )
         .mapToVoid()
         .trackActivity(activityTracker)
+        .trackError(errorTracker)
         .asDriverOnErrorJustComplete()
         // and other mantadory data
     }
