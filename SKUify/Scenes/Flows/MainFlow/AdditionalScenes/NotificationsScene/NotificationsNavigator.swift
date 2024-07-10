@@ -10,18 +10,23 @@ import UIKit
 
 protocol NotificationsNavigatorProtocol {
     func toNotifications()
+    func toSales(with input: SalesViewModel.SetupModel)
+    func toInventory(with input: InventoryViewModel.SetupModel)
 }
 
 final class NotificationsNavigator: NotificationsNavigatorProtocol {
     private let navigationController: UINavigationController
     private let di: DIProtocol
-    
+    private weak var mainTabBar: MainTabBarNavigatorSwicherProtocol?
+ 
     init(
         navigationController: UINavigationController,
-        di: DIProtocol
+        di: DIProtocol,
+        mainTabBar: MainTabBarNavigatorSwicherProtocol?
     ) {
         self.navigationController = navigationController
         self.di = di
+        self.mainTabBar = mainTabBar
     }
     
     func toNotifications() {
@@ -31,6 +36,14 @@ final class NotificationsNavigator: NotificationsNavigatorProtocol {
             navigator: self
         )
         navigationController.pushViewController(vc, animated: true)
+    }
+    
+    func toSales(with input: SalesViewModel.SetupModel) {
+        mainTabBar?.switchToSales(with: input)
+    }
+    
+    func toInventory(with input: InventoryViewModel.SetupModel) {
+        mainTabBar?.switchToInventory(with: input)
     }
     
     deinit {

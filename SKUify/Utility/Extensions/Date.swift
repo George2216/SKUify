@@ -80,4 +80,11 @@ extension Date {
         return formattedDate
     }
     
+    func hmma() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "h:mma"
+        let formattedDate = dateFormatter.string(from: self)
+        return formattedDate
+    }
+    
 }

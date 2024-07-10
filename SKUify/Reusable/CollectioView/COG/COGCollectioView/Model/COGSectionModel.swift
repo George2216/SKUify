@@ -8,4 +8,4 @@
 import Foundation
 import RxDataSources
 
-typealias COGSectionModel = SectionModel<COGSectionType, COGCollectionItem>
+typealias COGSectionModel = SectionModel<DefaultSectionType, COGCollectionItem>

@@ -53,63 +53,24 @@ class DIContainer: DIProtocol {
     
     // MARK: Make use cases
 
-    func makeLoginUseCase() -> Domain.LoginUseCase {
-        networkUseCaseProvider.makeLoginUseCase(
-            autDataUseCase: makeAutorizationDataUseCase(),
-            tokensUseCase: makeTokensUseCase(),
-            userIdUseCase: makeUserIdUseCase(),
-            marketplacesUseCase: makeMarketplacesUseCase()
-        )
-    }
+    // MARK: - Only network UseCases
     
     func makeSubscriptionsUseCase() -> Domain.SubscriptionsUseCase {
         networkUseCaseProvider.makeSubscriptionsUseCase()
     }
     
-    func makeLoginStateUseCase() -> Domain.LoginStateUseCase {
-        realmUseCaseProvider.makeLoginStateUseCase()
-    }
-    
     func makeUpdatePasswordUseCase() -> Domain.UpdatePasswordUseCase {
-        return networkUseCaseProvider.makeUpdatePasswordUseCase()
+        networkUseCaseProvider.makeUpdatePasswordUseCase()
     }
     
     func makeResetPasswordUseCase() -> Domain.ResetPasswordUseCase {
-        return networkUseCaseProvider.makeResetPasswordUseCase()
-    }
-    
-    func makeKeyboardUseCase() -> Domain.KeyboardUseCase {
-        appEventsUseCaseProvider.makeKeyboardUseCase()
-    }
-    
-    func makeAppVersionUseCase() -> Domain.AppVersionUseCase {
-        appEventsUseCaseProvider.makeAppVersionUseCase()
-    }
-    
-    func makeAutorizationDataUseCase() -> Domain.AuthorizationDataUseCase {
-        realmUseCaseProvider.makeAuthorizationDataUseCase()
-    }
-    
-    func makeCurrencyUseCase() -> Domain.CurrencyUseCase {
-        realmUseCaseProvider.makeCurrencyUseCase()
+        networkUseCaseProvider.makeResetPasswordUseCase()
     }
     
     func makeChartsUseCase() -> Domain.ChartsUseCase {
         networkUseCaseProvider.makeChartsUseCase()
     }
     
-    func makeTokensUseCase() -> Domain.TokensUseCase {
-        realmUseCaseProvider.makeTokensUseCase()
-    }
-    
-    func makeUserIdUseCase() -> Domain.UserIdUseCase {
-        realmUseCaseProvider.makeUserIdUseCase()
-    }
-    
-    func makeMarketplacesUseCase() -> Domain.MarketplacesUseCase {
-        realmUseCaseProvider.makeMarketplacesUseCase()
-    }
-
     func makeUserDataUseCase() -> Domain.UserDataUseCase {
         networkUseCaseProvider.makeUserDataUseCase(makeCurrencyUseCase())
     }
@@ -126,6 +87,10 @@ class DIContainer: DIProtocol {
         networkUseCaseProvider.makeBreakEvenPointUseCase()
     }
     
+    func makeNotificationsUseCase() -> Domain.NotificationsUseCase {
+        networkUseCaseProvider.makeNotificationsUseCase()
+    }
+
     func makeCOGUseCase() -> Domain.COGUseCase {
         networkUseCaseProvider.makeCOGUseCase()
     }
@@ -150,17 +115,7 @@ class DIContainer: DIProtocol {
         networkUseCaseProvider.makeExpensesUseCase()
     }
     
-    func makeExpensesCategoriesUseCase() -> Domain.ExpensesCategoriesUseCase {
-        networkUseCaseProvider.makeExpensesCategoriesUseCase(
-            categoriesDataUseCase: makeExpensesCategoriesDataUseCase()
-        )
-    }
-    
-    func makeExpensesCategoriesDataUseCase() -> Domain.ExpensesCategoriesDataUseCase {
-        realmUseCaseProvider.makeExpensesCategoriesDataUseCase()
-    }
-    
-    // MARK: Note use case
+    // Note use case
     
     func makeNoteInventoryUseCase() -> Domain.NoteUseCase {
         return networkUseCaseProvider.makeNoteInventoryUseCase()
@@ -168,6 +123,63 @@ class DIContainer: DIProtocol {
     
     func makeNoteSalesUseCase() -> Domain.NoteUseCase {
         return networkUseCaseProvider.makeNoteSalesUseCase()
+    }
+    
+    // MARK: - Realm UseCases
+
+    func makeLoginStateUseCase() -> Domain.LoginStateUseCase {
+        realmUseCaseProvider.makeLoginStateUseCase()
+    }
+    
+    func makeAuthorizationDataUseCase() -> Domain.AuthorizationDataUseCase {
+        realmUseCaseProvider.makeAuthorizationDataUseCase()
+    }
+    
+    func makeCurrencyUseCase() -> Domain.CurrencyUseCase {
+        realmUseCaseProvider.makeCurrencyUseCase()
+    }
+    
+    func makeTokensUseCase() -> Domain.TokensUseCase {
+        realmUseCaseProvider.makeTokensUseCase()
+    }
+    
+    func makeUserIdUseCase() -> Domain.UserIdUseCase {
+        realmUseCaseProvider.makeUserIdUseCase()
+    }
+    
+    func makeMarketplacesUseCase() -> Domain.MarketplacesUseCase {
+        realmUseCaseProvider.makeMarketplacesUseCase()
+    }
+    
+    func makeExpensesCategoriesDataUseCase() -> Domain.ExpensesCategoriesDataUseCase {
+        realmUseCaseProvider.makeExpensesCategoriesDataUseCase()
+    }
+  
+    // MARK: - App Events UseCases
+
+    func makeKeyboardUseCase() -> Domain.KeyboardUseCase {
+        appEventsUseCaseProvider.makeKeyboardUseCase()
+    }
+    
+    func makeAppVersionUseCase() -> Domain.AppVersionUseCase {
+        appEventsUseCaseProvider.makeAppVersionUseCase()
+    }
+
+    // MARK: - Network use cases that use Realm
+    
+    func makeLoginUseCase() -> Domain.LoginUseCase {
+        networkUseCaseProvider.makeLoginUseCase(
+            autDataUseCase: makeAuthorizationDataUseCase(),
+            tokensUseCase: makeTokensUseCase(),
+            userIdUseCase: makeUserIdUseCase(),
+            marketplacesUseCase: makeMarketplacesUseCase()
+        )
+    }
+    
+    func makeExpensesCategoriesUseCase() -> Domain.ExpensesCategoriesUseCase {
+        networkUseCaseProvider.makeExpensesCategoriesUseCase(
+            categoriesDataUseCase: makeExpensesCategoriesDataUseCase()
+        )
     }
     
 }

@@ -9,5 +9,5 @@ import Foundation
 import Domain
 
 protocol NotificationsUseCases {
-    
+    func makeNotificationsUseCase() -> Domain.NotificationsUseCase
 }

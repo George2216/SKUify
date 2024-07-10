@@ -1,16 +1,16 @@
 //
-//  SalesSectionType.swift
+//  DefaultSectionType.swift
 //  SKUify
 //
-//  Created by George Churikov on 09.02.2024.
+//  Created by George Churikov on 26.06.2024.
 //
 
 import Foundation
 
-enum ProductsSectionType: Equatable {
+enum DefaultSectionType: Equatable {
     case defaultSection(
-        header: String,
-        footer: String
+        header: String = "",
+        footer: String = ""
     )
 
     var headerFooter: (
@@ -25,5 +25,5 @@ enum ProductsSectionType: Equatable {
             return (header, footer)
         }
     }
+    
 }
-

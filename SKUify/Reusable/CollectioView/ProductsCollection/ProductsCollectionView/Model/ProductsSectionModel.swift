@@ -9,4 +9,4 @@ import Foundation
 import RxSwift
 import RxDataSources
 
-typealias ProductsSectionModel = SectionModel<ProductsSectionType, ProductsCollectionItem>
+typealias ProductsSectionModel = SectionModel<DefaultSectionType, ProductsCollectionItem>

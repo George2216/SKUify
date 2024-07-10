@@ -36,6 +36,8 @@ final class InventoryViewModel: ViewModelProtocol {
 
     // MARK: - Setup view actions
     
+    private let searchTextInTextField = BehaviorSubject<String>(value: "")
+
     private let searchTextChanged = PublishSubject<String>()
     private let changeCOGs = PublishSubject<Bool>()
     private let changeStockOrInactive = PublishSubject<Bool>()
@@ -78,6 +80,7 @@ final class InventoryViewModel: ViewModelProtocol {
         subscribeOnReloadData(input)
         subscribeOnScreenDisappear(input)
         subscribeOnReachedBottom(input)
+        subscribeOnSetupWith(input)
         return Output(
             setupViewInput: makeSetupViewInput(),
             collectionData: collectionDataStorage.asDriverOnErrorJustComplete(), 
@@ -249,15 +252,7 @@ extension InventoryViewModel {
             .init(
                 ordersButtonConfid: makeOrdersButtonConfig(),
                 buyBotImportsButtonConfid: makeRefundsButtonConfig(),
-                searchTextFiestConfig: .init(
-                    style: .search,
-                    plaseholder: "Search inventory",
-                    debounce: 400,
-                    textObserver: { [weak self] text in
-                        guard let self else { return }
-                        self.searchTextChanged.onNext(text)
-                    }
-                ),
+                searchTextFiestConfig: makeSearchTextFieldConfig(),
                 switchesViewInput: .init(
                     inactiveTitledSwitchInput: .init(
                         title: "Include out of stock or inactive",
@@ -284,6 +279,23 @@ extension InventoryViewModel {
                 )
             )
         )
+    }
+    
+    private func makeSearchTextFieldConfig() -> Driver<DefaultTextField.Config> {
+        searchTextInTextField
+            .asDriverOnErrorJustComplete()
+            .map(self) { owner, text in
+                return .init(
+                    style: .search,
+                    text: text,
+                    plaseholder: "Search inventory",
+                    debounce: 400,
+                    textObserver: { [weak self] text in
+                        guard let self else { return }
+                        self.searchTextChanged.onNext(text)
+                    }
+                )
+            }
     }
     
 }
@@ -328,6 +340,18 @@ extension InventoryViewModel {
             .drive(with: self) { owner, _ in
                 owner.activityIndicator.stopTracker()
             }
+            .disposed(by: disposeBag)
+    }
+    
+    private func subscribeOnSetupWith(_ input: Input) {
+        input.setupWith
+            .do(self) { owner, model in
+                owner.tableType.onNext(model.tableType)
+            }
+            .do(self) { owner, model in
+                owner.searchTextInTextField.onNext(model.searchText)
+            }
+            .drive()
             .disposed(by: disposeBag)
     }
     
@@ -419,10 +443,7 @@ extension InventoryViewModel {
             .map(self) { (owner, productMarketplaceArray) in
                 productMarketplaceArray.map { order, markeplace in
                     return .init(
-                        model: .defaultSection(
-                            header: "",
-                            footer: ""
-                        ),
+                        model: .defaultSection(),
                         items: [
                             .main(
                                 owner.makeOrderMainCellInput(order)),
@@ -655,10 +676,7 @@ extension InventoryViewModel {
             .map(self) { (owner, productMarketplaceArray) in
                 productMarketplaceArray.map { bbImport, markeplace in
                     return .init(
-                        model: .defaultSection(
-                            header: "",
-                            footer: ""
-                        ),
+                        model: .defaultSection(),
                         items: [
                             .main(
                                 owner.makeBuyBotImportsMainCellInput(bbImport)
@@ -1136,6 +1154,15 @@ extension InventoryViewModel {
     
 }
 
+// MARK: - Model for setaping from Notification screen, maby other some day
+
+extension InventoryViewModel {
+    struct SetupModel {
+        let tableType: InventoryTableType
+        let searchText: String
+    }
+    
+}
 // MARK: - Input, Output
 
 extension InventoryViewModel {
@@ -1146,6 +1173,8 @@ extension InventoryViewModel {
         let screenDisappear: Driver<Void>
         // currently visible collection section
         let reachedBottom: Driver<Void>
+        // Setup from other screens
+        let setupWith: Driver<SetupModel>
     }
     
     struct Output {

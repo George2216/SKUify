@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RxSwift
 
 class MainTabBarController: UITabBarController {
 
@@ -26,4 +27,22 @@ class MainTabBarController: UITabBarController {
         ]
     }
     
+    func switchToSales(with input: SalesViewModel.SetupModel) {
+        let salesIndex = 1
+        guard let salesNavigationController = viewControllers?[salesIndex] as? UINavigationController else { return }
+        salesNavigationController.popToRootViewController(animated: false)
+        guard let salesVC = salesNavigationController.topViewController as? SalesSetupProtocol else { return }
+        selectedIndex = salesIndex
+        salesVC.setupWith.onNext(input)
+    }
+    
+    func switchToInventory(with input: InventoryViewModel.SetupModel) {
+        let inventoryIndex = 3
+        guard let inventoryNavigationController = viewControllers?[inventoryIndex] as? UINavigationController else { return }
+        inventoryNavigationController.popToRootViewController(animated: false)
+        guard let inventoryVC = inventoryNavigationController.topViewController as? InventorySetupProtocol else { return }
+        selectedIndex = inventoryIndex
+        inventoryVC.setupWith.onNext(input)
+    }
+ 
 }

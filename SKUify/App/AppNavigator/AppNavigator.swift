@@ -15,7 +15,8 @@ final class AppNavigator: AppNavigatorProtocol {
     
     private var navigation: UINavigationController
     private let diContainer: DIProtocol
-    
+    private var mainTabBarNavigator: MainTabBarNavigatorProtocol?
+
     init(
         navigation: UINavigationController,
         diContainer: DIProtocol,
@@ -48,10 +49,13 @@ final class AppNavigator: AppNavigatorProtocol {
     
     func toMainFlow() {
         clearViewControllers()
+
         let navigator = MainTabBarNavigator(
             navigationController: navigation,
             di: diContainer
         )
+        self.mainTabBarNavigator = navigator
+        
         navigator.toTabBar()
     }
     
@@ -67,6 +71,7 @@ final class AppNavigator: AppNavigatorProtocol {
     }
     
     private func clearViewControllers() {
+        mainTabBarNavigator?.clearNavigationControllers()
         navigation.viewControllers.removeAll()
     }
     

@@ -250,7 +250,7 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
     
     private func saveUserRequestStorage(
         _ combinedData: Driver<(UserDTO, Int, CompanyInformationRequestModel?)>
-    ) -> Driver<(CompanyInformationViewModel, UserDTO)> {
+    ) -> Driver<UserDTO> {
         combinedData
             .do(self) { owner, arg0 in
                 var (data, userId, dataStorage) = arg0
@@ -270,17 +270,14 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
                 )
                 owner.companyDataRequestStorage.onNext(dataStorage)
             }
-            .map(self) { owner, arg0 in
-                let (user, _, _) = arg0
-                return (owner, user)
-            }
+            .map { $0.0 }
     }
     
     private func makeContentDataInput(
-        _ userData: Driver<(CompanyInformationViewModel, UserDTO)>
+        _ userData: Driver<UserDTO>
     ) -> Driver<UserContentContentView.Input> {
         userData
-            .map({ owner, user in
+            .map(self) { owner, user in
                 let imageUrlText = user.companyAvatarImage?
                     .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
                 
@@ -406,7 +403,7 @@ final class CompanyInformationViewModel: BaseUserContentViewModel {
                         )
                     )
                 )
-            })
+            }
     }
     
     private func saveToContentDataStorage(

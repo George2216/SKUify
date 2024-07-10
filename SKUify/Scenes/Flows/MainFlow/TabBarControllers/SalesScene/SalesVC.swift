@@ -11,8 +11,14 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
-final class SalesVC: BaseViewController {
+protocol SalesSetupProtocol {
+    var setupWith: BehaviorSubject<SalesViewModel.SetupModel?> { get set }
+}
 
+final class SalesVC: BaseViewController, SalesSetupProtocol {
+
+    var setupWith = BehaviorSubject<SalesViewModel.SetupModel?>(value: nil)
+    
     private let selectedCalendarDates = PublishSubject<(Date,Date?)>()
     private let selectedCancelCalendar = PublishSubject<Void>()
     
@@ -53,7 +59,8 @@ final class SalesVC: BaseViewController {
                 reachedBottom: collectionView.rx.reachedBottom.asDriver(),
                 marketplaceSelected: marketplacesPopover.itemSelected(),
                 selectedCalendarDates: selectedCalendarDates.asDriverOnErrorJustComplete(), 
-                selectedCancelCalendar: selectedCancelCalendar.asDriverOnErrorJustComplete()
+                selectedCancelCalendar: selectedCancelCalendar.asDriverOnErrorJustComplete(),
+                setupWith: setupWith.compactMap { $0 }.asDriverOnErrorJustComplete()
             )
         )
         

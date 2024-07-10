@@ -68,6 +68,10 @@ public final class NetworkUseCaseProvider: Domain.NetworkUseCaseProvider {
         )
     }
     
+    public func makeNotificationsUseCase() -> Domain.NotificationsUseCase {
+        return NotificationsUseCase(network: networkProvider.makeNotificationsNetwork())
+    }
+    
     public func makeCOGSInformationUseCase() -> Domain.COGSInformationUseCase {
         return COGSInformationUseCase(informationCOGSNetwork: networkProvider.makeCOGSInformationNetwork())
     }

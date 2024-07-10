@@ -85,6 +85,13 @@ final public class NetworkProvider: Domain.NetworkProvider {
         )
     }
     
+    public func makeNotificationsNetwork() -> Domain.NotificationsNetwork {
+        return NotificationsNetwork(
+            network: makeNetwork(NotificationsDTO.self),
+            interceptorFactory: interceptorFactory
+        )
+    }
+    
     // MARK: - Sales
     
     public func makeSalesRefundsNetwork() -> Domain.SalesRefundsNetwork {

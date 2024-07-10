@@ -191,15 +191,7 @@ extension ProductsCollectionView: UICollectionViewDelegate {
                 animated: true
             )
         }
-//        let previousCellIndexPath = IndexPath(
-//            row: indexPath.row - 1,
-//            section: indexPath.section
-//        )
-//
-//        collectionView.deselectItem(
-//            at: previousCellIndexPath,
-//            animated: true
-//        )
+
         collectionView.performBatchUpdates(nil)
         return true
     }
@@ -221,16 +213,6 @@ extension ProductsCollectionView: UICollectionViewDelegate {
 
         guard item ~= .showDetail else { return false }
 
-        let previousCellIndexPath = IndexPath(
-            row: indexPath.row - 1,
-            section: indexPath.section
-        )
-
-        let mainCellIndexPatch = IndexPath(
-            row: 0,
-            section: indexPath.section
-        )
-
         for row in 0..<itemsCount {
             collectionView.selectItem(
                 at: .init(row: row, section: indexPath.section),
@@ -239,17 +221,8 @@ extension ProductsCollectionView: UICollectionViewDelegate {
             )
         }
 
-//        collectionView.selectItem(
-//            at: previousCellIndexPath,
-//            animated: true,
-//            scrollPosition: []
-//        )
         collectionView.performBatchUpdates(nil)
-//        collectionView.scrollToItem(
-//            at: mainCellIndexPatch,
-//            at: .top,
-//            animated: true
-//        )
+
         return true
     }
 

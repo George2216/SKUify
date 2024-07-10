@@ -78,7 +78,9 @@ final class SalesSetupView: UIView {
     }
     
     private func setupSearchTextField(_ input: Input) {
-        searchTextField.config = input.searchTextFieldConfig
+        input.searchTextFieldConfig
+            .drive(searchTextField.rx.config)
+            .disposed(by: disposeBag)
     }
     
     private func setupFilterByDatePopoverButton(_ input: Input) {
@@ -163,7 +165,7 @@ extension SalesSetupView {
         var refundsButtonConfig: Driver<DefaultButton.Config>
         let filterByDatePopoverButtonConfig: DefaultButton.Config
         let filterByMarketplacePopoverButtonConfig: DefaultButton.Config
-        let searchTextFieldConfig: DefaultTextField.Config
+        let searchTextFieldConfig: Driver<DefaultTextField.Config>
         let COGsInput: TitledSwitchView.Input
     }
     

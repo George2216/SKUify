@@ -7,13 +7,22 @@
 
 import Foundation
 import UIKit
-protocol MainTabBarNavigatorProtocol {
+
+protocol MainTabBarNavigatorProtocol: AnyObject {
     func toTabBar()
+    func clearNavigationControllers()
 }
 
-final class MainTabBarNavigator {
+protocol MainTabBarNavigatorSwicherProtocol: AnyObject {
+    func switchToSales(with input: SalesViewModel.SetupModel)
+    func switchToInventory(with input: InventoryViewModel.SetupModel)
+}
+
+final class MainTabBarNavigator: MainTabBarNavigatorProtocol {
     private let navigationController: UINavigationController
     private let di: DIProtocol
+    
+    private let tabBarController = MainTabBarController()
 
     init(
         navigationController: UINavigationController,
@@ -24,7 +33,6 @@ final class MainTabBarNavigator {
     }
     
     func toTabBar() {
-        let tabBarController = MainTabBarController()
         
         let dashboardNavigation = makeNavigation(
             title: "Dashboard",
@@ -32,7 +40,8 @@ final class MainTabBarNavigator {
         )
         let dashboardNavigator = DashboardNavigator(
             navigationController: dashboardNavigation,
-            di: di
+            di: di, 
+            mainTabBar: self
         )
         
         let salesNavigation = makeNavigation(
@@ -77,7 +86,15 @@ final class MainTabBarNavigator {
         inventoryNavigator.toInventory()
         
         navigationController.pushViewController(tabBarController, animated: true)
-       
+
+    }
+    
+    func clearNavigationControllers() {
+        tabBarController.viewControllers?.forEach { vc in
+            if let nav = vc as? UINavigationController {
+                nav.viewControllers.removeAll()
+            }
+        }
     }
     
     private func makeNavigation(
@@ -95,5 +112,15 @@ final class MainTabBarNavigator {
         return navigation
     }
     
-  
+}
+
+extension MainTabBarNavigator: MainTabBarNavigatorSwicherProtocol {
+    func switchToSales(with input: SalesViewModel.SetupModel) {
+        tabBarController.switchToSales(with: input)
+    }
+    
+    func switchToInventory(with input: InventoryViewModel.SetupModel) {
+        tabBarController.switchToInventory(with: input)
+    }
+    
 }

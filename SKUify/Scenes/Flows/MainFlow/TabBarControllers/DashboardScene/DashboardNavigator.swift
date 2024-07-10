@@ -17,17 +17,20 @@ protocol DashboardNavigatorProtocol: AnyObject {
 final class DashboardNavigator: DashboardNavigatorProtocol {
     private let navigationController: UINavigationController
     private let di: DIProtocol
-
+    private weak var mainTabBar: MainTabBarNavigatorSwicherProtocol?
+    
     init(
         navigationController: UINavigationController,
-        di: DIProtocol
+        di: DIProtocol,
+        mainTabBar: MainTabBarNavigatorSwicherProtocol?
     ) {
         self.navigationController = navigationController
         self.di = di
+        self.mainTabBar = mainTabBar
     }
     
     func toDashboard() {
-       let vc = DashboardVC()
+        let vc = DashboardVC()
         vc.viewModel = DashboardViewModel(
             useCases: di,
             navigator: self
@@ -47,7 +50,8 @@ final class DashboardNavigator: DashboardNavigatorProtocol {
     func toNotifications() {
         let navigator = NotificationsNavigator(
             navigationController: navigationController,
-            di: di
+            di: di, 
+            mainTabBar: mainTabBar
         )
         navigator.toNotifications()
     }

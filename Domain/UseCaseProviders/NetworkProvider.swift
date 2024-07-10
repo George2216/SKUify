@@ -21,6 +21,7 @@ public protocol NetworkProvider {
     func makeNoteInventoryNetwork() -> NoteNetwork
     func makeNoteSalesNetwork() -> NoteNetwork
     func makeSalesBreakEvenPointNetwork() -> BreakEvenPointNetwork
+    func makeNotificationsNetwork() -> NotificationsNetwork
     func makeInventoryBreakEvenPointNetwork() -> BreakEvenPointNetwork
     func makeCOGSalesNetwork() -> COGSalesNetwork
     func makeCOGInventoryNetwork() -> COGInventoryNetwork

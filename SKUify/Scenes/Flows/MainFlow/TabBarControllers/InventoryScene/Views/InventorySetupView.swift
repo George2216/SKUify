@@ -61,7 +61,9 @@ final class InventorySetupView: UIView {
     }
     
     private func setupSearchTextFiest(_ input: Input) {
-        searchTextFiest.config = input.searchTextFiestConfig
+        input.searchTextFiestConfig
+            .drive(searchTextFiest.rx.config)
+            .disposed(by: disposeBag)
     }
     
     private func setupSwitchesView(_ input: Input) {
@@ -107,7 +109,7 @@ extension InventorySetupView {
     struct Input {
         let ordersButtonConfid: Driver<DefaultButton.Config>
         let buyBotImportsButtonConfid: Driver<DefaultButton.Config>
-        let searchTextFiestConfig: DefaultTextField.Config
+        let searchTextFiestConfig: Driver<DefaultTextField.Config>
         let switchesViewInput: InventorySwitchesView.Input
     }
     

@@ -10,8 +10,14 @@ import RxSwift
 import RxCocoa
 import SnapKit
 
-final class InventoryVC: BaseViewController {
+protocol InventorySetupProtocol {
+    var setupWith: BehaviorSubject<InventoryViewModel.SetupModel?> { get set }
+}
 
+final class InventoryVC: BaseViewController, InventorySetupProtocol {
+
+    var setupWith = BehaviorSubject<InventoryViewModel.SetupModel?>(value: nil)
+    
     // MARK: - UI elements
     
     private lazy var setupView = InventorySetupView()
@@ -42,7 +48,8 @@ final class InventoryVC: BaseViewController {
             .init(
                 reloadData: Driver.merge(refreshingTriger, viewDidAppear),
                 screenDisappear: viewDidDisappear,
-                reachedBottom: collectionView.rx.reachedBottom.asDriver()
+                reachedBottom: collectionView.rx.reachedBottom.asDriver(),
+                setupWith: setupWith.compactMap { $0 }.asDriverOnErrorJustComplete()
             )
         )
         

@@ -37,6 +37,8 @@ final class SalesViewModel: ViewModelProtocol {
     
     // MARK: - Setup view actions
     
+    private let searchTextInTextField = BehaviorSubject<String>(value: "")
+
     private let searchTextChanged = PublishSubject<String>()
     private let tapOnCalendar = PublishSubject<CGPoint>()
     private let tapOnMarketplaces = PublishSubject<CGPoint>()
@@ -77,6 +79,7 @@ final class SalesViewModel: ViewModelProtocol {
         subscribeOnMarketplaceSelected(input)
         subscribeOnSelectedCalendarDates(input)
         subscribeOnCancelCalendar(input)
+        subscribeOnSetupWith(input)
         return Output(
             setupViewInput: makeSetupViewInput(),
             collectionData: collectionDataStorage.asDriverOnErrorJustComplete(),
@@ -236,15 +239,7 @@ final class SalesViewModel: ViewModelProtocol {
                         self.tapOnMarketplaces.onNext(point)
                     })
                 ),
-                searchTextFieldConfig: .init(
-                    style: .search,
-                    plaseholder: "Search product",
-                    debounce: 400,
-                    textObserver: { [weak self] text in
-                        guard let self else { return }
-                        self.searchTextChanged.onNext(text)
-                    }
-                ),
+                searchTextFieldConfig: makeSearchTextFieldConfig(),
                 COGsInput: .init(
                     title : "No COGs",
                     switchState: false,
@@ -285,6 +280,23 @@ final class SalesViewModel: ViewModelProtocol {
                         guard let self else { return }
                         self.tableType.onNext(.refunds)
                     })
+                )
+            }
+    }
+    
+    private func makeSearchTextFieldConfig() -> Driver<DefaultTextField.Config> {
+        searchTextInTextField
+            .asDriverOnErrorJustComplete()
+            .map { text in
+                return .init(
+                    style: .search,
+                    text: text,
+                    plaseholder: "Search product",
+                    debounce: 400,
+                    textObserver: { [weak self] text in
+                        guard let self else { return }
+                        self.searchTextChanged.onNext(text)
+                    }
                 )
             }
     }
@@ -372,6 +384,18 @@ extension SalesViewModel {
         input.selectedCancelCalendar
             .do(self) { owner, _ in
                 owner.periodType.onNext(.all)
+            }
+            .drive()
+            .disposed(by: disposeBag)
+    }
+    
+    private func subscribeOnSetupWith(_ input: Input) {
+        input.setupWith
+            .do(self) { owner, model in
+                owner.tableType.onNext(model.tableType)
+            }
+            .do(self) { owner, model in
+                owner.searchTextInTextField.onNext(model.searchText)
             }
             .drive()
             .disposed(by: disposeBag)
@@ -1111,6 +1135,18 @@ extension SalesViewModel {
     
 }
 
+// MARK: - Model for setaping from Notification screen, maby other some day
+
+extension SalesViewModel {
+    struct SetupModel {
+        var tableType: SalesTableType
+        var searchText: String
+    }
+    
+}
+
+// MARK: - Input Output
+
 extension SalesViewModel {
     struct Input {
         // viewDidAppear or swipe
@@ -1124,7 +1160,8 @@ extension SalesViewModel {
         // Calendar actions
         let selectedCalendarDates: Driver<(Date, Date?)>
         let selectedCancelCalendar: Driver<Void>
-        
+        // Setup from other screens 
+        let setupWith: Driver<SetupModel>
     }
     
     struct Output {
